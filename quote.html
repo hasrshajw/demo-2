@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayrollPro - Quote</title>
+    <title>KS Enterprises - Quote</title>
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,10 +71,10 @@
         const hideLoading = () => loadingOverlay.style.display = 'none';
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
 
-        // --- CORE FUNCTIONALITY ---
+        // --- CORE FUNCTIONALITY (EXACT REPLICA) ---
         const createQuoteHtml = (order, pricePerSft, transportCharges) => {
             let windowsForPdf = [];
-            try { windowsForPdf = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data:", e); }
+            try { windowsForPdf = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data", e); }
             
             let tableRows = '';
             let subTotal = 0;
@@ -82,11 +82,11 @@
             windowsForPdf.forEach((win, index) => {
                 const heightMm = parseFloat(win.height || 0);
                 const widthMm = parseFloat(win.width || 0);
-                const sft = (widthMm / 304.8) * (heightMm / 304.8);
+                const sft = (widthMm / 304) * (heightMm / 304); // Using original 304 factor
                 const windowCost = sft * pricePerSft;
                 subTotal += windowCost;
                 const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
-                tableRows += `<tr><td>${(index + 1).toString().padStart(2, '0')}</td><td>${itemName}${win.hasGlass && win.glassName ? ` <br><small>(${win.glassName})</small>` : ''}</td><td>${widthMm}</td><td>${heightMm}</td><td>304.8</td><td>${sft.toFixed(2)}</td><td>${pricePerSft.toLocaleString('en-IN')}</td><td>${windowCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>`;
+                tableRows += `<tr><td>${(index + 1).toString().padStart(2, '0')}</td><td>${itemName}${win.hasGlass && win.glassName ? ` <br><small>(${win.glassName})</small>` : ''}</td><td>${widthMm}</td><td>${heightMm}</td><td>304</td><td>${sft.toFixed(2)}</td><td>${pricePerSft.toLocaleString('en-IN')}</td><td>${windowCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>`;
             });
 
             const gst = subTotal * 0.18;
@@ -101,7 +101,7 @@
                 <div class="invoice-box">
                     <div>
                         <div class="header">
-                            <div class="logo"><p style="font-size: 1.5rem; font-weight: 700; color: var(--color-primary);">PayrollPro</p></div>
+                            <div class="logo"><img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Company Logo" class="logo-img"></div>
                             <div class="invoice-details">
                                 <div><strong>Quotation Date:</strong> ${new Date().toLocaleDateString()}</div>
                                 <div><strong>Prepared by:</strong> ${order.createdBy || 'N/A'}</div>
@@ -127,16 +127,19 @@
                     <div class="terms">
                         <strong>Terms & Conditions</strong>
                         <ol>
-                            <li>This quotation is based on the <strong>approximate measurements</strong>. Final measurements will be taken after order confirmation. Total square footage (SFT) may vary accordingly.</li>
-                            <li>A <strong>signed work order</strong> on official letterhead is required with the <strong>advance payment</strong>.</li>
+                            <li>This quotation is based on the <strong>approximate measurements</strong> shared by the customer. <strong>Final measurements</strong> will be taken after the order is confirmed. The total square footage (SFT) may <strong>increase or decrease</strong> accordingly.</li>
+                            <li>A <strong>signed work order</strong> with full contract details must be submitted on the customer's <strong>official letterhead</strong> along with the <strong>advance payment</strong>.</li>
                             <li><strong>Payment terms:</strong> <strong>60% advance</strong>, <strong>30% after material delivery</strong>, and remaining <strong>10% after installation</strong>.</li>
+                            <li>All payments by <strong>cheque or demand draft</strong> in favour of <strong>“PREMIUM U-PVC DOORS & WINDOWS”</strong>.</li>
+                            <li>Customer is responsible for: <strong>safe storage</strong> of materials, <strong>scaffolding</strong>, and <strong>power supply</strong> at site.</li>
                             <li>This quotation is <strong>valid for 30 days</strong>.</li>
                             <li><strong>Delivery timeline:</strong> <strong>30 days from the date of final measurement</strong>.</li>
+                            <li>Customer must arrange any <strong>masonry chipping or leveling</strong> at their own expense.</li>
                         </ol>
                     </div>
                     <div class="footer">
-                        <div class="icons"><span>📞 Your Phone</span> | <span>✉️ your.email@example.com</span></div>
-                        <div class="signature"><p>Authorized Signatory</p></div>
+                        <div class="icons"><span>📞 +91 79815 99155</span> | <span>✉️ kolatapu.k@gmail.com</span> | <span>📍 K.S Enterprises, Jewellery Park, Machilipatnam</span></div>
+                        <div class="signature"><p>K.KIRAN KUMAR</p></div>
                     </div>
                 </div>`;
         };
@@ -206,7 +209,6 @@
                     const order = { id: orderSnap.id, ...orderSnap.data() };
                     quoteScreenPrintable.innerHTML = createQuoteHtml(order, price, transport);
                     priceModal.style.display = 'none';
-                    // Add listener to the dynamically created back button
                     document.getElementById('quote-back-btn').addEventListener('click', (e) => {
                         window.location.href = `order-details.html?id=${e.currentTarget.dataset.id}`;
                     });
@@ -223,7 +225,11 @@
 
         priceCancelBtn.addEventListener('click', () => {
             const orderId = priceForm.dataset.id;
-            window.location.href = `order-details.html?id=${orderId}`;
+            if (orderId) {
+                window.location.href = `order-details.html?id=${orderId}`;
+            } else {
+                history.back(); // Fallback if no orderId is set
+            }
         });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
 
