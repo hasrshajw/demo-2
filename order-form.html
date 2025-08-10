@@ -437,8 +437,15 @@
 
             async function initializeFirebase() {
                 try {
-                    const firebaseConfig = {"apiKey":"AIzaSyBp4XoqX-MYvOlweR5dPfEqAP9qXu2P81E","authDomain":"harsha-jw.firebaseapp.com","projectId":"harsha-jw","storageBucket":"harsha-jw.appspot.com","messagingSenderId":"471408120499","appId":"1:471408120499:web:91e61514ad3703ce3b16c6","measurementId":"G-NBC16X4R1T"};
-                    const app = initializeApp(firebaseConfig);
+                    const firebaseConfig = {
+            apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
+            authDomain: "payment-form-b77e2.firebaseapp.com",
+            projectId: "payment-form-b77e2",
+            storageBucket: "payment-form-b77e2.firebasestorage.app",
+            messagingSenderId: "796020240904",
+            appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
+            measurementId: "G-DHJJ4WNYR4"
+        };
                     db = getFirestore(app);
                     auth = getAuth(app);
                     onAuthStateChanged(auth, async (user) => {
