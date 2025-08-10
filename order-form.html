@@ -435,31 +435,49 @@
                 return changes;
             };
 
-            async function initializeFirebase() {
+                        async function initializeFirebase() {
                 try {
+                    // THIS IS THE CORRECTED CONFIGURATION
                     const firebaseConfig = {
-            apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
-            authDomain: "payment-form-b77e2.firebaseapp.com",
-            projectId: "payment-form-b77e2",
-            storageBucket: "payment-form-b77e2.firebasestorage.app",
-            messagingSenderId: "796020240904",
-            appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
-            measurementId: "G-DHJJ4WNYR4"
-        };
+                        apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
+                        authDomain: "payment-form-b77e2.firebaseapp.com",
+                        projectId: "payment-form-b77e2",
+                        storageBucket: "payment-form-b77e2.firebasestorage.app",
+                        messagingSenderId: "796020240904",
+                        appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
+                        measurementId: "G-DHJJ4WNYR4"
+                    };
+
+                    const app = initializeApp(firebaseConfig); // Initialize app with the correct config
                     db = getFirestore(app);
                     auth = getAuth(app);
+                    
                     onAuthStateChanged(auth, async (user) => {
                         if (user) {
                             profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
-                            const userDoc = await getDoc(doc(db, `artifacts/default-app-id/user_profiles`, user.uid));
-                            if (userDoc.exists()) currentUserName = userDoc.data().userName;
+                            // Note: The user profile path might be different in your new project.
+                            // This path is just a placeholder. You may need to adjust it if user names don't load.
+                            const userDoc = await getDoc(doc(db, `users`, user.uid)); 
+                            if (userDoc.exists()) {
+                                currentUserName = userDoc.data().displayName || "Admin";
+                            }
+
                             const urlParams = new URLSearchParams(window.location.search);
                             const orderId = urlParams.get('id');
-                            if (orderId) { await loadOrderForEditing(orderId); } 
-                            else { setupFormForCreate(); }
-                        } else { window.location.href = 'login.html'; }
+                            if (orderId) { 
+                                await loadOrderForEditing(orderId); 
+                            } else { 
+                                setupFormForCreate(); 
+                            }
+                        } else { 
+                            window.location.href = 'login.html'; 
+                        }
                     });
-                } catch (error) { console.error("Firebase Init Error:", error); hideLoading(); }
+                } catch (error) { 
+                    console.error("Firebase Init Error:", error); 
+                    showMessageModal("Could not connect to the database. Please check the configuration.");
+                    hideLoading(); 
+                }
             }
 
             async function loadOrderForEditing(orderId) {
