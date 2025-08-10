@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* All original CSS is included here for brevity */
         :root { --font-main: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1); --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px; --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); --shadow-focus-ring: 0 0 0 3px; }
         [data-theme="light"] { --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-secondary: #475569; --color-background: #f8fafc; --color-surface: #ffffff; --color-text-primary: #1f2937; --color-text-secondary: #64748b; --color-border: #e5e7eb; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; --color-success-bg: #f0fdf4; --color-danger-bg: #fef2f2; --color-warning-bg: #fffbeb; --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%); }
         [data-theme="dark"] { --color-primary: #818cf8; --color-primary-light: rgba(129, 140, 248, 0.16); --color-primary-dark: #a7affb; --color-secondary: #94a3b8; --color-background: #0f172a; --color-surface: #1e293b; --color-text-primary: #f1f5f9; --color-text-secondary: #94a3b8; --color-border: #334155; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; --color-success-bg: rgba(74, 222, 128, 0.1); --color-danger-bg: rgba(248, 113, 113, 0.1); --color-warning-bg: rgba(250, 204, 21, 0.1); }
@@ -60,7 +58,6 @@
         .btn-icon { background: none; border: none; padding: 10px; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-icon:hover { color: var(--color-text-primary); background-color: var(--color-border); }
         .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm); transition: box-shadow 0.3s var(--ease-cubic), border-color 0.3s var(--ease-cubic); }
-        .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-secondary); font-size: 0.9rem; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-background); transition: all 0.2s; color: var(--color-text-primary); }
@@ -69,16 +66,7 @@
         .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 500px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--color-text-secondary); background: transparent; border: none; cursor: pointer; transition: color 0.2s; }
         .close-btn:hover { color: var(--color-text-primary); }
-        .alert-danger { background-color: var(--color-danger-bg); border-left: 4px solid var(--color-danger); padding: 12px 16px; border-radius: var(--radius-md); margin-bottom: 1rem; color: var(--color-danger); font-size: 0.9rem; }
         .user-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--color-border); cursor: pointer; }
-        .pending-user { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid var(--color-border); }
-        #admin-approval-list, #unlinked-employees-list { display: flex; flex-direction: column; gap: 0.5rem; }
-        .pending-user:last-child { border-bottom: none; }
-        .pending-user-info { display: flex; align-items: center; gap: 12px; }
-        .pending-user-avatar { width: 40px; height: 40px; border-radius: 50%; }
-        .pending-user-name { font-weight: 500; }
-        .pending-user-email { font-size: 0.8rem; color: var(--color-text-secondary); }
-        .pending-user-actions { display: flex; gap: 8px; }
         .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--color-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; position: relative; }
         .employee-row:first-of-type { border-top: 1px solid var(--color-border); }
         .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
@@ -97,7 +85,20 @@
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes count-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .stat-card-value, .global-stat .value { animation: count-up 0.5s var(--ease-cubic); }
-        @media (max-width: 768px) { .container { padding: 0 16px; } .desktop-only { display: none !important; } .nav-menu-btn { display: inline-flex; } main { padding-top: 24px; padding-bottom: 24px; } .app-header { padding: 0 16px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; } .card { padding: 16px; } .modal-content { padding: 24px; } .btn { padding: 10px 14px; font-size: 0.9rem; } .section-header { flex-direction: column; align-items: stretch; gap: 12px; } .pending-user { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem; } .pending-user-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;} #unlinked-employees-list .pending-user-actions { grid-template-columns: 1fr; } #global-summary-grid { grid-template-columns: 1fr; gap: 1rem; text-align: left; } .global-stat { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 0.75rem; } .global-stat:last-child { border-bottom: none; } .global-stat .value { font-size: 1.25rem; } .global-stat .label { margin-top: 0; } #attendance-tracker .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } #attendance-tracker .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } #attendance-tracker .btn { font-size: 0.85rem; padding: 8px 10px; } }
+        
+        .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+        .card > .card-content:last-child { margin-bottom: 0; }
+        .card .title { color: var(--color-text-primary); font-size: 28px; font-weight: 700; margin: 0; line-height: 1.2; letter-spacing: -0.025em; }
+        .card .description { font-size: 16px; color: var(--color-text-secondary); margin: 0; line-height: 1.5; max-width: 95%; }
+        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: 999px; text-decoration: none; transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: var(--shadow-sm); }
+        .link-tile:hover { background-color: var(--color-primary-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .link-tile span { color: var(--color-text-primary); font-weight: 600; font-size: 16px; }
+        .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
+        .link-tile:hover svg { transform: translateX(3px); }
+        .user-avatar.has-notifications { animation: shake 1.5s cubic-bezier(.36,.07,.19,.97) both infinite; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-3px, 0, 0); } 40%, 60% { transform: translate3d(3px, 0, 0); } }
+
+        @media (max-width: 768px) { .container { padding: 0 16px; } .desktop-only { display: none !important; } .nav-menu-btn { display: inline-flex; } main { padding-top: 24px; padding-bottom: 24px; } .app-header { padding: 0 16px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; } .card { padding: 16px; } .modal-content { padding: 24px; } .btn { padding: 10px 14px; font-size: 0.9rem; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } #global-summary-grid { grid-template-columns: 1fr; gap: 1rem; text-align: left; } .global-stat { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--color-border); padding-bottom: 0.75rem; } .global-stat:last-child { border-bottom: none; } .card .title { font-size: 24px; } .link-tile { padding: 14px 20px; } .link-tile span { font-size: 15px; } }
         @media (min-width: 769px) { .mobile-only { display: none !important; } }
     </style>
 </head>
@@ -110,9 +111,7 @@
         <div id="mobile-menu">
             <div class="mobile-menu-header">
                 <span class="mobile-menu-title">Menu</span>
-                <button class="btn-icon" data-app-action="close-menu">
-                    <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
+                <button class="btn-icon" data-app-action="close-menu"><svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
             </div>
             <div id="mobile-menu-content"></div>
         </div>
@@ -120,15 +119,23 @@
         <main>
             <div class="container" id="main-container">
                 <div id="home-view" class="view active">
-                    <div id="unlinked-employees-container" class="card" style="display:none;"></div>
-                    <div id="admin-approval-container" class="card" style="display:none;"></div>
-                    <div class="card">
-                        <div class="section-header"><h2>Today's Attendance</h2></div>
+                    <!-- The entire card will be hidden by JS when no actions are needed -->
+                    <div id="attendance-card" class="card">
+                        <div class="card-content">
+                            <h2 class="title">Today's Attendance</h2>
+                            <p class="description">Mark employees as present, absent, or half-day.</p>
+                        </div>
                         <div id="attendance-tracker"></div>
                     </div>
                     <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 24px;">
-                        <button class="btn btn-primary" data-app-action="navigate-employees" style="width: 100%;">View All Employees</button>
-                        <button class="btn btn-secondary" data-app-action="navigate-add-payment" style="width: 100%;">Add a Payment</button>
+                        <a href="admin-employees.html" class="link-tile">
+                            <span>View All Employees</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
+                        </a>
+                        <a href="admin-add-payment.html" class="link-tile">
+                            <span>Add a Payment</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
+                        </a>
                     </div>
                     <div id="global-summary-card" class="card"></div>
                 </div>
@@ -139,18 +146,14 @@
     <div id="toast"></div>
     <div id="loader"><div class="spinner"></div></div>
 
-    <!-- All Modals needed for the Admin Dashboard -->
-    <div id="set-salary-modal" class="modal"></div>
-    <div id="link-user-modal" class="modal"></div>
     <div id="employee-modal" class="modal"></div>
     <div id="other-options-modal" class="modal"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, writeBatch, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // IMPORTANT: Replace with your actual Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
             authDomain: "payment-form-b77e2.firebaseapp.com",
@@ -161,28 +164,23 @@
             measurementId: "G-DHJJ4WNYR4"
         };
         
-        let db, auth;
-        let currentUserProfile = null;
+        let db, auth, currentUserProfile;
         const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
-        // --- HELPER FUNCTIONS ---
         const showLoader = () => document.getElementById('loader').style.display = 'flex';
         const hideLoader = () => document.getElementById('loader').style.display = 'none';
         const showToast = (message, type = 'success') => { const t = document.getElementById('toast'); t.textContent = message; t.className = `show ${type}`; setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); }
         const openModal = (id) => document.getElementById(id).style.display = 'block';
         const closeModal = (id) => document.getElementById(id).style.display = 'none';
-        const formatDate = (date) => {
-            const d = new Date(date);
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        };
         
-        // --- INITIALIZATION ---
+        function getIndiaDateString() {
+            const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' };
+            return new Intl.DateTimeFormat('en-CA', options).format(new Date());
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             try {
-                if (!firebaseConfig.apiKey || firebaseConfig.projectId === "your-project-id") { throw new Error("Firebase config is not set."); }
+                if (!firebaseConfig.apiKey || firebaseConfig.apiKey.includes("your-")) { throw new Error("Firebase config is not set."); }
                 
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -194,28 +192,19 @@
                 listenForAuthStateChanges();
             } catch (error) {
                 console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<div class="full-page-center"><h2>Error initializing application.</h2></div>`;
+                document.body.innerHTML = `<div style="display:grid;place-items:center;height:100vh;text-align:center;font-family:sans-serif;"><h2>Error initializing application.</h2><p style="color: dimgray;">Please ensure your Firebase configuration is correct in the script.</p></div>`;
             }
         });
 
-        // --- AUTHENTICATION & ROUTING ---
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 showLoader();
-                if (user) {
-                    if (user.email !== ADMIN_EMAIL) {
-                        window.location.href = 'employee-dashboard.html';
-                        return;
-                    }
-                    
+                if (user && user.email === ADMIN_EMAIL) {
                     const userRef = doc(db, "users", user.uid);
                     await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    
-                    renderHeader();
                     await initializeAdminView();
-                    
                 } else {
                     window.location.href = 'login.html';
                 }
@@ -223,12 +212,9 @@
             });
         }
 
-        async function handleLogout() { await signOut(auth); }
-        
-        // --- ADMIN DASHBOARD INITIALIZATION ---
         async function initializeAdminView() {
-            await renderAdminApprovalList();
-            await renderUnlinkedEmployees();
+            const hasNotifications = await checkForNotifications();
+            renderHeader(hasNotifications);
             const employeesSnap = await getDocs(collection(db, "employees"));
             const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
             await refreshAttendanceTracker(employees);
@@ -236,15 +222,21 @@
             scheduleDailyReset();
         }
 
-        // --- UI RENDERING (HEADER, MODALS, THEME) ---
-        function renderHeader() {
-             const header = document.getElementById('app-header');
+        async function checkForNotifications() {
+            const pendingUsersQuery = query(collection(db, "users"), where("status", "==", "pending"));
+            const pendingUsersSnap = await getDocs(pendingUsersQuery);
+            return !pendingUsersSnap.empty;
+        }
+
+        function renderHeader(hasNotifications = false) {
+            const header = document.getElementById('app-header');
             const mobileMenuContent = document.getElementById('mobile-menu-content');
+            const avatarClass = hasNotifications ? 'user-avatar has-notifications' : 'user-avatar';
             
-            let desktopActions = `
+            const desktopActions = `
                 <button class="btn btn-secondary" data-app-action="toggle-theme">
                     <svg id="theme-icon-sun-desktop" class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 011.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" /></svg>
-                    <svg id="theme-icon-moon-desktop" class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
+                    <svg id="theme-icon-moon-desktop" class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="display:none;"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
                     <span class="sr-only">Toggle Theme</span>
                 </button>
                 <button data-app-action="open-modal" data-modal-id="employee-modal" data-form-id="employee-form" class="btn btn-primary">
@@ -254,16 +246,18 @@
 
             header.innerHTML = `
                 <div class="nav-left">
-                    <button class="btn-icon nav-menu-btn" data-app-action="toggle-menu">
-                        <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                    </button>
-                    <span class="header-title mobile-only">PayrollPro</span>
+                    <button class="btn-icon nav-menu-btn" data-app-action="toggle-menu"><svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg></button>
+                    <a href="index.html" style="font-size: 1.2rem; font-weight: 600; text-decoration: none; color: var(--color-text-primary);">PayrollPro</a>
                 </div>
                 <div class="nav-right">
                     <div class="desktop-only">${desktopActions}</div>
                     <div class="profile-menu">
-                        <img src="${currentUserProfile.photoURL}" alt="User Profile" class="user-avatar" data-app-action="toggle-profile-dropdown">
+                        <img src="${currentUserProfile.photoURL}" alt="User Profile" class="${avatarClass}" data-app-action="toggle-profile-dropdown">
                         <div id="profile-dropdown">
+                            <a href="notifications.html" class="btn btn-secondary">
+                               <svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" /></svg>
+                               Notifications
+                            </a>
                             <button class="btn btn-secondary" data-app-action="logout">
                                 <svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" /></svg>
                                 Logout
@@ -273,59 +267,42 @@
                 </div>`;
             
             mobileMenuContent.innerHTML = `
+                <a href="notifications.html" class="btn btn-secondary">
+                    <svg class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" /></svg>
+                    <span>Notifications</span>
+                </a>
                 <button class="btn btn-secondary" data-app-action="toggle-theme">
-                    <svg id="theme-icon-sun-mobile" class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 011.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" /></svg>
-                    <svg id="theme-icon-moon-mobile" class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>
+                    <svg id="theme-icon-sun-mobile" class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm..."></svg>
+                    <svg id="theme-icon-moon-mobile" class="icon-md" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="display:none;"><path d="M17.293 13.293A8 8..."></svg>
                     <span>Toggle Theme</span>
                 </button>
                 <button class="btn btn-secondary" data-app-action="open-modal" data-modal-id="employee-modal" data-form-id="employee-form">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-md" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-md" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1..."></svg>
                     <span>Add Employee</span>
                 </button>`;
             updateThemeIcons(localStorage.getItem('theme') || 'light');
         }
 
-        function toggleMenu(show) { document.getElementById('mobile-menu').classList.toggle('active', show); document.getElementById('mobile-menu-overlay').classList.toggle('active', show); }
-        function toggleProfileDropdown(show) { const dropdown = document.getElementById('profile-dropdown'); if (show === undefined) { dropdown.classList.toggle('active'); } else { dropdown.classList.toggle('active', show); } }
-        function initializeTheme() { const theme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', theme); updateThemeIcons(theme); }
-        function toggleTheme() { const currentTheme = document.documentElement.getAttribute('data-theme'); const newTheme = currentTheme === 'light' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); updateThemeIcons(newTheme); }
-        function updateThemeIcons(theme) {['desktop', 'mobile'].forEach(device => { const sunIcon = document.getElementById(`theme-icon-sun-${device}`); const moonIcon = document.getElementById(`theme-icon-moon-${device}`); if(!sunIcon || !moonIcon) return; if (theme === 'light') { sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; } else { sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; } }); }
-
         function renderAppShellModals() {
-            document.getElementById('set-salary-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="set-salary-modal">×</span><h2>Set Salary for <strong id="new-employee-name-modal"></strong></h2><form id="set-salary-form"><input type="hidden" id="new-employee-uid"><div class="form-group"><label for="new-employee-daily-salary">Daily Salary (INR)</label><input type="number" id="new-employee-daily-salary" required min="0" step="1"></div><button type="submit" class="btn btn-primary" style="width:100%">Confirm & Accept</button></form></div>`;
             document.getElementById('employee-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="employee-modal">×</span><h2 id="employee-modal-title">Add Employee</h2><form id="employee-form"><input type="hidden" id="employee-id"><div class="form-group"><label for="full-name">Full Name</label><input type="text" id="full-name" required></div><div class="form-group"><label for="daily-salary">Daily Salary</label><input type="number" id="daily-salary" required min="0" step="0.01"></div><button type="submit" class="btn btn-primary" style="width:100%">Save Changes</button></form></div>`;
             document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;"></div></div>`;
-            document.getElementById('link-user-modal').innerHTML = `<div class="modal-content"></div>`;
         }
         
-        // --- ALL ORIGINAL FUNCTIONS ARE INCLUDED BELOW FOR FULL FUNCTIONALITY ---
-
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const target = e.target;
                 const appAction = target.closest('[data-app-action]');
                 if (!appAction?.dataset?.appAction) { if (!target.closest('.profile-menu')) toggleProfileDropdown(false); return; }
                 
-                // Allow default behavior for actual links, prevent for buttons
-                if (appAction.tagName !== 'A' || !appAction.href) {
-                    e.preventDefault();
-                }
-
+                if (appAction.tagName !== 'A' || !appAction.href) e.preventDefault();
                 const action = appAction.dataset.appAction;
-                switch (action) {
-                    // --- Navigation to other pages ---
-                    case 'navigate-employees': window.location.href = 'admin-employees.html'; break;
-                    case 'navigate-add-payment': window.location.href = 'admin-add-payment.html'; break;
 
-                    // --- Actions handled on this page ---
+                switch (action) {
                     case 'toggle-menu': toggleMenu(true); break;
                     case 'close-menu': toggleMenu(false); break;
                     case 'toggle-profile-dropdown': toggleProfileDropdown(); break;
                     case 'toggle-theme': toggleTheme(); break;
-                    case 'logout': await handleLogout(); break;
-                    case 'accept-user': handleAcceptUserClick(appAction.dataset.uid, appAction.dataset.name); break;
-                    case 'deny-user': await handleDenyUser(appAction.dataset.uid); break;
-                    case 'link-user': handleLinkUserClick(appAction.dataset.employeeId, appAction.dataset.employeeName); break;
+                    case 'logout': await signOut(auth); break;
                     case 'open-modal': 
                         document.getElementById(appAction.dataset.formId)?.reset(); 
                         if(appAction.dataset.modalId === 'employee-modal') { 
@@ -338,118 +315,21 @@
                     case 'open-other-options-modal': 
                         const { id, name } = appAction.dataset; 
                         document.getElementById('other-options-title').textContent = `Mark Attendance: ${name}`; 
-                        document.getElementById('other-options-buttons').innerHTML = ` <button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent" data-close-modal="other-options-modal">Absent</button> <button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day" data-close-modal="other-options-modal">Half Day</button> <button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday" data-close-modal="other-options-modal">Paid Holiday</button>`; 
+                        document.getElementById('other-options-buttons').innerHTML = ` <button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button> <button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button> <button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`; 
                         openModal('other-options-modal'); 
                         break;
                     case 'mark-attendance': 
                         await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
-                        if (appAction.dataset.closeModal) closeModal(appAction.dataset.closeModal); 
+                        closeModal('other-options-modal');
                         break;
                 }
-
                 if (action !== 'toggle-profile-dropdown') toggleProfileDropdown(false);
-                if (action.includes('modal')) toggleMenu(false);
             });
-            
-            document.getElementById('set-salary-form').addEventListener('submit', handleSetSalarySubmit);
             document.getElementById('employee-form').addEventListener('submit', handleEmployeeFormSubmit);
         }
 
-        async function renderAdminApprovalList() {
-            const container = document.getElementById('admin-approval-container');
-            const q = query(collection(db, "users"), where("status", "==", "pending"));
-            const querySnapshot = await getDocs(q);
-            if (querySnapshot.empty) { container.style.display = 'none'; return; }
-            container.style.display = 'block';
-            const users = querySnapshot.docs.map(d => ({id: d.id, ...d.data()}));
-            container.innerHTML = `<h2>Pending Google Users (${users.length})</h2><div id="admin-approval-list">${users.map(user => `<div class="pending-user"><div class="pending-user-info"><img src="${user.photoURL}" alt="${user.displayName}" class="pending-user-avatar"><div><div class="pending-user-name">${user.displayName}</div><div class="pending-user-email">${user.email}</div></div></div><div class="pending-user-actions"><button class="btn btn-success" data-app-action="accept-user" data-uid="${user.id}" data-name="${user.displayName}">Accept as New</button><button class="btn btn-danger" data-app-action="deny-user" data-uid="${user.id}">Deny</button></div></div>`).join('')}</div>`;
-        }
-        
-        async function renderUnlinkedEmployees() {
-            const container = document.getElementById('unlinked-employees-container');
-            const employeesSnap = await getDocs(collection(db, "employees"));
-            const usersQuery = query(collection(db, "users"), where("status", "==", "pending"));
-            const pendingUsersSnap = await getDocs(usersQuery);
-            const availableUsers = pendingUsersSnap.docs.map(d => ({id: d.id, ...d.data()}));
-            const unlinkedEmployees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() })).filter(emp => !emp.userUID);
-            if (unlinkedEmployees.length === 0 || availableUsers.length === 0) { container.style.display = 'none'; return; }
-            container.style.display = 'block';
-            container.innerHTML = `<h2>Unlinked Employees (${unlinkedEmployees.length})</h2><p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-top: -1rem; margin-bottom: 1rem;">Connect existing employee records to new Google sign-ins.</p><div id="unlinked-employees-list">${unlinkedEmployees.map(emp => `<div class="pending-user"><div class="pending-user-info"><div><div class="pending-user-name">${emp.name}</div><div class="pending-user-email">Daily Salary: ₹${emp.dailySalary}</div></div></div><div class="pending-user-actions"><button class="btn btn-primary" data-app-action="link-user" data-employee-id="${emp.id}" data-employee-name="${emp.name}">Link to Google User</button></div></div>`).join('')}</div>`;
-        }
-        
-        function handleLinkUserClick(employeeId, employeeName) {
-            const modal = document.getElementById('link-user-modal');
-            showLoader();
-            const usersQuery = query(collection(db, "users"), where("status", "==", "pending"));
-            getDocs(usersQuery).then(pendingUsersSnap => {
-                const availableUsers = pendingUsersSnap.docs.map(d => ({id: d.id, ...d.data()}));
-                if (availableUsers.length === 0) {
-                    showToast("No pending users available to link.", "error");
-                    hideLoader();
-                    return;
-                }
-                const userOptions = availableUsers.map(user => `<option value="${user.id}">${user.displayName} (${user.email})</option>`).join('');
-                modal.innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="link-user-modal">×</span><h2>Link Account for <strong>${employeeName}</strong></h2><form id="link-user-form"><input type="hidden" id="link-employee-id" value="${employeeId}"><div class="form-group"><label for="link-user-select">Select the Google User to Link</label><select id="link-user-select" required><option value="">-- Select a Pending User --</option>${userOptions}</select></div><button type="submit" class="btn btn-primary" style="width:100%">Confirm & Link Account</button></form></div>`;
-                document.getElementById('link-user-form').addEventListener('submit', handleLinkUserFormSubmit);
-                hideLoader();
-                openModal('link-user-modal');
-            }).catch(err => {
-                hideLoader();
-                showToast("Could not load pending users.", "error");
-                console.error(err);
-            });
-        }
-        
-        async function handleLinkUserFormSubmit(e) {
-            e.preventDefault();
-            const employeeId = document.getElementById('link-employee-id').value;
-            const userUID = document.getElementById('link-user-select').value;
-            if (!employeeId || !userUID) { showToast("Please select a user to link.", "error"); return; }
-            showLoader();
-            try {
-                const batch = writeBatch(db);
-                batch.update(doc(db, "employees", employeeId), { userUID: userUID });
-                batch.update(doc(db, "users", userUID), { status: 'approved', role: 'employee', employeeId: employeeId });
-                await batch.commit();
-                showToast("Account linked successfully!", "success");
-                closeModal('link-user-modal');
-                await initializeAdminView(); // Refresh dashboard
-            } catch (err) {
-                console.error("Error linking account:", err);
-                showToast("Failed to link account.", "error");
-            } finally {
-                hideLoader();
-            }
-        }
-        
-        function handleAcceptUserClick(uid, name) { document.getElementById('new-employee-name-modal').textContent = name; document.getElementById('new-employee-uid').value = uid; document.getElementById('set-salary-form').reset(); openModal('set-salary-modal'); }
-        
-        async function handleDenyUser(uid) { if (!confirm("Are you sure you want to deny this user? This cannot be undone.")) return; showLoader(); try { await setDoc(doc(db, "users", uid), { status: 'denied' }, { merge: true }); showToast("User has been denied.", "success"); await initializeAdminView(); } catch (e) { console.error("Error denying user:", e); showToast("Could not deny user.", "error"); } finally { hideLoader(); } }
-        
-        async function handleSetSalarySubmit(e) {
-            e.preventDefault();
-            showLoader();
-            const uid = document.getElementById('new-employee-uid').value;
-            const name = document.getElementById('new-employee-name-modal').textContent;
-            const dailySalary = parseFloat(document.getElementById('new-employee-daily-salary').value);
-            try {
-                const employeeData = { name, dailySalary, userUID: uid };
-                const employeeDocRef = await addDoc(collection(db, "employees"), employeeData);
-                await setDoc(doc(db, "users", uid), { status: 'approved', role: 'employee', employeeId: employeeDocRef.id }, { merge: true });
-                showToast(`${name} is now an employee!`, "success");
-                closeModal('set-salary-modal');
-                await initializeAdminView();
-            } catch (err) {
-                console.error("Error accepting user:", err);
-                showToast("Could not accept user.", "error");
-            } finally {
-                hideLoader();
-            }
-        }
-        
         async function handleEmployeeFormSubmit(e) {
-            e.preventDefault();
-            showLoader();
+            e.preventDefault(); showLoader();
             try {
                 const id = document.getElementById('employee-id').value;
                 const data = { name: document.getElementById('full-name').value, dailySalary: parseFloat(document.getElementById('daily-salary').value) };
@@ -460,19 +340,20 @@
                 }
                 showToast("Employee saved!", "success");
                 closeModal('employee-modal');
-                await initializeAdminView(); // Refresh dashboard
-            } catch(err) {
-                console.error("Error saving employee:", err);
-                showToast("Error: Could not save employee.", "error");
-            } finally {
-                hideLoader();
-            }
+                await initializeAdminView();
+            } catch(err) { showToast("Error: Could not save employee.", "error"); } finally { hideLoader(); }
         }
+
+        function toggleMenu(show) { document.getElementById('mobile-menu').classList.toggle('active', show); document.getElementById('mobile-menu-overlay').classList.toggle('active', show); }
+        function toggleProfileDropdown(show) { const dropdown = document.getElementById('profile-dropdown'); if (show === undefined) { dropdown.classList.toggle('active'); } else { dropdown.classList.toggle('active', show); } }
+        function initializeTheme() { const theme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', theme); updateThemeIcons(theme); }
+        function toggleTheme() { const currentTheme = document.documentElement.getAttribute('data-theme'); const newTheme = currentTheme === 'light' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); updateThemeIcons(newTheme); }
+        function updateThemeIcons(theme) {['desktop', 'mobile'].forEach(device => { const sunIcon = document.getElementById(`theme-icon-sun-${device}`); const moonIcon = document.getElementById(`theme-icon-moon-${device}`); if(!sunIcon || !moonIcon) return; if (theme === 'light') { sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; } else { sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; } }); }
         
         async function handleAttendanceClick(employeeId, status) {
             showLoader();
             try {
-                const today = formatDate(new Date());
+                const today = getIndiaDateString();
                 await setDoc(doc(db, `employees/${employeeId}/attendance`, today), { status, date: today });
                 showToast(`Attendance marked as ${status}.`, "success");
                 const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
@@ -484,89 +365,95 @@
                         await calculateAndRenderGlobalSummary(allEmployees);
                     }, 500);
                 }
-            } catch (err) {
-                console.error("Error marking attendance:", err);
-                showToast("Error: Could not mark attendance.", "error");
-            } finally {
-                hideLoader();
-            }
+            } catch (err) { showToast("Error: Could not mark attendance.", "error"); } finally { hideLoader(); }
         }
-        
+
         async function refreshAttendanceTracker(employees) {
-            const today = formatDate(new Date());
+            const today = getIndiaDateString();
             const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
             const attendanceDocs = await Promise.all(attendancePromises);
             const attendedTodayIds = new Set(attendanceDocs.filter(docSnap => docSnap.exists()).map(docSnap => docSnap.ref.parent.parent.id));
             const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
             renderAttendanceTracker(employeesToTrack);
         }
-        
+
         function renderAttendanceTracker(employeesToTrack) {
+            const attendanceCard = document.getElementById('attendance-card');
             const container = document.getElementById('attendance-tracker');
-            if (!container) return;
+            
+            if (!attendanceCard || !container) return;
+
             if (employeesToTrack.length === 0) {
-                container.innerHTML = '<p style="text-align:center; padding: 20px; color: var(--color-success); font-weight: 500;">✅ All attendance marked for today!</p>';
-                return;
+                attendanceCard.style.display = 'none';
+            } else {
+                attendanceCard.style.display = 'block';
+                container.innerHTML = employeesToTrack.map(emp => ` <div class="employee-row" data-employee-row-id="${emp.id}"> <div class="employee-name">${emp.name}</div> <div class="actions"> <button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button> <button class="btn btn-ghost" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button> </div> </div>`).join('');
             }
-            container.innerHTML = employeesToTrack.map(emp => ` <div class="employee-row" data-employee-row-id="${emp.id}"> <div class="employee-name">${emp.name}</div> <div class="actions"> <button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button> <button class="btn btn-ghost" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button> </div> </div>`).join('');
         }
-        
+
         async function calculateAndRenderGlobalSummary(employees) {
             const container = document.getElementById('global-summary-card');
             if (!container) return;
-            const now = new Date();
-            const startDate = formatDate(new Date(now.getFullYear(), now.getMonth(), 1));
-            const endDate = formatDate(new Date(now.getFullYear(), now.getMonth() + 1, 0));
-            let totalEarnedThisMonth = 0, totalPaidThisMonth = 0;
             
+            const todayInIndia = getIndiaDateString();
+            const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`;
+            const lastDayOfMonth = new Date(year, parseInt(month, 10), 0).getDate();
+            const endDate = `${year}-${month}-${String(lastDayOfMonth).padStart(2, '0')}`;
+
+            let totalEarnedThisMonth = 0, totalPaidThisMonth = 0;
             const employeeDataPromises = employees.map(async emp => {
-                const [attSnap, paySnap] = await Promise.all([
-                    getDocs(collection(db, `employees/${emp.id}/attendance`)),
-                    getDocs(collection(db, `employees/${emp.id}/payments`))
+                const [attSnap, paySnap] = await Promise.all([ 
+                    getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
+                    getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
                 ]);
-                const monthlyAttendance = attSnap.docs.map(d => d.data()).filter(a => a?.date >= startDate && a?.date <= endDate);
-                const monthlyPayments = paySnap.docs.map(d => d.data()).filter(p => p?.date >= startDate && p?.date <= endDate);
-                const { totalEarned } = calculateFinancials(emp, monthlyAttendance, []);
-                const totalPaid = monthlyPayments.reduce((sum, p) => sum + (p?.amount || 0), 0);
+                const { totalEarned } = calculateFinancials(emp, attSnap.docs.map(d => d.data()));
+                const totalPaid = paySnap.docs.reduce((sum, p) => sum + (p.data()?.amount || 0), 0);
                 return { totalEarned, totalPaid };
             });
-
             const results = await Promise.all(employeeDataPromises);
             results.forEach(res => { totalEarnedThisMonth += res.totalEarned; totalPaidThisMonth += res.totalPaid; });
             const totalDueThisMonth = totalEarnedThisMonth - totalPaidThisMonth;
             renderGlobalSummary({ totalDue: totalDueThisMonth, totalEarned: totalEarnedThisMonth, totalPaid: totalPaidThisMonth });
         }
-        
+
         function renderGlobalSummary(data) {
             const container = document.getElementById('global-summary-card');
             if (!container) return;
             const dueClass = data.totalDue > 0 ? 'danger-text' : 'success-text';
-            container.innerHTML = `<h2>Current Month Summary</h2><div id="global-summary-grid"><div class="global-stat"><div class="label">Total Amount to be Paid</div><div class="value ${dueClass}">₹${data.totalDue.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Employees Earned</div><div class="value">₹${data.totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid to Employees</div><div class="value">₹${data.totalPaid.toFixed(2)}</div></div></div>`;
+            container.innerHTML = `
+                <div class="card-content">
+                    <h2 class="title">Month in Review</h2>
+                    <p class="description">An overview of your current monthly payroll totals.</p>
+                </div>
+                <div id="global-summary-grid">
+                    <div class="global-stat"><div class="label">Total Amount to be Paid</div><div class="value ${dueClass}">₹${data.totalDue.toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Employees Earned</div><div class="value">₹${data.totalEarned.toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Paid to Employees</div><div class="value">₹${data.totalPaid.toFixed(2)}</div></div>
+                </div>`;
         }
-        
-        function calculateFinancials(employee, attendance, payments) {
-            if (!employee || !Array.isArray(attendance) || !Array.isArray(payments)) { return { totalEarned: 0, dueAmount: 0 }; }
+
+        function calculateFinancials(employee, attendance = [], payments = []) {
+            if (!employee) return { totalEarned: 0, dueAmount: 0 };
             let p=0,h=0,ph=0;
             attendance.forEach(a=>{if(a?.status==='present')p++;else if(a?.status==='half-day')h++;else if(a?.status==='paid-holiday')ph++;});
             const earned=(p+(h*0.5)+ph)*(employee.dailySalary||0);
             const paid=payments.reduce((s,p)=>s+(p?.amount||0),0);
             return {totalEarned:earned, dueAmount:earned-paid};
         }
-        
+
         function scheduleDailyReset() {
-            const scheduleNextReload = () => {
-                const now = new Date();
-                let nextReload = new Date();
-                nextReload.setHours(24, 1, 0, 0); // Set for 12:01 AM the next day
-                const timeout = nextReload.getTime() - now.getTime();
-                console.log(`Page will auto-reload for daily reset at: ${nextReload.toLocaleString()}`);
+            const nowInIndia = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+            let nextReload = new Date(nowInIndia);
+            nextReload.setDate(nowInIndia.getDate() + 1);
+            nextReload.setHours(0, 1, 0, 0);
+            
+            const timeout = nextReload.getTime() - nowInIndia.getTime();
+            if (timeout > 0) {
+                console.log(`Page will auto-reload for daily reset at (India Time): ${nextReload.toLocaleString()}`);
                 setTimeout(() => { location.reload(); }, timeout);
-            };
-            scheduleNextReload();
+            }
         }
-
-        function animateValue(obj, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); obj.innerHTML = Math.abs(progress * (end - start) + start).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); if (progress < 1) window.requestAnimationFrame(step); else { obj.innerHTML = Math.abs(end).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); } }; window.requestAnimationFrame(step); }
-
     </script>
 </body>
 </html>
