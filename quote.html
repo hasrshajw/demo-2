@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KS Enterprises - Quote</title>
+    <title>PayrollPro - Quote</title>
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,7 +71,7 @@
         const hideLoading = () => loadingOverlay.style.display = 'none';
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
 
-        // --- CORE FUNCTIONALITY (EXACT REPLICA) ---
+        // --- CORE FUNCTIONALITY ---
         const createQuoteHtml = (order, pricePerSft, transportCharges) => {
             let windowsForPdf = [];
             try { windowsForPdf = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data", e); }
@@ -209,6 +209,7 @@
                     const order = { id: orderSnap.id, ...orderSnap.data() };
                     quoteScreenPrintable.innerHTML = createQuoteHtml(order, price, transport);
                     priceModal.style.display = 'none';
+                    // Add listener to the dynamically created back button
                     document.getElementById('quote-back-btn').addEventListener('click', (e) => {
                         window.location.href = `order-details.html?id=${e.currentTarget.dataset.id}`;
                     });
@@ -228,7 +229,7 @@
             if (orderId) {
                 window.location.href = `order-details.html?id=${orderId}`;
             } else {
-                history.back(); // Fallback if no orderId is set
+                window.location.href = 'view-orders.html'; // Fallback if no orderId is set
             }
         });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
