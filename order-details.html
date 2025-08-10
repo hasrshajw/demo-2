@@ -76,7 +76,6 @@
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- DOM ELEMENTS & APP STATE ---
         const loadingOverlay = document.getElementById('loading-overlay');
         const profileImage = document.getElementById('profileImage');
         const profileDropdown = document.getElementById('profileDropdown');
@@ -114,8 +113,8 @@
         let db, auth;
         let currentAction = { type: null, id: null, callback: null };
         let currentUserName = "Unknown User";
+        const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
-        // --- UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
         function toggleProfileMenu() { profileDropdown.classList.toggle('show'); }
@@ -129,8 +128,6 @@
             confirmationModal.style.display = 'flex';
         };
         const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
-
-        // --- DATA & RENDERING FUNCTIONS ---
         const getStatusInfo = (order, today) => {
             if (order.status === 'completed') { return { text: 'Completed', className: 'completed' }; }
             const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; 
@@ -188,7 +185,7 @@
             detailGetDirectionsBtn.dataset.lon = order.longitude;
 
             const currentUserEmail = auth.currentUser ? auth.currentUser.email : null;
-            if (currentUserEmail === 'harshavardhanjw@gmail.com') {
+            if (currentUserEmail === ADMIN_EMAIL) {
                 detailDeleteBtn.style.display = 'inline-flex';
             }
             
@@ -212,15 +209,9 @@
         
         async function performConfirmedAction() {
             hideConfirmationModal(); showLoading();
-            try {
-                await currentAction.callback(doc(db, 'upvc_orders', currentAction.id));
-            } catch (error) {
-                console.error(`Error performing action '${currentAction.type}':`, error);
-                showMessageModal(`Action failed.`);
-            } finally {
-                currentAction = { type: null, id: null, callback: null };
-                hideLoading();
-            }
+            try { await currentAction.callback(doc(db, 'upvc_orders', currentAction.id)); } 
+            catch (error) { console.error(`Error performing action '${currentAction.type}':`, error); showMessageModal(`Action failed.`); } 
+            finally { currentAction = { type: null, id: null, callback: null }; hideLoading(); }
         }
 
         async function showHistoryModal(orderId) {
@@ -230,40 +221,37 @@
             try {
                 const q = query(collection(db, `upvc_orders/${orderId}/history`), orderBy('timestamp', 'desc'));
                 const snapshot = await getDocs(q);
-                const historyData = snapshot.docs.map(doc => doc.data());
-
-                if (historyData.length === 0) { historyList.innerHTML = '<li>No history found.</li>'; } 
-                else {
-                    historyList.innerHTML = '';
-                    historyData.forEach(entry => {
-                        const li = document.createElement('li');
-                        li.className = 'history-item';
-                        const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
-                        let detailsHtml = '';
-                        if (entry.details && Object.keys(entry.details).length > 0) {
-                            detailsHtml += '<ul class="history-detail">';
-                            for (const [key, value] of Object.entries(entry.details)) {
-                                if (typeof value === 'object' && value !== null) {
-                                    detailsHtml += `<li><strong>${key}:</strong><ul>`;
-                                    for (const [subKey, subValue] of Object.entries(value)) {
-                                        detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`;
-                                    }
-                                    detailsHtml += '</ul></li>';
-                                } else {
-                                    detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                if (snapshot.empty) { historyList.innerHTML = '<li>No history found.</li>'; return; }
+                
+                historyList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const entry = doc.data();
+                    const li = document.createElement('li');
+                    li.className = 'history-item';
+                    const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
+                    let detailsHtml = '';
+                    if (entry.details && Object.keys(entry.details).length > 0) {
+                        detailsHtml += '<ul class="history-detail">';
+                        for (const [key, value] of Object.entries(entry.details)) {
+                            if (typeof value === 'object' && value !== null) {
+                                detailsHtml += `<li><strong>${key}:</strong><ul>`;
+                                for (const [subKey, subValue] of Object.entries(value)) {
+                                    detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`;
                                 }
+                                detailsHtml += '</ul></li>';
+                            } else {
+                                detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
                             }
-                            detailsHtml += '</ul>';
                         }
-                        li.innerHTML = `<div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}`;
-                        historyList.appendChild(li);
-                    });
-                }
+                        detailsHtml += '</ul>';
+                    }
+                    li.innerHTML = `<div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}`;
+                    historyList.appendChild(li);
+                });
             } catch (error) { console.error("Error fetching history:", error); historyList.innerHTML = '<li>Could not load history.</li>'; } 
             finally { hideLoading(); }
         }
-
-        // --- FIREBASE & CORE LOGIC ---
+        
         async function initializeFirebase() {
             try {
                 const firebaseConfig = {
@@ -275,17 +263,17 @@
                     appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
                     measurementId: "G-DHJJ4WNYR4"
                 };
-                const app = initializeApp(firebaseConfig);
+                // *** CRITICAL FIX IS HERE ***
+                const app = initializeApp(firebaseConfig); // Initialize app FIRST
                 db = getFirestore(app);
                 auth = getAuth(app);
+                // *** END OF FIX ***
                 
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (!userDoc.exists() || userDoc.data().status !== 'approved') {
-                            window.location.href = 'login.html';
-                            return;
-                        }
+                        if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
+                        
                         const userProfile = userDoc.data();
                         currentUserName = userProfile.displayName || "User";
                         profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
@@ -330,7 +318,7 @@
         });
         detailCompleteBtn.addEventListener('click', (e) => {
             const orderId = e.currentTarget.dataset.id;
-            const isCompleted = !e.currentTarget.disabled && e.currentTarget.textContent.includes('Reopen');
+            const isCompleted = e.currentTarget.textContent.includes('Reopen');
             if (isCompleted) {
                 showConfirmationModal('Reopen this order?', 'btn-reopen', 'Reopen Order', 'reopen', orderId,
                     async (docRef) => { 
@@ -361,7 +349,6 @@
         // --- INITIALIZATION ---
         showLoading();
         initializeFirebase();
-    })();
     </script>
 </body>
 </html>
