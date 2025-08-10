@@ -72,7 +72,7 @@
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
 
         // --- CORE FUNCTIONALITY ---
-        const createQuoteHtml = (order, pricePerSft, transportCharges) => {
+        const createQuoteHtml = (order, orderId, pricePerSft, transportCharges) => {
             let windowsForPdf = [];
             try { windowsForPdf = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data", e); }
             
@@ -91,7 +91,6 @@
 
             const gst = subTotal * 0.18;
             const grandTotal = subTotal + gst + transportCharges;
-            const orderId = priceForm.dataset.id;
             
             return `
                 <div class="quote-controls">
@@ -207,11 +206,12 @@
 
                 if (orderSnap.exists()) {
                     const order = { id: orderSnap.id, ...orderSnap.data() };
-                    quoteScreenPrintable.innerHTML = createQuoteHtml(order, price, transport);
+                    quoteScreenPrintable.innerHTML = createQuoteHtml(order, orderId, price, transport);
                     priceModal.style.display = 'none';
-                    // Add listener to the dynamically created back button
-                    document.getElementById('quote-back-btn').addEventListener('click', (e) => {
-                        window.location.href = `order-details.html?id=${e.currentTarget.dataset.id}`;
+                    
+                    // CORRECTED: Attach listener to the newly created back button
+                    document.getElementById('quote-back-btn').addEventListener('click', () => {
+                        window.location.href = `order-details.html?id=${orderId}`;
                     });
                 } else {
                     showMessageModal("Could not find the order to generate a quote.");
@@ -229,7 +229,7 @@
             if (orderId) {
                 window.location.href = `order-details.html?id=${orderId}`;
             } else {
-                window.location.href = 'view-orders.html'; // Fallback if no orderId is set
+                window.location.href = 'view-orders.html'; // Fallback
             }
         });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
