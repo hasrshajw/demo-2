@@ -55,7 +55,7 @@
         .loading-overlay {position: fixed; inset: 0; width: 100%; height: 100%;background-color: rgba(255, 255, 255, 0.9); z-index: 1001;display: flex; align-items: center; justify-content: center;}
         .spinner {border: 6px solid var(--light-bg-tertiary); border-top: 6px solid var(--color-primary);border-radius: 50%; width: 50px; height: 50px;animation: spin 1s linear infinite;}
         .map-pin {position: absolute; top: 50%; left: 50%;transform: translate(-50%, -100%); width: 40px; height: 40px;background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ef4444" width="40px" height="40px"><path d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/></svg>');background-size: contain; pointer-events: none; z-index: 1000;}
-        .navbar {background-color: var(--light-bg-primary);padding: 10px 5%;box-shadow: var(--shadow-md);display: flex;align-items: center;justify-content: space-between;position: fixed;top: 0;left: 0;right: 0;z-index: 1000;height: 70px;}
+        .navbar {background-color: var(--light-bg-primary);padding: 10px 2rem;box-shadow: var(--shadow-md);display: flex;align-items: center;justify-content: space-between;position: fixed;top: 0;left: 0;right: 0;z-index: 1000;height: 70px;}
         .navbar-logo a { text-decoration: none; color: var(--light-text-primary); font-weight: 700; font-size: 1.5rem; }
         .navbar-profile {position: relative;}
         .navbar-profile .profile-image {height: 45px;width: 45px;border-radius: 50%;object-fit: cover;cursor: pointer;border: 2px solid #e0e0e0;transition: transform 0.2s ease, box-shadow 0.2s ease;}
@@ -87,10 +87,7 @@
         <div class="navbar-profile" id="profileContainer">
             <img src="https://i.stack.imgur.com/34AD2.jpg" alt="User Profile" class="profile-image" id="profileImage">
             <div class="profile-dropdown" id="profileDropdown">
-                <button id="nav-logout-btn">
-                    <span class="icon material-symbols-outlined">logout</span>
-                    Logout
-                </button>
+                <button id="nav-logout-btn"><span class="icon material-symbols-outlined">logout</span>Logout</button>
             </div>
         </div>
     </nav>
@@ -133,9 +130,8 @@
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, addDoc, getDoc, updateDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- ALL ORIGINAL DOM ELEMENTS & STATE VARIABLES ---
+        // --- ALL DOM ELEMENTS & STATE VARIABLES ---
         const loadingOverlay = document.getElementById('loading-overlay');
-        const profileContainer = document.getElementById('profileContainer');
         const profileImage = document.getElementById('profileImage');
         const profileDropdown = document.getElementById('profileDropdown');
         const navLogoutBtn = document.getElementById('nav-logout-btn');
@@ -166,15 +162,22 @@
         const cancelLocationBtn = document.getElementById('cancel-location-btn');
         let db, auth, map;
         let currentUserName = "Unknown User";
-        let currentUserProfile = null;
-        const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
-        // --- ALL ORIGINAL UI & HELPER FUNCTIONS ---
+        // --- ALL UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
-        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
+        const showMessageModal = (message, redirectUrl = null) => {
+            messageText.textContent = message;
+            messageModal.style.display = 'flex';
+            if (redirectUrl) {
+                // If a redirect URL is provided, close the modal and redirect after a delay
+                setTimeout(() => {
+                    messageModal.style.display = 'none';
+                    window.location.href = redirectUrl;
+                }, 1500);
+            }
+        };
         function toggleProfileMenu() { profileDropdown.classList.toggle('show'); }
-
         const addWindowInput = (container, index, data = {}) => {
             const { height = '', width = '', hasGlass = false, glassName = '', itemType = 'sliding window' } = data;
             const windowEntryDiv = document.createElement('div');
@@ -192,13 +195,13 @@
         const updateAllWindowGlassUIs = () => { document.querySelectorAll('#windows-container .window-entry').forEach(updateWindowGlassUI); };
         const updateWindowTitles = (container) => { container.querySelectorAll('.window-entry').forEach((entry, index) => { entry.querySelector('.window-entry-title').textContent = `#${index + 1}`; const checkbox = entry.querySelector('.has-glass-checkbox'); const label = entry.querySelector('label[for^="glass-check-"]'); const newId = `glass-check-${index + 1}`; checkbox.id = newId; if(label) label.htmlFor = newId; }); };
         const setupFormForCreate = () => { formTitle.textContent = 'Create New Order'; saveOrderBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Save Order'; orderForm.reset(); orderIdInput.value = ''; customerLatInput.value = ''; customerLonInput.value = ''; sameGlassAllCheckbox.checked = false; globalGlassNameContainer.style.display = 'none'; getLocationBtn.innerHTML = '<span class="material-symbols-outlined">pin_drop</span> Set Customer Location on Map'; getLocationBtn.classList.remove('btn-success'); windowsContainer.innerHTML = ''; addWindowInput(windowsContainer, 1); loadDraft(); hideLoading(); };
-        const setupFormForEdit = (order) => { formTitle.textContent = 'Edit Order'; saveOrderBtn.innerHTML = '<span class="material-symbols-outlined">update</span> Update Order'; orderForm.reset(); originalOrderDataInput.value = JSON.stringify(order); orderIdInput.value = order.id; customerNameInput.value = order.name; customerAddressInput.value = order.address; customerMobileInput.value = order.mobileNumber || ''; dueDateInput.value = order.dueDate || ''; customerLatInput.value = order.latitude || ''; customerLonInput.value = order.longitude || ''; if (order.latitude && order.longitude) { getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit'; getLocationBtn.classList.add('btn-success'); } let windowsToLoad = Array.isArray(order.windows) ? order.windows : JSON.parse(order.windows || '[]'); const windowsWithGlass = windowsToLoad.filter(w => w.hasGlass); const firstGlassName = windowsWithGlass.length > 0 ? windowsWithGlass[0].glassName : null; const allSame = windowsWithGlass.every(w => w.glassName === firstGlassName); if (windowsWithGlass.length > 0 && allSame && firstGlassName) { sameGlassAllCheckbox.checked = true; globalGlassNameContainer.style.display = 'block'; globalGlassNameInput.value = firstGlassName || ''; } else { sameGlassAllCheckbox.checked = false; globalGlassNameContainer.style.display = 'none'; globalGlassNameInput.value = ''; } windowsContainer.innerHTML = ''; if (windowsToLoad.length > 0) { windowsToLoad.forEach((win, index) => addWindowInput(windowsContainer, index + 1, win)); } else { addWindowInput(windowsContainer, 1); } hideLoading(); };
+        const setupFormForEdit = (order) => { formTitle.textContent = 'Edit Order'; saveOrderBtn.innerHTML = '<span class="material-symbols-outlined">update</span> Update Order'; orderForm.reset(); originalOrderDataInput.value = JSON.stringify(order); orderIdInput.value = order.id; customerNameInput.value = order.name; customerAddressInput.value = order.address; customerMobileInput.value = order.mobileNumber || ''; dueDateInput.value = order.dueDate || ''; customerLatInput.value = order.latitude || ''; customerLonInput.value = order.longitude || ''; if (order.latitude && order.longitude) { getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit'; getLocationBtn.classList.add('btn-success'); } let windowsToLoad = []; try { windowsToLoad = JSON.parse(order.windows || '[]'); } catch(e) {} const windowsWithGlass = windowsToLoad.filter(w => w.hasGlass); const firstGlassName = windowsWithGlass.length > 0 ? windowsWithGlass[0].glassName : null; const allSame = windowsWithGlass.every(w => w.glassName === firstGlassName); if (windowsWithGlass.length > 0 && allSame && firstGlassName) { sameGlassAllCheckbox.checked = true; globalGlassNameContainer.style.display = 'block'; globalGlassNameInput.value = firstGlassName || ''; } else { sameGlassAllCheckbox.checked = false; globalGlassNameContainer.style.display = 'none'; globalGlassNameInput.value = ''; } windowsContainer.innerHTML = ''; if (windowsToLoad.length > 0) { windowsToLoad.forEach((win, index) => addWindowInput(windowsContainer, index + 1, win)); } else { addWindowInput(windowsContainer, 1); } hideLoading(); };
         function saveDraft() { if(orderIdInput.value) return; const draft = { name: customerNameInput.value, mobile: customerMobileInput.value, address: customerAddressInput.value, dueDate: dueDateInput.value, lat: customerLatInput.value, lon: customerLonInput.value, sameGlass: sameGlassAllCheckbox.checked, globalGlassName: globalGlassNameInput.value, windows: Array.from(windowsContainer.querySelectorAll('.window-entry')).map(entry => ({ itemType: entry.querySelector('.item-type-select').value, height: entry.querySelector('.window-height-input').value, width: entry.querySelector('.window-width-input').value, hasGlass: entry.querySelector('.has-glass-checkbox').checked, glassName: entry.querySelector('.individual-glass-name').value })) }; localStorage.setItem('orderDraft', JSON.stringify(draft)); }
         function loadDraft() { const draftJSON = localStorage.getItem('orderDraft'); if (draftJSON) { const data = JSON.parse(draftJSON); customerNameInput.value = data.name || ''; customerMobileInput.value = data.mobile || ''; customerAddressInput.value = data.address || ''; dueDateInput.value = data.dueDate || ''; customerLatInput.value = data.lat || ''; customerLonInput.value = data.lon || ''; sameGlassAllCheckbox.checked = data.sameGlass || false; globalGlassNameInput.value = data.globalGlassName || ''; globalGlassNameContainer.style.display = data.sameGlass ? 'block' : 'none'; if (data.lat && data.lon) { getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit'; getLocationBtn.classList.add('btn-success'); } windowsContainer.innerHTML = ''; if (data.windows && data.windows.length > 0) { data.windows.forEach((win, i) => addWindowInput(windowsContainer, i + 1, win)); } else { addWindowInput(windowsContainer, 1); } showMessageModal("Your unsaved draft has been restored."); } }
         const openLocationPicker = async () => { locationPickerModal.style.display = 'flex'; showLoading(); let initialLat = customerLatInput.value || 20.5937; let initialLon = customerLonInput.value || 78.9629; let initialZoom = customerLatInput.value ? 16 : 5; const setupMap = (lat, lon, zoom) => { if (!map) { map = L.map('map-container').setView([lat, lon], zoom); L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }).addTo(map); } else { map.setView([lat, lon], zoom); } setTimeout(() => map.invalidateSize(), 10); hideLoading(); }; if ("geolocation" in navigator && !customerLatInput.value) { navigator.geolocation.getCurrentPosition( (position) => { setupMap(position.coords.latitude, position.coords.longitude, 18); }, (error) => { console.warn(`Geolocation error (${error.code}): ${error.message}`); showMessageModal("Could not get your location. Please select manually."); setupMap(initialLat, initialLon, initialZoom); }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 } ); } else { setupMap(initialLat, initialLon, initialZoom); } };
         const confirmSelectedLocation = () => { const center = map.getCenter(); customerLatInput.value = center.lat.toFixed(6); customerLonInput.value = center.lng.toFixed(6); getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit'; getLocationBtn.classList.remove('btn-secondary'); getLocationBtn.classList.add('btn-success'); locationPickerModal.style.display = 'none'; saveDraft(); };
-        async function logHistory(orderId, action, details = {}) { if (!orderId) return; try { const historyCollectionRef = collection(db, `upvc_orders/${orderId}/history`); await addDoc(historyCollectionRef, { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
-        const createChangeLog = (original, newData) => { const changes = {}; const simpleFields = ['name', 'address', 'mobileNumber', 'dueDate']; simpleFields.forEach(field => { if (original[field] !== newData[field]) { changes[field.charAt(0).toUpperCase() + field.slice(1)] = `"${original[field] || ''}" → "${newData[field] || ''}"`; } }); const oldWindows = JSON.parse(original.windows || '[]'); const newWindows = JSON.parse(newData.windows || '[]'); const windowChanges = {}; const maxLen = Math.max(oldWindows.length, newWindows.length); for (let i = 0; i < maxLen; i++) { const oldW = oldWindows[i]; const newW = newWindows[i]; const changeDetails = []; if (oldW && !newW) { windowChanges[`Item ${i + 1} (Deleted)`] = `(was ${oldW.width}x${oldW.height})`; } else if (!oldW && newW) { windowChanges[`Item ${i + 1} (Added)`] = `${newW.itemType}: ${newW.width}x${newW.height}, Glass: ${newW.hasGlass ? (newW.glassName || 'Yes') : 'No'}`; } else if (oldW && newW) { if (oldW.itemType !== newW.itemType) changeDetails.push(`Type: "${oldW.itemType}"→"${newW.itemType}"`); if (oldW.width !== newW.width) changeDetails.push(`W: ${oldW.width}→${newW.width}`); if (oldW.height !== newW.height) changeDetails.push(`H: ${oldW.height}→${newW.height}`); if (oldW.hasGlass !== newW.hasGlass) { changeDetails.push(`Glass: ${oldW.hasGlass ? 'On' : 'Off'}→${newW.hasGlass ? 'On' : 'Off'}`); } if (oldW.glassName !== newW.glassName) { changeDetails.push(`Glass Name: "${oldW.glassName || ''}"→"${newW.glassName || ''}"`); } if (changeDetails.length > 0) { windowChanges[`Item ${i + 1}`] = changeDetails.join(', '); } } } if (Object.keys(windowChanges).length > 0) { changes['Windows'] = windowChanges; } return changes; };
+        async function logHistory(orderId, action, details = {}) { if (!orderId) return; try { await addDoc(collection(db, `upvc_orders/${orderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
+        const createChangeLog = (original, newData) => { const changes = {}; const simpleFields = ['name', 'address', 'mobileNumber', 'dueDate']; simpleFields.forEach(field => { if (original[field] !== newData[field]) { changes[field.charAt(0).toUpperCase() + field.slice(1)] = `"${original[field] || ''}" → "${newData[field] || ''}"`; } }); let oldWindows = []; try {oldWindows = JSON.parse(original.windows || '[]')} catch(e){} let newWindows = []; try {newWindows = JSON.parse(newData.windows || '[]')} catch(e){} const windowChanges = {}; const maxLen = Math.max(oldWindows.length, newWindows.length); for (let i = 0; i < maxLen; i++) { const oldW = oldWindows[i]; const newW = newWindows[i]; const changeDetails = []; if (oldW && !newW) { windowChanges[`Item ${i + 1} (Deleted)`] = `(was ${oldW.width}x${oldW.height})`; } else if (!oldW && newW) { windowChanges[`Item ${i + 1} (Added)`] = `${newW.itemType}: ${newW.width}x${newW.height}, Glass: ${newW.hasGlass ? (newW.glassName || 'Yes') : 'No'}`; } else if (oldW && newW) { if (oldW.itemType !== newW.itemType) changeDetails.push(`Type: "${oldW.itemType}"→"${newW.itemType}"`); if (oldW.width !== newW.width) changeDetails.push(`W: ${oldW.width}→${newW.width}`); if (oldW.height !== newW.height) changeDetails.push(`H: ${oldW.height}→${newW.height}`); if (oldW.hasGlass !== newW.hasGlass) { changeDetails.push(`Glass: ${oldW.hasGlass ? 'On' : 'Off'}→${newW.hasGlass ? 'On' : 'Off'}`); } if (oldW.glassName !== newW.glassName) { changeDetails.push(`Glass Name: "${oldW.glassName || ''}"→"${newW.glassName || ''}"`); } if (changeDetails.length > 0) { windowChanges[`Item ${i + 1}`] = changeDetails.join(', '); } } } if (Object.keys(windowChanges).length > 0) { changes['Windows'] = windowChanges; } return changes; };
         
         async function initializeFirebase() {
             try {
@@ -218,31 +221,18 @@
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (!userDoc.exists() || userDoc.data().status !== 'approved') {
-                            window.location.href = 'login.html'; // Redirect if not approved
-                            return;
-                        }
-                        currentUserProfile = userDoc.data();
-                        currentUserName = currentUserProfile.displayName || "User";
-                        profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
+                        if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
                         
-                        // Set dashboard link based on role
-                        if (currentUserProfile.role === 'admin') {
-                            dashboardLink.href = 'admin-dashboard.html';
-                        } else {
-                            dashboardLink.href = 'employee-dashboard.html';
-                        }
+                        const userProfile = userDoc.data();
+                        currentUserName = userProfile.displayName || "User";
+                        profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
+                        dashboardLink.href = userProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
 
                         const urlParams = new URLSearchParams(window.location.search);
                         const orderId = urlParams.get('id');
-                        if (orderId) { 
-                            await loadOrderForEditing(orderId); 
-                        } else { 
-                            setupFormForCreate(); 
-                        }
-                    } else { 
-                        window.location.href = 'login.html'; 
-                    }
+                        if (orderId) { await loadOrderForEditing(orderId); } 
+                        else { setupFormForCreate(); }
+                    } else { window.location.href = 'login.html'; }
                 });
             } catch (error) { console.error("Firebase Init Error:", error); showMessageModal("Could not connect to the database."); hideLoading(); }
         }
@@ -251,11 +241,8 @@
             showLoading();
             try {
                 const orderSnap = await getDoc(doc(db, 'upvc_orders', orderId));
-                if (orderSnap.exists()) {
-                    setupFormForEdit({ id: orderSnap.id, ...orderSnap.data() });
-                } else {
-                    showMessageModal("Order not found.");
-                }
+                if (orderSnap.exists()) { setupFormForEdit({ id: orderSnap.id, ...orderSnap.data() }); } 
+                else { showMessageModal("Order not found. Redirecting...", "view-orders.html"); }
             } catch (error) { console.error("Error loading order:", error); hideLoading(); }
         }
 
@@ -284,16 +271,16 @@
                     const changes = createChangeLog(originalOrder, orderData);
                     await updateDoc(doc(collectionRef, orderId), { ...orderData, updatedAt: serverTimestamp() });
                     if(Object.keys(changes).length > 0) { await logHistory(orderId, 'Order Edited', changes); }
-                    showMessageModal("Order updated successfully!");
+                    // *** THIS IS THE CORRECTED REDIRECTION LOGIC ***
+                    showMessageModal("Order updated successfully!", `order-details.html?id=${finalOrderId}`);
                 } else {
                     const newDocRef = await addDoc(collectionRef, { ...orderData, status: 'pending', createdBy: currentUserName, createdAt: serverTimestamp() });
                     finalOrderId = newDocRef.id;
                     await logHistory(finalOrderId, 'Order Created');
                     localStorage.removeItem('orderDraft');
-                    showMessageModal("Order created successfully!");
+                     // *** THIS IS THE CORRECTED REDIRECTION LOGIC ***
+                    showMessageModal("Order created successfully!", `order-details.html?id=${finalOrderId}`);
                 }
-                 // Stay on page after action
-                hideLoading();
             } catch (error) { 
                 console.error("Error saving order:", error); 
                 showMessageModal("Failed to save order."); 
@@ -303,7 +290,7 @@
         
         async function handleSignOut() { showLoading(); try { await signOut(auth); } catch (e) { hideLoading(); } }
 
-        // --- ALL ORIGINAL EVENT LISTENERS ---
+        // --- ALL EVENT LISTENERS ---
         navLogoutBtn.addEventListener('click', handleSignOut);
         orderForm.addEventListener('submit', handleFormSubmit);
         addWindowBtn.addEventListener('click', () => addWindowInput(windowsContainer, windowsContainer.children.length + 1));
