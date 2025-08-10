@@ -206,6 +206,7 @@
                     const order = { id: orderSnap.id, ...orderSnap.data() };
                     quoteScreenPrintable.innerHTML = createQuoteHtml(order, price, transport);
                     priceModal.style.display = 'none';
+                    // Add listener to the dynamically created back button
                     document.getElementById('quote-back-btn').addEventListener('click', (e) => {
                         window.location.href = `order-details.html?id=${e.currentTarget.dataset.id}`;
                     });
@@ -229,7 +230,6 @@
         // --- INITIALIZATION ---
         showLoading();
         initializeFirebase();
-    })();
     </script>
 </body>
 </html>
