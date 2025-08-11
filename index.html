@@ -148,6 +148,7 @@
         };
         
         let db, auth;
+        // MODIFICATION: Changed to an array to support multiple admins
         const ADMIN_EMAILS = ["kolatapuk.k@gmail.com", "harshavardhanjw@gmail.com"];
 
         // --- HELPER FUNCTIONS ---
@@ -220,7 +221,8 @@
             // Instead of showing/hiding divs, this function now redirects
             // the user to the correct page based on their role and status.
 
-            if (user.email === ADMIN_EMAIL) {
+            // MODIFICATION: Check if the user's email is in the ADMIN_EMAILS array
+            if (ADMIN_EMAILS.includes(user.email)) {
                 let userDoc = await getDoc(userRef);
                 if (!userDoc.data().role) {
                     await setDoc(userRef, { status: 'approved', role: 'admin', createdAt: new Date().toISOString() }, { merge: true });
