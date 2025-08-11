@@ -1,371 +1,386 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayrollPro - Admin Dashboard</title>
+    <title>Deeps Beer Cafe</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        /* --- MERGED & COMPLETE CSS --- */
         :root {
-            --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
-            --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
-            --light-text-primary: #012726; --light-text-secondary: #52616b; --light-border: #e5e7eb;
-            --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
-            --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
-            --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
+            --primary-dark: #002726;
+            --accent-green: #33c072;
+            --pure-white: #FFFFFF;
+            --light-gray: #f5f5f5;
+            --text-color: #333;
+            --text-light: #666;
+            --border-gray: #e0e0e0;
+            --color-danger: #dc2626;
         }
-        [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
-        [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--font-alt); background-color: var(--color-background); color: var(--light-text-secondary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; color: var(--light-text-primary); }
-        .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-        .app-container { display: block; }
-        main { padding-top: 48px; padding-bottom: 48px; }
-        .app-header { height: 65px; background-color: hsla(0, 0%, 100%, 0.8); border-bottom: 1px solid var(--light-border); padding: 0 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(8px); }
-        [data-theme="dark"] .app-header { background-color: hsla(222, 47%, 11%, 0.8); }
-        .nav-left, .nav-right { display: flex; align-items: center; gap: 16px; }
-        .profile-menu { position: relative; }
-        .user-avatar { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--light-border); cursor: pointer; object-fit: cover; transition: transform 0.2s ease, box-shadow 0.2s ease;}
-        .user-avatar:hover { transform: scale(1.1); box-shadow: var(--shadow-md); }
-        #profile-dropdown { display: none; position: absolute; top: calc(100% + 12px); right: 0; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 200px; padding: 8px; animation: modalOpen 0.2s; }
-        #profile-dropdown.active { display: block; }
-        #profile-dropdown .btn, #profile-dropdown a.btn { width: 100%; justify-content: flex-start; }
-        .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .btn:hover:not(:disabled) { transform: translateY(-1px); }
-        .btn-success { background-color: var(--color-success); color: white; }
-        .btn-danger { background-color: var(--color-danger); color: white; }
-        .btn-warning { background-color: var(--color-warning); color: #1f2937; }
-        .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
-        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
-        .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-        .card .title { color: var(--light-text-primary); font-size: 22px; font-weight: 600; margin: 0; line-height: 1.2; }
-        .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; }
-        .employee-row:first-of-type { border-top: 1px solid var(--light-border); }
-        .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
-        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; gap: 8px; }
-        #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
-        .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
-        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
-        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .upcoming-order-card .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
-        .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
-        .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
-        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
-        .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
-        .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
-        .link-tile:hover svg { transform: translateX(3px); }
-        .global-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; }
-        .global-stat { display: flex; flex-direction: column; gap: 4px; }
-        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); font-family: var(--font-alt); }
-        .global-stat .value.danger-text { color: var(--color-danger); }
-        .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
-        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
-        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; transition: transform 0.3s ease; }
-        .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
-        .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
-        .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
-        .fab-menu.show { visibility: visible; opacity: 1; }
-        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; }
-        .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
-        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
-        .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
-        .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
-        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
-        .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
-        .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
-        .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
+
+        *,
+        *::before,
+        *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; }
+        body { font-family: 'IBM Plex Sans', sans-serif; background-color: var(--pure-white); display: flex; justify-content: center; align-items: center; color: var(--text-color); }
+        .container { width: 100%; max-width: 420px; height: 100%; max-height: 900px; background-color: var(--pure-white); border-radius: 0; overflow: hidden; display: flex; flex-direction: column; }
+        .form-panel-wrapper { flex-grow: 1; position: relative; display: flex; flex-direction: column; overflow-y: auto; }
+        .info-panel { display: none; }
+
+        /* Welcome Screen */
+        #welcome-screen { display: flex; flex-direction: column; height: 100%; }
+        .welcome-top { flex-grow: 1; display: flex; justify-content: flex-start; align-items: center; padding: 1rem 2rem; }
+        .welcome-top img { width: 100%; max-width: 280px; height: auto; object-fit: contain; }
+        .welcome-bottom { position: absolute; bottom: 0; left: 0; width: 100%; flex-shrink: 0; background-color: var(--primary-dark); border-top-left-radius: 40px; border-top-right-radius: 40px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+        .welcome-bottom h1 { font-size: 2.2rem; font-weight: 600; margin-bottom: 1rem; color: var(--pure-white); }
+        .welcome-bottom p { font-size: 1rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem; line-height: 1.6; }
+        .btn-get-started { width: 100%; padding: 1rem; font-size: 1rem; font-weight: 600; color: var(--primary-dark); background-color: var(--accent-green); border: none; border-radius: 16px; cursor: pointer; transition: all 0.3s; }
+        .btn-get-started:hover { background-color: #2aa864; transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        /* Auth Section */
+        #auth-section { display: none; flex-direction: column; padding: 4rem 2rem 2rem; flex-grow: 1; justify-content: flex-start; }
+        .form-toggle { display: flex; justify-content: center; background-color: var(--light-gray); border-radius: 12px; padding: 5px; margin-bottom: 2.5rem; flex-shrink: 0; }
+        .toggle-btn { width: 50%; padding: 0.75rem; border: none; background-color: transparent; color: var(--text-light); font-size: 0.9rem; font-weight: 600; border-radius: 9px; cursor: pointer; transition: all 0.3s ease; }
+        .toggle-btn.active { background-color: var(--pure-white); color: var(--primary-dark); box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .form-container form { display: none; }
+        .form-container form.active { display: block; }
+        .form-header h2 { font-size: 1.8rem; font-weight: 600; text-align: center; margin-bottom: 0.5rem; }
+        .form-header p { text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: 0.9rem; }
+        .input-group { margin-bottom: 1.25rem; }
+        .input-group label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text-light); }
+        .input-group input { width: 100%; padding: 0.9rem 1rem; border: 1px solid var(--border-gray); background-color: var(--light-gray); border-radius: 12px; font-size: 1rem; font-family: 'IBM Plex Sans', sans-serif; transition: all 0.3s ease; }
+        .input-group input:focus { outline: none; border-color: var(--accent-green); background-color: var(--pure-white); box-shadow: 0 0 0 4px rgba(51, 192, 114, 0.2); }
+        .form-options { display: flex; justify-content: flex-end; margin: -0.5rem 0 1.5rem 0; }
+        .form-options .forgot-password { font-size: 0.875rem; color: var(--text-color); text-decoration: none; font-weight: 500; }
+        .btn-submit { width: 100%; padding: 1rem; font-size: 1rem; font-weight: 600; color: var(--pure-white); background-color: var(--primary-dark); border: none; border-radius: 12px; cursor: pointer; margin-top: 0.5rem; transition: all 0.3s; }
+        .btn-submit:hover { background-color: #001a19; transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .divider { display: flex; align-items: center; text-align: center; color: var(--text-light); margin: 1.75rem 0; font-size: 0.8rem; font-weight: 500; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-gray); }
+        .divider:not(:empty)::before { margin-right: .75em; }
+        .divider:not(:empty)::after { margin-left: .75em; }
+        .btn-google { width: 100%; padding: 0.9rem 1rem; font-size: 0.95rem; font-weight: 600; color: var(--text-color); background-color: var(--pure-white); border: 1px solid var(--border-gray); border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .btn-google:hover { background-color: var(--light-gray); }
+        .google-icon { width: 20px; height: 20px; margin-right: 0.75rem; }
+        .switch-form-text { text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-light); }
+        .switch-form-text a { color: var(--text-color); font-weight: 600; text-decoration: none; cursor: pointer; }
+
+        /* Feedback Elements (Loader & Toast) */
+        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
+        .spinner { width: 48px; height: 48px; border: 5px solid rgba(51, 192, 114, 0.2); border-bottom-color: var(--accent-green); border-radius: 50%; animation: rotation 1s linear infinite; }
+        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: 12px; color: white; font-weight: 500; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1001; }
+        #toast.show { bottom: 30px; }
+        #toast.success { background-color: var(--accent-green); color: var(--primary-dark); }
+        #toast.error { background-color: var(--color-danger); }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Desktop View */
+        @media (min-width: 992px) {
+            html, body { height: auto; overflow: auto; }
+            body { background-color: #e9eef2; padding: 2rem; min-height: 100vh; }
+            .container { flex-direction: row; max-width: 1200px; height: 800px; max-height: 95vh; border-radius: 2rem; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.2); }
+            .info-panel { display: flex; flex-direction: column; justify-content: space-between; flex-basis: 55%; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1586993451228-098a81de5d3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80') center center / cover; padding: 4rem; color: var(--pure-white); }
+            .info-panel-header { font-size: 1.5rem; font-weight: 700; }
+            .info-panel-text h2 { font-size: 3.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+            .info-panel-text p { font-size: 1rem; max-width: 450px; line-height: 1.6; opacity: 0.8; }
+            .form-panel-wrapper { flex-basis: 45%; display: flex; align-items: center; justify-content: center; padding: 3rem; overflow-y: auto; position: static; flex-grow: 0; }
+            #welcome-screen { display: none; }
+            #auth-section { display: flex; position: static; height: auto; padding: 0; width: 100%; max-width: 400px; justify-content: center; }
+        }
     </style>
 </head>
-
 <body>
-    <div id="app-container" class="app-container">
-        <header id="app-header" class="app-header"></header>
-        
-        <main>
-            <div class="container" id="main-container">
-                <div id="home-view" class="view active">
-                    <div id="dashboard-layout">
-                        <!-- Card 1: Attendance -->
-                        <div id="attendance-card" class="card" style="display: none;">
-                            <div class="card-content">
-                                <h2 class="title">Today's Attendance</h2>
-                            </div>
-                            <div id="attendance-tracker"></div>
-                        </div>
 
-                        <!-- Card 2: Orders -->
-                        <div id="orders-card" class="card">
-                            <div class="card-content">
-                                <h2 class="title">Upcoming & Overdue Orders</h2>
-                            </div>
-                            <div id="upcoming-overdue-list" class="upcoming-cards-container"></div>
-                        </div>
-                        
-                        <!-- Card 3: Actions Container -->
-                        <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                            <a href="view-orders.html" class="link-tile">
-                                <span>View All Orders</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
-                            </a>
-                            <a href="admin-employees.html" class="link-tile">
-                                <span>Manage All Employees</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
-                            </a>
-                        </div>
-
-                        <!-- Card 4: Month in Review -->
-                        <div id="global-summary-card" class="card"></div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-    
-    <div class="fab-container" id="fabContainer">
-        <div class="fab-menu" id="fabMenu">
-            <div class="fab-item" data-app-action="navigate-order-form">
-                <span class="label">Take Order</span>
-                <div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div>
-            </div>
-            <div class="fab-item" data-app-action="navigate-add-payment">
-                <span class="label">Add Payment</span>
-                <div class="action-button"><span class="material-symbols-outlined">payments</span></div>
+    <div class="container">
+        <!-- Desktop side panel -->
+        <div class="info-panel">
+            <div class="info-panel-header">Deeps Beer Cafe</div>
+            <div class="info-panel-text">
+                <h2>The best nights are usually unplanned.</h2>
+                <p>Join our community to discover exclusive events, new brews, and connect with fellow beer enthusiasts.</p>
             </div>
         </div>
-        <button class="fab-button" id="fabButton" data-app-action="toggle-fab">
-            <span class="material-symbols-outlined">add</span>
-        </button>
+
+        <!-- Mobile-first content wrapper -->
+        <div class="form-panel-wrapper">
+             <div id="welcome-screen">
+                <div class="welcome-top">
+                    <img src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/6-pack.png" alt="Beer Illustration">
+                </div>
+                <div class="welcome-bottom">
+                    <h1>Welcome</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt ut labore et.</p>
+                    <button id="get-started-btn" class="btn-get-started">Get Started</button>
+                </div>
+            </div>
+
+            <div id="auth-section">
+                <div class="form-toggle">
+                    <button id="show-login-btn" class="toggle-btn active">Sign In</button>
+                    <button id="show-signup-btn" class="toggle-btn">Sign Up</button>
+                </div>
+                <div class="form-container">
+                    <form id="login-form" class="active">
+                        <div class="form-header">
+                            <h2>Welcome Back</h2>
+                            <p>Please enter your details to sign in.</p>
+                        </div>
+                        <div class="input-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="form-options">
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn-submit">Sign In</button>
+                        <div class="divider">OR</div>
+                        <button type="button" class="btn-google" id="google-signin-btn">
+                            <svg class="google-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.655-3.344-11.303-7.962l-6.571,4.819C9.656,40.909,16.318,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.089,5.571l6.19,5.238C42.012,36.494,44,30.638,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                            Sign in with Google
+                        </button>
+                        <p class="switch-form-text">
+                            Don't have an account? <a class="switch-to-signup">Sign Up</a>
+                        </p>
+                    </form>
+
+                    <form id="signup-form">
+                        <div class="form-header">
+                            <h2>Create Account</h2>
+                            <p>Join us! It only takes a minute.</p>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-username">Username</label>
+                            <input type="text" id="signup-username" placeholder="Choose a username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" placeholder="Create a password" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Create Account</button>
+                        <p class="switch-form-text">
+                            Already have an account? <a class="switch-to-login">Sign In</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     
+    <!-- Feedback Elements -->
+    <div id="toast"></div>
     <div id="loader"><div class="spinner"></div></div>
-    <div id="other-options-modal" class="modal"></div>
 
     <script type="module">
+        // Firebase v10 SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        // 🔴🔴🔴 IMPORTANT: REPLACE WITH YOUR FIREBASE CONFIG 🔴🔴🔴
         const firebaseConfig = {
-            apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
-            authDomain: "payment-form-b77e2.firebaseapp.com",
-            projectId: "payment-form-b77e2",
-            storageBucket: "payment-form-b77e2.firebasestorage.app",
-            messagingSenderId: "796020240904",
-            appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
-            measurementId: "G-DHJJ4WNYR4"
-        };
+  apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
+  authDomain: "payment-form-b77e2.firebaseapp.com",
+  projectId: "payment-form-b77e2",
+  storageBucket: "payment-form-b77e2.firebasestorage.app",
+  messagingSenderId: "796020240904",
+  appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
+  measurementId: "G-DHJJ4WNYR4"
+};
         
-        let db, auth, currentUserProfile;
+        let db, auth;
+        const ADMIN_EMAILS = ["your.admin.email@example.com", "another.admin@example.com"]; // Add your admin emails here
 
+        // --- HELPER FUNCTIONS ---
         const showLoader = () => document.getElementById('loader').style.display = 'flex';
         const hideLoader = () => document.getElementById('loader').style.display = 'none';
-        const openModal = (id) => document.getElementById(id).style.display = 'block';
-        const closeModal = (id) => document.getElementById(id).style.display = 'none';
-        const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+        const showToast = (message, type = 'success') => { const t = document.getElementById('toast'); t.textContent = message; t.className = `show ${type}`; setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); }
 
+        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             try {
+                if (firebaseConfig.apiKey.includes("YOUR_API_KEY")) {
+                    throw new Error("Firebase config is not set. Please update it in the script.");
+                }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
-                document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
                 bindEventListeners();
                 listenForAuthStateChanges();
             } catch (error) {
                 console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
+                document.body.innerHTML = `<div style="padding:2rem;text-align:center;"><h2>CRITICAL ERROR</h2><p>${error.message}</p></div>`;
             }
         });
 
+        // --- AUTHENTICATION FLOW ---
         function listenForAuthStateChanges() {
-            onAuthStateChanged(auth, async (user) => {
-                showLoader();
-                if (user && user.email === "harshavardhanjw@gmail.com") {
-                    const userRef = doc(db, "users", user.uid);
-                    await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
-                    const userDoc = await getDoc(userRef);
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    await initializeAdminView();
+            onAuthStateChanged(auth, user => {
+                if (user) {
+                    showLoader();
+                    handleUserLoggedIn(user);
                 } else {
-                    window.location.href = 'login.html';
+                    hideLoader();
                 }
-                hideLoader();
             });
         }
+        
+        async function handleGoogleLogin() { 
+            const provider = new GoogleAuthProvider(); 
+            try { 
+                showLoader(); 
+                await signInWithPopup(auth, provider);
+                // onAuthStateChanged will handle the rest.
+            } catch (error) { 
+                console.error("Google Sign-In Error", error); 
+                showToast("Failed to sign in with Google.", "error"); 
+                hideLoader(); 
+            } 
+        }
 
-        async function initializeAdminView() {
-            renderHeader();
-            listenForOrders();
-            const employeesSnap = await getDocs(collection(db, "employees"));
-            const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-            await refreshAttendanceTracker(employees);
-            await calculateAndRenderGlobalSummary(employees);
+        async function handleUserLoggedIn(user) {
+            const userRef = doc(db, "users", user.uid);
+            
+            // Check if user is an admin
+            if (ADMIN_EMAILS.includes(user.email)) {
+                // Ensure admin role and status is set
+                await setDoc(userRef, { 
+                    displayName: user.displayName || user.email,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                    role: 'admin', 
+                    status: 'approved',
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                // Handle regular users
+                const userDoc = await getDoc(userRef);
+                if (!userDoc.exists()) {
+                    // First time login for a regular user, set as pending
+                    await setDoc(userRef, {
+                        displayName: user.displayName || user.email,
+                        email: user.email,
+                        photoURL: user.photoURL,
+                        role: 'employee',
+                        status: 'pending',
+                        createdAt: new Date().toISOString()
+                    }, { merge: true });
+                    window.location.href = 'pending-approval.html';
+                } else {
+                    // Returning user, check their status
+                    await setDoc(userRef, { lastLogin: new Date().toISOString() }, { merge: true });
+                    const userData = userDoc.data();
+                    switch (userData.status) {
+                        case 'approved':
+                            window.location.href = 'employee-dashboard.html';
+                            break;
+                        case 'denied':
+                            window.location.href = 'access-denied.html';
+                            break;
+                        case 'pending':
+                        default:
+                            window.location.href = 'pending-approval.html';
+                            break;
+                    }
+                }
+            }
         }
         
-        function renderHeader() {
-            const header = document.getElementById('app-header');
-            header.innerHTML = `
-                <div class="nav-left"><a href="admin-dashboard.html" style="font-family: var(--font-alt); font-size: 1.2rem; font-weight: 600; text-decoration: none; color: var(--light-text-primary);">PayrollPro</a></div>
-                <div class="nav-right"><div class="profile-menu"><img src="${currentUserProfile.photoURL}" alt="User Profile" class="user-avatar" data-app-action="toggle-profile-dropdown"><div id="profile-dropdown"><a href="notifications.html" class="btn btn-secondary">Notifications</a><button class="btn btn-secondary" data-app-action="logout">Logout</button></div></div></div>`;
-        }
-
-        function toggleProfileDropdown(show) { const dropdown = document.getElementById('profile-dropdown'); if (show === undefined) { dropdown.classList.toggle('active'); } else { dropdown.classList.toggle('active', show); } }
-        function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
-
+        // --- EVENT BINDING ---
         function bindEventListeners() {
-            document.body.addEventListener('click', async (e) => {
-                const appAction = e.target.closest('[data-app-action]');
-                if (!appAction) { if (!e.target.closest('.profile-menu') && !e.target.closest('.fab-container')) { toggleProfileDropdown(false); document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); } return; }
-                
-                const action = appAction.dataset.appAction;
-                if (action !== 'toggle-profile-dropdown' && action !== 'toggle-fab') { toggleProfileDropdown(false); document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
-                if (!appAction.href) e.preventDefault();
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const authSection = document.getElementById('auth-section');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            
+            const showLoginBtn = document.getElementById('show-login-btn');
+            const showSignupBtn = document.getElementById('show-signup-btn');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const googleSigninBtn = document.getElementById('google-signin-btn');
 
-                switch (action) {
-                    case 'toggle-profile-dropdown': toggleProfileDropdown(); break;
-                    case 'toggle-fab': toggleFabMenu(); break;
-                    case 'navigate-order-form': window.location.href='order-form.html'; break;
-                    case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
-                    case 'logout': await signOut(auth); break;
-                    case 'close-modal': closeModal(appAction.dataset.modalId); break;
-                    case 'open-other-options-modal': 
-                        const { id, name } = appAction.dataset; 
-                        document.getElementById('other-options-title').textContent = `Mark Attendance: ${name}`; 
-                        document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
-                        openModal('other-options-modal'); 
-                        break;
-                    case 'mark-attendance': 
-                        await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
-                        closeModal('other-options-modal');
-                        break;
+            // Switch from Welcome to Auth screen
+            getStartedBtn.addEventListener('click', () => {
+                welcomeScreen.style.display = 'none';
+                authSection.style.display = 'flex';
+            });
+
+            // Toggle between Sign In and Sign Up forms
+            const goToLogin = () => {
+                signupForm.classList.remove('active');
+                showSignupBtn.classList.remove('active');
+                loginForm.classList.add('active');
+                showLoginBtn.classList.add('active');
+            };
+            const goToSignup = () => {
+                loginForm.classList.remove('active');
+                showLoginBtn.classList.remove('active');
+                signupForm.classList.add('active');
+                showSignupBtn.classList.add('active');
+            };
+            showLoginBtn.addEventListener('click', goToLogin);
+            showSignupBtn.addEventListener('click', goToSignup);
+            document.querySelector('.switch-to-login').addEventListener('click', goToLogin);
+            document.querySelector('.switch-to-signup').addEventListener('click', goToSignup);
+
+            // Handle form submissions
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                showLoader();
+                const email = loginForm['login-email'].value;
+                const password = loginForm['login-password'].value;
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    // onAuthStateChanged will handle success
+                } catch (error) {
+                    console.error("Login Error:", error.code);
+                    showToast("Invalid email or password.", "error");
+                    hideLoader();
                 }
             });
-        }
-        
-        async function handleAttendanceClick(employeeId, status) {
-            showLoader();
-            try {
-                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-                const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
-                if(rowToHide) rowToHide.classList.add('hidden');
-                setTimeout(async () => {
-                    const allEmployees = (await getDocs(collection(db, "employees"))).docs.map(d => ({ id: d.id, ...d.data() }));
-                    await refreshAttendanceTracker(allEmployees);
-                }, 500);
-            } catch (err) { console.error(err); } 
-            finally { hideLoader(); }
-        }
-
-        async function refreshAttendanceTracker(employees) {
-            const today = getIndiaDateString();
-            const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
-            const attendanceDocs = await Promise.all(attendancePromises);
-            const attendedTodayIds = new Set(attendanceDocs.filter(docSnap => docSnap.exists()).map(docSnap => docSnap.ref.parent.parent.id));
-            const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
-            renderAttendanceTracker(employeesToTrack);
-        }
-
-        function renderAttendanceTracker(employeesToTrack) {
-            const attendanceCard = document.getElementById('attendance-card');
-            const container = document.getElementById('attendance-tracker');
-            if (employeesToTrack.length === 0) {
-                attendanceCard.style.display = 'none';
-            } else {
-                attendanceCard.style.display = 'block';
-                container.innerHTML = employeesToTrack.map(emp => `<div class="employee-row" data-employee-row-id="${emp.id}"><div class="employee-name">${emp.name}</div><div class="actions"><button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button><button class="btn btn-secondary" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button></div></div>`).join('');
-            }
-        }
-        
-        function listenForOrders() {
-            const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
-            onSnapshot(ordersQuery, (snapshot) => {
-                const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                populateUpcomingOverdueList(orders);
+            
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                showLoader();
+                const email = signupForm['signup-email'].value;
+                const password = signupForm['signup-password'].value;
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    // Set display name if provided (optional, but good practice)
+                    const user = userCredential.user;
+                    const userRef = doc(db, "users", user.uid);
+                    await setDoc(userRef, {
+                        displayName: signupForm['signup-username'].value || email,
+                        email: email,
+                        role: 'employee',
+                        status: 'pending', // New users always start as pending
+                        createdAt: new Date().toISOString()
+                    });
+                    // onAuthStateChanged will handle the rest
+                } catch (error) {
+                    console.error("Signup Error:", error.code);
+                    if (error.code === 'auth/email-already-in-use') {
+                        showToast('This email is already registered.', 'error');
+                    } else if (error.code === 'auth/weak-password') {
+                        showToast('Password should be at least 6 characters.', 'error');
+                    } else {
+                        showToast('Failed to create account.', 'error');
+                    }
+                    hideLoader();
+                }
             });
+            
+            googleSigninBtn.addEventListener('click', handleGoogleLogin);
         }
 
-        const getStatusInfo = (order, today) => {
-            if (order.status === 'completed') return null;
-            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
-            if (!dueDate) return null;
-            if (dueDate < today) return { text: 'Overdue', className: 'overdue' };
-            const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
-            if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };
-            return null;
-        };
-        
-        function populateUpcomingOverdueList(orders) {
-            const container = document.getElementById('upcoming-overdue-list');
-            const today = new Date(); today.setHours(0,0,0,0);
-            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) }))
-                                         .filter(order => order.statusInfo !== null)
-                                         .sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
-            if (criticalOrders.length === 0) {
-                container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>';
-            } else {
-                container.innerHTML = criticalOrders.map(order => `
-                    <div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'">
-                        <div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div>
-                    </div>`).join('');
-            }
-        }
-
-        async function calculateAndRenderGlobalSummary(employees) {
-            const container = document.getElementById('global-summary-card');
-            if (!container) return;
-            const todayInIndia = getIndiaDateString();
-            const [year, month] = todayInIndia.split('-');
-            const startDate = `${year}-${month}-01`;
-            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
-            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
-            let totalEarned = 0, totalPaid = 0;
-            const promises = employees.map(async emp => {
-                const [attSnap, paySnap] = await Promise.all([ 
-                    getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
-                    getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
-                ]);
-                let p=0,h=0,ph=0;
-                attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
-                totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
-                paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
-            });
-            await Promise.all(promises);
-            container.innerHTML = `
-                <div class="card-content"><h2 class="title">Month in Review</h2></div>
-                <div class="global-summary-grid">
-                    <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
-                </div>`;
-        }
-
-        function scheduleDailyReset() {
-            const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-            let nextReload = new Date(now); nextReload.setDate(now.getDate() + 1); nextReload.setHours(0, 1, 0, 0);
-            const timeout = nextReload.getTime() - now.getTime();
-            if (timeout > 0) setTimeout(() => { location.reload(); }, timeout);
-        }
     </script>
 </body>
 </html>
