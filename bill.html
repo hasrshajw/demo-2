@@ -70,31 +70,24 @@
             let windows = [];
             try { windows = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data", e); }
             
-            // --- NEW LOGIC FOR GROUPING ITEMS ---
             const itemGroups = {};
-            // --- NEW LOGIC: Calculate subTotal by iterating through each window individually ---
-            let subTotal = 0;
-            
             windows.forEach(win => {
+                const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                if (!itemGroups[itemName]) { itemGroups[itemName] = { qty: 0, totalSft: 0 }; }
+                itemGroups[itemName].qty += 1;
                 const heightMm = parseFloat(win.height || 0);
                 const widthMm = parseFloat(win.width || 0);
-                const sft = (widthMm / 304) * (heightMm / 304); // Use 304 for consistency
-                const windowCost = sft * details.pricePerSft;
-                subTotal += windowCost;
-
-                const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
-                if (!itemGroups[itemName]) { itemGroups[itemName] = { qty: 0, totalSft: 0, totalValue: 0 }; }
-                itemGroups[itemName].qty += 1;
-                itemGroups[itemName].totalSft += sft;
-                itemGroups[itemName].totalValue += windowCost;
+                itemGroups[itemName].totalSft += (widthMm / 304) * (heightMm / 304);
             });
 
             let tableRows = '';
+            let subTotal = 0;
             let itemIndex = 1;
             for (const itemName in itemGroups) {
                 const group = itemGroups[itemName];
-                // DISPLAY rounded SFT, but the VALUE is calculated from the more precise subTotal
-                tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.pricePerSft.toLocaleString('en-IN')}</td><td>${group.totalValue.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>`;
+                const itemCost = group.totalSft * details.pricePerSft;
+                subTotal += itemCost;
+                tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.pricePerSft.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>`;
             }
             
             const totalBeforeTax = subTotal;
