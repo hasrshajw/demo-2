@@ -85,9 +85,9 @@
             let itemIndex = 1;
             for (const itemName in itemGroups) {
                 const group = itemGroups[itemName];
-                const itemCost = group.totalSft * details.pricePerSft;
+                const itemCost = group.totalSft * details.pricePerSft; // Use full precision for calculation
                 subTotal += itemCost;
-                tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.pricePerSft.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>`;
+                tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.pricePerSft.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
             }
             
             const totalBeforeTax = subTotal;
@@ -95,6 +95,8 @@
             const cgst = totalBeforeTax * 0.09;
             const grandTotal = totalBeforeTax + details.freight + sgst + cgst;
             const totalInWords = numberToWords(Math.round(grandTotal));
+
+            const formatCurrency = (num) => num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
             return `
                 <div id="bill-controls">
@@ -134,11 +136,11 @@
                         </div>
                         <div class="summary-totals">
                             <table>
-                                <tr><td>Total Before Tax:</td><td style="text-align: right;">${totalBeforeTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
-                                <tr><td>Freight:</td><td style="text-align: right;">+ ${details.freight.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
-                                <tr><td>SGST (9%):</td><td style="text-align: right;">+ ${sgst.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
-                                <tr><td>CGST (9%):</td><td style="text-align: right;">+ ${cgst.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
-                                <tr><td>Grand Total:</td><td style="text-align: right;">₹ ${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
+                                <tr><td>Total Before Tax:</td><td style="text-align: right;">${formatCurrency(totalBeforeTax)}</td></tr>
+                                <tr><td>Freight:</td><td style="text-align: right;">+ ${formatCurrency(details.freight)}</td></tr>
+                                <tr><td>SGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(sgst)}</td></tr>
+                                <tr><td>CGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(cgst)}</td></tr>
+                                <tr><td>Grand Total:</td><td style="text-align: right;">₹ ${formatCurrency(grandTotal)}</td></tr>
                             </table>
                         </div>
                     </section>
