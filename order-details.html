@@ -115,7 +115,6 @@
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- DOM ELEMENTS & APP STATE ---
         const loadingOverlay = document.getElementById('loading-overlay');
         const profileImage = document.getElementById('profileImage');
         const profileDropdown = document.getElementById('profileDropdown');
@@ -160,7 +159,6 @@
         const paymentModal = document.getElementById('payment-modal');
         const paymentForm = document.getElementById('payment-form');
         const paymentModalTitle = document.getElementById('payment-modal-title');
-        
         let db, auth, currentOrder, currentOrderId;
         let currentAction = { type: null, id: null, callback: null };
         let currentUserName = "Unknown User";
@@ -168,7 +166,6 @@
         let paymentsUnsubscribe = null;
         const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
-        // --- UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
         function toggleProfileMenu() { profileDropdown.classList.toggle('show'); }
@@ -184,7 +181,6 @@
         const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
         const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
-        // --- DATA & RENDERING FUNCTIONS ---
         const getStatusInfo = (order, today) => {
             if (order.status === 'completed') { return { text: 'Completed', className: 'completed' }; }
             const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; 
@@ -263,7 +259,6 @@
             }
         }
         
-        // --- PAYMENT MANAGEMENT FUNCTIONS ---
         function listenForPayments() {
             if (paymentsUnsubscribe) paymentsUnsubscribe();
             const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('date', 'desc'));
@@ -296,7 +291,7 @@
         }
 
         function calculateTotals(payments) {
-            const paymentList = payments || []; // Ensure payments is an array
+            const paymentList = payments || [];
             const totalCollected = paymentList.reduce((sum, p) => sum + p.amount, 0);
             const finalTotal = currentOrder ? (currentOrder.finalTotal || 0) : 0;
             const pendingAmount = finalTotal - totalCollected;
@@ -343,7 +338,7 @@
         
         function handleFinalTotalEdit() {
             const currentTotal = currentOrder.finalTotal || 0;
-            finalTotalContainer.innerHTML = `<input type="number" id="final-total-input" class="final-total-input" value="${currentTotal}"><button class="btn-secondary edit-total-btn" data-app-action="save-final-total"><span class="material-symbols-outlined">check</span></button>`;
+            finalTotalContainer.innerHTML = `<input type="number" id="final-total-input" class="final-total-input" value="${currentTotal}" step="0.01"><button class="btn-secondary edit-total-btn" data-app-action="save-final-total"><span class="material-symbols-outlined">check</span></button>`;
             const input = document.getElementById('final-total-input');
             input.focus();
             input.select();
@@ -351,7 +346,7 @@
 
         async function handleFinalTotalUpdate() {
             const input = document.getElementById('final-total-input');
-            if (!input) return; // defensive check
+            if (!input) return;
             const newTotalRaw = input.value;
             const currentTotal = currentOrder.finalTotal || 0;
             const newTotal = parseFloat(newTotalRaw);
@@ -370,14 +365,13 @@
         }
         
         async function handleDeletePayment(paymentId, amount) {
-            showConfirmationModal(`Are you sure you want to delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', 'delete-payment', paymentId,
+            showConfirmationModal(`Are you sure you want to delete this payment of ${formatCurrency(amount)}? This cannot be undone.`, 'btn-danger', 'Delete Payment', 'delete-payment', paymentId,
                 async () => { 
                     await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId));
                     await logHistory(currentOrderId, 'Payment Deleted', { amount: formatCurrency(amount) });
                 });
         }
         
-        // --- FIREBASE & CORE LOGIC ---
         async function initializeFirebase() {
             try {
                 const firebaseConfig = { apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg", authDomain: "payment-form-b77e2.firebaseapp.com", projectId: "payment-form-b77e2", storageBucket: "payment-form-b77e2.firebasestorage.app", messagingSenderId: "796020240904", appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd", measurementId: "G-DHJJ4WNYR4" };
@@ -438,8 +432,8 @@
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
         paymentList.addEventListener('click', async (e) => { const editBtn = e.target.closest('[data-app-action="edit-payment"]'); if (editBtn) { await openPaymentModalForEdit(editBtn.dataset.id); } const deleteBtn = e.target.closest('[data-app-action="delete-payment"]'); if(deleteBtn) { await handleDeletePayment(deleteBtn.dataset.id, parseFloat(deleteBtn.dataset.amount)); } });
         finalTotalContainer.addEventListener('click', (e) => { const editBtn = e.target.closest('[data-app-action="edit-final-total"]'); if(editBtn) { handleFinalTotalEdit(); } });
-        finalTotalContainer.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const saveBtn = finalTotalContainer.querySelector('[data-app-action="save-final-total"]'); if (saveBtn) { handleFinalTotalUpdate(); e.preventDefault(); } }});
-        finalTotalContainer.addEventListener('focusout', (e) => { if (e.target.id === 'final-total-input') { const saveBtn = finalTotalContainer.querySelector('[data-app-action="save-final-total"]'); if (saveBtn) { handleFinalTotalUpdate(); } }});
+        finalTotalContainer.addEventListener('keydown', (e) => { if (e.key === 'Enter') { handleFinalTotalUpdate(); e.preventDefault(); } });
+        finalTotalContainer.addEventListener('focusout', (e) => { if (e.target.id === 'final-total-input') { handleFinalTotalUpdate(); } });
         document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => { paymentModal.style.display = 'none'; });
 
         showLoading();
