@@ -12,24 +12,44 @@
     <style>
         /* --- EXACT, COMPLETE CSS FROM YOUR EXAMPLE --- */
         :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--font-icon:"Material Symbols Outlined";--light-bg-primary:#fff;--light-bg-secondary:#f7f9fc;--light-bg-tertiary:#f1f3f6;--light-text-primary:#012726;--light-text-secondary:#52616b;--light-text-muted:#9ca3af;--light-border:#e5e7eb;--light-border-hover:#d1d5db;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--color-accent:#33c375;--color-accent-hover:#2cac66;--color-accent-text:#012726;--color-danger:#ef4444;--color-danger-hover:#dc2626;--color-danger-text:#fff;--color-warning:#f59e0b;--color-warning-hover:#d97706;--color-warning-text:#fff;--color-reopen:#6f42c1;--color-reopen-hover:#5a3d9a;--color-reopen-text:#fff;--status-pending-bg:#eef2ff;--status-pending-text:#4338ca;--status-completed-bg:#f0fdf4;--status-completed-text:#166534;--status-overdue-bg:#fef2f2;--status-overdue-text:#be123c;--status-overdue-border:#fecaca;--status-upcoming-bg:#fffbeb;--status-upcoming-text:#b45309;--status-upcoming-border:#fde68a;--color-focus-ring:rgba(51,195,117,.35);--radius-sm:0.25rem;--radius-md:0.5rem;--radius-lg:1rem;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04);--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--shadow-lg:0 10px 20px -3px rgba(0,0,0,.07),0 4px 8px -4px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1)}*,:after,:before{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:var(--light-text-secondary);margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:calc(70px + 1rem)}.app-container{max-width:72rem;margin:2rem auto;padding:0;width:100%}h1,h2,h3{font-weight:600;color:var(--light-text-primary);margin:0}h1{font-size:1.875rem;line-height:2.25rem}h2{font-size:1.5rem;line-height:2rem}h3{font-size:1.25rem;line-height:1.75rem}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.screen{display:none}.screen.active{display:block;animation:fadeUp .5s var(--ease) forwards}button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer;-webkit-user-select:none;user-select:none}button:hover:not(:disabled),.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-md)}button:active:not(:disabled),.btn:active:not(:disabled){transform:translateY(0);box-shadow:var(--shadow-sm)}button:disabled,.btn:disabled{opacity:.6;cursor:not-allowed}button:focus-visible,.btn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}.btn-primary{background-color:var(--color-primary);color:var(--color-primary-text)}.btn-primary:hover:not(:disabled){background-color:var(--color-primary-hover)}.btn-secondary{background-color:var(--light-bg-primary);color:var(--light-text-secondary);border-color:var(--light-border);box-shadow:var(--shadow-sm)}.btn-secondary:hover:not(:disabled){background-color:var(--light-bg-tertiary);border-color:var(--light-border-hover);color:var(--light-text-primary)}.btn-danger{background-color:var(--color-danger);color:var(--color-danger-text)}.btn-danger:hover:not(:disabled){background-color:var(--color-danger-hover)}.btn-success{background-color:var(--color-accent);color:var(--color-accent-text)}.btn-success:hover:not(:disabled){background-color:var(--color-accent-hover)}.btn-reopen{background-color:var(--color-reopen);color:var(--color-reopen-text)}.btn-reopen:hover:not(:disabled){background-color:var(--color-reopen-hover)}.status-tag{display:inline-flex;align-items:center;gap:.375rem;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:600}.status-tag:before{content:"";display:block;width:.5rem;height:.5rem;border-radius:50%}.status-tag.pending{background-color:var(--status-pending-bg);color:var(--status-pending-text)}.status-tag.pending:before{background-color:var(--status-pending-text)}.status-tag.completed{background-color:var(--status-completed-bg);color:var(--status-completed-text)}.status-tag.completed:before{background-color:var(--status-completed-text)}.status-tag.overdue{background-color:var(--status-overdue-bg);color:var(--status-overdue-text)}.status-tag.overdue:before{background-color:var(--status-overdue-text)}.status-tag.upcoming-due{background-color:var(--status-upcoming-bg);color:var(--status-upcoming-text)}.status-tag.upcoming-due:before{background-color:var(--status-upcoming-text)}.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding:0 1.5rem}.card{background-color:var(--light-bg-primary);border:1px solid var(--light-border);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow-sm);margin-bottom:2rem}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:left;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary); text-align:center;}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}.history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none}.history-detail ul{padding-left:1.25rem;margin-top:.25rem}.detail-window-item{display:flex;align-items:center;gap:1rem;padding:.75rem;background-color:var(--light-bg-tertiary);border-radius:var(--radius-md);margin-bottom:.5rem}.item-number{flex-shrink:0;width:2.25rem;height:2.25rem;background-color:var(--color-primary);color:var(--color-primary-text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.875rem}.item-info{font-size:.9rem;color:var(--light-text-primary);line-height:1.4}.item-info small{display:block;color:var(--light-text-secondary);font-size:.8rem;margin-top:.25rem}.remove-window-btn{background:0 0;border:none;padding:.25rem;color:var(--light-text-muted);cursor:pointer;border-radius:9999px;display:flex;align-items:center;justify-content:center;transition:color .2s,background-color .2s;position:static}.remove-window-btn:hover{background-color:var(--light-bg-tertiary);color:var(--color-danger)}.navbar{background-color:var(--light-bg-primary);padding:10px 2rem;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;height:70px}.navbar-logo a{text-decoration:none;color:var(--light-text-primary);font-weight:700;font-size:1.5rem}.navbar-profile{position:relative}.navbar-profile .profile-image{height:45px;width:45px;border-radius:50%;-o-object-fit:cover;object-fit:cover;cursor:pointer;border:2px solid #e0e0e0;transition:transform .2s ease,box-shadow .2s ease}.navbar-profile .profile-image:hover{transform:scale(1.1);box-shadow:0 0 10px rgba(0,0,0,.2)}.profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;background:var(--light-bg-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:8px;min-width:160px;z-index:1001;visibility:hidden;opacity:0;transform:translateY(-10px);transition:all .2s ease-out}.profile-dropdown.show{visibility:visible;opacity:1;transform:translateY(0)}.profile-dropdown button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:none;background:0 0;text-align:left;font-size:15px;color:var(--light-text-primary);border-radius:var(--radius-sm);cursor:pointer;transition:background-color .2s ease}.profile-dropdown button:hover{background-color:var(--light-bg-tertiary)}.profile-dropdown .icon{font-size:18px}
-        .payment-list { list-style: none; padding: 0; margin: 0; } .payment-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--light-border); } .payment-item:last-child { border-bottom: none; } .payment-info { display: flex; flex-direction: column; } .payment-amount { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); } .payment-meta { font-size: 0.8rem; color: var(--light-text-muted); } .payment-meta .notes { display: block; margin-top: 4px; color: var(--light-text-secondary); font-style: italic; } .payment-actions { display: flex; gap: 0.5rem; } .payment-summary { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-border); display: grid; grid-template-columns: 1fr; gap: 1rem; } .summary-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.9rem; } .summary-row .label { font-weight: 500; color: var(--light-text-secondary); } .summary-row .value { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); } .summary-row .pending { font-size: 1.25rem; font-weight: 700; } .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; } .form-group { margin-bottom: 1rem; } .form-group.col-span-2 { grid-column: span 2; } .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem; color: var(--light-text-secondary); } .input-field { width: 100%; padding: 0.75rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; }
+        .payment-list { list-style: none; padding: 0; margin: 0; }
+        .payment-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--light-border); }
+        .payment-item:last-child { border-bottom: none; }
+        .payment-info { display: flex; flex-direction: column; }
+        .payment-amount { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); }
+        .payment-meta { font-size: 0.8rem; color: var(--light-text-muted); }
+        .payment-meta .notes { display: block; margin-top: 4px; color: var(--light-text-secondary); font-style: italic; }
+        .payment-actions { display: flex; gap: 0.5rem; }
+        .payment-summary { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-border); display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        .summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; } /* Changed align-items */
+        .summary-row .label { font-weight: 500; color: var(--light-text-secondary); }
+        .summary-row .value { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); }
+        .summary-row .pending { font-size: 1.25rem; font-weight: 700; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { margin-bottom: 1rem; } .form-group.col-span-2 { grid-column: span 2; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem; color: var(--light-text-secondary); }
+        .input-field { width: 100%; padding: 0.75rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; }
         /* *** NEW STYLES FOR EDITABLE FINAL TOTAL *** */
-        .editable-field { display: flex; align-items: center; gap: 8px; }
-        .editable-field .final-total-input { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); border: 1px solid var(--light-border); border-radius: var(--radius-sm); padding: 4px 8px; max-width: 120px; text-align: right; }
-        .editable-field .edit-icon, .editable-field .save-icon { cursor: pointer; color: var(--light-text-muted); transition: color 0.2s ease; }
-        .editable-field .edit-icon:hover, .editable-field .save-icon:hover { color: var(--color-primary); }
-        .editable-field input, .editable-field .save-icon { display: none; } /* Hide input and save icon by default */
-        .editable-field.editing span, .editable-field.editing .edit-icon { display: none; } /* Hide span and edit icon when editing */
-        .editable-field.editing input, .editable-field.editing .save-icon { display: inline-block; } /* Show input and save icon when editing */
-        
+        .final-total-wrapper { display: flex; align-items: center; gap: 8px; }
+        .edit-total-btn { padding: 4px; height: 28px; width: 28px; border-radius: 50%; }
+        .edit-total-btn .material-symbols-outlined { font-size: 18px; }
+        .final-total-input { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); border: 1px solid var(--light-border); border-radius: var(--radius-sm); padding: 4px 8px; max-width: 120px; text-align: right; }
+        .final-total-input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 2px var(--color-focus-ring); outline: none; }
         @media (max-width: 640px) { body { padding: 0; padding-top: 70px; background-color: var(--light-bg-primary); } .app-container { margin: 0; padding: 0; } .card { padding: 1.5rem; border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; } .page-header { flex-direction: row; justify-content: flex-start; align-items: center; gap: 1rem; padding: 1.5rem; background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); } #detail-info-grid { grid-template-columns: 1fr !important; } .details-action-buttons { flex-direction: column; align-items: stretch !important; gap: 0.75rem; } .details-action-buttons .btn { width: 100%; margin: 0; } .payment-item { grid-template-columns: 1fr; } .payment-actions { justify-content: flex-end; } }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="navbar-logo"><a href="#" id="dashboard-link">PayrollPro</a></div>
-        <div class="navbar-profile" id="profileContainer"><img src="https://i.stack.imgur.com/34AD2.jpg" alt="User Profile" class="profile-image" id="profileImage"><div class="profile-dropdown" id="profileDropdown"><button id="nav-logout-btn"><span class="icon material-symbols-outlined">logout</span>Logout</button></div></div>
+        <div class="navbar-logo">
+            <a href="#" id="dashboard-link">PayrollPro</a>
+        </div>
+        <div class="navbar-profile" id="profileContainer">
+            <img src="https://i.stack.imgur.com/34AD2.jpg" alt="User Profile" class="profile-image" id="profileImage">
+            <div class="profile-dropdown" id="profileDropdown">
+                <button id="nav-logout-btn"><span class="icon material-symbols-outlined">logout</span>Logout</button>
+            </div>
+        </div>
     </nav>
 
     <div class="app-container">
@@ -39,22 +59,23 @@
                  <h2>Order Details</h2>
             </div>
             <div class="card">
-                <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;"><div id="detail-customer-name-container"><p id="detail-customer-name" style="font-size: 1.5rem; font-weight: 700; color: var(--color-primary);"></p><p id="detail-customer-address" style="color: var(--light-text-secondary);"></p></div><div id="detail-status-tag" class="status-tag" style="align-self: flex-start;"></div></div>
+                <!-- Existing Customer & Windows Details -->
+                <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;"><div><p id="detail-customer-name" style="font-size: 1.5rem; font-weight: 700; color: var(--color-primary);"></p><p id="detail-customer-address" style="color: var(--light-text-secondary);"></p></div><div id="detail-status-tag" class="status-tag" style="align-self: flex-start;"></div></div>
                 <div id="detail-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; font-size: 0.875rem;"><p><strong>Mobile:</strong> <span id="detail-customer-mobile"></span></p><p><strong>Placed:</strong> <span id="detail-order-taken-date"></span></p><p><strong>Due Date:</strong> <span id="detail-due-date"></span></p><p id="detail-completed-date-row" style="display: none;"><strong>Completed:</strong> <span id="detail-completed-date"></span></p><p id="detail-created-by-row" style="display: none;"><strong>Created By:</strong> <span id="detail-created-by"></span></p><p id="detail-completed-by-row" style="display: none;"><strong>Completed By:</strong> <span id="detail-completed-by"></span></p></div>
-                <h3 style="margin-bottom: 1rem;">Windows (<span id="detail-window-count"></span>)</h3>
-                <div id="detail-windows-list"></div>
+                <h3 style="margin-bottom: 1rem;">Windows (<span id="detail-window-count"></span>)</h3><div id="detail-windows-list"></div>
             </div>
 
+            <!-- PAYMENT MANAGEMENT CARD - HIDDEN BY DEFAULT FOR EMPLOYEES -->
             <div id="payment-management-card" class="card" style="display: none;">
-                <div class="section-header" style="margin-bottom: 1.5rem;">
+                <div class="section-header">
                     <h3>Payment Management</h3>
-                    <button id="add-payment-btn" class="btn-primary" style="display: none;"><span class="material-symbols-outlined">add_card</span> Add Payment</button>
+                    <button id="add-payment-btn" class="btn-primary"><span class="material-symbols-outlined">add_card</span> Add Payment</button>
                 </div>
                 <ul id="payment-list" class="payment-list"></ul>
                 <div id="payment-summary" class="payment-summary">
                     <div class="summary-row"><span class="label">Total Collected:</span><span id="total-collected" class="value">₹0.00</span></div>
                     <div class="summary-row"><span class="label">Final Order Total:</span><div id="final-total-container" class="value"></div></div>
-                     <div class="summary-row"><span class="label pending">Pending Amount:</span><span id="pending-amount" class="value pending">₹0.00</span></div>
+                    <div class="summary-row"><span class="label pending">Pending Amount:</span><span id="pending-amount" class="value pending">₹0.00</span></div>
                 </div>
             </div>
 
@@ -75,6 +96,7 @@
     <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn-primary" style="min-width: 120px;">OK</button></div></div>
     <div id="history-modal" class="modal"><div class="modal-content" style="max-width: 600px; text-align: left;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;"><h3 id="history-modal-title">Order History</h3><button id="history-close-btn" class="remove-window-btn" style="position: static; border-radius: 50%;"><span class="material-symbols-outlined">close</span></button></div><ul id="history-list" style="list-style-type: none; padding: 0; max-height: 60vh; overflow-y: auto;"></ul></div></div>
     <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
+
     <div id="payment-modal" class="modal"><div class="modal-content"><h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div><div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div><div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div><div class="modal-buttons" style="margin-top: 1rem;"><button type="button" class="btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn-primary">Save Payment</button></div></form></div></div>
     
     <script type="module">
@@ -82,50 +104,53 @@
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const profileImage = document.getElementById('profileImage');
-        const profileDropdown = document.getElementById('profileDropdown');
-        const navLogoutBtn = document.getElementById('nav-logout-btn');
-        const dashboardLink = document.getElementById('dashboard-link');
-        const detailCustomerName = document.getElementById('detail-customer-name');
-        const detailCustomerAddress = document.getElementById('detail-customer-address');
-        const detailCustomerMobile = document.getElementById('detail-customer-mobile');
-        const detailOrderTakenDate = document.getElementById('detail-order-taken-date');
-        const detailDueDate = document.getElementById('detail-due-date');
-        const detailStatusTag = document.getElementById('detail-status-tag');
-        const detailCompletedDateRow = document.getElementById('detail-completed-date-row');
-        const detailCompletedDate = document.getElementById('detail-completed-date');
-        const detailCreatedByRow = document.getElementById('detail-created-by-row');
-        const detailCreatedBy = document.getElementById('detail-created-by');
-        const detailCompletedByRow = document.getElementById('detail-completed-by-row');
-        const detailCompletedBy = document.getElementById('detail-completed-by');
-        const detailWindowsList = document.getElementById('detail-windows-list');
-        const detailWindowCount = document.getElementById('detail-window-count');
-        const detailEditBtn = document.getElementById('detail-edit-btn');
-        const detailDeleteBtn = document.getElementById('detail-delete-btn');
-        const detailViewQuoteBtn = document.getElementById('detail-view-quote-btn');
-        const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        const detailShowHistoryBtn = document.getElementById('detail-show-history-btn');
-        const detailGetDirectionsBtn = document.getElementById('detail-get-directions-btn');
-        const confirmationModal = document.getElementById('confirmation-modal');
-        const modalMessage = document.getElementById('modal-message');
-        const confirmActionBtn = document.getElementById('confirm-action-btn');
-        const cancelActionBtn = document.getElementById('cancel-action-btn');
-        const messageModal = document.getElementById('message-modal');
-        const messageText = document.getElementById('message-text');
-        const messageOkBtn = document.getElementById('message-ok-btn');
-        const historyModal = document.getElementById('history-modal');
-        const historyList = document.getElementById('history-list');
-        const historyCloseBtn = document.getElementById('history-close-btn');
-        const paymentManagementCard = document.getElementById('payment-management-card');
-        const addPaymentBtn = document.getElementById('add-payment-btn');
-        const paymentList = document.getElementById('payment-list');
-        const totalCollectedEl = document.getElementById('total-collected');
-        const finalTotalContainer = document.getElementById('final-total-container');
-        const pendingAmountEl = document.getElementById('pending-amount');
-        const paymentModal = document.getElementById('payment-modal');
-        const paymentForm = document.getElementById('payment-form');
-        const paymentModalTitle = document.getElementById('payment-modal-title');
+        // --- DOM ELEMENTS & APP STATE ---
+        const allDOMElements = {
+            loadingOverlay: document.getElementById('loading-overlay'),
+            profileImage: document.getElementById('profileImage'),
+            profileDropdown: document.getElementById('profileDropdown'),
+            navLogoutBtn: document.getElementById('nav-logout-btn'),
+            dashboardLink: document.getElementById('dashboard-link'),
+            detailCustomerName: document.getElementById('detail-customer-name'),
+            detailCustomerAddress: document.getElementById('detail-customer-address'),
+            detailCustomerMobile: document.getElementById('detail-customer-mobile'),
+            detailOrderTakenDate: document.getElementById('detail-order-taken-date'),
+            detailDueDate: document.getElementById('detail-due-date'),
+            detailStatusTag: document.getElementById('detail-status-tag'),
+            detailCompletedDateRow: document.getElementById('detail-completed-date-row'),
+            detailCompletedDate: document.getElementById('detail-completed-date'),
+            detailCreatedByRow: document.getElementById('detail-created-by-row'),
+            detailCreatedBy: document.getElementById('detail-created-by'),
+            detailCompletedByRow: document.getElementById('detail-completed-by-row'),
+            detailCompletedBy: document.getElementById('detail-completed-by'),
+            detailWindowsList: document.getElementById('detail-windows-list'),
+            detailWindowCount: document.getElementById('detail-window-count'),
+            detailEditBtn: document.getElementById('detail-edit-btn'),
+            detailDeleteBtn: document.getElementById('detail-delete-btn'),
+            detailViewQuoteBtn: document.getElementById('detail-view-quote-btn'),
+            detailCompleteBtn: document.getElementById('detail-complete-btn'),
+            detailShowHistoryBtn: document.getElementById('detail-show-history-btn'),
+            detailGetDirectionsBtn: document.getElementById('detail-get-directions-btn'),
+            confirmationModal: document.getElementById('confirmation-modal'),
+            modalMessage: document.getElementById('modal-message'),
+            confirmActionBtn: document.getElementById('confirm-action-btn'),
+            cancelActionBtn: document.getElementById('cancel-action-btn'),
+            messageModal: document.getElementById('message-modal'),
+            messageText: document.getElementById('message-text'),
+            messageOkBtn: document.getElementById('message-ok-btn'),
+            historyModal: document.getElementById('history-modal'),
+            historyList: document.getElementById('history-list'),
+            historyCloseBtn: document.getElementById('history-close-btn'),
+            paymentManagementCard: document.getElementById('payment-management-card'),
+            addPaymentBtn: document.getElementById('add-payment-btn'),
+            paymentList: document.getElementById('payment-list'),
+            totalCollectedEl: document.getElementById('total-collected'),
+            finalTotalContainer: document.getElementById('final-total-container'),
+            pendingAmountEl: document.getElementById('pending-amount'),
+            paymentModal: document.getElementById('payment-modal'),
+            paymentForm: document.getElementById('payment-form'),
+            paymentModalTitle: document.getElementById('payment-modal-title')
+        };
         
         let db, auth, currentOrder, currentOrderId;
         let currentAction = { type: null, id: null, callback: null };
@@ -134,102 +159,90 @@
         let paymentsUnsubscribe = null;
         const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
-        const showLoading = () => loadingOverlay.style.display = 'flex';
-        const hideLoading = () => loadingOverlay.style.display = 'none';
-        function toggleProfileMenu() { profileDropdown.classList.toggle('show'); }
-        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
-        const showConfirmationModal = (message, confirmClass, confirmText, actionType, orderId, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn'; confirmActionBtn.classList.add(confirmClass); confirmActionBtn.textContent = confirmText; currentAction = { type: actionType, id: orderId, callback: callback }; confirmationModal.style.display = 'flex'; };
-        const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
+        const showLoading = () => allDOMElements.loadingOverlay.style.display = 'flex';
+        const hideLoading = () => allDOMElements.loadingOverlay.style.display = 'none';
+        function toggleProfileMenu() { allDOMElements.profileDropdown.classList.toggle('show'); }
+        const showMessageModal = (message) => { allDOMElements.messageText.textContent = message; allDOMElements.messageModal.style.display = 'flex'; };
+        const showConfirmationModal = (message, confirmClass, confirmText, actionType, orderId, callback) => { allDOMElements.modalMessage.textContent = message; allDOMElements.confirmActionBtn.className = 'btn'; allDOMElements.confirmActionBtn.classList.add(confirmClass); allDOMElements.confirmActionBtn.textContent = confirmText; currentAction = { type: actionType, id: orderId, callback: callback }; allDOMElements.confirmationModal.style.display = 'flex'; };
+        const hideConfirmationModal = () => { allDOMElements.confirmationModal.style.display = 'none'; };
         const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-
-        const getStatusInfo = (order, today) => {
-            if (order.status === 'completed') { return { text: 'Completed', className: 'completed' }; }
-            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; 
-            if (dueDate && dueDate < today) { return { text: 'Overdue', className: 'overdue' }; }
-            if (dueDate) {
-                const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
-                if (daysDiff >= 0 && daysDiff <= 3) { return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; }
-            }
-            return { text: 'Pending', className: 'pending' };
-        };
+        const getStatusInfo = (order, today) => { if (order.status === 'completed') { return { text: 'Completed', className: 'completed' }; } const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) { return { text: 'Overdue', className: 'overdue' }; } if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) { return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } } return { text: 'Pending', className: 'pending' }; };
         
         function showOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile.role === 'admin';
-            
-            paymentManagementCard.style.display = isAdmin ? 'block' : 'none';
+            allDOMElements.paymentManagementCard.style.display = isAdmin ? 'block' : 'none';
 
-            detailCustomerName.textContent = order.name;
-            detailCustomerAddress.textContent = order.address;
-            detailCustomerMobile.textContent = order.mobileNumber || 'N/A';
-            detailOrderTakenDate.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A';
-            detailDueDate.textContent = order.dueDate || 'N/A';
+            allDOMElements.detailCustomerName.textContent = order.name;
+            allDOMElements.detailCustomerAddress.textContent = order.address;
+            allDOMElements.detailCustomerMobile.textContent = order.mobileNumber || 'N/A';
+            allDOMElements.detailOrderTakenDate.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A';
+            allDOMElements.detailDueDate.textContent = order.dueDate || 'N/A';
             
             const today = new Date(); today.setHours(0,0,0,0);
             const statusInfo = getStatusInfo(order, today);
-            detailStatusTag.className = 'status-tag ' + statusInfo.className;
-            detailStatusTag.textContent = statusInfo.text;
+            allDOMElements.detailStatusTag.className = 'status-tag ' + statusInfo.className;
+            allDOMElements.detailStatusTag.textContent = statusInfo.text;
             
-            detailCompletedDateRow.style.display = (order.status === 'completed' && order.completedAt) ? 'block' : 'none';
-            detailCompletedDate.textContent = (order.status === 'completed' && order.completedAt?.toDate) ? new Date(order.completedAt.toDate()).toLocaleDateString() : '';
-            detailCreatedByRow.style.display = order.createdBy ? 'block' : 'none';
-            detailCreatedBy.textContent = order.createdBy || '';
-            detailCompletedByRow.style.display = (order.completedBy && order.status === 'completed') ? 'block' : 'none';
-            detailCompletedBy.textContent = order.completedBy || '';
+            allDOMElements.detailCompletedDateRow.style.display = (order.status === 'completed' && order.completedAt) ? 'block' : 'none';
+            allDOMElements.detailCompletedDate.textContent = (order.status === 'completed' && order.completedAt?.toDate) ? new Date(order.completedAt.toDate()).toLocaleDateString() : '';
+            allDOMElements.detailCreatedByRow.style.display = order.createdBy ? 'block' : 'none';
+            allDOMElements.detailCreatedBy.textContent = order.createdBy || '';
+            allDOMElements.detailCompletedByRow.style.display = (order.completedBy && order.status === 'completed') ? 'block' : 'none';
+            allDOMElements.detailCompletedBy.textContent = order.completedBy || '';
 
             let windowsToDisplay = [];
-            try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
-            detailWindowsList.innerHTML = '';
-            if(windowsToDisplay.length > 0) {
-                windowsToDisplay.forEach((win, i) => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'detail-window-item';
-                    let glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>';
-                    const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window';
-                    itemDiv.innerHTML = `<div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div>`;
-                    detailWindowsList.appendChild(itemDiv);
-                });
-            } else { detailWindowsList.innerHTML = '<p>No window details available.</p>'; }
-            detailWindowCount.textContent = windowsToDisplay.length;
+            try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data:", e); }
+            allDOMElements.detailWindowsList.innerHTML = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => {
+                let glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>';
+                const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window';
+                return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`;
+            }).join('') : '<p>No window details available.</p>';
+            allDOMElements.detailWindowCount.textContent = windowsToDisplay.length;
 
-            detailEditBtn.dataset.id = order.id;
-            detailViewQuoteBtn.dataset.id = order.id;
-            detailCompleteBtn.dataset.id = order.id;
-            detailShowHistoryBtn.dataset.id = order.id;
-            detailDeleteBtn.dataset.id = order.id;
-            detailGetDirectionsBtn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none';
-            detailGetDirectionsBtn.dataset.lat = order.latitude;
-            detailGetDirectionsBtn.dataset.lon = order.longitude;
+            allDOMElements.detailEditBtn.dataset.id = order.id;
+            allDOMElements.detailViewQuoteBtn.dataset.id = order.id;
+            allDOMElements.detailCompleteBtn.dataset.id = order.id;
+            allDOMElements.detailShowHistoryBtn.dataset.id = order.id;
+            allDOMElements.detailDeleteBtn.dataset.id = order.id;
+            allDOMElements.detailGetDirectionsBtn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none';
+            allDOMElements.detailGetDirectionsBtn.dataset.lat = order.latitude;
+            allDOMElements.detailGetDirectionsBtn.dataset.lon = order.longitude;
 
             if (isAdmin) {
-                detailDeleteBtn.style.display = 'inline-flex';
-                addPaymentBtn.style.display = 'inline-flex';
-                finalTotalContainer.innerHTML = `
-                    <div class="editable-field">
-                        <span class="value">${formatCurrency(order.finalTotal || 0)}</span>
-                        <input type="number" class="final-total-input" value="${order.finalTotal || 0}" step="0.01">
-                        <span class="material-symbols-outlined edit-icon" data-app-action="edit-final-total">edit</span>
-                        <span class="material-symbols-outlined save-icon" data-app-action="save-final-total">save</span>
+                allDOMElements.detailDeleteBtn.style.display = 'inline-flex';
+                allDOMElements.finalTotalContainer.innerHTML = `
+                    <div class="final-total-wrapper" data-view-mode="true">
+                        <span id="final-total-text">${formatCurrency(order.finalTotal || 0)}</span>
+                        <button class="btn-secondary edit-total-btn" data-app-action="toggle-total-edit">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                    </div>
+                    <div class="final-total-wrapper" data-view-mode="false" style="display:none;">
+                        <input type="number" id="final-total-input" class="final-total-input" value="${order.finalTotal || 0}">
+                        <button class="btn-secondary edit-total-btn" data-app-action="save-total-edit">
+                            <span class="material-symbols-outlined">save</span>
+                        </button>
                     </div>`;
             } else {
-                finalTotalContainer.innerHTML = `<span>${formatCurrency(order.finalTotal || 0)}</span>`;
+                allDOMElements.finalTotalContainer.innerHTML = `<span>${formatCurrency(order.finalTotal || 0)}</span>`;
             }
             
             if (order.status === 'completed') {
-                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
-                detailCompleteBtn.className = 'btn btn-reopen';
-                detailEditBtn.disabled = true;
+                allDOMElements.detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
+                allDOMElements.detailCompleteBtn.className = 'btn btn-reopen';
+                allDOMElements.detailEditBtn.disabled = true;
             } else {
-                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
-                detailCompleteBtn.className = 'btn btn-success';
-                detailEditBtn.disabled = false;
+                allDOMElements.detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
+                allDOMElements.detailCompleteBtn.className = 'btn btn-success';
+                allDOMElements.detailEditBtn.disabled = false;
             }
         }
         
         async function logHistory(orderId, action, details = {}) { /* ... Same as before ... */ }
         async function performConfirmedAction() { /* ... Same as before ... */ }
         async function showHistoryModal(orderId) { /* ... Same as before ... */ }
-        
+
         function listenForPayments() {
             if (paymentsUnsubscribe) paymentsUnsubscribe();
             const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('date', 'desc'));
@@ -241,67 +254,55 @@
 
         function renderPayments(payments) {
             const isAdmin = currentUserProfile.role === 'admin';
-            paymentList.innerHTML = '';
-            if (payments.length === 0) {
-                paymentList.innerHTML = '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No payments recorded yet.</p></li>';
-            } else {
-                payments.forEach(p => {
-                    const li = document.createElement('li'); li.className = 'payment-item';
-                    const notesHtml = p.notes ? `<span class="notes">${p.notes}</span>` : '';
-                    const actionsHtml = isAdmin ? `<div class="payment-actions"><button class="btn-secondary" data-app-action="edit-payment" data-id="${p.id}" style="padding: 4px 8px;"><span class="material-symbols-outlined" style="font-size: 16px;">edit</span></button></div>` : '';
-                    li.innerHTML = `<div class="payment-info"><span class="payment-amount">${formatCurrency(p.amount)}</span><span class="payment-meta">${new Date(p.date + 'T00:00:00').toLocaleDateString()} • ${p.type} ${notesHtml}</span></div>${actionsHtml}`;
-                    paymentList.appendChild(li);
-                });
-            }
+            allDOMElements.paymentList.innerHTML = payments.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No payments recorded yet.</p></li>' : payments.map(p => {
+                const notesHtml = p.notes ? `<span class="notes">${p.notes}</span>` : '';
+                const actionsHtml = isAdmin ? `<div class="payment-actions"><button class="btn-secondary" data-app-action="edit-payment" data-id="${p.id}" style="padding: 4px 8px;"><span class="material-symbols-outlined" style="font-size: 16px;">edit</span></button></div>` : '';
+                return `<li class="payment-item"><div class="payment-info"><span class="payment-amount">${formatCurrency(p.amount)}</span><span class="payment-meta">${new Date(p.date + 'T00:00:00').toLocaleDateString()} • ${p.type} ${notesHtml}</span></div>${actionsHtml}</li>`;
+            }).join('');
             calculateTotals(payments);
         }
 
-        function calculateTotals(payments) {
-            const totalCollected = (payments || []).reduce((sum, p) => sum + p.amount, 0);
+        function calculateTotals(payments = []) {
+            const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0);
             let finalTotal = 0;
-            const finalTotalField = finalTotalContainer.querySelector('input, span');
-            if (finalTotalField.tagName === 'INPUT') {
-                finalTotal = parseFloat(finalTotalField.value) || 0;
-            } else {
-                finalTotal = parseFloat(finalTotalField.textContent.replace(/[₹,]/g, '')) || 0;
-            }
+            const finalTotalInput = document.getElementById('final-total-input');
+            if (finalTotalInput) { finalTotal = parseFloat(finalTotalInput.value) || 0; } 
+            else { finalTotal = currentOrder.finalTotal || 0; }
             const pendingAmount = finalTotal - totalCollected;
-            totalCollectedEl.textContent = formatCurrency(totalCollected);
-            pendingAmountEl.textContent = formatCurrency(pendingAmount);
+            allDOMElements.totalCollectedEl.textContent = formatCurrency(totalCollected);
+            allDOMElements.pendingAmountEl.textContent = formatCurrency(pendingAmount);
         }
         
         async function handlePaymentFormSubmit(e) {
             e.preventDefault(); showLoading();
-            const paymentId = paymentForm.querySelector('#payment-id').value;
-            const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() };
+            const paymentId = allDOMElements.paymentForm.querySelector('#payment-id').value;
+            const data = { amount: parseFloat(allDOMElements.paymentForm.querySelector('#payment-amount').value), date: allDOMElements.paymentForm.querySelector('#payment-date').value, type: allDOMElements.paymentForm.querySelector('#payment-type').value, notes: allDOMElements.paymentForm.querySelector('#payment-notes').value.trim() };
             try {
                 const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`);
-                const action = paymentId ? "Payment Edited" : "Payment Added";
-                const docRef = paymentId ? doc(paymentsRef, paymentId) : doc(paymentsRef);
-                await setDoc(docRef, data);
-                await logHistory(currentOrderId, action, { amount: formatCurrency(data.amount) });
-                paymentModal.style.display = 'none';
-            } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } 
+                if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory(currentOrderId, "Payment Edited", { amount: formatCurrency(data.amount) }); } 
+                else { await addDoc(paymentsRef, data); await logHistory(currentOrderId, "Payment Added", { amount: formatCurrency(data.amount) }); }
+                allDOMElements.paymentModal.style.display = 'none';
+            } catch (error) { showMessageModal("Could not save payment."); } 
             finally { hideLoading(); }
         }
         
         function openPaymentModalForEdit(payment) {
-            paymentModalTitle.textContent = "Edit Payment";
-            paymentForm.querySelector('#payment-id').value = payment.id;
-            paymentForm.querySelector('#payment-amount').value = payment.amount;
-            paymentForm.querySelector('#payment-date').value = payment.date;
-            paymentForm.querySelector('#payment-type').value = payment.type;
-            paymentForm.querySelector('#payment-notes').value = payment.notes;
-            paymentModal.style.display = 'flex';
+            allDOMElements.paymentModalTitle.textContent = "Edit Payment";
+            allDOMElements.paymentForm.querySelector('#payment-id').value = payment.id;
+            allDOMElements.paymentForm.querySelector('#payment-amount').value = payment.amount;
+            allDOMElements.paymentForm.querySelector('#payment-date').value = payment.date;
+            allDOMElements.paymentForm.querySelector('#payment-type').value = payment.type;
+            allDOMElements.paymentForm.querySelector('#payment-notes').value = payment.notes;
+            allDOMElements.paymentModal.style.display = 'flex';
         }
 
         async function initializeFirebase() { /* ... Same as before ... */ }
-        async function loadAndDisplayOrder(orderId) { /* ... Same as before, now calls listenForPayments ... */ }
+        async function loadAndDisplayOrder(orderId) { /* ... Same as before, calls listenForPayments ... */ }
         async function handleSignOut() { /* ... Same as before ... */ }
         
         initializeFirebase = async function() {
             try {
-                const firebaseConfig = { apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg", authDomain: "payment-form-b77e2.firebaseapp.com", projectId: "payment-form-b77e2", storageBucket: "payment-form-b77e2.firebasestorage.app", messagingSenderId: "796020240904", appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd", measurementId: "G-DHJJ4WNYR4" };
+                const firebaseConfig = { apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg", authDomain: "payment-form-b77e2.firebaseapp.com", projectId: "payment-form-b77e2", storageBucket: "payment-form-b77e2.firebasestorage.app", messagingSenderId: "796020240904", appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd" };
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
@@ -311,8 +312,8 @@
                         if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
                         currentUserProfile = { id: userDoc.id, ...userDoc.data() };
                         currentUserName = currentUserProfile.displayName || "User";
-                        profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
-                        dashboardLink.href = currentUserProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
+                        allDOMElements.profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
+                        allDOMElements.dashboardLink.href = currentUserProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
                         const urlParams = new URLSearchParams(window.location.search);
                         currentOrderId = urlParams.get('id');
                         if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } 
@@ -321,65 +322,30 @@
                 });
             } catch (error) { console.error("Firebase Init Error:", error); showMessageModal("Critical error initializing application."); hideLoading(); }
         }
-        loadAndDisplayOrder = async function(orderId) {
-            showLoading();
-            try {
-                const orderRef = doc(db, 'upvc_orders', orderId);
-                const orderSnap = await getDoc(orderRef);
-                if (orderSnap.exists()) { showOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); listenForPayments(); } 
-                else { showMessageModal("Order not found. Redirecting..."); setTimeout(() => window.location.href = 'view-orders.html', 2000); }
-            } catch (error) { console.error("Error loading order: ", error); showMessageModal("Failed to load order data."); } 
-            finally { hideLoading(); }
-        }
+        loadAndDisplayOrder = async function(orderId) { showLoading(); try { const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { showOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); listenForPayments(); } else { showMessageModal("Order not found. Redirecting..."); setTimeout(() => window.location.href = 'view-orders.html', 2000); } } catch (error) { console.error("Error loading order: ", error); showMessageModal("Failed to load order data."); } finally { hideLoading(); } }
         handleSignOut = async function() { showLoading(); try { await signOut(auth); } catch (e) { hideLoading(); } }
         
-        // --- EVENT LISTENERS ---
-        navLogoutBtn.addEventListener('click', handleSignOut);
-        detailEditBtn.addEventListener('click', (e) => window.location.href = `order-form.html?id=${e.currentTarget.dataset.id}`);
-        detailViewQuoteBtn.addEventListener('click', (e) => window.location.href = `quote.html?id=${e.currentTarget.dataset.id}`);
-        detailDeleteBtn.addEventListener('click', (e) => { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', 'delete', e.currentTarget.dataset.id, async (docRef) => { await logHistory(e.currentTarget.dataset.id, 'Order Deleted'); await deleteDoc(docRef); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); }); });
-        detailCompleteBtn.addEventListener('click', (e) => {
-            const orderId = e.currentTarget.dataset.id;
-            const isCompleted = e.currentTarget.textContent.includes('Reopen');
-            if (isCompleted) { showConfirmationModal('Reopen this order?', 'btn-reopen', 'Reopen Order', 'reopen', orderId, async (docRef) => { await updateDoc(docRef, { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }); await logHistory(orderId, 'Order Reopened'); showMessageModal('Order reopened.'); loadAndDisplayOrder(orderId); }); } 
-            else { showConfirmationModal('Mark this order as complete?', 'btn-success', 'Mark Complete', 'complete', orderId, async (docRef) => { await updateDoc(docRef, { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }); await logHistory(orderId, 'Order Completed'); showMessageModal('Order marked as complete!'); loadAndDisplayOrder(orderId); }); }
-        });
-        detailShowHistoryBtn.addEventListener('click', (e) => showHistoryModal(e.currentTarget.dataset.id));
-        detailGetDirectionsBtn.addEventListener('click', (e) => { const { lat, lon } = e.currentTarget.dataset; if (lat && lon) window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank'); });
-        profileImage.addEventListener('click', (e) => { e.stopPropagation(); toggleProfileMenu(); });
-        window.addEventListener('click', (e) => { if (profileDropdown.classList.contains('show')) { toggleProfileMenu(); } });
-        messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
-        cancelActionBtn.addEventListener('click', hideConfirmationModal);
-        confirmActionBtn.addEventListener('click', performConfirmedAction);
-        historyCloseBtn.addEventListener('click', () => historyModal.style.display = 'none');
-        addPaymentBtn.addEventListener('click', () => { paymentModalTitle.textContent = "Add Payment"; paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; });
-        paymentForm.addEventListener('submit', handlePaymentFormSubmit);
-        paymentList.addEventListener('click', async (e) => {
-            const editBtn = e.target.closest('[data-app-action="edit-payment"]');
-            if (editBtn) { const paymentId = editBtn.dataset.id; const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if (paymentDoc.exists()) { openPaymentModalForEdit({ id: paymentDoc.id, ...paymentDoc.data() }); } }
-        });
-        document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => { paymentModal.style.display = 'none'; });
-        
-        finalTotalContainer.addEventListener('click', async (e) => {
-            const target = e.target;
-            const field = finalTotalContainer.querySelector('.editable-field');
-            if(target.matches('[data-app-action="edit-final-total"]')) {
-                field.classList.add('editing');
-                field.querySelector('input').focus();
-            } else if (target.matches('[data-app-action="save-final-total"]')) {
-                const input = field.querySelector('input');
-                const newTotal = parseFloat(input.value);
-                if (!isNaN(newTotal) && newTotal !== currentOrder.finalTotal) {
-                    await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal });
-                    await logHistory(currentOrderId, "Final Total Updated", { old: formatCurrency(currentOrder.finalTotal || 0), new: formatCurrency(newTotal) });
-                    currentOrder.finalTotal = newTotal; // Update local state
-                }
-                field.classList.remove('editing');
-                field.querySelector('span').textContent = formatCurrency(newTotal);
-                calculateTotals();
-            }
-        });
+        // --- ALL EVENT LISTENERS (INCLUDING NEW ONES) ---
+        allDOMElements.navLogoutBtn.addEventListener('click', handleSignOut);
+        allDOMElements.detailEditBtn.addEventListener('click', (e) => window.location.href = `order-form.html?id=${e.currentTarget.dataset.id}`);
+        allDOMElements.detailViewQuoteBtn.addEventListener('click', (e) => window.location.href = `quote.html?id=${e.currentTarget.dataset.id}`);
+        allDOMElements.detailDeleteBtn.addEventListener('click', (e) => { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', 'delete', e.currentTarget.dataset.id, async (docRef) => { await logHistory(e.currentTarget.dataset.id, 'Order Deleted'); await deleteDoc(docRef); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); }); });
+        allDOMElements.detailCompleteBtn.addEventListener('click', (e) => { const orderId = e.currentTarget.dataset.id; const isCompleted = e.currentTarget.textContent.includes('Reopen'); if (isCompleted) { showConfirmationModal('Reopen this order?', 'btn-reopen', 'Reopen Order', 'reopen', orderId, async (docRef) => { await updateDoc(docRef, { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }); await logHistory(orderId, 'Order Reopened'); showMessageModal('Order reopened.'); loadAndDisplayOrder(orderId); }); } else { showConfirmationModal('Mark this order as complete?', 'btn-success', 'Mark Complete', 'complete', orderId, async (docRef) => { await updateDoc(docRef, { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }); await logHistory(orderId, 'Order Completed'); showMessageModal('Order marked as complete!'); loadAndDisplayOrder(orderId); }); } });
+        allDOMElements.detailShowHistoryBtn.addEventListener('click', (e) => showHistoryModal(e.currentTarget.dataset.id));
+        allDOMElements.detailGetDirectionsBtn.addEventListener('click', (e) => { const { lat, lon } = e.currentTarget.dataset; if (lat && lon) window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank'); });
+        allDOMElements.profileImage.addEventListener('click', (e) => { e.stopPropagation(); toggleProfileMenu(); });
+        window.addEventListener('click', (e) => { if (allDOMElements.profileDropdown.classList.contains('show')) { toggleProfileMenu(); } });
+        allDOMElements.messageOkBtn.addEventListener('click', () => allDOMElements.messageModal.style.display = 'none');
+        allDOMElements.cancelActionBtn.addEventListener('click', hideConfirmationModal);
+        allDOMElements.confirmActionBtn.addEventListener('click', performConfirmedAction);
+        allDOMElements.historyCloseBtn.addEventListener('click', () => allDOMElements.historyModal.style.display = 'none');
+        allDOMElements.addPaymentBtn.addEventListener('click', () => { allDOMElements.paymentModalTitle.textContent = "Add Payment"; allDOMElements.paymentForm.reset(); allDOMElements.paymentForm.querySelector('#payment-id').value = ''; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; allDOMElements.paymentModal.style.display = 'flex'; });
+        allDOMElements.paymentForm.addEventListener('submit', handlePaymentFormSubmit);
+        allDOMElements.paymentList.addEventListener('click', async (e) => { const editBtn = e.target.closest('[data-app-action="edit-payment"]'); if (editBtn) { const paymentId = editBtn.dataset.id; const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if (paymentDoc.exists()) { openPaymentModalForEdit({ id: paymentDoc.id, ...paymentDoc.data() }); } } });
+        document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => { allDOMElements.paymentModal.style.display = 'none'; });
+        allDOMElements.finalTotalContainer.addEventListener('click', (e) => { const actionBtn = e.target.closest('[data-app-action]'); if (!actionBtn) return; const action = actionBtn.dataset.appAction; const viewWrapper = allDOMElements.finalTotalContainer.querySelector('[data-view-mode="true"]'); const editWrapper = allDOMElements.finalTotalContainer.querySelector('[data-view-mode="false"]'); if (action === 'toggle-total-edit') { viewWrapper.style.display = 'none'; editWrapper.style.display = 'flex'; editWrapper.querySelector('input').focus(); } else if (action === 'save-total-edit') { const newTotal = parseFloat(editWrapper.querySelector('input').value); if (!isNaN(newTotal)) { showLoading(); updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }).then(() => { logHistory(currentOrderId, "Final Total Updated", { newTotal: formatCurrency(newTotal) }); currentOrder.finalTotal = newTotal; viewWrapper.querySelector('span').textContent = formatCurrency(newTotal); calculateTotals(); hideLoading(); }).catch(hideLoading); } viewWrapper.style.display = 'flex'; editWrapper.style.display = 'none'; } });
 
+        // --- INITIALIZATION ---
         showLoading();
         initializeFirebase();
     </script>
