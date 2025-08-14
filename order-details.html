@@ -10,30 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        /* --- ALL ORIGINAL CSS + NEW PAYMENT STYLES --- */
-        :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--font-icon:"Material Symbols Outlined";--light-bg-primary:#fff;--light-bg-secondary:#f7f9fc;--light-bg-tertiary:#f1f3f6;--light-text-primary:#012726;--light-text-secondary:#52616b;--light-text-muted:#9ca3af;--light-border:#e5e7eb;--light-border-hover:#d1d5db;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--color-accent:#33c375;--color-accent-hover:#2cac66;--color-accent-text:#012726;--color-danger:#ef4444;--color-danger-hover:#dc2626;--color-danger-text:#fff;--color-warning:#f59e0b;--color-warning-hover:#d97706;--color-warning-text:#fff;--color-reopen:#6f42c1;--color-reopen-hover:#5a3d9a;--color-reopen-text:#fff;--status-pending-bg:#eef2ff;--status-pending-text:#4338ca;--status-completed-bg:#f0fdf4;--status-completed-text:#166534;--status-overdue-bg:#fef2f2;--status-overdue-text:#be123c;--status-overdue-border:#fecaca;--status-upcoming-bg:#fffbeb;--status-upcoming-text:#b45309;--status-upcoming-border:#fde68a;--color-focus-ring:rgba(51,195,117,.35);--radius-sm:0.25rem;--radius-md:0.5rem;--radius-lg:1rem;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04);--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--shadow-lg:0 10px 20px -3px rgba(0,0,0,.07),0 4px 8px -4px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1)}*,:after,:before{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:var(--light-text-secondary);margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:calc(70px + 1rem)}.app-container{max-width:72rem;margin:2rem auto;padding:0;width:100%}h1,h2,h3{font-weight:600;color:var(--light-text-primary);margin:0}h1{font-size:1.875rem;line-height:2.25rem}h2{font-size:1.5rem;line-height:2rem}h3{font-size:1.25rem;line-height:1.75rem}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.screen{display:none}.screen.active{display:block;animation:fadeUp .5s var(--ease) forwards}button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer;-webkit-user-select:none;user-select:none}button:hover:not(:disabled),.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-md)}button:active:not(:disabled),.btn:active:not(:disabled){transform:translateY(0);box-shadow:var(--shadow-sm)}button:disabled,.btn:disabled{opacity:.6;cursor:not-allowed}button:focus-visible,.btn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}.btn-primary{background-color:var(--color-primary);color:var(--color-primary-text)}.btn-primary:hover:not(:disabled){background-color:var(--color-primary-hover)}.btn-secondary{background-color:var(--light-bg-primary);color:var(--light-text-secondary);border-color:var(--light-border);box-shadow:var(--shadow-sm)}.btn-secondary:hover:not(:disabled){background-color:var(--light-bg-tertiary);border-color:var(--light-border-hover);color:var(--light-text-primary)}.btn-danger{background-color:var(--color-danger);color:var(--color-danger-text)}.btn-danger:hover:not(:disabled){background-color:var(--color-danger-hover)}.btn-success{background-color:var(--color-accent);color:var(--color-accent-text)}.btn-success:hover:not(:disabled){background-color:var(--color-accent-hover)}.btn-reopen{background-color:var(--color-reopen);color:var(--color-reopen-text)}.btn-reopen:hover:not(:disabled){background-color:var(--color-reopen-hover)}.status-tag{display:inline-flex;align-items:center;gap:.375rem;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:600}.status-tag:before{content:"";display:block;width:.5rem;height:.5rem;border-radius:50%}.status-tag.pending{background-color:var(--status-pending-bg);color:var(--status-pending-text)}.status-tag.pending:before{background-color:var(--status-pending-text)}.status-tag.completed{background-color:var(--status-completed-bg);color:var(--status-completed-text)}.status-tag.completed:before{background-color:var(--status-completed-text)}.status-tag.overdue{background-color:var(--status-overdue-bg);color:var(--status-overdue-text)}.status-tag.overdue:before{background-color:var(--status-overdue-text)}.status-tag.upcoming-due{background-color:var(--status-upcoming-bg);color:var(--status-upcoming-text)}.status-tag.upcoming-due:before{background-color:var(--status-upcoming-text)}.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding:0 1.5rem}.card{background-color:var(--light-bg-primary);border:1px solid var(--light-border);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow-sm); margin-bottom: 2rem;}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:center;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary)}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}.history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none}.history-detail ul{padding-left:1.25rem;margin-top:.25rem}.detail-window-item{display:flex;align-items:center;gap:1rem;padding:.75rem;background-color:var(--light-bg-tertiary);border-radius:var(--radius-md);margin-bottom:.5rem}.item-number{flex-shrink:0;width:2.25rem;height:2.25rem;background-color:var(--color-primary);color:var(--color-primary-text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.875rem}.item-info{font-size:.9rem;color:var(--light-text-primary);line-height:1.4}.item-info small{display:block;color:var(--light-text-secondary);font-size:.8rem;margin-top:.25rem}.remove-window-btn{background:0 0;border:none;padding:.25rem;color:var(--light-text-muted);cursor:pointer;border-radius:9999px;display:flex;align-items:center;justify-content:center;transition:color .2s,background-color .2s;position:static}.remove-window-btn:hover{background-color:var(--light-bg-tertiary);color:var(--color-danger)}.navbar{background-color:var(--light-bg-primary);padding:10px 2rem;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;height:70px}.navbar-logo a{text-decoration:none;color:var(--light-text-primary);font-weight:700;font-size:1.5rem}.navbar-profile{position:relative}.navbar-profile .profile-image{height:45px;width:45px;border-radius:50%;-o-object-fit:cover;object-fit:cover;cursor:pointer;border:2px solid #e0e0e0;transition:transform .2s ease,box-shadow .2s ease}.navbar-profile .profile-image:hover{transform:scale(1.1);box-shadow:0 0 10px rgba(0,0,0,.2)}.profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;background:var(--light-bg-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:8px;min-width:160px;z-index:1001;visibility:hidden;opacity:0;transform:translateY(-10px);transition:all .2s ease-out}.profile-dropdown.show{visibility:visible;opacity:1;transform:translateY(0)}.profile-dropdown button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:none;background:0 0;text-align:left;font-size:15px;color:var(--light-text-primary);border-radius:var(--radius-sm);cursor:pointer;transition:background-color .2s ease}.profile-dropdown button:hover{background-color:var(--light-bg-tertiary)}.profile-dropdown .icon{font-size:18px}
-        /* --- NEW PAYMENT SECTION STYLES --- */
-        #payment-form {display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid var(--light-border); padding-bottom: 2rem;}
-        #payment-form .grid-span-2 { grid-column: span 2; }
-        .form-group { margin: 0; }
-        .input-group { position: relative; }
-        .input-field { width: 100%; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; padding: 1rem; color: var(--light-text-primary); transition: all 0.2s; outline: none; }
-        .input-label { position: absolute; top: 1rem; left: 1rem; color: var(--light-text-secondary); pointer-events: none; transition: all 0.2s var(--ease); background-color: var(--light-bg-primary); padding: 0 0.25rem; }
-        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label {top: -0.625rem; font-size: 0.75rem; color: var(--color-primary);}
-        .input-field:focus { border-color: var(--color-primary); }
-        #payments-list { list-style: none; padding: 0; margin: 0; }
-        .payment-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--light-border); }
-        .payment-item:last-child { border-bottom: none; }
-        .payment-info .amount { font-weight: 600; font-size: 1.1rem; color: var(--light-text-primary); }
-        .payment-info .meta { font-size: 0.8rem; color: var(--light-text-muted); }
-        #payment-summary { margin-top: 2rem; border-top: 2px solid var(--light-border); padding-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .summary-item { display: flex; flex-direction: column; }
-        .summary-item .label { font-size: 0.8rem; font-weight: 500; color: var(--light-text-secondary); text-transform: uppercase; margin-bottom: 0.25rem; }
-        .summary-item .value { font-size: 1.5rem; font-weight: 700; color: var(--light-text-primary); }
-        .summary-item .value.pending { color: var(--color-danger); }
-        #final-total-input { font-size: 1.5rem; font-weight: 700; color: var(--light-text-primary); border: 2px solid transparent; border-radius: var(--radius-sm); padding: 4px 8px; transition: border-color 0.2s; width: 100%; }
-        #final-total-input:hover, #final-total-input:focus { border-color: var(--light-border-hover); }
-        @media (max-width: 640px) { body { padding: 0; padding-top: 70px; background-color: var(--light-bg-primary); } .app-container { margin: 0; padding: 0; } .card { padding: 1.5rem; border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; } .page-header { flex-direction: row; justify-content: flex-start; align-items: center; gap: 1rem; padding: 1.5rem; background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); } #detail-info-grid { grid-template-columns: 1fr !important; } .details-action-buttons { flex-direction: column; align-items: stretch !important; gap: 0.75rem; } .details-action-buttons .btn { width: 100%; margin: 0; } #payment-form { grid-template-columns: 1fr; } #payment-form .grid-span-2 { grid-column: span 1; } #payment-summary { grid-template-columns: 1fr; } }
+        /* --- EXACT, COMPLETE CSS FROM YOUR EXAMPLE --- */
+        :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--font-icon:"Material Symbols Outlined";--light-bg-primary:#fff;--light-bg-secondary:#f7f9fc;--light-bg-tertiary:#f1f3f6;--light-text-primary:#012726;--light-text-secondary:#52616b;--light-text-muted:#9ca3af;--light-border:#e5e7eb;--light-border-hover:#d1d5db;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--color-accent:#33c375;--color-accent-hover:#2cac66;--color-accent-text:#012726;--color-danger:#ef4444;--color-danger-hover:#dc2626;--color-danger-text:#fff;--color-warning:#f59e0b;--color-warning-hover:#d97706;--color-warning-text:#fff;--color-reopen:#6f42c1;--color-reopen-hover:#5a3d9a;--color-reopen-text:#fff;--status-pending-bg:#eef2ff;--status-pending-text:#4338ca;--status-completed-bg:#f0fdf4;--status-completed-text:#166534;--status-overdue-bg:#fef2f2;--status-overdue-text:#be123c;--status-overdue-border:#fecaca;--status-upcoming-bg:#fffbeb;--status-upcoming-text:#b45309;--status-upcoming-border:#fde68a;--color-focus-ring:rgba(51,195,117,.35);--radius-sm:0.25rem;--radius-md:0.5rem;--radius-lg:1rem;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04);--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--shadow-lg:0 10px 20px -3px rgba(0,0,0,.07),0 4px 8px -4px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1)}*,:after,:before{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:var(--light-text-secondary);margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:calc(70px + 1rem)}.app-container{max-width:72rem;margin:2rem auto;padding:0;width:100%}h1,h2,h3{font-weight:600;color:var(--light-text-primary);margin:0}h1{font-size:1.875rem;line-height:2.25rem}h2{font-size:1.5rem;line-height:2rem}h3{font-size:1.25rem;line-height:1.75rem}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.screen{display:none}.screen.active{display:block;animation:fadeUp .5s var(--ease) forwards}button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer;-webkit-user-select:none;user-select:none}button:hover:not(:disabled),.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-md)}button:active:not(:disabled),.btn:active:not(:disabled){transform:translateY(0);box-shadow:var(--shadow-sm)}button:disabled,.btn:disabled{opacity:.6;cursor:not-allowed}button:focus-visible,.btn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}.btn-primary{background-color:var(--color-primary);color:var(--color-primary-text)}.btn-primary:hover:not(:disabled){background-color:var(--color-primary-hover)}.btn-secondary{background-color:var(--light-bg-primary);color:var(--light-text-secondary);border-color:var(--light-border);box-shadow:var(--shadow-sm)}.btn-secondary:hover:not(:disabled){background-color:var(--light-bg-tertiary);border-color:var(--light-border-hover);color:var(--light-text-primary)}.btn-danger{background-color:var(--color-danger);color:var(--color-danger-text)}.btn-danger:hover:not(:disabled){background-color:var(--color-danger-hover)}.btn-success{background-color:var(--color-accent);color:var(--color-accent-text)}.btn-success:hover:not(:disabled){background-color:var(--color-accent-hover)}.btn-reopen{background-color:var(--color-reopen);color:var(--color-reopen-text)}.btn-reopen:hover:not(:disabled){background-color:var(--color-reopen-hover)}.status-tag{display:inline-flex;align-items:center;gap:.375rem;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:600}.status-tag:before{content:"";display:block;width:.5rem;height:.5rem;border-radius:50%}.status-tag.pending{background-color:var(--status-pending-bg);color:var(--status-pending-text)}.status-tag.pending:before{background-color:var(--status-pending-text)}.status-tag.completed{background-color:var(--status-completed-bg);color:var(--status-completed-text)}.status-tag.completed:before{background-color:var(--status-completed-text)}.status-tag.overdue{background-color:var(--status-overdue-bg);color:var(--status-overdue-text)}.status-tag.overdue:before{background-color:var(--status-overdue-text)}.status-tag.upcoming-due{background-color:var(--status-upcoming-bg);color:var(--status-upcoming-text)}.status-tag.upcoming-due:before{background-color:var(--status-upcoming-text)}.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding:0 1.5rem}.card{background-color:var(--light-bg-primary);border:1px solid var(--light-border);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow-sm)}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:center;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary)}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}.history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none}.history-detail ul{padding-left:1.25rem;margin-top:.25rem}.detail-window-item{display:flex;align-items:center;gap:1rem;padding:.75rem;background-color:var(--light-bg-tertiary);border-radius:var(--radius-md);margin-bottom:.5rem}.item-number{flex-shrink:0;width:2.25rem;height:2.25rem;background-color:var(--color-primary);color:var(--color-primary-text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.875rem}.item-info{font-size:.9rem;color:var(--light-text-primary);line-height:1.4}.item-info small{display:block;color:var(--light-text-secondary);font-size:.8rem;margin-top:.25rem}.remove-window-btn{background:0 0;border:none;padding:.25rem;color:var(--light-text-muted);cursor:pointer;border-radius:9999px;display:flex;align-items:center;justify-content:center;transition:color .2s,background-color .2s;position:static}.remove-window-btn:hover{background-color:var(--light-bg-tertiary);color:var(--color-danger)}.navbar{background-color:var(--light-bg-primary);padding:10px 2rem;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;height:70px}.navbar-logo a{text-decoration:none;color:var(--light-text-primary);font-weight:700;font-size:1.5rem}.navbar-profile{position:relative}.navbar-profile .profile-image{height:45px;width:45px;border-radius:50%;-o-object-fit:cover;object-fit:cover;cursor:pointer;border:2px solid #e0e0e0;transition:transform .2s ease,box-shadow .2s ease}.navbar-profile .profile-image:hover{transform:scale(1.1);box-shadow:0 0 10px rgba(0,0,0,.2)}.profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;background:var(--light-bg-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:8px;min-width:160px;z-index:1001;visibility:hidden;opacity:0;transform:translateY(-10px);transition:all .2s ease-out}.profile-dropdown.show{visibility:visible;opacity:1;transform:translateY(0)}.profile-dropdown button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:none;background:0 0;text-align:left;font-size:15px;color:var(--light-text-primary);border-radius:var(--radius-sm);cursor:pointer;transition:background-color .2s ease}.profile-dropdown button:hover{background-color:var(--light-bg-tertiary)}.profile-dropdown .icon{font-size:18px}
+        .form-group{margin-bottom:1.5rem}.input-group{position:relative}.input-field{width:100%;background-color:#fff;border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:1rem;padding:1rem;color:#012726;transition:all .2s;outline:none}.input-label{position:absolute;top:1rem;left:1rem;color:#52616b;pointer-events:none;transition:all .2s var(--ease);background-color:#fff;padding:0 .25rem}.input-field:focus+.input-label,.input-field:not(:placeholder-shown)+.input-label{top:-.625rem;font-size:.75rem;color:var(--color-primary)}.input-field:focus{border-color:var(--color-primary);box-shadow:0 0 0 3px var(--color-focus-ring)}
+        .payment-list-item{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;padding:1rem 0;border-bottom:1px solid var(--light-border)}.payment-list-item:last-child{border-bottom:none}.payment-info{font-size:.9rem}.payment-info strong{color:var(--light-text-primary)}.payment-info .note{font-size:.8rem;color:var(--light-text-muted)}.payment-summary{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-border)}.summary-item{display:flex;justify-content:space-between;align-items:baseline;font-size:.9rem}.summary-item .label{font-weight:500;color:var(--light-text-secondary)}.summary-item .value{font-weight:600;font-size:1.1rem;color:var(--light-text-primary)}.summary-item .value.final-total input{font-size:inherit;font-weight:inherit;color:inherit;padding:.25rem .5rem;border-radius:var(--radius-sm);border:1px solid var(--light-border);text-align:right;width:120px}.summary-item .value.pending{color:var(--color-danger);font-size:1.25rem}.summary-item .value.collected{color:var(--color-accent-text)}
+        @media (max-width: 640px) { body { padding: 0; padding-top: 70px; background-color: var(--light-bg-primary); } .app-container { margin: 0; padding: 0; } .card { padding: 1.5rem; border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; } .page-header { flex-direction: row; justify-content: flex-start; align-items: center; gap: 1rem; padding: 1.5rem; background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); } #detail-info-grid { grid-template-columns: 1fr !important; } .details-action-buttons { flex-direction: column; align-items: stretch !important; gap: 0.75rem; } .details-action-buttons .btn { width: 100%; margin: 0; } .payment-list-item{grid-template-columns:1fr;gap:.5rem} .payment-amount{text-align:left} }
     </style>
 </head>
 <body>
@@ -58,76 +39,16 @@
                 </button>
                  <h2>Order Details</h2>
             </div>
-            <div class="card">
-                <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
-                    <div><p id="detail-customer-name" style="font-size: 1.5rem; font-weight: 700; color: var(--color-primary);"></p><p id="detail-customer-address" style="color: var(--light-text-secondary);"></p></div>
-                    <div id="detail-status-tag" class="status-tag" style="align-self: flex-start;"></div>
-                </div>
-                <div id="detail-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; font-size: 0.875rem;">
-                    <p><strong>Mobile:</strong> <span id="detail-customer-mobile"></span></p>
-                    <p><strong>Placed:</strong> <span id="detail-order-taken-date"></span></p>
-                    <p><strong>Due Date:</strong> <span id="detail-due-date"></span></p>
-                    <p id="detail-completed-date-row" style="display: none;"><strong>Completed:</strong> <span id="detail-completed-date"></span></p>
-                    <p id="detail-created-by-row" style="display: none;"><strong>Created By:</strong> <span id="detail-created-by"></span></p>
-                    <p id="detail-completed-by-row" style="display: none;"><strong>Completed By:</strong> <span id="detail-completed-by"></span></p>
-                </div>
-                <h3 style="margin-bottom: 1rem;">Windows (<span id="detail-window-count"></span>)</h3>
-                <div id="detail-windows-list"></div>
-                <div class="details-action-buttons" style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem; margin-top: 2rem; border-top: 1px solid var(--light-border); padding-top: 2rem;">
-                    <button id="detail-get-directions-btn" class="btn-secondary"><span class="material-symbols-outlined">directions</span>Get Directions</button>
-                    <button id="detail-view-quote-btn" class="btn-secondary"><span class="material-symbols-outlined">request_quote</span>View Quote</button>
-                    <button id="detail-show-history-btn" class="btn-secondary"><span class="material-symbols-outlined">history</span>Show History</button>
-                    <button id="detail-edit-btn" class="btn-primary"><span class="material-symbols-outlined">edit</span>Edit Order</button>
-                    <button id="detail-complete-btn" class="btn-success"><span class="material-symbols-outlined">check_circle</span>Mark as Complete</button>
-                    <button id="detail-delete-btn" class="btn-danger" style="display: none;"><span class="material-symbols-outlined">delete</span>Delete</button>
-                </div>
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <!-- Main order details are injected here -->
             </div>
             
-            <!-- NEW PAYMENT CARD -->
-            <div class="card" id="payments-card" style="display: none;">
-                <h2>Payment Details</h2>
-                <form id="payment-form">
-                    <div class="input-group">
-                        <input type="number" id="payment-amount" class="input-field" placeholder=" " required min="1">
-                        <label for="payment-amount" class="input-label">Amount</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="date" id="payment-date" class="input-field" placeholder=" " required>
-                        <label for="payment-date" class="input-label">Date</label>
-                    </div>
-                    <div class="input-group grid-span-2">
-                        <select id="payment-type" class="input-field" required>
-                            <option value="Cash">Cash</option>
-                            <option value="Online">Online</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="input-group grid-span-2">
-                        <input type="text" id="payment-notes" class="input-field" placeholder=" ">
-                        <label for="payment-notes" class="input-label">Notes (Optional)</label>
-                    </div>
-                    <button type="submit" class="btn-primary grid-span-2">
-                        <span class="material-symbols-outlined">add_card</span>
-                        Add Payment
-                    </button>
-                </form>
-                <ul id="payments-list"></ul>
-                <div id="payment-summary">
-                    <div class="summary-item">
-                        <label for="final-total-input" class="label">Final Total</label>
-                        <input type="number" id="final-total-input" class="input-field" value="0" min="0" step="0.01">
-                    </div>
-                    <div class="summary-item">
-                        <span class="label">Total Collected</span>
-                        <span id="total-collected" class="value">₹0.00</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="label">Pending Amount</span>
-                        <span id="pending-amount" class="value pending">₹0.00</span>
-                    </div>
-                </div>
+            <!-- New Payment Section (Admin-only) -->
+            <div class="card" id="payment-section" style="display: none;">
+                <h3 style="margin-bottom: 1rem;">Payment Details</h3>
+                <div id="payment-list"></div>
+                <div id="payment-summary" class="payment-summary"></div>
             </div>
-
         </div>
     </div>
 
@@ -136,37 +57,50 @@
     <div id="history-modal" class="modal"><div class="modal-content" style="max-width: 600px; text-align: left;"><div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;"><h3 id="history-modal-title">Order History</h3><button id="history-close-btn" class="remove-window-btn" style="position: static; border-radius: 50%;"><span class="material-symbols-outlined">close</span></button></div><ul id="history-list" style="list-style-type: none; padding: 0; max-height: 60vh; overflow-y: auto;"></ul></div></div>
     <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
     
+    <!-- New Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content" style="text-align: left;">
+            <form id="payment-form">
+                <h3 style="margin-bottom: 1.5rem;">Add Payment</h3>
+                <div class="form-group">
+                    <label for="payment-amount">Amount (₹)</label>
+                    <input type="number" id="payment-amount" class="input-field" required min="0.01" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="payment-date">Date</label>
+                    <input type="date" id="payment-date" class="input-field" required>
+                </div>
+                <div class="form-group">
+                    <label for="payment-type">Payment Type</label>
+                    <select id="payment-type" class="input-field">
+                        <option>Cash</option>
+                        <option>Online</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payment-notes">Notes (Optional)</label>
+                    <input type="text" id="payment-notes" class="input-field">
+                </div>
+                <div class="modal-buttons" style="margin-top: 1rem;">
+                    <button type="button" class="btn btn-secondary" data-app-action="close-payment-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, onSnapshot, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- DOM ELEMENTS & APP STATE ---
         const loadingOverlay = document.getElementById('loading-overlay');
         const profileImage = document.getElementById('profileImage');
         const profileDropdown = document.getElementById('profileDropdown');
         const navLogoutBtn = document.getElementById('nav-logout-btn');
         const dashboardLink = document.getElementById('dashboard-link');
-        const detailCustomerName = document.getElementById('detail-customer-name');
-        const detailCustomerAddress = document.getElementById('detail-customer-address');
-        const detailCustomerMobile = document.getElementById('detail-customer-mobile');
-        const detailOrderTakenDate = document.getElementById('detail-order-taken-date');
-        const detailDueDate = document.getElementById('detail-due-date');
-        const detailStatusTag = document.getElementById('detail-status-tag');
-        const detailCompletedDateRow = document.getElementById('detail-completed-date-row');
-        const detailCompletedDate = document.getElementById('detail-completed-date');
-        const detailCreatedByRow = document.getElementById('detail-created-by-row');
-        const detailCreatedBy = document.getElementById('detail-created-by');
-        const detailCompletedByRow = document.getElementById('detail-completed-by-row');
-        const detailCompletedBy = document.getElementById('detail-completed-by');
-        const detailWindowsList = document.getElementById('detail-windows-list');
-        const detailWindowCount = document.getElementById('detail-window-count');
-        const detailEditBtn = document.getElementById('detail-edit-btn');
-        const detailDeleteBtn = document.getElementById('detail-delete-btn');
-        const detailViewQuoteBtn = document.getElementById('detail-view-quote-btn');
-        const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        const detailShowHistoryBtn = document.getElementById('detail-show-history-btn');
-        const detailGetDirectionsBtn = document.getElementById('detail-get-directions-btn');
+        const orderDetailsCard = document.querySelector('#order-details-screen .card');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
@@ -177,22 +111,16 @@
         const historyModal = document.getElementById('history-modal');
         const historyList = document.getElementById('history-list');
         const historyCloseBtn = document.getElementById('history-close-btn');
-        // New Payment Elements
-        const paymentsCard = document.getElementById('payments-card');
+        const paymentSection = document.getElementById('payment-section');
+        const paymentModal = document.getElementById('payment-modal');
         const paymentForm = document.getElementById('payment-form');
-        const paymentsList = document.getElementById('payments-list');
-        const finalTotalInput = document.getElementById('final-total-input');
-        const totalCollectedEl = document.getElementById('total-collected');
-        const pendingAmountEl = document.getElementById('pending-amount');
-
+        
         let db, auth;
         let currentAction = { type: null, id: null, callback: null };
         let currentUserName = "Unknown User";
-        let currentOrderId = null;
-        let paymentUnsubscribe = null; // To store the listener unsubscribe function
         const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
+        let paymentsUnsubscribe = null; // To detach the real-time listener
 
-        // --- UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
         function toggleProfileMenu() { profileDropdown.classList.toggle('show'); }
@@ -206,8 +134,7 @@
             confirmationModal.style.display = 'flex';
         };
         const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
-
-        // --- DATA & RENDERING FUNCTIONS ---
+        
         const getStatusInfo = (order, today) => {
             if (order.status === 'completed') { return { text: 'Completed', className: 'completed' }; }
             const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; 
@@ -219,29 +146,55 @@
             return { text: 'Pending', className: 'pending' };
         };
         
-        function showOrderDetails(order, userRole) {
-            detailCustomerName.textContent = order.name;
-            detailCustomerAddress.textContent = order.address;
-            detailCustomerMobile.textContent = order.mobileNumber || 'N/A';
-            detailOrderTakenDate.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A';
-            detailDueDate.textContent = order.dueDate || 'N/A';
+        function showOrderDetails(order, isAdmin) {
+            orderDetailsCard.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <p id="detail-customer-name" style="font-size: 1.5rem; font-weight: 700; color: var(--color-primary);">${order.name}</p>
+                        <p id="detail-customer-address" style="color: var(--light-text-secondary);">${order.address}</p>
+                    </div>
+                    <div id="detail-status-tag" class="status-tag" style="align-self: flex-start;"></div>
+                </div>
+                <div id="detail-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; font-size: 0.875rem;">
+                    <p><strong>Mobile:</strong> <span>${order.mobileNumber || 'N/A'}</span></p>
+                    <p><strong>Placed:</strong> <span>${order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A'}</span></p>
+                    <p><strong>Due Date:</strong> <span>${order.dueDate || 'N/A'}</span></p>
+                    <p id="detail-completed-date-row" style="display: none;"><strong>Completed:</strong> <span id="detail-completed-date"></span></p>
+                    <p id="detail-created-by-row" style="display: ${order.createdBy ? 'block' : 'none'};"><strong>Created By:</strong> <span>${order.createdBy || ''}</span></p>
+                    <p id="detail-completed-by-row" style="display: none;"><strong>Completed By:</strong> <span id="detail-completed-by"></span></p>
+                </div>
+                <h3 style="margin-bottom: 1rem;">Windows (<span id="detail-window-count"></span>)</h3>
+                <div id="detail-windows-list"></div>
+                <div class="details-action-buttons" style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem; margin-top: 2rem; border-top: 1px solid var(--light-border); padding-top: 2rem;">
+                    <button id="detail-get-directions-btn" class="btn btn-secondary" style="display: ${order.latitude && order.longitude ? 'inline-flex' : 'none'};" data-lat="${order.latitude}" data-lon="${order.longitude}"><span class="material-symbols-outlined">directions</span>Get Directions</button>
+                    <button id="detail-view-bill-btn" class="btn btn-secondary"><span class="material-symbols-outlined">receipt_long</span>Generate Bill</button>
+                    <button id="detail-show-history-btn" class="btn btn-secondary"><span class="material-symbols-outlined">history</span>Show History</button>
+                    <button id="detail-edit-btn" class="btn btn-primary"><span class="material-symbols-outlined">edit</span>Edit Order</button>
+                    <button id="detail-add-payment-btn" class="btn btn-primary" style="display: none;"><span class="material-symbols-outlined">payments</span>Add Payment</button>
+                    <button id="detail-complete-btn" class="btn btn-success"><span class="material-symbols-outlined">check_circle</span>Mark as Complete</button>
+                    <button id="detail-delete-btn" class="btn btn-danger" style="display: none;"><span class="material-symbols-outlined">delete</span>Delete</button>
+                </div>`;
             
+            const statusTag = orderDetailsCard.querySelector('#detail-status-tag');
             const today = new Date(); today.setHours(0,0,0,0);
             const statusInfo = getStatusInfo(order, today);
-            detailStatusTag.className = 'status-tag ' + statusInfo.className;
-            detailStatusTag.textContent = statusInfo.text;
-            
-            detailCompletedDateRow.style.display = (order.status === 'completed' && order.completedAt) ? 'block' : 'none';
-            detailCompletedDate.textContent = (order.status === 'completed' && order.completedAt?.toDate) ? new Date(order.completedAt.toDate()).toLocaleDateString() : '';
-            detailCreatedByRow.style.display = order.createdBy ? 'block' : 'none';
-            detailCreatedBy.textContent = order.createdBy || '';
-            detailCompletedByRow.style.display = (order.completedBy && order.status === 'completed') ? 'block' : 'none';
-            detailCompletedBy.textContent = order.completedBy || '';
+            statusTag.className = 'status-tag ' + statusInfo.className;
+            statusTag.textContent = statusInfo.text;
+
+            if (order.status === 'completed' && order.completedAt) {
+                orderDetailsCard.querySelector('#detail-completed-date-row').style.display = 'block';
+                orderDetailsCard.querySelector('#detail-completed-date').textContent = new Date(order.completedAt.toDate()).toLocaleDateString();
+                orderDetailsCard.querySelector('#detail-completed-by-row').style.display = order.completedBy ? 'block' : 'none';
+                orderDetailsCard.querySelector('#detail-completed-by').textContent = order.completedBy || '';
+                const completeBtn = orderDetailsCard.querySelector('#detail-complete-btn');
+                completeBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
+                completeBtn.className = 'btn btn-reopen';
+                orderDetailsCard.querySelector('#detail-edit-btn').disabled = true;
+            }
 
             let windowsToDisplay = [];
-            try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data:", e); }
-            
-            detailWindowsList.innerHTML = '';
+            try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
+            const windowsList = orderDetailsCard.querySelector('#detail-windows-list');
             if(windowsToDisplay.length > 0) {
                 windowsToDisplay.forEach((win, i) => {
                     const itemDiv = document.createElement('div');
@@ -249,229 +202,174 @@
                     let glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>';
                     const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window';
                     itemDiv.innerHTML = `<div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div>`;
-                    detailWindowsList.appendChild(itemDiv);
+                    windowsList.appendChild(itemDiv);
                 });
             } else { 
-                detailWindowsList.innerHTML = '<p>No window details available.</p>';
+                windowsList.innerHTML = '<p>No window details available.</p>';
             }
-            detailWindowCount.textContent = windowsToDisplay.length;
-
-            detailEditBtn.dataset.id = order.id;
-            detailViewQuoteBtn.dataset.id = order.id;
-            detailCompleteBtn.dataset.id = order.id;
-            detailShowHistoryBtn.dataset.id = order.id;
-            detailDeleteBtn.dataset.id = order.id;
-            detailGetDirectionsBtn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none';
-            detailGetDirectionsBtn.dataset.lat = order.latitude;
-            detailGetDirectionsBtn.dataset.lon = order.longitude;
-
-            // Role-based UI changes
-            if (userRole === 'admin') {
-                detailDeleteBtn.style.display = 'inline-flex';
-                paymentsCard.style.display = 'block';
-                finalTotalInput.value = order.finalTotal || 0;
-            } else {
-                detailDeleteBtn.style.display = 'none';
-                paymentsCard.style.display = 'none';
-            }
-            
-            if (order.status === 'completed') {
-                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
-                detailCompleteBtn.className = 'btn btn-reopen';
-                detailEditBtn.disabled = true;
-            } else {
-                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
-                detailCompleteBtn.className = 'btn btn-success';
-                detailEditBtn.disabled = false;
-            }
+            orderDetailsCard.querySelector('#detail-window-count').textContent = windowsToDisplay.length;
         }
-        
-        async function logHistory(orderId, action, details = {}) { /* ... same as before ... */ }
-        async function performConfirmedAction() { /* ... same as before ... */ }
-        async function showHistoryModal(orderId) { /* ... same as before ... */ }
 
-        // --- NEW PAYMENT FUNCTIONS ---
-        function listenForPayments(orderId) {
-            // Unsubscribe from previous listener if it exists
-            if (paymentUnsubscribe) paymentUnsubscribe();
-            
-            const paymentsQuery = query(collection(db, `upvc_orders/${orderId}/payments`), orderBy('date', 'desc'));
-            paymentUnsubscribe = onSnapshot(paymentsQuery, (snapshot) => {
-                const payments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderPayments(payments);
-            });
-        }
-        
-        function renderPayments(payments) {
-            paymentsList.innerHTML = '';
+        function renderPayments(payments, finalTotal) {
+            const paymentList = document.getElementById('payment-list');
+            const paymentSummary = document.getElementById('payment-summary');
+            paymentList.innerHTML = '';
+
             let totalCollected = 0;
-            if (payments.length === 0) {
-                paymentsList.innerHTML = '<p style="text-align:center; color: var(--light-text-muted); padding: 1rem 0;">No payments recorded yet.</p>';
-            } else {
+            if (payments.length > 0) {
                 payments.forEach(payment => {
+                    const item = document.createElement('div');
+                    item.className = 'payment-list-item';
                     totalCollected += payment.amount;
-                    const li = document.createElement('li');
-                    li.className = 'payment-item';
-                    li.innerHTML = `
+                    item.innerHTML = `
                         <div class="payment-info">
-                            <span class="amount">₹${payment.amount.toLocaleString('en-IN')}</span>
-                            <span class="meta">${payment.date} &bull; ${payment.type} ${payment.notes ? `&bull; ${payment.notes}` : ''}</span>
+                            <strong>₹${payment.amount.toLocaleString('en-IN')}</strong> via ${payment.type}
+                            <div class="note">${new Date(payment.date).toLocaleDateString('en-GB')} - ${payment.notes || 'No notes'}</div>
                         </div>
+                        <div class="payment-amount"></div>
                     `;
-                    paymentsList.appendChild(li);
+                    paymentList.appendChild(item);
                 });
+            } else {
+                paymentList.innerHTML = '<p style="color: var(--light-text-muted); font-size: .9rem;">No payments have been added yet.</p>';
             }
-            totalCollectedEl.textContent = `₹${totalCollected.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            updatePendingAmount();
+            
+            const pendingAmount = finalTotal - totalCollected;
+
+            paymentSummary.innerHTML = `
+                <div class="summary-item">
+                    <span class="label">Final Total</span>
+                    <span class="value final-total">₹<input type="number" id="final-total-input" value="${finalTotal.toFixed(2)}" step="0.01"></span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Total Collected</span>
+                    <span class="value collected">₹${totalCollected.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Pending Amount</span>
+                    <span class="value pending">₹${pendingAmount.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                </div>
+            `;
+            document.getElementById('final-total-input').addEventListener('change', handleFinalTotalChange);
         }
 
-        function updatePendingAmount() {
-            const finalTotal = parseFloat(finalTotalInput.value) || 0;
-            const totalCollected = parseFloat(totalCollectedEl.textContent.replace(/[₹,]/g, '')) || 0;
-            const pending = finalTotal - totalCollected;
-            pendingAmountEl.textContent = `₹${pending.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        async function handleFinalTotalChange(e) {
+            const newTotal = parseFloat(e.target.value);
+            if (isNaN(newTotal)) return;
+            showLoading();
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const orderId = urlParams.get('id');
+                await updateDoc(doc(db, 'upvc_orders', orderId), { finalTotal: newTotal });
+                // The onSnapshot listener will automatically re-render the summary
+            } catch(error) {
+                console.error("Error updating final total:", error);
+            } finally {
+                hideLoading();
+            }
         }
         
         async function handlePaymentFormSubmit(e) {
             e.preventDefault();
-            const amount = parseFloat(document.getElementById('payment-amount').value);
-            const date = document.getElementById('payment-date').value;
-            const type = document.getElementById('payment-type').value;
-            const notes = document.getElementById('payment-notes').value.trim();
-
-            if (!amount || !date || !type) return;
-            
             showLoading();
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            const data = {
+                amount: parseFloat(document.getElementById('payment-amount').value),
+                date: document.getElementById('payment-date').value,
+                type: document.getElementById('payment-type').value,
+                notes: document.getElementById('payment-notes').value,
+                addedAt: serverTimestamp()
+            };
             try {
-                const paymentData = { amount, date, type, notes, createdAt: serverTimestamp() };
-                await addDoc(collection(db, `upvc_orders/${currentOrderId}/payments`), paymentData);
-                await logHistory(currentOrderId, `Payment of ₹${amount} Added`);
+                await addDoc(collection(db, `upvc_orders/${orderId}/payments`), data);
                 paymentForm.reset();
-                document.getElementById('payment-date').value = new Date().toISOString().split('T')[0];
+                paymentModal.style.display = 'none';
             } catch (error) {
                 console.error("Error adding payment:", error);
             } finally {
                 hideLoading();
             }
         }
-        
-        async function handleFinalTotalChange() {
-            const newTotal = parseFloat(finalTotalInput.value);
-            if (isNaN(newTotal) || !currentOrderId) return;
-            try {
-                await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal });
-                updatePendingAmount();
-            } catch (error) {
-                console.error("Error updating final total:", error);
-            }
-        }
 
-
-        // --- FIREBASE & CORE LOGIC ---
         async function initializeFirebase() {
             try {
-                const firebaseConfig = {
-                    apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
-                    authDomain: "payment-form-b77e2.firebaseapp.com",
-                    projectId: "payment-form-b77e2",
-                    storageBucket: "payment-form-b77e2.firebasestorage.app",
-                    messagingSenderId: "796020240904",
-                    appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
-                    measurementId: "G-DHJJ4WNYR4"
-                };
+                const firebaseConfig = { apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg", authDomain: "payment-form-b77e2.firebaseapp.com", projectId: "payment-form-b77e2", storageBucket: "payment-form-b77e2.firebasestorage.app", messagingSenderId: "796020240904", appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd", measurementId: "G-DHJJ4WNYR4" };
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         const userDoc = await getDoc(doc(db, "users", user.uid));
                         if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
-                        
                         const userProfile = userDoc.data();
                         currentUserName = userProfile.displayName || "User";
                         profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
                         dashboardLink.href = userProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
-
                         const urlParams = new URLSearchParams(window.location.search);
-                        currentOrderId = urlParams.get('id');
-                        if (currentOrderId) { await loadAndDisplayOrder(currentOrderId, userProfile.role); } 
-                        else {
-                            showMessageModal("No order specified. Redirecting...");
-                            setTimeout(() => window.location.href = 'view-orders.html', 2000);
-                        }
+                        const orderId = urlParams.get('id');
+                        if (orderId) { await loadAndDisplayOrder(orderId, userProfile.role === 'admin'); } 
+                        else { setTimeout(() => window.location.href = 'view-orders.html', 2000); }
                     } else { window.location.href = 'login.html'; }
                 });
-            } catch (error) { console.error("Firebase Init Error:", error); showMessageModal("Critical error initializing application."); hideLoading(); }
+            } catch (error) { console.error("Firebase Init Error:", error); }
         }
 
-        async function loadAndDisplayOrder(orderId, userRole) {
+        async function loadAndDisplayOrder(orderId, isAdmin) {
             showLoading();
             try {
+                if (paymentsUnsubscribe) paymentsUnsubscribe(); // Detach previous listener if it exists
+
                 const orderRef = doc(db, 'upvc_orders', orderId);
                 const orderSnap = await getDoc(orderRef);
-                if (orderSnap.exists()) { 
-                    showOrderDetails({ id: orderSnap.id, ...orderSnap.data() }, userRole);
-                    if (userRole === 'admin') {
-                        listenForPayments(orderId);
+
+                if (orderSnap.exists()) {
+                    const orderData = { id: orderSnap.id, ...orderSnap.data() };
+                    showOrderDetails(orderData, isAdmin);
+
+                    if (isAdmin) {
+                        paymentSection.style.display = 'block';
+                        const paymentsQuery = query(collection(db, `upvc_orders/${orderId}/payments`), orderBy('date', 'desc'));
+                        paymentsUnsubscribe = onSnapshot(paymentsQuery, (snapshot) => {
+                            const payments = snapshot.docs.map(doc => doc.data());
+                            const finalTotal = orderData.finalTotal || 0;
+                            renderPayments(payments, finalTotal);
+                        });
                     }
-                } 
-                else { showMessageModal("Order not found. Redirecting..."); setTimeout(() => window.location.href = 'view-orders.html', 2000); }
-            } catch (error) { console.error("Error loading order: ", error); showMessageModal("Failed to load order data."); } 
+                } else {
+                    showMessageModal("Order not found. Redirecting...");
+                    setTimeout(() => window.location.href = 'view-orders.html', 2000);
+                }
+            } catch (error) { console.error("Error loading order: ", error); } 
             finally { hideLoading(); }
         }
         
-        async function handleSignOut() { showLoading(); try { await signOut(auth); } catch (e) { hideLoading(); } }
-        
         // --- EVENT LISTENERS ---
-        navLogoutBtn.addEventListener('click', handleSignOut);
-        detailEditBtn.addEventListener('click', (e) => window.location.href = `order-form.html?id=${e.currentTarget.dataset.id}`);
-        detailViewQuoteBtn.addEventListener('click', (e) => window.location.href = `quote.html?id=${e.currentTarget.dataset.id}`);
-        detailDeleteBtn.addEventListener('click', (e) => {
-            showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', 'delete', e.currentTarget.dataset.id,
-                async (docRef) => { 
-                    await logHistory(e.currentTarget.dataset.id, 'Order Deleted'); 
-                    await deleteDoc(docRef); 
-                    showMessageModal('Order deleted.'); 
-                    setTimeout(() => window.location.href = 'view-orders.html', 1500);
-                });
-        });
-        detailCompleteBtn.addEventListener('click', (e) => {
-            const orderId = e.currentTarget.dataset.id;
-            const isCompleted = e.currentTarget.textContent.includes('Reopen');
-            if (isCompleted) {
-                showConfirmationModal('Reopen this order?', 'btn-reopen', 'Reopen Order', 'reopen', orderId,
-                    async (docRef) => { 
-                        await updateDoc(docRef, { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }); 
-                        await logHistory(orderId, 'Order Reopened'); 
-                        showMessageModal('Order reopened.');
-                        loadAndDisplayOrder(orderId, 'admin');
-                    });
-            } else {
-                showConfirmationModal('Mark this order as complete?', 'btn-success', 'Mark Complete', 'complete', orderId,
-                    async (docRef) => { 
-                        await updateDoc(docRef, { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }); 
-                        await logHistory(orderId, 'Order Completed'); 
-                        showMessageModal('Order marked as complete!');
-                        loadAndDisplayOrder(orderId, 'admin');
-                    });
+        document.body.addEventListener('click', async (e) => {
+            const actionTarget = e.target.closest('[data-app-action]');
+            if (actionTarget) {
+                 if (!actionTarget.href) e.preventDefault();
+                 const action = actionTarget.dataset.appAction;
+                 // Handle simple actions
             }
+
+            if (e.target.closest('#nav-logout-btn')) { await signOut(auth); }
+            if (e.target.closest('#profileImage')) { toggleProfileMenu(); }
+            if (e.target.closest('#detail-edit-btn')) { window.location.href = `order-form.html?id=${e.target.closest('#detail-edit-btn').dataset.id}`; }
+            if (e.target.closest('#detail-view-bill-btn')) { window.location.href = `bill.html?id=${e.target.closest('#detail-view-bill-btn').dataset.id}`; }
+            if (e.target.closest('#detail-add-payment-btn')) {
+                paymentForm.reset();
+                document.getElementById('payment-date').value = new Date().toISOString().split('T')[0];
+                paymentModal.style.display = 'flex';
+            }
+             if (e.target.closest('[data-app-action="close-payment-modal"]')) { paymentModal.style.display = 'none'; }
         });
-        detailShowHistoryBtn.addEventListener('click', (e) => showHistoryModal(e.currentTarget.dataset.id));
-        detailGetDirectionsBtn.addEventListener('click', (e) => { const { lat, lon } = e.currentTarget.dataset; if (lat && lon) window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank'); });
-        profileImage.addEventListener('click', (e) => { e.stopPropagation(); toggleProfileMenu(); });
-        window.addEventListener('click', (e) => { if (profileDropdown.classList.contains('show') && !profileContainer.contains(e.target)) { toggleProfileMenu(); } });
-        messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
-        cancelActionBtn.addEventListener('click', hideConfirmationModal);
-        confirmActionBtn.addEventListener('click', performConfirmedAction);
-        historyCloseBtn.addEventListener('click', () => historyModal.style.display = 'none');
-        // New Payment Listeners
+        
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
-        finalTotalInput.addEventListener('input', handleFinalTotalChange);
 
-
+        window.addEventListener('click', (e) => { if (!e.target.closest('.profile-menu')) toggleProfileMenu(false); });
+        
         // --- INITIALIZATION ---
-        showLoading();
         initializeFirebase();
     </script>
 </body>
