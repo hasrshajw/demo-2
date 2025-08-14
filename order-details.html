@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayrollPro - Order Details</title>
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -39,6 +40,7 @@
     </style>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="navbar-logo"><a href="#" id="dashboard-link">PayrollPro</a></div>
         <div class="navbar-profile" id="profileContainer">
@@ -113,7 +115,7 @@
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- ALL DOM ELEMENTS & STATE ---
+        // --- DOM ELEMENTS & APP STATE ---
         const loadingOverlay = document.getElementById('loading-overlay');
         const profileImage = document.getElementById('profileImage');
         const profileDropdown = document.getElementById('profileDropdown');
@@ -261,6 +263,7 @@
             }
         }
         
+        // --- PAYMENT MANAGEMENT FUNCTIONS ---
         function listenForPayments() {
             if (paymentsUnsubscribe) paymentsUnsubscribe();
             const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('date', 'desc'));
@@ -293,8 +296,9 @@
         }
 
         function calculateTotals(payments) {
-            const totalCollected = (payments || []).reduce((sum, p) => sum + p.amount, 0);
-            const finalTotal = currentOrder.finalTotal || 0;
+            const paymentList = payments || []; // Ensure payments is an array
+            const totalCollected = paymentList.reduce((sum, p) => sum + p.amount, 0);
+            const finalTotal = currentOrder ? (currentOrder.finalTotal || 0) : 0;
             const pendingAmount = finalTotal - totalCollected;
             totalCollectedEl.textContent = formatCurrency(totalCollected);
             pendingAmountEl.textContent = formatCurrency(pendingAmount);
@@ -337,7 +341,7 @@
             }
         }
         
-        async function handleFinalTotalEdit() {
+        function handleFinalTotalEdit() {
             const currentTotal = currentOrder.finalTotal || 0;
             finalTotalContainer.innerHTML = `<input type="number" id="final-total-input" class="final-total-input" value="${currentTotal}"><button class="btn-secondary edit-total-btn" data-app-action="save-final-total"><span class="material-symbols-outlined">check</span></button>`;
             const input = document.getElementById('final-total-input');
@@ -347,33 +351,33 @@
 
         async function handleFinalTotalUpdate() {
             const input = document.getElementById('final-total-input');
-            if (!input) return;
+            if (!input) return; // defensive check
             const newTotalRaw = input.value;
             const currentTotal = currentOrder.finalTotal || 0;
             const newTotal = parseFloat(newTotalRaw);
 
-            if (newTotalRaw !== "" && !isNaN(newTotal) && newTotal !== currentTotal) {
+            if (newTotalRaw.trim() !== "" && !isNaN(newTotal) && newTotal !== currentTotal) {
                 showLoading();
                 try {
                     await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal });
                     await logHistory(currentOrderId, "Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) });
-                    currentOrder.finalTotal = newTotal; // Update local state
+                    currentOrder.finalTotal = newTotal;
                 } catch (error) { showMessageModal("Failed to update final total."); } 
                 finally { hideLoading(); }
             }
-            // Always revert back to text display
             finalTotalContainer.innerHTML = `<span>${formatCurrency(currentOrder.finalTotal || 0)}</span><button class="btn-secondary edit-total-btn" data-app-action="edit-final-total"><span class="material-symbols-outlined">edit</span></button>`;
             calculateTotals();
         }
         
         async function handleDeletePayment(paymentId, amount) {
-            showConfirmationModal(`Are you sure you want to delete this payment of ${formatCurrency(amount)}? This cannot be undone.`, 'btn-danger', 'Delete Payment', 'delete-payment', paymentId,
+            showConfirmationModal(`Are you sure you want to delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', 'delete-payment', paymentId,
                 async () => { 
                     await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId));
                     await logHistory(currentOrderId, 'Payment Deleted', { amount: formatCurrency(amount) });
                 });
         }
         
+        // --- FIREBASE & CORE LOGIC ---
         async function initializeFirebase() {
             try {
                 const firebaseConfig = { apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg", authDomain: "payment-form-b77e2.firebaseapp.com", projectId: "payment-form-b77e2", storageBucket: "payment-form-b77e2.firebasestorage.app", messagingSenderId: "796020240904", appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd", measurementId: "G-DHJJ4WNYR4" };
@@ -385,12 +389,10 @@
                     if (user) {
                         const userDoc = await getDoc(doc(db, "users", user.uid));
                         if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
-                        
                         currentUserProfile = { id: userDoc.id, ...userDoc.data() };
                         currentUserName = currentUserProfile.displayName || "User";
                         profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
                         dashboardLink.href = currentUserProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
-
                         const urlParams = new URLSearchParams(window.location.search);
                         currentOrderId = urlParams.get('id');
                         if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } 
@@ -422,10 +424,7 @@
         navLogoutBtn.addEventListener('click', handleSignOut);
         detailEditBtn.addEventListener('click', (e) => window.location.href = `order-form.html?id=${e.currentTarget.dataset.id}`);
         detailViewQuoteBtn.addEventListener('click', (e) => window.location.href = `quote.html?id=${e.currentTarget.dataset.id}`);
-        detailDeleteBtn.addEventListener('click', (e) => {
-            showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', 'delete', e.currentTarget.dataset.id,
-                async () => { await logHistory(e.currentTarget.dataset.id, 'Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', e.currentTarget.dataset.id)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });
-        });
+        detailDeleteBtn.addEventListener('click', (e) => showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', 'delete', e.currentTarget.dataset.id, async () => { await logHistory(e.currentTarget.dataset.id, 'Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', e.currentTarget.dataset.id)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); }));
         detailCompleteBtn.addEventListener('click', (e) => { const orderId = e.currentTarget.dataset.id; const isCompleted = e.currentTarget.textContent.includes('Reopen'); if (isCompleted) { showConfirmationModal('Reopen this order?', 'btn-reopen', 'Reopen Order', 'reopen', orderId, async () => { await updateDoc(doc(db, 'upvc_orders', orderId), { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }); await logHistory(orderId, 'Order Reopened'); showMessageModal('Order reopened.'); loadAndDisplayOrder(orderId); }); } else { showConfirmationModal('Mark this order as complete?', 'btn-success', 'Mark Complete', 'complete', orderId, async () => { await updateDoc(doc(db, 'upvc_orders', orderId), { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }); await logHistory(orderId, 'Order Completed'); showMessageModal('Order marked as complete!'); loadAndDisplayOrder(orderId); }); } });
         detailShowHistoryBtn.addEventListener('click', (e) => showHistoryModal(e.currentTarget.dataset.id));
         detailGetDirectionsBtn.addEventListener('click', (e) => { const { lat, lon } = e.currentTarget.dataset; if (lat && lon) window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank'); });
@@ -438,8 +437,9 @@
         addPaymentBtn.addEventListener('click', () => { paymentModalTitle.textContent = "Add Payment"; paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; });
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
         paymentList.addEventListener('click', async (e) => { const editBtn = e.target.closest('[data-app-action="edit-payment"]'); if (editBtn) { await openPaymentModalForEdit(editBtn.dataset.id); } const deleteBtn = e.target.closest('[data-app-action="delete-payment"]'); if(deleteBtn) { await handleDeletePayment(deleteBtn.dataset.id, parseFloat(deleteBtn.dataset.amount)); } });
-        finalTotalContainer.addEventListener('click', (e) => { const editBtn = e.target.closest('[data-app-action="edit-final-total"]'); if(editBtn) { handleFinalTotalEdit(); } const saveBtn = e.target.closest('[data-app-action="save-final-total"]'); if(saveBtn) { handleFinalTotalUpdate(); } });
-        finalTotalContainer.addEventListener('keydown', (e) => { if (e.key === 'Enter') { handleFinalTotalUpdate(); } });
+        finalTotalContainer.addEventListener('click', (e) => { const editBtn = e.target.closest('[data-app-action="edit-final-total"]'); if(editBtn) { handleFinalTotalEdit(); } });
+        finalTotalContainer.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const saveBtn = finalTotalContainer.querySelector('[data-app-action="save-final-total"]'); if (saveBtn) { handleFinalTotalUpdate(); e.preventDefault(); } }});
+        finalTotalContainer.addEventListener('focusout', (e) => { if (e.target.id === 'final-total-input') { const saveBtn = finalTotalContainer.querySelector('[data-app-action="save-final-total"]'); if (saveBtn) { handleFinalTotalUpdate(); } }});
         document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => { paymentModal.style.display = 'none'; });
 
         showLoading();
