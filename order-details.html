@@ -4,15 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayrollPro - Order Details</title>
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        /* --- EXACT, COMPLETE CSS FROM YOUR EXAMPLE --- */
-        :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--font-icon:"Material Symbols Outlined";--light-bg-primary:#fff;--light-bg-secondary:#f7f9fc;--light-bg-tertiary:#f1f3f6;--light-text-primary:#012726;--light-text-secondary:#52616b;--light-text-muted:#9ca3af;--light-border:#e5e7eb;--light-border-hover:#d1d5db;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--color-accent:#33c375;--color-accent-hover:#2cac66;--color-accent-text:#012726;--color-danger:#ef4444;--color-danger-hover:#dc2626;--color-danger-text:#fff;--color-warning:#f59e0b;--color-warning-hover:#d97706;--color-warning-text:#fff;--color-reopen:#6f42c1;--color-reopen-hover:#5a3d9a;--color-reopen-text:#fff;--status-pending-bg:#eef2ff;--status-pending-text:#4338ca;--status-completed-bg:#f0fdf4;--status-completed-text:#166534;--status-overdue-bg:#fef2f2;--status-overdue-text:#be123c;--status-overdue-border:#fecaca;--status-upcoming-bg:#fffbeb;--status-upcoming-text:#b45309;--status-upcoming-border:#fde68a;--color-focus-ring:rgba(51,195,117,.35);--radius-sm:0.25rem;--radius-md:0.5rem;--radius-lg:1rem;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04);--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--shadow-lg:0 10px 20px -3px rgba(0,0,0,.07),0 4px 8px -4px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1)}*,:after,:before{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:var(--light-text-secondary);margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:calc(70px + 1rem)}.app-container{max-width:72rem;margin:2rem auto;padding:0;width:100%}h1,h2,h3{font-weight:600;color:var(--light-text-primary);margin:0}h1{font-size:1.875rem;line-height:2.25rem}h2{font-size:1.5rem;line-height:2rem}h3{font-size:1.25rem;line-height:1.75rem}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.screen{display:none}.screen.active{display:block;animation:fadeUp .5s var(--ease) forwards}button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer;-webkit-user-select:none;user-select:none}button:hover:not(:disabled),.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-md)}button:active:not(:disabled),.btn:active:not(:disabled){transform:translateY(0);box-shadow:var(--shadow-sm)}button:disabled,.btn:disabled{opacity:.6;cursor:not-allowed}button:focus-visible,.btn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}.btn-primary{background-color:var(--color-primary);color:var(--color-primary-text)}.btn-primary:hover:not(:disabled){background-color:var(--color-primary-hover)}.btn-secondary{background-color:var(--light-bg-primary);color:var(--light-text-secondary);border-color:var(--light-border);box-shadow:var(--shadow-sm)}.btn-secondary:hover:not(:disabled){background-color:var(--light-bg-tertiary);border-color:var(--light-border-hover);color:var(--light-text-primary)}.btn-danger{background-color:var(--color-danger);color:var(--color-danger-text)}.btn-danger:hover:not(:disabled){background-color:var(--color-danger-hover)}.btn-success{background-color:var(--color-accent);color:var(--color-accent-text)}.btn-success:hover:not(:disabled){background-color:var(--color-accent-hover)}.btn-reopen{background-color:var(--color-reopen);color:var(--color-reopen-text)}.btn-reopen:hover:not(:disabled){background-color:var(--color-reopen-hover)}.status-tag{display:inline-flex;align-items:center;gap:.375rem;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:600}.status-tag:before{content:"";display:block;width:.5rem;height:.5rem;border-radius:50%}.status-tag.pending{background-color:var(--status-pending-bg);color:var(--status-pending-text)}.status-tag.pending:before{background-color:var(--status-pending-text)}.status-tag.completed{background-color:var(--status-completed-bg);color:var(--status-completed-text)}.status-tag.completed:before{background-color:var(--status-completed-text)}.status-tag.overdue{background-color:var(--status-overdue-bg);color:var(--status-overdue-text)}.status-tag.overdue:before{background-color:var(--status-overdue-text)}.status-tag.upcoming-due{background-color:var(--status-upcoming-bg);color:var(--status-upcoming-text)}.status-tag.upcoming-due:before{background-color:var(--status-upcoming-text)}.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding:0 1.5rem}.card{background-color:var(--light-bg-primary);border:1px solid var(--light-border);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow-sm)}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:center;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary)}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}.history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none}.history-detail ul{padding-left:1.25rem;margin-top:.25rem}.detail-window-item{display:flex;align-items:center;gap:1rem;padding:.75rem;background-color:var(--light-bg-tertiary);border-radius:var(--radius-md);margin-bottom:.5rem}.item-number{flex-shrink:0;width:2.25rem;height:2.25rem;background-color:var(--color-primary);color:var(--color-primary-text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.875rem}.item-info{font-size:.9rem;color:var(--light-text-primary);line-height:1.4}.item-info small{display:block;color:var(--light-text-secondary);font-size:.8rem;margin-top:.25rem}.remove-window-btn{background:0 0;border:none;padding:.25rem;color:var(--light-text-muted);cursor:pointer;border-radius:9999px;display:flex;align-items:center;justify-content:center;transition:color .2s,background-color .2s;position:static}.remove-window-btn:hover{background-color:var(--light-bg-tertiary);color:var(--color-danger)}.navbar{background-color:var(--light-bg-primary);padding:10px 2rem;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;height:70px}.navbar-logo a{text-decoration:none;color:var(--light-text-primary);font-weight:700;font-size:1.5rem}.navbar-profile{position:relative}.navbar-profile .profile-image{height:45px;width:45px;border-radius:50%;-o-object-fit:cover;object-fit:cover;cursor:pointer;border:2px solid #e0e0e0;transition:transform .2s ease,box-shadow .2s ease}.navbar-profile .profile-image:hover{transform:scale(1.1);box-shadow:0 0 10px rgba(0,0,0,.2)}.profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;background:var(--light-bg-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:8px;min-width:160px;z-index:1001;visibility:hidden;opacity:0;transform:translateY(-10px);transition:all .2s ease-out}.profile-dropdown.show{visibility:visible;opacity:1;transform:translateY(0)}.profile-dropdown button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:none;background:0 0;text-align:left;font-size:15px;color:var(--light-text-primary);border-radius:var(--radius-sm);cursor:pointer;transition:background-color .2s ease}.profile-dropdown button:hover{background-color:var(--light-bg-tertiary)}.profile-dropdown .icon{font-size:18px}
-        .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}.form-group{margin-bottom:1rem}.input-group{position:relative}.input-field{width:100%;background-color:#fff;border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:1rem;padding:1rem;color:var(--light-text-primary);transition:all .2s;outline:none}.payment-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--light-border)}.payment-item:last-child{border-bottom:none}.payment-info{font-size:0.9rem}.payment-info .note{font-size:0.8rem;color:var(--light-text-secondary)}.payment-amount{font-weight:600;color:var(--light-text-primary)}.payment-actions{display:flex;gap:8px}.payment-summary{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-border);display:grid;gap:0.75rem;font-size:0.9rem}.summary-row{display:flex;justify-content:space-between;align-items:center}.summary-row .label{color:var(--light-text-secondary)}.summary-row .value{font-weight:600;color:var(--light-text-primary)}.summary-row .value.pending{color:var(--color-danger)}
+        /* --- EXACT CSS (with additions for new section) --- */
+        :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--font-icon:"Material Symbols Outlined";--light-bg-primary:#fff;--light-bg-secondary:#f7f9fc;--light-bg-tertiary:#f1f3f6;--light-text-primary:#012726;--light-text-secondary:#52616b;--light-text-muted:#9ca3af;--light-border:#e5e7eb;--light-border-hover:#d1d5db;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--color-accent:#33c375;--color-accent-hover:#2cac66;--color-accent-text:#012726;--color-danger:#ef4444;--color-danger-hover:#dc2626;--color-danger-text:#fff;--color-warning:#f59e0b;--color-warning-hover:#d97706;--color-warning-text:#fff;--color-reopen:#6f42c1;--color-reopen-hover:#5a3d9a;--color-reopen-text:#fff;--status-pending-bg:#eef2ff;--status-pending-text:#4338ca;--status-completed-bg:#f0fdf4;--status-completed-text:#166534;--status-overdue-bg:#fef2f2;--status-overdue-text:#be123c;--status-overdue-border:#fecaca;--status-upcoming-bg:#fffbeb;--status-upcoming-text:#b45309;--status-upcoming-border:#fde68a;--color-focus-ring:rgba(51,195,117,.35);--radius-sm:0.25rem;--radius-md:0.5rem;--radius-lg:1rem;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04);--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--shadow-lg:0 10px 20px -3px rgba(0,0,0,.07),0 4px 8px -4px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1)}*,:after,:before{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:var(--light-text-secondary);margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:calc(70px + 1rem)}.app-container{max-width:72rem;margin:2rem auto;padding:0;width:100%}h1,h2,h3{font-weight:600;color:var(--light-text-primary);margin:0}h1{font-size:1.875rem;line-height:2.25rem}h2{font-size:1.5rem;line-height:2rem}h3{font-size:1.25rem;line-height:1.75rem}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.screen{display:none}.screen.active{display:block;animation:fadeUp .5s var(--ease) forwards}button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer;-webkit-user-select:none;user-select:none}button:hover:not(:disabled),.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-md)}button:active:not(:disabled),.btn:active:not(:disabled){transform:translateY(0);box-shadow:var(--shadow-sm)}button:disabled,.btn:disabled{opacity:.6;cursor:not-allowed}button:focus-visible,.btn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}.btn-primary{background-color:var(--color-primary);color:var(--color-primary-text)}.btn-primary:hover:not(:disabled){background-color:var(--color-primary-hover)}.btn-secondary{background-color:var(--light-bg-primary);color:var(--light-text-secondary);border-color:var(--light-border);box-shadow:var(--shadow-sm)}.btn-secondary:hover:not(:disabled){background-color:var(--light-bg-tertiary);border-color:var(--light-border-hover);color:var(--light-text-primary)}.btn-danger{background-color:var(--color-danger);color:var(--color-danger-text)}.btn-danger:hover:not(:disabled){background-color:var(--color-danger-hover)}.btn-success{background-color:var(--color-accent);color:var(--color-accent-text)}.btn-success:hover:not(:disabled){background-color:var(--color-accent-hover)}.btn-reopen{background-color:var(--color-reopen);color:var(--color-reopen-text)}.btn-reopen:hover:not(:disabled){background-color:var(--color-reopen-hover)}.status-tag{display:inline-flex;align-items:center;gap:.375rem;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:600}.status-tag:before{content:"";display:block;width:.5rem;height:.5rem;border-radius:50%}.status-tag.pending{background-color:var(--status-pending-bg);color:var(--status-pending-text)}.status-tag.pending:before{background-color:var(--status-pending-text)}.status-tag.completed{background-color:var(--status-completed-bg);color:var(--status-completed-text)}.status-tag.completed:before{background-color:var(--status-completed-text)}.status-tag.overdue{background-color:var(--status-overdue-bg);color:var(--status-overdue-text)}.status-tag.overdue:before{background-color:var(--status-overdue-text)}.status-tag.upcoming-due{background-color:var(--status-upcoming-bg);color:var(--status-upcoming-text)}.status-tag.upcoming-due:before{background-color:var(--status-upcoming-text)}.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding:0 1.5rem}.card{background-color:var(--light-bg-primary);border:1px solid var(--light-border);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow-sm); margin-bottom: 2rem;}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:center;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary)}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}.history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none}.history-detail ul{padding-left:1.25rem;margin-top:.25rem}.detail-window-item{display:flex;align-items:center;gap:1rem;padding:.75rem;background-color:var(--light-bg-tertiary);border-radius:var(--radius-md);margin-bottom:.5rem}.item-number{flex-shrink:0;width:2.25rem;height:2.25rem;background-color:var(--color-primary);color:var(--color-primary-text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.875rem}.item-info{font-size:.9rem;color:var(--light-text-primary);line-height:1.4}.item-info small{display:block;color:var(--light-text-secondary);font-size:.8rem;margin-top:.25rem}.remove-window-btn{background:0 0;border:none;padding:.25rem;color:var(--light-text-muted);cursor:pointer;border-radius:9999px;display:flex;align-items:center;justify-content:center;transition:color .2s,background-color .2s;position:static}.remove-window-btn:hover{background-color:var(--light-bg-tertiary);color:var(--color-danger)}.navbar{background-color:var(--light-bg-primary);padding:10px 2rem;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;height:70px}.navbar-logo a{text-decoration:none;color:var(--light-text-primary);font-weight:700;font-size:1.5rem}.navbar-profile{position:relative}.navbar-profile .profile-image{height:45px;width:45px;border-radius:50%;-o-object-fit:cover;object-fit:cover;cursor:pointer;border:2px solid #e0e0e0;transition:transform .2s ease,box-shadow .2s ease}.navbar-profile .profile-image:hover{transform:scale(1.1);box-shadow:0 0 10px rgba(0,0,0,.2)}.profile-dropdown{position:absolute;top:calc(100% + 12px);right:0;background:var(--light-bg-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:8px;min-width:160px;z-index:1001;visibility:hidden;opacity:0;transform:translateY(-10px);transition:all .2s ease-out}.profile-dropdown.show{visibility:visible;opacity:1;transform:translateY(0)}.profile-dropdown button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:none;background:0 0;text-align:left;font-size:15px;color:var(--light-text-primary);border-radius:var(--radius-sm);cursor:pointer;transition:background-color .2s ease}.profile-dropdown button:hover{background-color:var(--light-bg-tertiary)}.profile-dropdown .icon{font-size:18px}
+        .form-group{margin-bottom:1.5rem}.input-field{width:100%;background-color:#fff;border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:1rem;padding:1rem;color:#012726;transition:all .2s;outline:none}.btn-icon{background:0 0;border:none;padding:.25rem;color:var(--light-text-muted);cursor:pointer;border-radius:9999px;display:flex;align-items:center;justify-content:center;transition:color .2s,background-color .2s}.btn-icon:hover{background-color:var(--light-bg-tertiary);color:var(--color-danger)}
+        /* NEW STYLES FOR PAYMENT SECTION */
+        .payment-list { list-style-type: none; padding: 0; margin: 0; }
+        .payment-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--light-border); }
+        .payment-item:last-child { border-bottom: none; }
+        .payment-info { font-size: 0.9rem; } .payment-info strong { color: var(--light-text-primary); font-weight: 600; } .payment-info .note { display: block; font-size: 0.8rem; color: var(--light-text-secondary); }
+        .payment-amount { font-size: 1rem; font-weight: 600; color: var(--color-primary); }
+        .payment-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .financials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-border); }
+        .financial-stat .label { font-size: 0.8rem; text-transform: uppercase; color: var(--light-text-secondary); margin-bottom: 0.25rem; }
+        .financial-stat .value { font-size: 1.5rem; font-weight: 700; color: var(--light-text-primary); }
+        .financial-stat .value.pending { color: var(--color-danger); }
+        .final-total-group { display: flex; align-items: center; gap: 0.5rem; }
+        .final-total-group .input-field { padding: 0.5rem 0.75rem; text-align: right; font-weight: 700; font-size: 1.5rem; }
+        .final-total-group .btn-icon { color: var(--color-accent); }
+
         @media (max-width: 640px) { body { padding: 0; padding-top: 70px; background-color: var(--light-bg-primary); } .app-container { margin: 0; padding: 0; } .card { padding: 1.5rem; border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; } .page-header { flex-direction: row; justify-content: flex-start; align-items: center; gap: 1rem; padding: 1.5rem; background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); } #detail-info-grid { grid-template-columns: 1fr !important; } .details-action-buttons { flex-direction: column; align-items: stretch !important; gap: 0.75rem; } .details-action-buttons .btn { width: 100%; margin: 0; } }
     </style>
 </head>
@@ -66,36 +80,15 @@
                 </div>
             </div>
 
-            <!-- NEW: Admin-Only Payment Section -->
-            <div id="admin-payment-section" style="display: none; margin-top: 2rem;">
-                <div class="card">
-                    <div class="section-header">
-                        <h2>Payment Tracking</h2>
-                        <button id="add-payment-btn" class="btn-primary"><span class="material-symbols-outlined" style="font-size: 1.25rem;">add_card</span>Add Payment</button>
-                    </div>
-                    <div class="form-group" style="display: flex; align-items: center; gap: 1rem;">
-                        <label for="final-total-input" style="margin-bottom: 0; white-space: nowrap;">Final Total (₹):</label>
-                        <input type="number" id="final-total-input" class="input-field" style="padding: 0.5rem 1rem;">
-                        <button id="save-final-total-btn" class="btn-success" style="display: none;">Save</button>
-                    </div>
-                    <div id="payments-list"></div>
-                    <div class="payment-summary">
-                        <div class="summary-row">
-                            <span class="label">Total Collected:</span>
-                            <span id="total-collected" class="value"></span>
-                        </div>
-                        <div class="summary-row">
-                            <span class="label">Pending Amount:</span>
-                            <span id="pending-amount" class="value pending"></span>
-                        </div>
-                    </div>
-                </div>
+            <!-- NEW Admin-only Payment Section -->
+            <div id="admin-payment-section" style="display: none;">
+                <!-- Content will be injected by JS -->
             </div>
 
         </div>
     </div>
 
-    <!-- Modals -->
+    <!-- ALL MODALS -->
     <div id="payment-modal" class="modal"></div>
     <div id="confirmation-modal" class="modal"><div class="modal-content"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn-danger">Confirm</button></div></div></div>
     <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn-primary" style="min-width: 120px;">OK</button></div></div>
@@ -105,9 +98,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- DOM ELEMENTS & APP STATE ---
         const loadingOverlay = document.getElementById('loading-overlay');
         const profileImage = document.getElementById('profileImage');
         const profileDropdown = document.getElementById('profileDropdown');
@@ -143,39 +135,20 @@
         const historyModal = document.getElementById('history-modal');
         const historyList = document.getElementById('history-list');
         const historyCloseBtn = document.getElementById('history-close-btn');
-        // New Payment Elements
-        const adminPaymentSection = document.getElementById('admin-payment-section');
-        const addPaymentBtn = document.getElementById('add-payment-btn');
-        const finalTotalInput = document.getElementById('final-total-input');
-        const saveFinalTotalBtn = document.getElementById('save-final-total-btn');
-        const paymentsListContainer = document.getElementById('payments-list');
-        const totalCollectedEl = document.getElementById('total-collected');
-        const pendingAmountEl = document.getElementById('pending-amount');
-        const paymentModal = document.getElementById('payment-modal');
-
         let db, auth;
         let currentAction = { type: null, id: null, callback: null };
         let currentUserName = "Unknown User";
-        let currentOrderId = null;
-        let unsubscribePayments = null; // To store the real-time listener
+        let currentUserProfile = null;
         const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
-        // --- UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
         function toggleProfileMenu() { profileDropdown.classList.toggle('show'); }
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
-        const showConfirmationModal = (message, confirmClass, confirmText, actionType, id, callback) => {
-            modalMessage.textContent = message;
-            confirmActionBtn.className = 'btn';
-            confirmActionBtn.classList.add(confirmClass);
-            confirmActionBtn.textContent = confirmText;
-            currentAction = { type: actionType, id: id, callback: callback };
-            confirmationModal.style.display = 'flex';
-        };
+        const showConfirmationModal = (message, confirmClass, confirmText, actionType, orderId, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn'; confirmActionBtn.classList.add(confirmClass); confirmActionBtn.textContent = confirmText; currentAction = { type: actionType, id: orderId, callback: callback }; confirmationModal.style.display = 'flex'; };
         const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
+        const closeModal = (id) => document.getElementById(id).style.display = 'none';
 
-        // --- DATA & RENDERING FUNCTIONS ---
         const getStatusInfo = (order, today) => {
             if (order.status === 'completed') { return { text: 'Completed', className: 'completed' }; }
             const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; 
@@ -193,18 +166,22 @@
             detailCustomerMobile.textContent = order.mobileNumber || 'N/A';
             detailOrderTakenDate.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A';
             detailDueDate.textContent = order.dueDate || 'N/A';
+            
             const today = new Date(); today.setHours(0,0,0,0);
             const statusInfo = getStatusInfo(order, today);
             detailStatusTag.className = 'status-tag ' + statusInfo.className;
             detailStatusTag.textContent = statusInfo.text;
+            
             detailCompletedDateRow.style.display = (order.status === 'completed' && order.completedAt) ? 'block' : 'none';
             detailCompletedDate.textContent = (order.status === 'completed' && order.completedAt?.toDate) ? new Date(order.completedAt.toDate()).toLocaleDateString() : '';
             detailCreatedByRow.style.display = order.createdBy ? 'block' : 'none';
             detailCreatedBy.textContent = order.createdBy || '';
             detailCompletedByRow.style.display = (order.completedBy && order.status === 'completed') ? 'block' : 'none';
             detailCompletedBy.textContent = order.completedBy || '';
+
             let windowsToDisplay = [];
             try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data:", e); }
+            
             detailWindowsList.innerHTML = '';
             if(windowsToDisplay.length > 0) {
                 windowsToDisplay.forEach((win, i) => {
@@ -219,6 +196,7 @@
                 detailWindowsList.innerHTML = '<p>No window details available.</p>';
             }
             detailWindowCount.textContent = windowsToDisplay.length;
+
             detailEditBtn.dataset.id = order.id;
             detailViewQuoteBtn.dataset.id = order.id;
             detailCompleteBtn.dataset.id = order.id;
@@ -227,9 +205,11 @@
             detailGetDirectionsBtn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none';
             detailGetDirectionsBtn.dataset.lat = order.latitude;
             detailGetDirectionsBtn.dataset.lon = order.longitude;
-            finalTotalInput.value = order.finalTotal || 0;
-            const currentUserEmail = auth.currentUser ? auth.currentUser.email : null;
-            if (currentUserEmail === ADMIN_EMAIL) { detailDeleteBtn.style.display = 'inline-flex'; }
+
+            if (currentUserProfile.role === 'admin') {
+                detailDeleteBtn.style.display = 'inline-flex';
+            }
+            
             if (order.status === 'completed') {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
                 detailCompleteBtn.className = 'btn btn-reopen';
@@ -241,68 +221,156 @@
             }
         }
         
-        async function logHistory(orderId, action, details = {}) {
-            if (!orderId) return;
-            try {
-                await addDoc(collection(db, `upvc_orders/${orderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() });
-            } catch (error) { console.error("Error logging history:", error); }
+        // --- NEW PAYMENT FUNCTIONS ---
+        function renderPaymentSection(orderId, payments, finalTotal = 0) {
+            const container = document.getElementById('admin-payment-section');
+            const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0);
+            const pendingAmount = finalTotal - totalCollected;
+
+            let paymentListHtml = '<p>No payments recorded yet.</p>';
+            if (payments.length > 0) {
+                payments.sort((a,b) => new Date(b.date) - new Date(a.date));
+                paymentListHtml = `<ol class="payment-list">${payments.map(p => `
+                    <li class="payment-item">
+                        <div>
+                            <div class="payment-info"><strong>${new Date(p.date + 'T00:00:00').toLocaleDateString('en-GB')}</strong> via ${p.paymentMode}</div>
+                            <span class="note">${p.note || 'No note'}</span>
+                        </div>
+                        <div class="payment-actions">
+                            <strong class="payment-amount">₹${p.amount.toLocaleString('en-IN')}</strong>
+                            <button class="btn-icon" data-app-action="edit-payment" data-payment-id="${p.id}" title="Edit Payment"><span class="material-symbols-outlined">edit</span></button>
+                            <button class="btn-icon" data-app-action="delete-payment" data-payment-id="${p.id}" title="Delete Payment"><span class="material-symbols-outlined">delete</span></button>
+                        </div>
+                    </li>`).join('')}</ol>`;
+            }
+
+            container.innerHTML = `
+                <div class="card">
+                    <div class="section-header" style="margin-bottom: 1.5rem;">
+                        <h2>Payments</h2>
+                        <button class="btn btn-primary" data-app-action="add-payment"><span class="material-symbols-outlined">add_card</span>Add Payment</button>
+                    </div>
+                    ${paymentListHtml}
+                    <div class="financials-grid">
+                        <div class="financial-stat">
+                            <div class="label">Final Total</div>
+                            <div class="final-total-group">
+                                <span style="font-size: 1.5rem; font-weight: 700;">₹</span>
+                                <input type="number" id="final-total-input" class="input-field" value="${finalTotal.toFixed(2)}" step="0.01">
+                                <button class="btn-icon" data-app-action="save-final-total" title="Save Final Total"><span class="material-symbols-outlined">save</span></button>
+                            </div>
+                        </div>
+                        <div class="financial-stat">
+                            <div class="label">Total Collected</div>
+                            <div class="value">₹${totalCollected.toLocaleString('en-IN')}</div>
+                        </div>
+                        <div class="financial-stat">
+                            <div class="label">Pending Amount</div>
+                            <div class="value pending">₹${pendingAmount.toLocaleString('en-IN')}</div>
+                        </div>
+                    </div>
+                </div>`;
         }
-        
-        async function performConfirmedAction() {
-            hideConfirmationModal(); showLoading();
+
+        function handleOpenPaymentModal(orderId, paymentToEdit = null) {
+            const modal = document.getElementById('payment-modal');
+            const isEditing = !!paymentToEdit;
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 480px; text-align: left;">
+                    <form id="payment-form" data-order-id="${orderId}" data-payment-id="${isEditing ? paymentToEdit.id : ''}">
+                        <h3 style="margin-bottom: 2rem;">${isEditing ? 'Edit' : 'Add'} Payment</h3>
+                        <div class="form-group">
+                            <label for="payment-amount">Amount (₹)</label>
+                            <input type="number" id="payment-amount" class="input-field" value="${isEditing ? paymentToEdit.amount : ''}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-date">Date</label>
+                            <input type="date" id="payment-date" class="input-field" value="${isEditing ? paymentToEdit.date : new Date().toISOString().split('T')[0]}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-mode">Payment Mode</label>
+                            <select id="payment-mode" class="input-field">
+                                <option ${isEditing && paymentToEdit.paymentMode === 'Cash' ? 'selected' : ''}>Cash</option>
+                                <option ${isEditing && paymentToEdit.paymentMode === 'Online' ? 'selected' : ''}>Online</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-note">Note (Optional)</label>
+                            <textarea id="payment-note" class="input-field" rows="3">${isEditing ? paymentToEdit.note : ''}</textarea>
+                        </div>
+                        <div class="modal-buttons" style="display:flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                            <button type="button" class="btn-secondary" data-app-action="close-modal" data-modal-id="payment-modal">Cancel</button>
+                            <button type="submit" class="btn-primary">${isEditing ? 'Update' : 'Save'} Payment</button>
+                        </div>
+                    </form>
+                </div>`;
+            document.getElementById('payment-form').addEventListener('submit', handlePaymentFormSubmit);
+            modal.style.display = 'flex';
+        }
+
+        async function handlePaymentFormSubmit(e) {
+            e.preventDefault();
+            showLoading();
+            const orderId = e.currentTarget.dataset.orderId;
+            const paymentId = e.currentTarget.dataset.paymentId;
+            const data = {
+                amount: parseFloat(document.getElementById('payment-amount').value),
+                date: document.getElementById('payment-date').value,
+                paymentMode: document.getElementById('payment-mode').value,
+                note: document.getElementById('payment-note').value.trim()
+            };
             try {
-                await currentAction.callback(currentAction.id);
-            } catch (error) {
-                console.error(`Error performing action '${currentAction.type}':`, error);
-                showMessageModal(`Action failed.`);
+                if (paymentId) {
+                    await updateDoc(doc(db, `upvc_orders/${orderId}/payments`, paymentId), data);
+                } else {
+                    await addDoc(collection(db, `upvc_orders/${orderId}/payments`), data);
+                }
+                closeModal('payment-modal');
+                await loadAndDisplayOrder(orderId);
+            } catch (err) { console.error("Error saving payment", err); } 
+            finally { hideLoading(); }
+        }
+
+        async function handleDeletePayment(orderId, paymentId) {
+            showConfirmationModal('Delete this payment record?', 'btn-danger', 'Delete', 'delete-payment', orderId, 
+                async () => {
+                    await deleteDoc(doc(db, `upvc_orders/${orderId}/payments`, paymentId));
+                    await loadAndDisplayOrder(orderId);
+                }
+            );
+        }
+
+        async function handleFinalTotalUpdate(orderId) {
+            showLoading();
+            const newTotal = parseFloat(document.getElementById('final-total-input').value);
+            if (isNaN(newTotal) || newTotal < 0) {
+                showMessageModal("Please enter a valid final total.");
+                hideLoading();
+                return;
+            }
+            try {
+                await updateDoc(doc(db, 'upvc_orders', orderId), { finalTotal: newTotal });
+                await loadAndDisplayOrder(orderId);
+            } catch (err) {
+                console.error("Error updating final total:", err);
             } finally {
-                currentAction = { type: null, id: null, callback: null };
                 hideLoading();
             }
         }
 
-        async function showHistoryModal(orderId) {
-            showLoading();
-            historyList.innerHTML = '<li>Loading history...</li>';
-            historyModal.style.display = 'flex';
-            try {
-                const q = query(collection(db, `upvc_orders/${orderId}/history`), orderBy('timestamp', 'desc'));
-                const snapshot = await getDocs(q);
-                if (snapshot.empty) { historyList.innerHTML = '<li>No history found.</li>'; return; }
-                
-                historyList.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const entry = doc.data();
-                    const li = document.createElement('li');
-                    li.className = 'history-item';
-                    const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
-                    let detailsHtml = '';
-                    if (entry.details && Object.keys(entry.details).length > 0) {
-                        detailsHtml += '<ul class="history-detail">';
-                        for (const [key, value] of Object.entries(entry.details)) {
-                            if (typeof value === 'object' && value !== null) {
-                                detailsHtml += `<li><strong>${key}:</strong><ul>`;
-                                for (const [subKey, subValue] of Object.entries(value)) {
-                                    detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`;
-                                }
-                                detailsHtml += '</ul></li>';
-                            } else {
-                                detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
-                            }
-                        }
-                        detailsHtml += '</ul>';
-                    }
-                    li.innerHTML = `<div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}`;
-                    historyList.appendChild(li);
-                });
-            } catch (error) { console.error("Error fetching history:", error); historyList.innerHTML = '<li>Could not load history.</li>'; } 
-            finally { hideLoading(); }
-        }
 
         // --- FIREBASE & CORE LOGIC ---
         async function initializeFirebase() {
             try {
-                const firebaseConfig = { apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg", authDomain: "payment-form-b77e2.firebaseapp.com", projectId: "payment-form-b77e2", storageBucket: "payment-form-b77e2.firebasestorage.app", messagingSenderId: "796020240904", appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd", measurementId: "G-DHJJ4WNYR4" };
+                const firebaseConfig = {
+                    apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
+                    authDomain: "payment-form-b77e2.firebaseapp.com",
+                    projectId: "payment-form-b77e2",
+                    storageBucket: "payment-form-b77e2.firebasestorage.app",
+                    messagingSenderId: "796020240904",
+                    appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
+                    measurementId: "G-DHJJ4WNYR4"
+                };
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
@@ -312,20 +380,14 @@
                         const userDoc = await getDoc(doc(db, "users", user.uid));
                         if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
                         
-                        const userProfile = userDoc.data();
-                        currentUserName = userProfile.displayName || "User";
+                        currentUserProfile = userDoc.data();
+                        currentUserName = currentUserProfile.displayName || "User";
                         profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
-                        dashboardLink.href = userProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
+                        dashboardLink.href = currentUserProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
 
                         const urlParams = new URLSearchParams(window.location.search);
-                        currentOrderId = urlParams.get('id');
-                        if (currentOrderId) {
-                            if (user.email === ADMIN_EMAIL) {
-                                adminPaymentSection.style.display = 'block';
-                                listenForPayments(currentOrderId);
-                            }
-                            await loadAndDisplayOrder(currentOrderId); 
-                        } 
+                        const orderId = urlParams.get('id');
+                        if (orderId) { await loadAndDisplayOrder(orderId); } 
                         else {
                             showMessageModal("No order specified. Redirecting...");
                             setTimeout(() => window.location.href = 'view-orders.html', 2000);
@@ -339,165 +401,87 @@
             showLoading();
             try {
                 const orderRef = doc(db, 'upvc_orders', orderId);
-                const orderSnap = await getDoc(orderRef);
-                if (orderSnap.exists()) { showOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); } 
-                else { showMessageModal("Order not found. Redirecting..."); setTimeout(() => window.location.href = 'view-orders.html', 2000); }
-            } catch (error) { console.error("Error loading order: ", error); showMessageModal("Failed to load order data."); } 
-            finally { hideLoading(); }
+                const paymentsQuery = query(collection(db, `upvc_orders/${orderId}/payments`));
+                
+                const [orderSnap, paymentsSnap] = await Promise.all([
+                    getDoc(orderRef),
+                    getDocs(paymentsQuery)
+                ]);
+
+                if (orderSnap.exists()) {
+                    const orderData = { id: orderSnap.id, ...orderSnap.data() };
+                    const paymentsData = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    
+                    showOrderDetails(orderData);
+                    
+                    // Show payment section ONLY for admin
+                    if (currentUserProfile.role === 'admin') {
+                        document.getElementById('admin-payment-section').style.display = 'block';
+                        renderPaymentSection(orderId, paymentsData, orderData.finalTotal);
+                    }
+
+                } else { 
+                    showMessageModal("Order not found. Redirecting..."); 
+                    setTimeout(() => window.location.href = 'view-orders.html', 2000); 
+                }
+            } catch (error) { 
+                console.error("Error loading order: ", error); 
+                showMessageModal("Failed to load order data."); 
+            } finally { 
+                hideLoading(); 
+            }
         }
         
         async function handleSignOut() { showLoading(); try { await signOut(auth); } catch (e) { hideLoading(); } }
         
-        // --- NEW PAYMENT FUNCTIONS ---
-        function listenForPayments(orderId) {
-            if (unsubscribePayments) unsubscribePayments(); // Unsubscribe from previous listener if it exists
-            const paymentsQuery = query(collection(db, `upvc_orders/${orderId}/payments`), orderBy('date', 'desc'));
-            unsubscribePayments = onSnapshot(paymentsQuery, (snapshot) => {
-                const payments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderPaymentSection(payments);
-            }, (error) => {
-                console.error("Error listening for payments:", error);
-                paymentsListContainer.innerHTML = "<p>Could not load payments.</p>";
-            });
-        }
-        
-        async function renderPaymentSection(payments) {
-            const finalTotal = parseFloat(finalTotalInput.value) || 0;
-            const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0);
-            const pendingAmount = finalTotal - totalCollected;
-
-            totalCollectedEl.textContent = `₹ ${totalCollected.toLocaleString('en-IN')}`;
-            pendingAmountEl.textContent = `₹ ${pendingAmount.toLocaleString('en-IN')}`;
-            
-            if (payments.length === 0) {
-                paymentsListContainer.innerHTML = "<p style='text-align: center; color: var(--light-text-muted); padding: 1rem 0;'>No payments recorded yet.</p>";
-            } else {
-                paymentsListContainer.innerHTML = payments.map(p => `
-                    <div class="payment-item">
-                        <div class="payment-info">
-                            <strong>${p.amount.toLocaleString('en-IN')}</strong> via ${p.paymentType} on ${p.date}
-                            ${p.notes ? `<div class="note">${p.notes}</div>` : ''}
-                        </div>
-                        <div class="payment-actions">
-                            <button class="btn-secondary" data-app-action="edit-payment" data-payment-id="${p.id}" style="padding: 5px 10px; font-size: 0.8rem;">Edit</button>
-                            <button class="btn-danger" data-app-action="delete-payment" data-payment-id="${p.id}" style="padding: 5px 10px; font-size: 0.8rem;">Delete</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-        
-        function handleOpenPaymentModal(paymentId = null, paymentData = {}) {
-            paymentModal.innerHTML = `
-                <div class="modal-content" style="max-width: 450px; text-align: left;">
-                    <span class="remove-window-btn" data-app-action="close-modal" data-modal-id="payment-modal" style="position: absolute; top: 12px; right: 12px;"><span class="material-symbols-outlined">close</span></span>
-                    <h3>${paymentId ? 'Edit' : 'Add'} Payment</h3>
-                    <form id="payment-form" data-payment-id="${paymentId || ''}">
-                        <div class="form-group">
-                            <label for="payment-amount">Amount (₹)</label>
-                            <input type="number" id="payment-amount" class="input-field" value="${paymentData.amount || ''}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment-date">Date</label>
-                            <input type="date" id="payment-date" class="input-field" value="${paymentData.date || new Date().toISOString().split('T')[0]}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment-type">Payment Type</label>
-                            <select id="payment-type" class="input-field">
-                                <option ${paymentData.paymentType === 'Cash' ? 'selected' : ''}>Cash</option>
-                                <option ${paymentData.paymentType === 'Online' ? 'selected' : ''}>Online</option>
-                                <option ${paymentData.paymentType === 'Cheque' ? 'selected' : ''}>Cheque</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment-notes">Notes (Optional)</label>
-                            <textarea id="payment-notes" class="input-field" rows="3">${paymentData.notes || ''}</textarea>
-                        </div>
-                        <div class="modal-buttons" style="border-top: 1px solid var(--light-border); padding-top: 1.5rem; margin-top: 0;">
-                            <button type="button" class="btn-secondary" data-app-action="close-modal" data-modal-id="payment-modal">Cancel</button>
-                            <button type="submit" class="btn-primary">Save Payment</button>
-                        </div>
-                    </form>
-                </div>`;
-            document.getElementById('payment-form').addEventListener('submit', handlePaymentFormSubmit);
-            openModal('payment-modal');
-        }
-
-        async function handlePaymentFormSubmit(e) {
-            e.preventDefault();
-            showLoading();
-            const paymentId = e.currentTarget.dataset.paymentId;
-            const data = {
-                amount: parseFloat(document.getElementById('payment-amount').value),
-                date: document.getElementById('payment-date').value,
-                paymentType: document.getElementById('payment-type').value,
-                notes: document.getElementById('payment-notes').value.trim()
-            };
-            try {
-                if (paymentId) {
-                    await updateDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId), data);
-                } else {
-                    await addDoc(collection(db, `upvc_orders/${currentOrderId}/payments`), data);
-                }
-                closeModal('payment-modal');
-            } catch (error) { console.error("Error saving payment:", error); } 
-            finally { hideLoading(); }
-        }
-
-        async function handleDeletePayment(paymentId) {
-            showConfirmationModal('Delete this payment record permanently?', 'btn-danger', 'Delete', 'delete-payment', paymentId,
-                async (id) => {
-                    await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, id));
-                }
-            );
-        }
-
-        async function handleSaveFinalTotal() {
-            showLoading();
-            try {
-                const newTotal = parseFloat(finalTotalInput.value);
-                await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal });
-                saveFinalTotalBtn.style.display = 'none';
-                await logHistory(currentOrderId, 'Final Total Updated', { newTotal: `₹ ${newTotal.toLocaleString('en-IN')}` });
-                // The onSnapshot listener will automatically re-render the summary
-            } catch (error) { console.error("Error saving final total:", error); }
-            finally { hideLoading(); }
-        }
-        
         // --- EVENT LISTENERS ---
-        document.body.addEventListener('click', async (e) => {
-            const appAction = e.target.closest('[data-app-action]');
-            if (!appAction) { if (!e.target.closest('.profile-menu')) toggleProfileDropdown(false); return; }
-            e.preventDefault();
-            const action = appAction.dataset.appAction;
-            
-            switch (action) {
-                case 'toggle-profile-dropdown': toggleProfileDropdown(); break;
-                case 'logout': await handleSignOut(); break;
-                case 'close-modal': closeModal(appAction.dataset.modalId); break;
-                case 'edit-payment':
-                    const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, appAction.dataset.paymentId));
-                    if(paymentDoc.exists()) handleOpenPaymentModal(paymentDoc.id, paymentDoc.data());
-                    break;
-                case 'delete-payment': handleDeletePayment(appAction.dataset.paymentId); break;
-                // Keep original actions
-                case 'edit-order': window.location.href = `order-form.html?id=${appAction.dataset.id}`; break;
-                case 'view-quote': window.location.href = `quote.html?id=${appAction.dataset.id}`; break;
-                case 'delete-order': /* ... same as before ... */ break;
-                case 'complete-order': /* ... same as before ... */ break;
-                case 'show-history': showHistoryModal(appAction.dataset.id); break;
-                case 'get-directions': const { lat, lon } = appAction.dataset; if (lat && lon) window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank'); break;
-            }
-        });
-        
-        addPaymentBtn.addEventListener('click', () => handleOpenPaymentModal());
-        finalTotalInput.addEventListener('input', () => { saveFinalTotalBtn.style.display = 'inline-flex'; });
-        saveFinalTotalBtn.addEventListener('click', handleSaveFinalTotal);
+        function bindEventListeners() {
+            document.body.addEventListener('click', async (e) => {
+                const appAction = e.target.closest('[data-app-action]');
+                if (!appAction) { if (!e.target.closest('.profile-menu')) toggleProfileDropdown(false); return; }
+                if (!appAction.href) e.preventDefault();
+                
+                const action = appAction.dataset.appAction;
+                const orderId = new URLSearchParams(window.location.search).get('id');
 
-        messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
-        cancelActionBtn.addEventListener('click', hideConfirmationModal);
-        confirmActionBtn.addEventListener('click', performConfirmedAction);
-        historyCloseBtn.addEventListener('click', () => historyModal.style.display = 'none');
+                switch (action) {
+                    case 'logout': await handleSignOut(); break;
+                    case 'toggle-profile-dropdown': toggleProfileDropdown(); break;
+                    case 'close-modal': closeModal(appAction.dataset.modalId); break;
+                    
+                    // Main page actions
+                    case 'edit-order': window.location.href = `order-form.html?id=${orderId}`; break;
+                    case 'view-quote': window.location.href = `quote.html?id=${orderId}`; break;
+                    case 'get-directions': const { lat, lon } = appAction.dataset; window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank'); break;
+                    case 'show-history': await showHistoryModal(orderId); break;
+                    case 'delete-order': /* ... logic ... */ break;
+                    case 'complete-order': /* ... logic ... */ break;
+                    
+                    // Payment Section Actions (Admin Only)
+                    case 'add-payment': handleOpenPaymentModal(orderId); break;
+                    case 'edit-payment': 
+                        const paymentDoc = await getDoc(doc(db, `upvc_orders/${orderId}/payments`, appAction.dataset.paymentId));
+                        handleOpenPaymentModal(orderId, {id: paymentDoc.id, ...paymentDoc.data()});
+                        break;
+                    case 'delete-payment': handleDeletePayment(orderId, appAction.dataset.paymentId); break;
+                    case 'save-final-total': await handleFinalTotalUpdate(orderId); break;
+                }
+            });
+
+            navLogoutBtn.addEventListener('click', handleSignOut);
+            detailEditBtn.addEventListener('click', (e) => window.location.href = `order-form.html?id=${e.currentTarget.dataset.id}`);
+            detailViewQuoteBtn.addEventListener('click', (e) => window.location.href = `quote.html?id=${e.currentTarget.dataset.id}`);
+            detailDeleteBtn.addEventListener('click', (e) => { /* ... existing delete logic ... */ });
+            detailCompleteBtn.addEventListener('click', (e) => { /* ... existing complete logic ... */ });
+            detailShowHistoryBtn.addEventListener('click', (e) => showHistoryModal(e.currentTarget.dataset.id));
+            detailGetDirectionsBtn.addEventListener('click', (e) => { const { lat, lon } = e.currentTarget.dataset; if (lat && lon) window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`, '_blank'); });
+            profileImage.addEventListener('click', (e) => { e.stopPropagation(); toggleProfileMenu(); });
+            window.addEventListener('click', (e) => { if (profileDropdown.classList.contains('show') && !profileContainer.contains(e.target)) { toggleProfileDropdown(false); } });
+            messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
+            cancelActionBtn.addEventListener('click', hideConfirmationModal);
+            confirmActionBtn.addEventListener('click', performConfirmedAction);
+            historyCloseBtn.addEventListener('click', () => historyModal.style.display = 'none');
+        }
 
         // --- INITIALIZATION ---
         showLoading();
