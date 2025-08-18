@@ -31,11 +31,12 @@
         .status-tag{display:inline-flex;align-items:center;gap:.375rem;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:600}.status-tag:before{content:"";display:block;width:.5rem;height:.5rem;border-radius:50%}.status-tag.pending{background-color:var(--status-pending-bg);color:var(--status-pending-text);border:1px solid var(--status-pending-text)}.status-tag.pending:before{background-color:var(--status-pending-text)}.status-tag.completed{background-color:var(--status-completed-bg);color:var(--status-completed-text);border:1px solid var(--status-completed-text)}.status-tag.completed:before{background-color:var(--status-completed-text)}.status-tag.overdue{background-color:var(--status-overdue-bg);color:var(--status-overdue-text);border:1px solid var(--status-overdue-text)}.status-tag.overdue:before{background-color:var(--status-overdue-text)}.status-tag.upcoming-due{background-color:var(--status-upcoming-bg);color:var(--status-upcoming-text);border:1px solid var(--status-upcoming-text)}.status-tag.upcoming-due:before{background-color:var(--status-upcoming-text)}
         .modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:left;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary); text-align:center;}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }.form-group { margin-bottom: 1rem; } .form-group.col-span-2 { grid-column: span 2; }.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem; color: var(--light-text-secondary); }.input-field { width: 100%; padding: 0.75rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; }
 
-        /* --- NEW REDESIGNED LAYOUT & COMPONENTS --- */
+        /* --- REDESIGNED LAYOUT & COMPONENTS --- */
         .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .page-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 1rem; }
         .details-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
-        .details-header__title h1 { font-size: 1.25rem; line-height: 1.2; margin: 0 0 0.25rem; }
+        .details-header__title { display: flex; align-items: center; gap: 0.75rem; flex-grow: 1; margin: 0 1rem; }
+        .details-header__title h1 { font-size: 1.25rem; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .icon-btn { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; display: flex; color: var(--light-text-secondary); transition: all .2s ease; }
         .icon-btn:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); transform: none; box-shadow: none; }
         .actions-menu-container { position: relative; }
@@ -49,8 +50,8 @@
         .metric-item__label { font-size: 0.8rem; font-weight: 500; color: var(--light-text-secondary); margin-bottom: 0.25rem; }
         .metric-item__value { font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
         .metric-item__value.pending { color: var(--status-overdue-text); }
-        .tabs__nav { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--light-border); padding: 0 1rem; background-color: var(--light-bg-primary); }
-        .tabs__button { background: none; border: none; padding: 1rem 0.5rem; font-weight: 600; color: var(--light-text-secondary); cursor: pointer; position: relative; border-bottom: 3px solid transparent; transform: none !important; box-shadow: none !important; border-radius: 0;}
+        .tabs__nav { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--light-border); padding: 0; background-color: var(--light-bg-primary); border-radius: var(--radius-lg) var(--radius-lg) 0 0; border: 1px solid var(--light-border); border-bottom: none;}
+        .tabs__button { flex-grow: 1; background: none; border: none; padding: 1rem 0.5rem; font-weight: 600; color: var(--light-text-secondary); cursor: pointer; position: relative; border-bottom: 3px solid transparent; transform: none !important; box-shadow: none !important; border-radius: 0;}
         .tabs__button.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
         .tabs__content-pane { display: none; padding: 1.5rem; background-color: var(--light-bg-primary); border-radius: 0 0 var(--radius-lg) var(--radius-lg); border: 1px solid var(--light-border); border-top: none;}
         .tabs__content-pane.active { display: block; }
@@ -61,12 +62,12 @@
         .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none}.history-detail ul{padding-left:1.25rem;margin-top:.25rem}
         .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; }
         .sticky-action-bar .btn { flex-grow: 1; padding: 1rem; font-size: 1rem; box-shadow: var(--shadow-md) !important; transform: none !important; }
+        .grid-sidebar { display: none; }
         @media (min-width: 800px) {
             body { padding-bottom: 0; }
             .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; }
             .details-header { background: none; border: none; padding: 0 0 1rem 0; }
             .details-header__title h1 { font-size: 1.75rem; }
-            .key-metrics-card { grid-template-columns: repeat(3, 1fr); }
             .tabs__nav, .sticky-action-bar { display: none; }
             .tabs__content-pane { display: block; padding: 0; background: none; border: none; }
             .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); }
@@ -113,17 +114,7 @@
             </header>
             <div class="page-grid">
                 <div class="grid-main">
-                    <div class="key-metrics-card">
-                        <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                        <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
-                        <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
-                    </div>
-                    <div class="tabs">
-                        <nav class="tabs__nav">
-                            <button class="tabs__button active" data-tab="details">Details</button>
-                            <button class="tabs__button" data-tab="payments">Payments</button>
-                            <button class="tabs__button" data-tab="history">History</button>
-                        </nav>
+                     <div class="tabs">
                         <div id="tab-details" class="tabs__content-pane active">
                             <section class="content-section">
                                 <h3>Customer & Order Info</h3>
@@ -146,21 +137,43 @@
                                 <div id="detail-windows-list"></div>
                             </section>
                         </div>
-                        <div id="tab-payments" class="tabs__content-pane"></div>
-                        <div id="tab-history" class="tabs__content-pane"></div>
+                        <nav class="tabs__nav">
+                            <button class="tabs__button active" data-tab="details">Details</button>
+                            <button class="tabs__button" data-tab="payments">Payments</button>
+                            <button class="tabs__button" data-tab="history">History</button>
+                        </nav>
+                        <div id="tab-payments" class="tabs__content-pane">
+                             <section id="payment-management-section-mobile" class="content-section" style="display: none;">
+                                <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1rem;">
+                                    <h3>Payments</h3>
+                                </div>
+                                <ul id="payment-list-mobile" class="payment-list"></ul>
+                            </section>
+                        </div>
+                        <div id="tab-history" class="tabs__content-pane">
+                             <section id="history-section-mobile" class="content-section">
+                                <h3>Order History</h3>
+                                <ul id="history-list-mobile" class="history-list"></ul>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="key-metrics-card">
+                        <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
+                        <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
+                        <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
                     </div>
                 </div>
                 <div class="grid-sidebar">
-                    <section id="payment-management-section" class="content-section" style="display: none;">
+                    <section id="payment-management-section-desktop" class="content-section" style="display: none;">
                         <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1rem;">
                             <h3>Payments</h3>
                             <button id="add-payment-btn" class="btn-primary" style="display: none;"><span class="material-symbols-outlined">add_card</span> Add</button>
                         </div>
-                        <ul id="payment-list" class="payment-list"></ul>
+                        <ul id="payment-list-desktop" class="payment-list"></ul>
                     </section>
-                    <section id="history-section" class="content-section">
+                    <section id="history-section-desktop" class="content-section">
                         <h3>Order History</h3>
-                        <ul id="history-list" class="history-list"><li>Loading...</li></ul>
+                        <ul id="history-list-desktop" class="history-list"></ul>
                     </section>
                 </div>
             </div>
@@ -206,12 +219,8 @@
         const tabsContainer = document.querySelector('.tabs');
         const tabButtons = document.querySelectorAll('.tabs__button');
         const contentPanes = document.querySelectorAll('.tabs__content-pane');
-        const paymentManagementSection = document.getElementById('payment-management-section');
-        const historySection = document.getElementById('history-section');
-        const tabPaymentsPane = document.getElementById('tab-payments');
-        const tabHistoryPane = document.getElementById('tab-history');
-        const paymentList = document.getElementById('payment-list');
-        const historyList = document.getElementById('history-list');
+        const paymentSectionDesktop = document.getElementById('payment-management-section-desktop');
+        const paymentSectionMobile = document.getElementById('payment-management-section-mobile');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
@@ -231,7 +240,7 @@
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
-        const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        const formatCurrency = (num) => `₹${(num || 0).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         const showConfirmationModal = (message, confirmClass, confirmText, callback) => {
             modalMessage.textContent = message;
             confirmActionBtn.className = 'btn';
@@ -273,7 +282,8 @@
             detailGetDirectionsBtn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none';
             if (isAdmin) {
                 menuDeleteBtn.style.display = 'flex';
-                paymentManagementSection.style.display = 'block';
+                paymentSectionDesktop.style.display = 'block';
+                paymentSectionMobile.style.display = 'block';
                 addPaymentBtn.style.display = 'inline-flex';
                 footerAddPaymentBtn.style.display = 'inline-flex';
             }
@@ -289,18 +299,21 @@
         }
         function renderPayments(payments) {
             const isAdmin = currentUserProfile.role === 'admin';
-            paymentList.innerHTML = payments.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No payments recorded.</p></li>' : payments.map(p => {
+            const paymentHtml = payments.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No payments recorded.</p></li>' : payments.map(p => {
                 const notesHtml = p.notes ? `<span class="notes">${p.notes}</span>` : '';
                 const actionsHtml = isAdmin ? `<div class="payment-actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${p.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${p.id}" data-amount="${p.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>` : '';
                 return `<li class="payment-item"><div class="payment-info"><span class="payment-amount">${formatCurrency(p.amount)}</span><span class="payment-meta">${new Date(p.date + 'T00:00:00').toLocaleDateString()} • ${p.type} ${notesHtml}</span></div>${actionsHtml}</li>`;
             }).join('');
+            document.getElementById('payment-list-desktop').innerHTML = paymentHtml;
+            document.getElementById('payment-list-mobile').innerHTML = paymentHtml;
             updateMetrics(payments);
         }
         async function loadAndRenderHistory() {
-            historyList.innerHTML = '<li>Loading history...</li>';
+            const historyLists = [document.getElementById('history-list-desktop'), document.getElementById('history-list-mobile')];
+            historyLists.forEach(list => list.innerHTML = '<li>Loading history...</li>');
             const q = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
             const snapshot = await getDocs(q);
-            historyList.innerHTML = snapshot.empty ? '<li>No history found.</li>' : snapshot.docs.map(doc => {
+            const historyHtml = snapshot.empty ? '<li>No history found.</li>' : snapshot.docs.map(doc => {
                 const entry = doc.data();
                 const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
                 let detailsHtml = '';
@@ -309,6 +322,7 @@
                 }
                 return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
             }).join('');
+            historyLists.forEach(list => list.innerHTML = historyHtml);
         }
         function updateMetrics(payments) {
             const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0);
@@ -394,7 +408,7 @@
         }
         
         // --- INITIALIZATION ---
-        async function initializeFirebase() { /* Unchanged */
+        async function initializeFirebase() {
             const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" };
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
@@ -446,36 +460,24 @@
         tabsContainer.addEventListener('click', (e) => {
             const clickedTab = e.target.closest('.tabs__button');
             if (!clickedTab) return;
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            contentPanes.forEach(pane => pane.classList.remove('active'));
+            tabsContainer.querySelector('.tabs__nav .active').classList.remove('active');
+            tabsContainer.querySelector('.tabs__content-pane.active').classList.remove('active');
             clickedTab.classList.add('active');
-            document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active');
+            tabsContainer.querySelector(`#tab-${clickedTab.dataset.tab}`).classList.add('active');
         });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
         cancelActionBtn.addEventListener('click', hideConfirmationModal);
         confirmActionBtn.addEventListener('click', performConfirmedAction);
         document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => paymentModal.style.display = 'none');
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
-        paymentList.addEventListener('click', (e) => {
+        document.body.addEventListener('click', (e) => {
             const editBtn = e.target.closest('[data-app-action="edit-payment"]');
             if (editBtn) { openPaymentModalForEdit(editBtn.dataset.id); }
             const deleteBtn = e.target.closest('[data-app-action="delete-payment"]');
             if(deleteBtn) { handleDeletePayment(deleteBtn.dataset.id, parseFloat(deleteBtn.dataset.amount)); }
         });
 
-        // --- UI Setup for Mobile/Desktop ---
-        function setupResponsiveViews() {
-            if (window.innerWidth < 800) {
-                // Clone sidebar content into tabs for mobile to avoid breaking desktop layout
-                tabPaymentsPane.innerHTML = '';
-                tabHistoryPane.innerHTML = '';
-                tabPaymentsPane.appendChild(paymentManagementSection.cloneNode(true));
-                tabHistoryPane.appendChild(historySection.cloneNode(true));
-            }
-        }
-
         // --- INITIALIZE APP ---
-        setupResponsiveViews();
         showLoading();
         initializeFirebase();
     </script>
