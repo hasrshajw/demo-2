@@ -309,9 +309,8 @@
                 menuEditBtn.disabled = false;
             }
         }
-        function renderFinancialLog(logItems) {
-            const containers = document.querySelectorAll('.financial-log');
-            const html = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
+        function renderFinancialLog(logItems, container) {
+            container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
                 if (item.type === 'adjustment') {
                     return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`;
                 }
@@ -319,11 +318,9 @@
                 const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`;
                 return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`;
             }).join('');
-            containers.forEach(container => container.innerHTML = html);
         }
-        function renderHistory(historyItems) {
-            const containers = document.querySelectorAll('.history-list');
-            const html = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => {
+        function renderHistory(historyItems, container) {
+            container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => {
                 const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
                 let detailsHtml = '';
                 if (entry.details && Object.keys(entry.details).length > 0) {
@@ -335,7 +332,6 @@
                 }
                 return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
             }).join('');
-            containers.forEach(container => container.innerHTML = html);
         }
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; metricDueDate.textContent = currentOrder.dueDate || 'N/A'; metricFinalTotal.textContent = formatCurrency(finalTotal); metricPendingAmount.textContent = formatCurrency(pendingAmount); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
@@ -354,7 +350,7 @@
         async function loadFinancialAndHistoryData() {
             const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`));
             const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
-            const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historySnap.query) ]);
+            const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
             
             const financialLogItems = [];
             const operationalHistoryItems = [];
@@ -363,8 +359,10 @@
                 const entry = doc.data();
                 const isFinancial = entry.action.includes('Payment') || entry.action.includes('Final Total');
                 if (currentUserProfile?.role === 'admin' && isFinancial) {
-                    financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
-                } else if (!isFinancial) {
+                    if (entry.action === 'Final Total Updated') {
+                        financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
+                    }
+                } else {
                     operationalHistoryItems.push(entry);
                 }
             });
@@ -373,10 +371,13 @@
             if (currentUserProfile?.role === 'admin') {
                 financialLogItems.push(...payments);
                 financialLogItems.sort((a, b) => b.date - a.date);
-                renderFinancialLog(financialLogItems);
+                renderFinancialLog(financialLogItems, document.querySelector('#payment-management-section .financial-log'));
+                if (document.querySelector('#tab-payments .financial-log')) { renderFinancialLog(financialLogItems, document.querySelector('#tab-payments .financial-log')); }
                 updateMetrics(payments);
             }
-            renderHistory(operationalHistoryItems);
+
+            renderHistory(operationalHistoryItems, document.querySelector('#history-section .history-list'));
+            if (document.querySelector('#tab-history .history-list')) { renderHistory(operationalHistoryItems, document.querySelector('#tab-history .history-list')); }
         }
         async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
         async function loadAndDisplayOrder(orderId) {
