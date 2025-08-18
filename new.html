@@ -62,7 +62,7 @@
         .financial-log { list-style: none; padding: 0; margin: 0; } .log-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--light-border); } .log-item:last-child { border-bottom: none; } .log-item__info { display: flex; flex-direction: column; } .log-item__amount { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); } .log-item__meta { font-size: 0.8rem; color: var(--light-text-muted); } .log-item__meta .notes { display: block; margin-top: 4px; color: var(--light-text-secondary); font-style: italic; } .log-item__actions { display: flex; gap: 0.5rem; }
         .log-item--adjustment .log-item__amount { color: var(--light-text-secondary); font-weight: 500; font-size: 0.9rem; }
         .log-item--adjustment .log-item__meta { font-style: italic; }
-        .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none; margin-left:0;}.history-detail li {list-style-type: disc; margin-left: 1rem;}
+        .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none; margin-left:0;}.history-detail ul{ padding-left: 1.25rem; margin-top: .25rem; }
         .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; }
         .sticky-action-bar .btn { flex-grow: 1; padding: 0.9rem; font-size: 0.9rem; box-shadow: var(--shadow-md) !important; transform: none !important; }
         .grid-sidebar { display: none; }
@@ -319,16 +319,25 @@
                 return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`;
             }).join('');
         }
+        // CORRECTED: Restored original, more robust history detail rendering
         function renderHistory(historyItems, container) {
             container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => {
                 const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
                 let detailsHtml = '';
-                if (entry.details && Object.keys(entry.details).length > 0) {
-                    detailsHtml += '<ul class="history-detail">';
-                    for (const [key, value] of Object.entries(entry.details)) {
-                        detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
-                    }
-                    detailsHtml += '</ul>';
+                if (entry.details && Object.keys(entry.details).length > 0) { 
+                    detailsHtml += '<ul class="history-detail">'; 
+                    for (const [key, value] of Object.entries(entry.details)) { 
+                        if (typeof value === 'object' && value !== null) { 
+                            detailsHtml += `<li><strong>${key}:</strong><ul>`; 
+                            for (const [subKey, subValue] of Object.entries(value)) { 
+                                detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; 
+                            } 
+                            detailsHtml += '</ul></li>'; 
+                        } else { 
+                            detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; 
+                        } 
+                    } 
+                    detailsHtml += '</ul>'; 
                 }
                 return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
             }).join('');
@@ -339,9 +348,9 @@
         // --- ACTION HANDLERS ---
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited", { amount: formatCurrency(data.amount) }); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added", { amount: formatCurrency(data.amount) }); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
-        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted', { amount: formatCurrency(amount) }); await loadFinancialAndHistoryData(); }); }
+        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
         async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
@@ -357,9 +366,10 @@
             
             historySnap.docs.forEach(doc => {
                 const entry = doc.data();
-                const isFinancial = entry.action.includes('Payment') || entry.action.includes('Final Total');
-                if (currentUserProfile?.role === 'admin' && isFinancial) {
-                    if (entry.action === 'Final Total Updated') {
+                const action = entry.action || '';
+                // Strict separation: Financial actions go to financial log ONLY for admins
+                if (action.includes('Payment') || action.includes('Total')) {
+                    if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') {
                         financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
                     }
                 } else {
@@ -371,13 +381,16 @@
             if (currentUserProfile?.role === 'admin') {
                 financialLogItems.push(...payments);
                 financialLogItems.sort((a, b) => b.date - a.date);
-                renderFinancialLog(financialLogItems, document.querySelector('#payment-management-section .financial-log'));
-                if (document.querySelector('#tab-payments .financial-log')) { renderFinancialLog(financialLogItems, document.querySelector('#tab-payments .financial-log')); }
-                updateMetrics(payments);
             }
 
             renderHistory(operationalHistoryItems, document.querySelector('#history-section .history-list'));
             if (document.querySelector('#tab-history .history-list')) { renderHistory(operationalHistoryItems, document.querySelector('#tab-history .history-list')); }
+            
+            if (currentUserProfile?.role === 'admin') {
+                renderFinancialLog(financialLogItems, document.querySelector('#payment-management-section .financial-log'));
+                if (document.querySelector('#tab-payments .financial-log')) { renderFinancialLog(financialLogItems, document.querySelector('#tab-payments .financial-log')); }
+                updateMetrics(payments);
+            }
         }
         async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
         async function loadAndDisplayOrder(orderId) {
@@ -419,8 +432,11 @@
             if (window.innerWidth < 800) {
                 tabPaymentsPane.innerHTML = '';
                 tabHistoryPane.innerHTML = '';
-                tabPaymentsPane.appendChild(paymentManagementSection.cloneNode(true));
-                tabHistoryPane.appendChild(historySection.cloneNode(true));
+                // CORRECTED: Ensure the cloned section has the correct child UL for targeting
+                const clonedPayments = paymentManagementSection.cloneNode(true);
+                const clonedHistory = historySection.cloneNode(true);
+                tabPaymentsPane.appendChild(clonedPayments);
+                tabHistoryPane.appendChild(clonedHistory);
             }
         }
 
