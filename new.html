@@ -62,7 +62,7 @@
         .financial-log { list-style: none; padding: 0; margin: 0; } .log-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--light-border); } .log-item:last-child { border-bottom: none; } .log-item__info { display: flex; flex-direction: column; } .log-item__amount { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); } .log-item__meta { font-size: 0.8rem; color: var(--light-text-muted); } .log-item__meta .notes { display: block; margin-top: 4px; color: var(--light-text-secondary); font-style: italic; } .log-item__actions { display: flex; gap: 0.5rem; }
         .log-item--adjustment .log-item__amount { color: var(--light-text-secondary); font-weight: 500; font-size: 0.9rem; }
         .log-item--adjustment .log-item__meta { font-style: italic; }
-        .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none; margin-left:0;}.history-detail li {list-style-type: disc; margin-left: 1rem;}
+        .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{list-style:none;padding-left:1rem;margin-top:.5rem;}.history-detail li{position:relative;padding-left:1.2rem;margin-top:0.25rem}.history-detail li::before{content:'•';position:absolute;left:0;top:1px;color:var(--light-text-secondary)}
         .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; }
         .sticky-action-bar .btn { flex-grow: 1; padding: 0.9rem; font-size: 0.9rem; box-shadow: var(--shadow-md) !important; transform: none !important; }
         .grid-sidebar { display: none; }
@@ -309,8 +309,8 @@
                 menuEditBtn.disabled = false;
             }
         }
-        function renderFinancialLog(logItems, container) {
-            container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
+        function renderFinancialLog(logItems) {
+            const html = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
                 if (item.type === 'adjustment') {
                     return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`;
                 }
@@ -318,9 +318,10 @@
                 const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`;
                 return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`;
             }).join('');
+            document.querySelectorAll('.financial-log').forEach(el => el.innerHTML = html);
         }
-        function renderHistory(historyItems, container) {
-            container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => {
+        function renderHistory(historyItems) {
+            const html = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => {
                 const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
                 let detailsHtml = '';
                 if (entry.details && Object.keys(entry.details).length > 0) {
@@ -328,6 +329,7 @@
                 }
                 return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
             }).join('');
+            document.querySelectorAll('.history-list').forEach(el => el.innerHTML = html);
         }
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; metricDueDate.textContent = currentOrder.dueDate || 'N/A'; metricFinalTotal.textContent = formatCurrency(finalTotal); metricPendingAmount.textContent = formatCurrency(pendingAmount); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
@@ -335,29 +337,31 @@
         // --- ACTION HANDLERS ---
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited", { amount: formatCurrency(data.amount) }); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added", { amount: formatCurrency(data.amount) }); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
-        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted', { amount: formatCurrency(amount) }); await loadFinancialAndHistoryData(); }); }
+        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
         async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
 
         // --- DATA FETCHING & PROCESSING ---
         async function loadFinancialAndHistoryData() {
-            const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('date', 'desc'));
+            const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`));
             const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
-            const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
+            const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historySnap.query) ]);
             
             const financialLogItems = [];
             const operationalHistoryItems = [];
             
             historySnap.docs.forEach(doc => {
                 const entry = doc.data();
-                if (entry.action === 'Final Total Updated') {
-                    if (currentUserProfile?.role === 'admin') {
-                        financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
+                const isFinancial = entry.action.includes('Payment') || entry.action.includes('Final Total');
+                
+                if (isFinancial && currentUserProfile?.role === 'admin') {
+                    if(entry.action === 'Final Total Updated') {
+                         financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
                     }
-                } else if (!entry.action.includes('Payment')) {
+                } else if (!isFinancial) {
                     operationalHistoryItems.push(entry);
                 }
             });
@@ -368,12 +372,9 @@
                 financialLogItems.sort((a, b) => b.date - a.date);
             }
 
-            renderHistory(operationalHistoryItems, document.querySelector('#history-section .history-list'));
-            if (document.querySelector('#tab-history .history-list')) { renderHistory(operationalHistoryItems, document.querySelector('#tab-history .history-list')); }
-            
+            renderHistory(operationalHistoryItems);
             if (currentUserProfile?.role === 'admin') {
-                renderFinancialLog(financialLogItems, document.querySelector('#payment-management-section .financial-log'));
-                if (document.querySelector('#tab-payments .financial-log')) { renderFinancialLog(financialLogItems, document.querySelector('#tab-payments .financial-log')); }
+                renderFinancialLog(financialLogItems);
                 updateMetrics(payments);
             }
         }
