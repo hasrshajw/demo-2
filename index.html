@@ -184,19 +184,21 @@
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-
-// Firebase configuration will be injected by Netlify during build
-const firebaseConfig = {
-    apiKey: "__API_KEY__",
-    authDomain: "__AUTH_DOMAIN__",
-    projectId: "__PROJECT_ID__",
-    storageBucket: "__STORAGE_BUCKET__",
-    messagingSenderId: "__MESSAGING_SENDER_ID__",
-    appId: "__APP_ID__",
-    measurementId: "__MEASUREMENT_ID__"
-};
+        // --- CHANGE 1: Firebase configuration replaced with placeholders ---
+        // These placeholders are replaced by Netlify's build process using environment variables.
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
         
         let db, auth;
+        // --- CHANGE 2: Replaced admin email array with a single placeholder string ---
+        // This is replaced by Netlify's build process using the ADMIN_EMAIL environment variable.
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
         // --- HELPER FUNCTIONS ---
@@ -207,8 +209,9 @@ const firebaseConfig = {
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             try {
-                if (firebaseConfig.apiKey.includes("YOUR_API_KEY")) {
-                    throw new Error("Firebase config is not set. Please update it in the script.");
+                // --- CHANGE 4: Improved initialization check for better error messages ---
+                if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith("__")) {
+                    throw new Error("Firebase configuration is missing or invalid. Ensure environment variables are set correctly in Netlify.");
                 }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -250,8 +253,8 @@ const firebaseConfig = {
         async function handleUserLoggedIn(user) {
             const userRef = doc(db, "users", user.uid);
             
-            // Check if user is an admin
-            if (ADMIN_EMAILS.includes(user.email)) {
+            // --- CHANGE 3: Updated admin check to a direct string comparison ---
+            if (user.email === ADMIN_EMAIL) {
                 // Ensure admin role and status is set
                 await setDoc(userRef, { 
                     displayName: user.displayName || user.email,
