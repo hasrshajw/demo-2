@@ -165,8 +165,12 @@
                                 <div id="detail-windows-list"></div>
                             </section>
                         </div>
-                        <div id="tab-payments" class="tabs__content-pane"></div>
-                        <div id="tab-history" class="tabs__content-pane"></div>
+                        <div id="tab-payments" class="tabs__content-pane">
+                            <!-- This will be populated by JS for mobile -->
+                        </div>
+                        <div id="tab-history" class="tabs__content-pane">
+                            <!-- This will be populated by JS for mobile -->
+                        </div>
                     </div>
                     <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
                         <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
@@ -178,7 +182,7 @@
                     <section id="payment-management-section" class="content-section" style="display: none;">
                         <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1rem;">
                             <h3>Financial Log</h3>
-                            <button id="add-payment-btn" class="btn-primary" style="display: none;"><span class="material-symbols-outlined">add_card</span> Add</button>
+                            <button data-app-action="add-payment" class="btn-primary" style="display: none;"><span class="material-symbols-outlined">add_card</span> Add</button>
                         </div>
                         <ul class="financial-log"></ul>
                     </section>
@@ -191,7 +195,7 @@
         </main>
     </div>
     <footer class="sticky-action-bar">
-        <button id="footer-add-payment-btn" class="btn-secondary" style="display:none;">Add Payment</button>
+        <button data-app-action="add-payment" class="btn-secondary" style="display:none;">Add Payment</button>
         <button id="detail-complete-btn" class="btn-success"></button>
     </footer>
 
@@ -229,8 +233,6 @@
         const detailViewQuoteBtn = document.getElementById('detail-view-quote-btn');
         const detailViewBillBtn = document.getElementById('detail-view-bill-btn');
         const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        const addPaymentBtn = document.getElementById('add-payment-btn');
-        const footerAddPaymentBtn = document.getElementById('footer-add-payment-btn');
         const tabsContainer = document.querySelector('.tabs');
         const tabButtons = document.querySelectorAll('.tabs__button');
         const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
@@ -295,9 +297,7 @@
                 menuDeleteBtn.style.display = 'flex';
                 menuEditTotalBtn.style.display = 'flex';
                 menuDivider.style.display = 'block';
-                paymentManagementSection.style.display = 'block';
-                addPaymentBtn.style.display = 'inline-flex';
-                footerAddPaymentBtn.style.display = 'inline-flex';
+                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
             }
             if (order.status === 'completed') {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
@@ -381,14 +381,9 @@
                 financialLogItems.sort((a, b) => b.date - a.date);
             }
 
-            renderHistory(operationalHistoryItems, document.querySelector('#history-section .history-list'));
-            const mobileHistoryList = document.querySelector('#tab-history .history-list');
-            if (mobileHistoryList) { renderHistory(operationalHistoryItems, mobileHistoryList); }
-            
+            document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list));
             if (currentUserProfile?.role === 'admin') {
-                renderFinancialLog(financialLogItems, document.querySelector('#payment-management-section .financial-log'));
-                const mobileFinancialLog = document.querySelector('#tab-payments .financial-log');
-                if (mobileFinancialLog) { renderFinancialLog(financialLogItems, mobileFinancialLog); }
+                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log));
                 updateMetrics(payments);
             }
         }
@@ -415,8 +410,6 @@
         detailViewQuoteBtn.addEventListener('click', () => window.location.href = `quote.html?id=${currentOrderId}`);
         detailViewBillBtn.addEventListener('click', () => window.location.href = `bill.html?id=${currentOrderId}`);
         detailCompleteBtn.addEventListener('click', handleCompleteOrder);
-        addPaymentBtn.addEventListener('click', openPaymentModal);
-        footerAddPaymentBtn.addEventListener('click', openPaymentModal);
         tabsContainer.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; tabButtons.forEach(btn => btn.classList.remove('active')); contentPanes.forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
         cancelActionBtn.addEventListener('click', hideConfirmationModal);
@@ -425,19 +418,21 @@
         document.querySelector('[data-app-action="close-total-modal"]').addEventListener('click', () => editTotalModal.style.display = 'none');
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
         editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
-        mainScreen.addEventListener('click', (e) => { const editBtn = e.target.closest('[data-app-action="edit-payment"]'); if (editBtn) { openPaymentModalForEdit(editBtn.dataset.id); } const deleteBtn = e.target.closest('[data-app-action="delete-payment"]'); if(deleteBtn) { handleDeletePayment(deleteBtn.dataset.id, parseFloat(deleteBtn.dataset.amount)); } });
+        mainScreen.addEventListener('click', (e) => {
+            if (e.target.closest('[data-app-action="add-payment"]')) { openPaymentModal(); }
+            const editBtn = e.target.closest('[data-app-action="edit-payment"]'); if (editBtn) { openPaymentModalForEdit(editBtn.dataset.id); } 
+            const deleteBtn = e.target.closest('[data-app-action="delete-payment"]'); if(deleteBtn) { handleDeletePayment(deleteBtn.dataset.id, parseFloat(deleteBtn.dataset.amount)); }
+        });
 
         // --- UI Setup for Mobile/Desktop ---
         function setupResponsiveViews() {
             if (window.innerWidth < 800) {
                 tabPaymentsPane.innerHTML = '';
                 tabHistoryPane.innerHTML = '';
-                // Clone the sections and remove their IDs to prevent duplicate IDs in the DOM
                 const clonedPayments = paymentManagementSection.cloneNode(true);
                 clonedPayments.removeAttribute('id');
                 const clonedHistory = historySection.cloneNode(true);
                 clonedHistory.removeAttribute('id');
-
                 tabPaymentsPane.appendChild(clonedPayments);
                 tabHistoryPane.appendChild(clonedHistory);
             }
