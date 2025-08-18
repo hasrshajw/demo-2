@@ -393,6 +393,7 @@
             const orderRef = doc(db, 'upvc_orders', orderId);
             const orderSnap = await getDoc(orderRef);
             if (orderSnap.exists()) {
+                setupResponsiveViews(); // Setup views before rendering
                 renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() });
                 await loadFinancialAndHistoryData();
             } else { showMessageModal("Order not found."); }
@@ -427,19 +428,24 @@
         // --- UI Setup for Mobile/Desktop ---
         function setupResponsiveViews() {
             if (window.innerWidth < 800) {
+                // Clear the panes to prevent duplication on reload
                 tabPaymentsPane.innerHTML = '';
                 tabHistoryPane.innerHTML = '';
+                
+                // Clone the original desktop sections
                 const clonedPayments = paymentManagementSection.cloneNode(true);
-                clonedPayments.removeAttribute('id');
+                clonedPayments.removeAttribute('id'); // Prevent duplicate IDs
+                
                 const clonedHistory = historySection.cloneNode(true);
                 clonedHistory.removeAttribute('id');
+
+                // Append the fresh clones to the mobile tab panes
                 tabPaymentsPane.appendChild(clonedPayments);
                 tabHistoryPane.appendChild(clonedHistory);
             }
         }
 
         // --- INITIALIZE APP ---
-        setupResponsiveViews();
         showLoading();
         initializeFirebase();
     </script>
