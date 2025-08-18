@@ -165,12 +165,8 @@
                                 <div id="detail-windows-list"></div>
                             </section>
                         </div>
-                        <div id="tab-payments" class="tabs__content-pane">
-                            <!-- This will be populated by JS for mobile -->
-                        </div>
-                        <div id="tab-history" class="tabs__content-pane">
-                            <!-- This will be populated by JS for mobile -->
-                        </div>
+                        <div id="tab-payments" class="tabs__content-pane"></div>
+                        <div id="tab-history" class="tabs__content-pane"></div>
                     </div>
                     <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
                         <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
@@ -237,8 +233,6 @@
         const tabButtons = document.querySelectorAll('.tabs__button');
         const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
         const contentPanes = document.querySelectorAll('.tabs__content-pane');
-        const paymentManagementSection = document.getElementById('payment-management-section');
-        const historySection = document.getElementById('history-section');
         const tabPaymentsPane = document.getElementById('tab-payments');
         const tabHistoryPane = document.getElementById('tab-history');
         const confirmationModal = document.getElementById('confirmation-modal');
@@ -393,7 +387,6 @@
             const orderRef = doc(db, 'upvc_orders', orderId);
             const orderSnap = await getDoc(orderRef);
             if (orderSnap.exists()) {
-                setupResponsiveViews(); // Setup views before rendering
                 renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() });
                 await loadFinancialAndHistoryData();
             } else { showMessageModal("Order not found."); }
@@ -428,24 +421,19 @@
         // --- UI Setup for Mobile/Desktop ---
         function setupResponsiveViews() {
             if (window.innerWidth < 800) {
-                // Clear the panes to prevent duplication on reload
                 tabPaymentsPane.innerHTML = '';
                 tabHistoryPane.innerHTML = '';
-                
-                // Clone the original desktop sections
                 const clonedPayments = paymentManagementSection.cloneNode(true);
-                clonedPayments.removeAttribute('id'); // Prevent duplicate IDs
-                
+                clonedPayments.removeAttribute('id');
                 const clonedHistory = historySection.cloneNode(true);
                 clonedHistory.removeAttribute('id');
-
-                // Append the fresh clones to the mobile tab panes
                 tabPaymentsPane.appendChild(clonedPayments);
                 tabHistoryPane.appendChild(clonedHistory);
             }
         }
 
         // --- INITIALIZE APP ---
+        setupResponsiveViews();
         showLoading();
         initializeFirebase();
     </script>
