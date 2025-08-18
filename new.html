@@ -40,12 +40,12 @@
         .icon-btn { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; display: flex; color: var(--light-text-secondary); transition: all .2s ease; flex-shrink: 0; }
         .icon-btn:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); transform: none; box-shadow: none; }
         .actions-menu-container { position: relative; }
-        .actions-dropdown { position: absolute; top: calc(100% + 8px); right: 0; background: var(--light-bg-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 8px; min-width: 180px; z-index: 1001; visibility: hidden; opacity: 0; transform: translateY(-10px); transition: all .2s ease-out; }
+        .actions-dropdown { position: absolute; top: calc(100% + 8px); right: 0; background: var(--light-bg-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 8px; min-width: 200px; z-index: 1001; visibility: hidden; opacity: 0; transform: translateY(-10px); transition: all .2s ease-out; }
         .actions-dropdown.show { visibility: visible; opacity: 1; transform: translateY(0); }
-        .actions-dropdown button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: 0 0; text-align: left; font-size: 15px; font-weight: 500; color: var(--light-text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: background-color .2s ease; }
+        .actions-dropdown button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: none; background: 0 0; text-align: left; font-size: 15px; font-weight: 500; color: var(--light-text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: background-color .2s ease; }
         .actions-dropdown button:hover { background-color: var(--light-bg-tertiary); transform: none; box-shadow: none; }
-        .actions-dropdown button .icon { font-size: 18px; color: var(--light-text-secondary); }
-        .key-metrics-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; background-color: var(--light-bg-primary); padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--light-border); }
+        .actions-dropdown .icon { font-size: 20px; color: var(--light-text-secondary); flex-shrink: 0; line-height: 1; }
+        .key-metrics-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem; background-color: var(--light-bg-primary); padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--light-border); }
         .metric-item { text-align: center; }
         .metric-item__label { font-size: 0.8rem; font-weight: 500; color: var(--light-text-secondary); margin-bottom: 0.25rem; }
         .metric-item__value { font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
@@ -61,19 +61,19 @@
         .payment-list { list-style: none; padding: 0; margin: 0; } .payment-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--light-border); } .payment-item:last-child { border-bottom: none; } .payment-info { display: flex; flex-direction: column; } .payment-amount { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); } .payment-meta { font-size: 0.8rem; color: var(--light-text-muted); } .payment-meta .notes { display: block; margin-top: 4px; color: var(--light-text-secondary); font-style: italic; } .payment-actions { display: flex; gap: 0.5rem; }
         .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none}.history-detail ul{padding-left:1.25rem;margin-top:.25rem}
         .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; }
-        .sticky-action-bar .btn { flex-grow: 1; padding: 1rem; font-size: 1rem; box-shadow: var(--shadow-md) !important; transform: none !important; }
-        .grid-sidebar { display: none; } /* Hide sidebar by default (mobile-first) */
+        .sticky-action-bar .btn { flex-grow: 1; padding: 0.8rem 1rem; font-size: 0.9rem; box-shadow: var(--shadow-md) !important; transform: none !important; }
+        .grid-sidebar { display: none; } 
+        @media (max-width: 380px) { .metric-item__value { font-size: 1rem; } }
         @media (min-width: 800px) {
             body { padding-bottom: 0; }
             .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; }
             .details-header { background: none; border: none; padding: 0 0 1rem 0; }
             .details-header__title h1 { font-size: 1.75rem; }
-            .key-metrics-card { grid-template-columns: repeat(3, 1fr); }
             .tabs__nav, .sticky-action-bar { display: none; }
             .tabs__content-pane { display: block; padding: 0; background: none; border: none; }
             .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); }
             .grid-main { display: flex; flex-direction: column; gap: 1.5rem; }
-            .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; } /* Show sidebar on desktop */
+            .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
             #desktop-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
         }
     </style>
@@ -81,23 +81,12 @@
 <body>
     <div class="page-container">
         <!-- MODALS & OVERLAYS -->
-        <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn-danger">Confirm</button></div></div></div>
-        <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn-primary" style="min-width: 120px; margin-left:auto;">OK</button></div></div>
+        <div id="confirmation-modal" class="modal"><div class="modal-content"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn-danger">Confirm</button></div></div></div>
+        <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn-primary" style="min-width: 120px; margin: 1rem auto 0;">OK</button></div></div>
         <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
-        <div id="payment-modal" class="modal">
-            <div class="modal-content">
-                <h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3>
-                <form id="payment-form">
-                    <input type="hidden" id="payment-id">
-                    <div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div>
-                    <div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div>
-                    <div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div>
-                    <div class="modal-buttons" style="margin-top: 1rem;"><button type="button" class="btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn-primary">Save Payment</button></div>
-                </form>
-            </div>
-        </div>
+        <div id="payment-modal" class="modal"><div class="modal-content"><h3 id="payment-modal-title" style="margin-bottom: 1.5rem;"></h3><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div><div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div><div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div><div class="modal-buttons" style="margin-top: 1rem;"><button type="button" class="btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn-primary">Save Payment</button></div></form></div></div>
+        <div id="edit-total-modal" class="modal"><div class="modal-content"><h3 style="margin-bottom: 1.5rem;">Edit Final Amount</h3><form id="edit-total-form"><div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" class="input-field" required min="0" step="0.01"></div><div class="modal-buttons" style="margin-top: 1rem;"><button type="button" class="btn-secondary" data-app-action="close-edit-total-modal">Cancel</button><button type="submit" class="btn-primary">Save Amount</button></div></form></div></div>
 
-        <!-- NEW PAGE STRUCTURE -->
         <main id="order-details-screen" class="screen active">
             <header class="details-header">
                 <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
@@ -109,6 +98,7 @@
                     <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
                     <div id="actions-dropdown" class="actions-dropdown">
                         <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
+                        <button id="menu-edit-total-btn" style="display: none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
                         <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined">delete</span>Delete Order</button>
                     </div>
                 </div>
@@ -118,7 +108,7 @@
                     <div class="tabs">
                         <nav class="tabs__nav">
                             <button class="tabs__button active" data-tab="details">Details</button>
-                            <button class="tabs__button" data-tab="payments">Payments</button>
+                            <button class="tabs__button" data-tab="payments" style="display: none;">Payments</button>
                             <button class="tabs__button" data-tab="history">History</button>
                         </nav>
                         <div id="tab-details" class="tabs__content-pane active">
@@ -146,7 +136,7 @@
                         <div id="tab-payments" class="tabs__content-pane"></div>
                         <div id="tab-history" class="tabs__content-pane"></div>
                     </div>
-                    <div class="key-metrics-card">
+                    <div id="key-metrics-card" class="key-metrics-card" style="display: none;">
                         <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
                         <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
                         <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
@@ -158,11 +148,11 @@
                             <h3>Payments</h3>
                             <button id="add-payment-btn" class="btn-primary" style="display: none;"><span class="material-symbols-outlined">add_card</span> Add</button>
                         </div>
-                        <ul id="payment-list" class="payment-list"></ul>
+                        <ul class="payment-list"></ul>
                     </section>
                     <section id="history-section" class="content-section">
                         <h3>Order History</h3>
-                        <ul id="history-list" class="history-list"><li>Loading...</li></ul>
+                        <ul class="history-list"><li>Loading...</li></ul>
                     </section>
                 </div>
             </div>
@@ -186,6 +176,7 @@
         const actionsDropdown = document.getElementById('actions-dropdown');
         const menuEditBtn = document.getElementById('menu-edit-btn');
         const menuDeleteBtn = document.getElementById('menu-delete-btn');
+        const menuEditTotalBtn = document.getElementById('menu-edit-total-btn');
         const detailCustomerName = document.getElementById('detail-customer-name');
         const detailStatusTag = document.getElementById('detail-status-tag');
         const detailCustomerAddress = document.getElementById('detail-customer-address');
@@ -197,6 +188,7 @@
         const detailCompletedBy = document.getElementById('detail-completed-by');
         const detailWindowCount = document.getElementById('detail-window-count');
         const detailWindowsList = document.getElementById('detail-windows-list');
+        const keyMetricsCard = document.getElementById('key-metrics-card');
         const metricDueDate = document.getElementById('metric-due-date');
         const metricFinalTotal = document.getElementById('metric-final-total');
         const metricPendingAmount = document.getElementById('metric-pending-amount');
@@ -208,12 +200,12 @@
         const footerAddPaymentBtn = document.getElementById('footer-add-payment-btn');
         const tabsContainer = document.querySelector('.tabs');
         const tabButtons = document.querySelectorAll('.tabs__button');
+        const paymentTabBtn = document.querySelector('.tabs__button[data-tab="payments"]');
         const contentPanes = document.querySelectorAll('.tabs__content-pane');
         const paymentManagementSection = document.getElementById('payment-management-section');
         const historySection = document.getElementById('history-section');
         const tabPaymentsPane = document.getElementById('tab-payments');
         const tabHistoryPane = document.getElementById('tab-history');
-        const historyList = document.getElementById('history-list');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
@@ -224,6 +216,9 @@
         const paymentModal = document.getElementById('payment-modal');
         const paymentForm = document.getElementById('payment-form');
         const paymentModalTitle = document.getElementById('payment-modal-title');
+        const editTotalModal = document.getElementById('edit-total-modal');
+        const editTotalForm = document.getElementById('edit-total-form');
+        const finalTotalInput = document.getElementById('final-total-input');
         
         let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
         let paymentsUnsubscribe = null;
@@ -274,7 +269,10 @@
             detailWindowCount.textContent = windowsToDisplay.length;
             detailGetDirectionsBtn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none';
             if (isAdmin) {
+                keyMetricsCard.style.display = 'grid';
                 menuDeleteBtn.style.display = 'flex';
+                menuEditTotalBtn.style.display = 'flex';
+                paymentTabBtn.style.display = 'block';
                 paymentManagementSection.style.display = 'block';
                 addPaymentBtn.style.display = 'inline-flex';
                 footerAddPaymentBtn.style.display = 'inline-flex';
@@ -298,11 +296,15 @@
             }).join('');
             updateMetrics(payments);
         }
-        async function loadAndRenderHistory(container) {
+        async function loadAndRenderHistory(container, isAdmin) {
             container.innerHTML = '<li>Loading history...</li>';
             const q = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
             const snapshot = await getDocs(q);
-            container.innerHTML = snapshot.empty ? '<li>No history found.</li>' : snapshot.docs.map(doc => {
+            let historyDocs = snapshot.docs;
+            if (!isAdmin) {
+                historyDocs = historyDocs.filter(doc => !doc.data().action.toLowerCase().includes('payment') && !doc.data().action.toLowerCase().includes('total'));
+            }
+            container.innerHTML = historyDocs.length === 0 ? '<li>No relevant history found.</li>' : historyDocs.map(doc => {
                 const entry = doc.data();
                 const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
                 let detailsHtml = '';
@@ -335,111 +337,23 @@
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() {
             const isCompleted = currentOrder.status === 'completed';
-            const action = isCompleted ? {
-                confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' },
-                update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() },
-                log: 'Order Reopened'
-            } : {
-                confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' },
-                update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName },
-                log: 'Order Completed'
-            };
+            const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' };
             showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => {
                 await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update);
                 await logHistory(action.log);
                 loadAndDisplayOrder(currentOrderId);
             });
         }
-        async function handlePaymentFormSubmit(e) {
-            e.preventDefault(); showLoading();
-            const paymentId = paymentForm.querySelector('#payment-id').value;
-            const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() };
-            try {
-                const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`);
-                if (paymentId) {
-                    await setDoc(doc(paymentsRef, paymentId), data);
-                    await logHistory("Payment Edited", { amount: formatCurrency(data.amount) });
-                } else {
-                    await addDoc(paymentsRef, data);
-                    await logHistory("Payment Added", { amount: formatCurrency(data.amount) });
-                }
-                paymentModal.style.display = 'none';
-            } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } 
-            finally { hideLoading(); }
-        }
-        async function openPaymentModalForEdit(paymentId) {
-            const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId));
-            if(paymentDoc.exists()){
-                const payment = paymentDoc.data();
-                paymentModalTitle.textContent = "Edit Payment";
-                paymentForm.querySelector('#payment-id').value = paymentId;
-                paymentForm.querySelector('#payment-amount').value = payment.amount;
-                paymentForm.querySelector('#payment-date').value = payment.date;
-                paymentForm.querySelector('#payment-type').value = payment.type;
-                paymentForm.querySelector('#payment-notes').value = payment.notes || '';
-                paymentModal.style.display = 'flex';
-            }
-        }
-        function handleDeletePayment(paymentId, amount) {
-            showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment',
-                async () => { 
-                    await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId));
-                    await logHistory('Payment Deleted', { amount: formatCurrency(amount) });
-                });
-        }
-        function openPaymentModal() {
-            paymentForm.reset();
-            paymentForm.querySelector('#payment-id').value = '';
-            paymentModalTitle.textContent = "Add Payment";
-            document.getElementById('payment-date').value = new Date().toISOString().split('T')[0];
-            paymentModal.style.display = 'flex';
-        }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited", { amount: formatCurrency(data.amount) }); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added", { amount: formatCurrency(data.amount) }); } paymentModal.style.display = 'none'; } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
+        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
+        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted', { amount: formatCurrency(amount) }); }); }
+        function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
+        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotalRaw = finalTotalInput.value; const currentTotal = currentOrder.finalTotal || 0; const newTotal = parseFloat(newTotalRaw); if (newTotalRaw.trim() === "" || isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); currentOrder.finalTotal = newTotal; editTotalModal.style.display = 'none'; loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update final total."); } finally { hideLoading(); } }
+        function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; }
         
         // --- INITIALIZATION ---
-        async function initializeFirebase() {
-            const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" };
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    currentUserName = currentUserProfile.displayName || "User";
-                    const urlParams = new URLSearchParams(window.location.search);
-                    currentOrderId = urlParams.get('id');
-                    if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } 
-                    else { showMessageModal("No order specified."); }
-                } else { window.location.href = 'login.html'; }
-            });
-        }
-        async function loadAndDisplayOrder(orderId) {
-            showLoading();
-            const orderRef = doc(db, 'upvc_orders', orderId);
-            const orderSnap = await getDoc(orderRef);
-            if (orderSnap.exists()) {
-                renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() });
-                if (currentUserProfile.role === 'admin') {
-                    if (paymentsUnsubscribe) paymentsUnsubscribe();
-                    const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('date', 'desc'));
-                    paymentsUnsubscribe = onSnapshot(paymentsQuery, (snapshot) => {
-                        const payments = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                        // Render payments in BOTH desktop and mobile tab containers
-                        renderPayments(payments, document.querySelector('#payment-management-section .payment-list'));
-                        if (document.querySelector('#tab-payments .payment-list')) {
-                           renderPayments(payments, document.querySelector('#tab-payments .payment-list'));
-                        }
-                    });
-                }
-                // Load history in BOTH desktop and mobile tab containers
-                await loadAndRenderHistory(document.querySelector('#history-section .history-list'));
-                if (document.querySelector('#tab-history .history-list')) {
-                    await loadAndRenderHistory(document.querySelector('#tab-history .history-list'));
-                }
-            } else { showMessageModal("Order not found."); }
-            hideLoading();
-        }
+        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
+        async function loadAndDisplayOrder(orderId) { showLoading(); const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { const isAdmin = currentUserProfile.role === 'admin'; renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); if (isAdmin) { if (paymentsUnsubscribe) paymentsUnsubscribe(); const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('date', 'desc')); paymentsUnsubscribe = onSnapshot(paymentsQuery, (snapshot) => { const payments = snapshot.docs.map(d => ({ id: d.id, ...d.data() })); renderPayments(payments, document.querySelector('#payment-management-section .payment-list')); if (document.querySelector('#tab-payments .payment-list')) { renderPayments(payments, document.querySelector('#tab-payments .payment-list')); } }); } setupResponsiveViews(isAdmin); await loadAndRenderHistory(document.querySelector('#history-section .history-list'), isAdmin); if (document.querySelector('#tab-history .history-list')) { await loadAndRenderHistory(document.querySelector('#tab-history .history-list'), isAdmin); } } else { showMessageModal("Order not found."); } hideLoading(); }
         
         // --- EVENT LISTENERS ---
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
@@ -447,47 +361,26 @@
         window.addEventListener('click', () => { if (actionsDropdown.classList.contains('show')) actionsDropdown.classList.remove('show'); });
         menuEditBtn.addEventListener('click', () => window.location.href = `order-form.html?id=${currentOrderId}`);
         menuDeleteBtn.addEventListener('click', handleDeleteOrder);
+        menuEditTotalBtn.addEventListener('click', openEditTotalModal);
         detailGetDirectionsBtn.addEventListener('click', () => window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'));
         detailViewQuoteBtn.addEventListener('click', () => window.location.href = `quote.html?id=${currentOrderId}`);
         detailViewBillBtn.addEventListener('click', () => window.location.href = `bill.html?id=${currentOrderId}`);
         detailCompleteBtn.addEventListener('click', handleCompleteOrder);
         addPaymentBtn.addEventListener('click', openPaymentModal);
         footerAddPaymentBtn.addEventListener('click', openPaymentModal);
-        tabsContainer.addEventListener('click', (e) => {
-            const clickedTab = e.target.closest('.tabs__button');
-            if (!clickedTab) return;
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            contentPanes.forEach(pane => pane.classList.remove('active'));
-            clickedTab.classList.add('active');
-            document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active');
-        });
+        tabsContainer.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; tabButtons.forEach(btn => btn.classList.remove('active')); contentPanes.forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
         cancelActionBtn.addEventListener('click', hideConfirmationModal);
         confirmActionBtn.addEventListener('click', performConfirmedAction);
         document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => paymentModal.style.display = 'none');
+        document.querySelector('[data-app-action="close-edit-total-modal"]').addEventListener('click', () => editTotalModal.style.display = 'none');
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
-        
-        // Use event delegation on the main screen for robust payment actions on both desktop and mobile
-        mainScreen.addEventListener('click', (e) => {
-            const editBtn = e.target.closest('[data-app-action="edit-payment"]');
-            if (editBtn) { openPaymentModalForEdit(editBtn.dataset.id); }
-            const deleteBtn = e.target.closest('[data-app-action="delete-payment"]');
-            if(deleteBtn) { handleDeletePayment(deleteBtn.dataset.id, parseFloat(deleteBtn.dataset.amount)); }
-        });
+        editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
+        mainScreen.addEventListener('click', (e) => { const editBtn = e.target.closest('[data-app-action="edit-payment"]'); if (editBtn) { openPaymentModalForEdit(editBtn.dataset.id); } const deleteBtn = e.target.closest('[data-app-action="delete-payment"]'); if(deleteBtn) { handleDeletePayment(deleteBtn.dataset.id, parseFloat(deleteBtn.dataset.amount)); } });
 
-        // --- UI Setup for Mobile/Desktop ---
-        function setupResponsiveViews() {
-            if (window.innerWidth < 800) {
-                // Clone sidebar content into tabs for mobile to avoid breaking desktop layout
-                tabPaymentsPane.innerHTML = '';
-                tabHistoryPane.innerHTML = '';
-                tabPaymentsPane.appendChild(paymentManagementSection.cloneNode(true));
-                tabHistoryPane.appendChild(historySection.cloneNode(true));
-            }
-        }
+        function setupResponsiveViews(isAdmin) { if (window.innerWidth < 800) { tabPaymentsPane.innerHTML = ''; tabHistoryPane.innerHTML = ''; if (isAdmin) { tabPaymentsPane.appendChild(paymentManagementSection.cloneNode(true)); } tabHistoryPane.appendChild(historySection.cloneNode(true)); } }
 
         // --- INITIALIZE APP ---
-        setupResponsiveViews();
         showLoading();
         initializeFirebase();
     </script>
