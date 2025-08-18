@@ -65,7 +65,7 @@
         .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none; margin-left:0;}.history-detail ul{ padding-left: 1.25rem; margin-top: .25rem; }
         .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; }
         .sticky-action-bar .btn { flex-grow: 1; padding: 0.9rem; font-size: 0.9rem; box-shadow: var(--shadow-md) !important; transform: none !important; }
-        .desktop-view { display: none; } /* Hide desktop elements by default */
+        .desktop-view { display: none; }
         .order-links-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
         .order-links-container .btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
         @media (min-width: 800px) {
@@ -168,7 +168,7 @@
                                 </section>
                             </div>
                             <div id="tab-payments" class="tabs__content-pane">
-                                <section class="content-section">
+                                <section class="content-section" data-section="payment-management">
                                     <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1rem;">
                                         <h3>Financial Log</h3>
                                     </div>
@@ -176,7 +176,7 @@
                                 </section>
                             </div>
                             <div id="tab-history" class="tabs__content-pane">
-                                <section class="content-section">
+                                <section class="content-section" data-section="history">
                                     <h3>Order History</h3>
                                     <ul class="history-list"></ul>
                                 </section>
@@ -191,6 +191,11 @@
 
                     <!-- Desktop View Content -->
                     <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
+                        <div id="desktop-key-metrics-card" class="key-metrics-card" style="display:none;">
+                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="desktop-metric-due-date" class="metric-item__value"></div></div>
+                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="desktop-metric-final-total" class="metric-item__value"></div></div>
+                            <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="desktop-metric-pending-amount" class="metric-item__value pending"></div></div>
+                        </div>
                         <section class="content-section">
                                     <h3>Customer & Order Info</h3>
                                     <p><strong>Address:</strong> <span class="detail-customer-address"></span></p>
@@ -249,10 +254,6 @@
         const menuEditTotalBtn = document.getElementById('menu-edit-total-btn');
         const menuDeleteBtn = document.getElementById('menu-delete-btn');
         const menuDivider = document.getElementById('menu-divider');
-        const keyMetricsCard = document.getElementById('key-metrics-card');
-        const metricDueDate = document.getElementById('metric-due-date');
-        const metricFinalTotal = document.getElementById('metric-final-total');
-        const metricPendingAmount = document.getElementById('metric-pending-amount');
         const detailCompleteBtn = document.getElementById('detail-complete-btn');
         const tabsContainer = document.querySelector('.tabs');
         const tabButtons = document.querySelectorAll('.tabs__button');
@@ -318,7 +319,7 @@
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none');
             
             if (isAdmin) {
-                keyMetricsCard.style.display = 'grid';
+                document.querySelectorAll('.key-metrics-card').forEach(card => card.style.display = 'grid');
                 paymentsTabButton.style.display = 'flex';
                 menuDeleteBtn.style.display = 'flex';
                 menuEditTotalBtn.style.display = 'flex';
@@ -368,7 +369,7 @@
                 return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
             }).join('');
         }
-        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; metricDueDate.textContent = currentOrder.dueDate || 'N/A'; metricFinalTotal.textContent = formatCurrency(finalTotal); metricPendingAmount.textContent = formatCurrency(pendingAmount); }
+        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date, #desktop-metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total, #desktop-metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount, #desktop-metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
 
         // --- ACTION HANDLERS ---
