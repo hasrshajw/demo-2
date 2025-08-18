@@ -89,20 +89,19 @@
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Firebase config is now loaded from environment variables
+        // IMPORTANT: Replace with your actual Firebase configuration
         const firebaseConfig = {
-            apiKey: "__PUBLIC_FIREBASE_API_KEY__",
-            authDomain: "__PUBLIC_FIREBASE_AUTH_DOMAIN__",
-            projectId: "__PUBLIC_FIREBASE_PROJECT_ID__",
-            storageBucket: "__PUBLIC_FIREBASE_STORAGE_BUCKET__",
-            messagingSenderId: "__PUBLIC_FIREBASE_MESSAGING_SENDER_ID__",
-            appId: "__PUBLIC_FIREBASE_APP_ID__",
-            measurementId: "__PUBLIC_FIREBASE_MEASUREMENT_ID__"
+            apiKey: "AIzaSyBQonPZMTX0m_yZF-MOyBuKU8nwQdVVdRg",
+            authDomain: "payment-form-b77e2.firebaseapp.com",
+            projectId: "payment-form-b77e2",
+            storageBucket: "payment-form-b77e2.firebasestorage.app",
+            messagingSenderId: "796020240904",
+            appId: "1:796020240904:web:fba6b6f0e1b743dd8017bd",
+            measurementId: "G-DHJJ4WNYR4"
         };
         
         let db, auth;
-        // Admin email is now loaded from an environment variable
-        const ADMIN_EMAIL = "__PUBLIC_ADMIN_EMAIL__";
+        const ADMIN_EMAIL = "harshavardhanjw@gmail.com";
 
         // --- HELPER FUNCTIONS ---
         const showLoader = () => document.getElementById('loader').style.display = 'flex';
@@ -121,8 +120,8 @@
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             try {
-                if (firebaseConfig.apiKey.startsWith("__PUBLIC_")) {
-                    throw new Error("Firebase config is not set. Environment variables may be missing.");
+                if (!firebaseConfig.apiKey || firebaseConfig.projectId === "your-project-id") {
+                    throw new Error("Firebase config is not set.");
                 }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -133,7 +132,7 @@
                 listenForAuthStateChanges();
             } catch (error) {
                 console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<div class="full-page-center"><h2>Error initializing application.</h2><p>Please check the console for details.</p></div>`;
+                document.body.innerHTML = `<div class="full-page-center"><h2>Error initializing application.</h2></div>`;
             }
         });
 
