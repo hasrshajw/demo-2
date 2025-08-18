@@ -198,7 +198,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // --- DOM ELEMENTS ---
         const mainScreen = document.getElementById('order-details-screen');
@@ -432,8 +432,12 @@
             if (window.innerWidth < 800) {
                 tabPaymentsPane.innerHTML = '';
                 tabHistoryPane.innerHTML = '';
+                // Clone the sections and remove their IDs to prevent duplicate IDs in the DOM
                 const clonedPayments = paymentManagementSection.cloneNode(true);
+                clonedPayments.removeAttribute('id');
                 const clonedHistory = historySection.cloneNode(true);
+                clonedHistory.removeAttribute('id');
+
                 tabPaymentsPane.appendChild(clonedPayments);
                 tabHistoryPane.appendChild(clonedHistory);
             }
