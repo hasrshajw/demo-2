@@ -11,8 +11,8 @@
     <style>
         /* --- MERGED & COMPLETE CSS --- */
         :root {
-            --font-main: "IBM Plex Sans", sans-serif;
-            --font-alt: 'Inter', sans-serif;
+            --font-main: 'Inter', sans-serif;
+            --font-nav: "IBM Plex Sans", sans-serif;
             --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -37,7 +37,7 @@
         html, body { height: 100%; }
 
         body {
-            font-family: var(--font-alt);
+            font-family: var(--font-main);
             background-color: var(--color-background);
             color: var(--color-text-primary);
             line-height: 1.5;
@@ -49,6 +49,7 @@
         .header {
             position: fixed; top: 0; width: 100%; z-index: 50;
             background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);
+            font-family: var(--font-nav);
         }
         [data-theme="dark"] .header { background-color: hsla(222, 47%, 11%, 0.8); }
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
@@ -67,7 +68,7 @@
         .nav-right { display: flex; align-items: center; gap: 1rem; }
         .menu-button { display: flex; padding: 0.375rem; border: 1px solid #012726; border-radius: 0.375rem; color: #012726; background-color: transparent; cursor: pointer; }
         @media (min-width: 48rem) { .menu-button { display: none; } }
-        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; }
+        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; font-family: var(--font-nav); }
         #mobileMenu.active { transform: translateX(0); }
         #menuOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         #menuOverlay.active { display: block; }
@@ -93,7 +94,7 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-
+        
         /* --- PAGE-SPECIFIC STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; }
@@ -207,7 +208,7 @@
         </div>
     </div>
     <div id="menuOverlay"></div>
-
+    
     <div id="app-container" class="app-container">
         <main>
             <div class="container" id="main-container">
@@ -275,7 +276,7 @@
                 hideLoader();
             });
         }
-        
+
         // --- NAVBAR FUNCTIONS ---
         function populateNavbar(user) {
             if (!user) return;
@@ -342,8 +343,7 @@
             });
             window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
         }
-        // --- END NAVBAR FUNCTIONS ---
-
+        
         async function showEmployeesView() {
             const view = document.getElementById('employees-view');
             view.innerHTML = `
@@ -412,9 +412,21 @@
                         <span class="close-btn" data-app-action="close-modal" data-modal-id="manual-employee-modal">×</span>
                         <h2>Add Employee Manually</h2>
                         <form id="manual-employee-form">
-                            <div class="form-group"><label for="manual-full-name">Full Name</label><input type="text" id="manual-full-name" required></div>
-                            <div class="form-group"><label for="manual-daily-salary">Daily Salary</label><input type="number" id="manual-daily-salary" required min="0" step="0.01"></div>
-                            <div class="form-group"><label for="manual-link-user">Link Gmail Account (Optional)</label><select id="manual-link-user"><option value="">None (No Gmail Link)</option>${userOptions}</select></div>
+                            <div class="form-group">
+                                <label for="manual-full-name">Full Name</label>
+                                <input type="text" id="manual-full-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="manual-daily-salary">Daily Salary</label>
+                                <input type="number" id="manual-daily-salary" required min="0" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="manual-link-user">Link Gmail Account (Optional)</label>
+                                <select id="manual-link-user">
+                                    <option value="">None (No Gmail Link)</option>
+                                    ${userOptions}
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary" style="width:100%">Save Employee</button>
                         </form>
                     </div>`;
