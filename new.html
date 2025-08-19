@@ -14,67 +14,31 @@
         :root {
             --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
             --font-icon: "Material Symbols Outlined";
-
-            /* Palette */
-            --color-primary: #047857; /* Rich Green */
-            --color-primary-hover: #059669;
-            --color-primary-text: #ffffff;
-
-            --color-danger: #dc2626;
-            --color-danger-hover: #b91c1c;
-            --color-danger-text: #ffffff;
-
-            --color-reopen: #6d28d9; /* Violet */
-            --color-reopen-hover: #5b21b6;
-            --color-reopen-text: #ffffff;
-
+            --color-primary: #047857; --color-primary-hover: #059669; --color-primary-text: #ffffff;
+            --color-danger: #dc2626; --color-danger-hover: #b91c1c; --color-danger-text: #ffffff;
+            --color-reopen: #6d28d9; --color-reopen-hover: #5b21b6; --color-reopen-text: #ffffff;
             --color-focus-ring: rgba(4, 120, 87, 0.3);
-
-            /* Backgrounds */
-            --light-bg-primary: #ffffff;
-            --light-bg-secondary: #f8f9fa; /* Softer page background */
-            --light-bg-tertiary: #f1f5f9;   /* Hover / subtle backgrounds */
-
-            /* Text */
-            --light-text-primary: #111827;   /* Near-black for high contrast */
-            --light-text-secondary: #4b5563; /* Medium grey for body */
-            --light-text-muted: #6b7280;     /* Lighter grey for metadata */
-
-            /* Borders */
-            --light-border: #e5e7eb;
-            --light-border-hover: #d1d5db;
-
-            /* Status */
+            --light-bg-primary: #ffffff; --light-bg-secondary: #f8f9fa; --light-bg-tertiary: #f1f5f9;
+            --light-text-primary: #111827; --light-text-secondary: #4b5563; --light-text-muted: #6b7280;
+            --light-border: #e5e7eb; --light-border-hover: #d1d5db;
             --status-pending-bg: #eef2ff; --status-pending-text: #4338ca;
             --status-completed-bg: #dcfce7; --status-completed-text: #166534;
             --status-overdue-bg: #fee2e2; --status-overdue-text: #b91c1c;
             --status-upcoming-bg: #fefce8; --status-upcoming-text: #a16207;
-
-            /* Sizing & Effects */
-            --radius-sm: 0.25rem; /* 4px */
-            --radius-md: 0.5rem;  /* 8px */
-            --radius-lg: 0.75rem; /* 12px */
+            --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
             --ease: cubic-bezier(.4, 0, .2, 1);
-            --sticky-footer-height: 88px; /* Increased for better thumb reach */
+            --sticky-footer-height: 92px; /* Increased for ergonomics */
         }
 
         /* --- GLOBAL RESETS & BASE STYLES --- */
         *, :after, :before { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body {
-            font-family: var(--font-main);
-            background-color: var(--light-bg-secondary);
-            color: var(--light-text-secondary);
-            margin: 0;
-            padding-bottom: var(--sticky-footer-height);
-            font-size: 16px; /* Set base font size */
-        }
+        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-bottom: var(--sticky-footer-height); font-size: 16px; }
         h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
-        h1 { font-size: 1.25rem; font-weight: 700; } /* 20px */
-        h3 { font-size: 1.125rem; } /* 18px */
+        h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
 
         /* --- ANIMATIONS --- */
@@ -82,17 +46,15 @@
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
         @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
-
         .screen.active { display: block; animation: fadeUp 0.4s var(--ease) forwards; }
 
         /* --- REDESIGNED CORE COMPONENTS --- */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; /* 15px */ transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
         .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-sm); }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn:focus-visible { outline: 3px solid var(--color-focus-ring); outline-offset: 2px; }
-        .btn .material-symbols-outlined { font-size: 1.25rem; } /* 20px */
-
+        .btn .material-symbols-outlined { font-size: 1.25rem; }
         .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); }
         .btn-primary:hover:not(:disabled) { background-color: var(--color-primary-hover); }
         .btn-secondary { background-color: var(--light-bg-primary); color: var(--light-text-secondary); border-color: var(--light-border); box-shadow: var(--shadow-sm); }
@@ -106,9 +68,9 @@
 
         .icon-btn { display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); transition: all 0.2s ease; flex-shrink: 0; }
         .icon-btn:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
-        .icon-btn .material-symbols-outlined { font-size: 1.5rem; } /* 24px */
-
-        .status-tag { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; /* 12px */ font-weight: 600; white-space: nowrap; }
+        .icon-btn .material-symbols-outlined { font-size: 1.5rem; }
+        
+        .status-tag { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
         .status-tag::before { content: ""; display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
         .status-tag.pending { background-color: var(--status-pending-bg); color: var(--status-pending-text); } .status-tag.pending::before { background-color: var(--status-pending-text); }
         .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); } .status-tag.completed::before { background-color: var(--status-completed-text); }
@@ -122,52 +84,52 @@
         .details-header__title { display: flex; align-items: center; gap: 0.75rem; flex-grow: 1; min-width: 0; }
         .details-header__title h1 { line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Action Menu */
         .actions-menu-container { position: relative; }
         .actions-dropdown { text-align: left; position: absolute; top: calc(100% + 8px); right: 0; background: var(--light-bg-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 0.5rem; min-width: 220px; z-index: 1001; visibility: hidden; opacity: 0; transform: translateY(-10px); transition: all 0.2s ease-out; border: 1px solid var(--light-border); }
         .actions-dropdown.show { visibility: visible; opacity: 1; transform: translateY(0); }
         .actions-dropdown button { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.625rem 0.75rem; border: none; background: transparent; text-align: left; font-size: 0.875rem; font-weight: 500; color: var(--light-text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: background-color 0.2s ease; }
         .actions-dropdown button:hover { background-color: var(--light-bg-tertiary); }
         .actions-dropdown button .icon { font-size: 1.125rem; color: var(--light-text-secondary); }
-        .actions-dropdown button[style*="--color-danger"] .icon { color: var(--color-danger); } /* NEW */
         .actions-dropdown hr { border: none; border-top: 1px solid var(--light-border); margin: 0.5rem 0; }
         
-        /* Key Metrics Card */
         .key-metrics-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--light-border); border: 1px solid var(--light-border); border-radius: var(--radius-lg); overflow: hidden; }
         .metric-item { background-color: var(--light-bg-primary); padding: 1rem; text-align: center; }
         .metric-item__label { font-size: 0.75rem; font-weight: 500; color: var(--light-text-secondary); margin-bottom: 0.375rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .metric-item__value { font-size: 1.375rem; font-weight: 600; color: var(--light-text-primary); line-height: 1.2; } /* UPDATED */
+        .metric-item__value { font-size: 1.25rem; font-weight: 600; color: var(--light-text-primary); line-height: 1.2; }
         .metric-item__value.pending { color: var(--color-danger); }
 
-        /* Tabs */
-        .tabs__nav { display: flex; border-bottom: 1px solid var(--light-border); background-color: var(--light-bg-primary); border-radius: var(--radius-lg) var(--radius-lg) 0 0; border: 1px solid var(--light-border); border-bottom: none; overflow-x: auto;}
-        .tabs__button { background: none; border: none; padding: 1rem; font-weight: 600; font-size: 0.875rem; color: var(--light-text-secondary); cursor: pointer; position: relative; border-bottom: 3px solid transparent; transition: color 0.2s ease; white-space: nowrap; flex-shrink: 0;}
-        .tabs__button.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
-        .tabs__content-pane { display: none; padding: 1.5rem; background-color: var(--light-bg-primary); border-radius: 0 0 var(--radius-lg) var(--radius-lg); border: 1px solid var(--light-border); border-top: none; }
+        /* [NEW] Modern Tab Design */
+        .tabs { margin-top: 1rem; }
+        .tabs__nav { display: flex; background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); overflow-x: auto; padding: 0 0.5rem; }
+        .tabs__button { background: none; border: none; padding: 1rem; font-weight: 600; font-size: 0.875rem; color: var(--light-text-secondary); cursor: pointer; transition: color 0.2s ease; white-space: nowrap; flex-shrink: 0; border-bottom: 3px solid transparent; }
+        .tabs__button.active { color: var(--color-primary); background-color: var(--light-bg-primary); border-color: var(--color-primary); border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md); }
+        .tabs__content-pane { display: none; padding: 1.5rem; background-color: var(--light-bg-primary); border-radius: var(--radius-lg); margin-top: -1px; /* Overlap border */ }
         .tabs__content-pane.active { display: block; animation: fadeIn 0.3s ease; }
-
-        /* Content Sections & Details */
-        .content-section { margin-bottom: 2rem; } .content-section:last-child { margin-bottom: 0; }
-        .content-section h3 { font-size: 1.125rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border); }
+        .tabs__nav + .tabs__content-pane.active { border-top-left-radius: 0; } /* Adjust radius for seamless look */
         
-        .info-grid { display: grid; grid-template-columns: 100px 1fr; gap: 0.75rem 1rem; font-size: 0.9375rem; margin-bottom: 1.5rem; }
-        .info-grid dt { font-weight: 500; color: var(--light-text-muted); }
-        .info-grid dd { color: var(--light-text-primary); margin: 0; }
+        .content-section { margin-bottom: 2.5rem; } .content-section:last-child { margin-bottom: 0; }
+        .content-section h3 { font-size: 1.125rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border); }
         
-        /* NEW: Quick Actions List */
-        .quick-actions-list { margin: 1.5rem 0 0 0; padding: 0; list-style: none; border-top: 1px solid var(--light-border); }
-        .quick-action-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 0.5rem; text-decoration: none; color: var(--light-text-primary); font-weight: 500; font-size: 0.9375rem; border-bottom: 1px solid var(--light-border); transition: background-color 0.2s ease; }
-        .quick-action-link:hover { background-color: var(--light-bg-tertiary); }
-        .quick-action-link .icon { color: var(--light-text-secondary); }
-        .quick-action-link .chevron { margin-left: auto; color: var(--light-text-muted); transition: transform 0.2s ease; }
-        .quick-action-link:hover .chevron { transform: translateX(4px); }
-
+        /* [NEW & IMPROVED] Customer Info Grid & Action Links List */
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 0; font-size: 0.9375rem; }
+        .info-grid-item { display: flex; justify-content: space-between; padding: 0.875rem 0; border-bottom: 1px solid var(--light-border); }
+        .info-grid-item:last-child { border-bottom: none; }
+        .info-grid dt { font-weight: 500; color: var(--light-text-muted); padding-right: 1rem; }
+        .info-grid dd { color: var(--light-text-primary); margin: 0; text-align: right; }
+        
+        .action-links { margin-top: 1.5rem; background-color: var(--light-bg-tertiary); border: 1px solid var(--light-border); border-radius: var(--radius-md); }
+        .action-link-item { display: flex; align-items: center; padding: 1rem; text-decoration: none; color: var(--light-text-primary); font-weight: 500; border-bottom: 1px solid var(--light-border); transition: background-color 0.2s ease; }
+        .action-link-item:last-child { border-bottom: none; }
+        .action-link-item:hover { background-color: #e9ecef; }
+        .action-link-item .icon { color: var(--light-text-secondary); margin-right: 1rem; }
+        .action-link-item .label { flex-grow: 1; }
+        .action-link-item .chevron { color: var(--light-text-muted); }
+        
         .detail-window-item { display: flex; align-items: center; gap: 1rem; padding: 0.875rem; background-color: var(--light-bg-tertiary); border-radius: var(--radius-md); margin-bottom: 0.5rem; border: 1px solid var(--light-border); }
         .item-number { flex-shrink: 0; width: 2.25rem; height: 2.25rem; background-color: var(--color-primary); color: var(--color-primary-text); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; }
         .item-info { font-size: 0.9rem; color: var(--light-text-primary); line-height: 1.4; }
         .item-info small { display: block; color: var(--light-text-secondary); font-size: 0.8rem; margin-top: 0.25rem; }
 
-        /* Financial & History Lists */
         .financial-log, .history-list { list-style: none; padding: 0; margin: 0; }
         .log-item, .history-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--light-border); }
         .log-item:last-child, .history-item:last-child { border-bottom: none; }
@@ -183,11 +145,10 @@
         .history-detail { font-size: 0.85rem; color: var(--light-text-secondary); margin-top: 0.75rem; list-style-type: none; padding-left: 1.25rem; border-left: 2px solid var(--light-border); }
         .history-detail ul { padding-left: 1.25rem; margin-top: .25rem; }
 
-        /* Sticky Action Bar (Mobile) */
-        .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255, 255, 255, 0.85); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; box-shadow: 0 -5px 15px -5px rgba(0,0,0,0.08); } /* UPDATED */
-        .sticky-action-bar .btn { flex-grow: 1; padding: 1rem; font-size: 1rem; }
+        .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255, 255, 255, 0.85); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; box-shadow: 0 -4px 10px rgba(0,0,0,0.04); }
+        .sticky-action-bar .btn { flex-grow: 1; padding: 1.125rem; font-size: 1rem; }
 
-        /* Modals & Forms */
+        /* --- Modals & Forms (No changes from previous good version) --- */
         .modal { display: none; position: fixed; z-index: 1000; inset: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; animation: fadeIn 0.3s var(--ease); padding: 1rem; }
         .modal-content { background-color: #fff; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; max-width: 450px; text-align: left; animation: popIn 0.3s var(--ease); }
         .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--light-text-primary); text-align: center; }
@@ -203,26 +164,26 @@
 
         /* --- DESKTOP STYLES (Breakpoint >= 900px) --- */
         .desktop-view { display: none; }
-
         @media (min-width: 900px) {
             .mobile-view { display: none; }
             .desktop-view { display: flex; }
             body { padding-bottom: 0; }
             .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; }
             .details-header { background: none; border: none; padding: 0 0 1.5rem 0; align-items: flex-start; }
-            .details-header__title h1 { font-size: 1.875rem; /* 30px */ }
+            .details-header__title h1 { font-size: 1.875rem; }
             .sticky-action-bar { display: none; }
             .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); margin: 0; }
             .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
             .info-grid { grid-template-columns: 120px 1fr; }
-            .quick-actions-list { border: 1px solid var(--light-border); border-radius: var(--radius-md); overflow: hidden; }
-            .quick-action-link { padding-left: 1rem; padding-right: 1rem; }
+            .info-grid-item { display: grid; grid-template-columns: subgrid; grid-column: span 2; }
+            .info-grid dt { text-align: left; }
+            .action-links { margin-top: 2rem; }
         }
     </style>
 </head>
 <body>
     <div class="page-container">
-        <!-- MODALS & OVERLAYS (No changes to structure or JS hooks) -->
+        <!-- MODALS & OVERLAYS (No changes) -->
         <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
         <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px; margin: 0 auto;">OK</button></div></div></div>
         <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
@@ -242,19 +203,13 @@
             <div class="modal-content">
                 <h3>Edit Final Amount</h3>
                 <form id="edit-total-form" style="margin-top: 1.5rem;">
-                    <div class="form-group">
-                        <label for="final-total-input">Final Order Total</label>
-                        <input id="final-total-input" type="number" step="0.01" required class="input-field">
-                    </div>
-                    <div class="modal-buttons">
-                         <button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button>
-                         <button type="submit" class="btn btn-primary">Save Amount</button>
-                    </div>
+                    <div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" step="0.01" required class="input-field"></div>
+                    <div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Amount</button></div>
                 </form>
             </div>
         </div>
 
-        <!-- NEW PAGE STRUCTURE -->
+        <!-- UPDATED PAGE STRUCTURE -->
         <main id="order-details-screen" class="screen active">
             <header class="details-header">
                 <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
@@ -268,13 +223,12 @@
                         <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
                         <hr id="menu-divider" style="display:none;">
                         <button id="menu-edit-total-btn" style="display:none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
-                        <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined">delete</span>Delete Order</button>
+                        <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
                     </div>
                 </div>
             </header>
             <div class="page-grid">
                 <div class="grid-main">
-                    <!-- COMMON: Key Metrics Card (Displayed in both mobile & desktop) -->
                     <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
                         <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
                         <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
@@ -293,22 +247,19 @@
                                 <section class="content-section">
                                     <h3>Customer & Order Info</h3>
                                     <dl class="info-grid">
-                                        <dt>Address</dt><dd class="detail-customer-address"></dd>
-                                        <dt>Mobile</dt><dd class="detail-customer-mobile"></dd>
-                                        <dt>Placed On</dt><dd class="detail-order-taken-date"></dd>
-                                        <dt>Created By</dt><dd class="detail-created-by"></dd>
+                                        <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
+                                        <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
+                                        <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                        <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
                                     </dl>
-                                    <div class="completed-info-block" style="display:none;">
-                                        <dl class="info-grid" style="margin-bottom:0;">
-                                            <dt>Completed On</dt><dd class="detail-completed-date"></dd>
-                                            <dt>Completed By</dt><dd class="detail-completed-by"></dd>
-                                        </dl>
+                                    <div class="completed-info-block" style="display:none; margin-top: 1rem;">
+                                        <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
                                     </div>
-                                    <!-- UPDATED: Quick Actions List -->
-                                    <div class="quick-actions-list">
-                                        <a href="#" class="quick-action-link detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span>Get Directions<span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                        <a href="#" class="quick-action-link detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span>View Quote<span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                        <a href="#" class="quick-action-link detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span>View Bill<span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                    <!-- [NEW] Action Links List -->
+                                    <div class="action-links">
+                                        <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                     </div>
                                 </section>
                                 <section class="content-section">
@@ -316,18 +267,8 @@
                                     <div class="detail-windows-list"></div>
                                 </section>
                             </div>
-                            <div id="tab-payments" class="tabs__content-pane">
-                                <section class="content-section" data-section="payment-management">
-                                    <h3>Financial Log</h3>
-                                    <ul class="financial-log"></ul>
-                                </section>
-                            </div>
-                            <div id="tab-history" class="tabs__content-pane">
-                                <section class="content-section" data-section="history">
-                                    <h3>Order History</h3>
-                                    <ul class="history-list"></ul>
-                                </section>
-                            </div>
+                            <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
+                            <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
                         </div>
                     </div>
 
@@ -336,28 +277,21 @@
                         <section class="content-section">
                             <h3>Customer & Order Info</h3>
                             <dl class="info-grid">
-                                <dt>Address</dt><dd class="detail-customer-address"></dd>
-                                <dt>Mobile</dt><dd class="detail-customer-mobile"></dd>
-                                <dt>Placed On</dt><dd class="detail-order-taken-date"></dd>
-                                <dt>Created By</dt><dd class="detail-created-by"></dd>
+                                <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
+                                <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
+                                <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
                             </dl>
-                            <div class="completed-info-block" style="display:none;">
-                                 <dl class="info-grid" style="margin-bottom:0;">
-                                    <dt>Completed On</dt><dd class="detail-completed-date"></dd>
-                                    <dt>Completed By</dt><dd class="detail-completed-by"></dd>
-                                </dl>
+                            <div class="completed-info-block" style="display:none; margin-top: 1rem;">
+                                <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
                             </div>
-                            <!-- UPDATED: Quick Actions List for Desktop -->
-                            <div class="quick-actions-list">
-                                <a href="#" class="quick-action-link detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span>Get Directions<span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                <a href="#" class="quick-action-link detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span>View Quote<span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                <a href="#" class="quick-action-link detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span>View Bill<span class="chevron material-symbols-outlined">chevron_right</span></a>
+                            <div class="action-links">
+                               <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                               <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                               <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                             </div>
                         </section>
-                        <section class="content-section">
-                            <h3>Windows (<span class="detail-window-count"></span>)</h3>
-                            <div class="detail-windows-list"></div>
-                        </section>
+                        <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
                     </div>
                 </div>
                 <div class="grid-sidebar desktop-view">
@@ -368,22 +302,18 @@
                         </div>
                         <ul class="financial-log"></ul>
                     </section>
-                    <section class="content-section" data-section="history">
-                        <h3>Order History</h3>
-                        <ul class="history-list"><li>Loading...</li></ul>
-                    </section>
+                    <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"><li>Loading...</li></ul></section>
                 </div>
             </div>
         </main>
     </div>
     <footer class="sticky-action-bar">
-        <button id="footer-add-payment-btn" data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
+        <button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
         <button id="detail-complete-btn" class="btn btn-success"></button>
     </footer>
 
     <script type="module">
-        // JAVASCRIPT has been slightly updated to fix the mobile button bug.
-        
+        // --- JAVASCRIPT IS LARGELY UNCHANGED, EXCEPT FOR ONE CRITICAL FIX ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -399,7 +329,6 @@
         const menuDeleteBtn = document.getElementById('menu-delete-btn');
         const menuDivider = document.getElementById('menu-divider');
         const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        const footerAddPaymentBtn = document.getElementById('footer-add-payment-btn'); // NEW ELEMENT
         const tabsContainer = document.querySelector('.tabs');
         const tabButtons = document.querySelectorAll('.tabs__button');
         const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
@@ -431,7 +360,6 @@
         async function performConfirmedAction() { hideConfirmationModal(); showLoading(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } finally { hideLoading(); } }
         async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
 
-        // --- RENDER & DISPLAY FUNCTIONS ---
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
@@ -446,7 +374,6 @@
             document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
             document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
             document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
-            
             document.querySelectorAll('.completed-info-block').forEach(block => {
                 block.style.display = order.status === 'completed' ? 'block' : 'none';
                 if (order.status === 'completed') {
@@ -454,15 +381,12 @@
                     block.querySelector('.detail-completed-by').textContent = order.completedBy || 'N/A';
                 }
             });
-
             let windowsToDisplay = [];
             try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
-            
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
-            
             if (isAdmin) {
                 document.getElementById('key-metrics-card').style.display = 'grid';
                 paymentsTabButton.style.display = 'flex';
@@ -484,40 +408,16 @@
         }
         function renderFinancialLog(logItems, container) {
             container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
-                if (item.type === 'adjustment') {
-                    return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`;
-                }
+                if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; }
                 const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : '';
                 const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`;
                 return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`;
             }).join('');
         }
-        function renderHistory(historyItems, container) {
-            container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => {
-                const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
-                let detailsHtml = '';
-                if (entry.details && Object.keys(entry.details).length > 0) { 
-                    detailsHtml += '<ul class="history-detail">'; 
-                    for (const [key, value] of Object.entries(entry.details)) { 
-                        if (typeof value === 'object' && value !== null) { 
-                            detailsHtml += `<li><strong>${key}:</strong><ul>`; 
-                            for (const [subKey, subValue] of Object.entries(value)) { 
-                                detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; 
-                            } 
-                            detailsHtml += '</ul></li>'; 
-                        } else { 
-                            detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; 
-                        } 
-                    } 
-                    detailsHtml += '</ul>'; 
-                }
-                return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
-            }).join('');
-        }
+        function renderHistory(historyItems, container) { container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => { const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, value] of Object.entries(entry.details)) { if (typeof value === 'object' && value !== null) { detailsHtml += `<li><strong>${key}:</strong><ul>`; for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } detailsHtml += '</ul></li>'; } else { detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; } } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join(''); }
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
 
-        // --- ACTION HANDLERS ---
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
         async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
@@ -526,11 +426,10 @@
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
         async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
-
-        // --- DATA FETCHING & PROCESSING ---
-        async function loadFinancialAndHistoryData() { /* ... function is unchanged ... */ const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`)); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => b.date - a.date); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(payments); } }
-        async function initializeFirebase() { /* ... function is unchanged ... */ const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
-        async function loadAndDisplayOrder(orderId) { /* ... function is unchanged ... */ showLoading(); const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); } hideLoading(); }
+        
+        async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`)); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => b.date - a.date); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(payments); } }
+        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
+        async function loadAndDisplayOrder(orderId) { showLoading(); const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); } hideLoading(); }
         
         // --- EVENT LISTENERS ---
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
@@ -540,7 +439,6 @@
         menuEditTotalBtn.addEventListener('click', openEditTotalModal);
         menuDeleteBtn.addEventListener('click', handleDeleteOrder);
         detailCompleteBtn.addEventListener('click', handleCompleteOrder);
-        footerAddPaymentBtn.addEventListener('click', openPaymentModal); // BUG FIX
         tabsContainer.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; tabButtons.forEach(btn => btn.classList.remove('active')); contentPanes.forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
         cancelActionBtn.addEventListener('click', hideConfirmationModal);
@@ -549,9 +447,9 @@
         document.querySelector('[data-app-action="close-total-modal"]').addEventListener('click', () => editTotalModal.style.display = 'none');
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
         editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
-        
-        mainScreen.addEventListener('click', (e) => {
-            // Use .closest() to ensure clicks on child elements of the link are caught
+
+        // [FIXED] Event listener moved to document.body to capture clicks everywhere, including the sticky footer.
+        document.body.addEventListener('click', (e) => {
             const directionsBtn = e.target.closest('.detail-get-directions-btn');
             if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
 
@@ -561,7 +459,6 @@
             const billBtn = e.target.closest('.detail-view-bill-btn');
             if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
             
-            // This now only handles the Add Payment button inside the main content (e.g., on desktop)
             if (e.target.closest('[data-app-action="add-payment"]')) { openPaymentModal(); }
 
             const editPaymentBtn = e.target.closest('[data-app-action="edit-payment"]'); 
