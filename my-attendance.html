@@ -7,86 +7,95 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- 1. DESIGN SYSTEM --- */
+        /* --- MERGED & COMPLETE CSS --- */
         :root {
-            --font-main: 'Inter', sans-serif;
-            --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        /* [THEME] Light Mode Palette */
         [data-theme="light"] {
-            --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3;
-            --color-secondary: #475569; --color-background: #f8fafc;
-            --color-surface: #ffffff; --color-text-primary: #1f2937;
-            --color-text-secondary: #64748b; --color-border: #e5e7eb;
-            --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b;
-            --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
+            --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-secondary: #475569; --color-background: #f8fafc;
+            --color-surface: #ffffff; --color-text-primary: #1f2937; --color-text-secondary: #64748b; --color-border: #e5e7eb;
+            --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
         }
-        /* [THEME] Dark Mode Palette */
         [data-theme="dark"] {
-            --color-primary: #818cf8; --color-primary-light: rgba(129, 140, 248, 0.16); --color-primary-dark: #a7affb;
-            --color-secondary: #94a3b8; --color-background: #0f172a;
-            --color-surface: #1e293b; --color-text-primary: #f1f5f9;
-            --color-text-secondary: #94a3b8; --color-border: #334155;
-            --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15;
-            --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
+            --color-primary: #818cf8; --color-primary-light: rgba(129, 140, 248, 0.16); --color-primary-dark: #a7affb; --color-secondary: #94a3b8; --color-background: #0f172a;
+            --color-surface: #1e293b; --color-text-primary: #f1f5f9; --color-text-secondary: #94a3b8; --color-border: #334155;
+            --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
         }
-
-        /* --- 2. GLOBAL RESETS & BASE STYLES --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
-        html { scroll-behavior: smooth; }
+        
         body {
-            font-family: var(--font-main); background-color: var(--color-background);
-            color: var(--color-text-primary); line-height: 1.5;
+            font-family: var(--font-alt);
+            background-color: var(--color-background); color: var(--color-text-primary); line-height: 1.5;
             transition: background-color 0.3s var(--ease-cubic), color 0.3s var(--ease-cubic);
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            padding-top: 72px; /* Reserved space for fixed navbar */
         }
+        
+        /* --- NAVBAR STYLES --- */
+        .header {
+            position: fixed; top: 0; width: 100%; z-index: 50;
+            background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);
+        }
+        [data-theme="dark"] .header { background-color: hsla(222, 47%, 11%, 0.8); }
+        .header-container { width: 90%; margin-left: auto; margin-right: auto; }
+        @media (min-width: 48rem) { .header-container { width: 80%; } }
+        @media (max-width: 768px) {
+            .header-container { padding-left: 16px; padding-right: 16px; width: 100%; }
+            .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }
+        }
+        .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
+        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
+        .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
+        .nav-links { display: none; align-items: center; gap: 1rem; }
+        @media (min-width: 48rem) { .nav-links { display: flex; } }
+        .nav-link { padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #012726; transition: color 0.15s, background-color 0.15s; text-decoration: none; border-radius: 0.375rem; }
+        @media (hover: hover) { .nav-link:hover { color: #fff; background-color: #012726; } }
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .menu-button { display: flex; padding: 0.375rem; border: 1px solid #012726; border-radius: 0.375rem; color: #012726; background-color: transparent; cursor: pointer; }
+        @media (min-width: 48rem) { .menu-button { display: none; } }
+        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; }
+        #mobileMenu.active { transform: translateX(0); }
+        #menuOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        #menuOverlay.active { display: block; }
+        .mobile-menu-close { padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease; align-self: flex-end; margin-bottom: 24px; cursor: pointer; }
+        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
+        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
+        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
+        .mobile-nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500; color: #012726; background-color: #f8f9fa; transition: background-color 0.15s; }
+        .mobile-nav-link:hover { background-color: #e9ecef; }
+        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
+        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
+        .divider { height: 1px; background-color: var(--color-border); }
+        @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
+        .desktop-profile { display: none; }
+        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
+        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
+        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
+        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
+        .profile-name { font-weight: 500; color: #012726; }
+        .profile-email { font-size: 0.85rem; color: #6c757d; }
+        .profile-dropdown-container { position: relative; }
+        .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
+        .logout-popup.show { display: block; }
+        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
+        .logout-button:hover { background-color: #c82333; }
+        
+        /* --- PAGE-SPECIFIC STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; }
         h1 { font-size: 2rem; margin-bottom: 0.5rem; }
         h2 { font-size: 1.25rem; color: var(--color-text-primary); margin-bottom: 1.5rem; }
         .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-        .icon-sm { width: 16px; height: 16px; } .icon-md { width: 20px; height: 20px; } .icon-lg { width: 24px; height: 24px; }
         .danger-text { color: var(--color-danger) !important; } .success-text { color: var(--color-success) !important; }
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
-
-        /* --- 3. LAYOUT & SHELL --- */
-        .app-container { display: block; }
-        main { padding-top: 48px; padding-bottom: 48px; }
-        .app-header { height: 65px; background-color: hsla(0, 0%, 100%, 0.8); border-bottom: 1px solid var(--color-border); padding: 0 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); }
-        [data-theme="dark"] .app-header { background-color: hsla(222, 47%, 11%, 0.8); }
-
-        /* NAVBAR & MENUS */
-        .nav-left, .nav-right { display: flex; align-items: center; gap: 16px; }
-        .nav-menu-btn { display: none; }
-        .profile-menu { position: relative; }
-        #profile-dropdown { display: none; position: absolute; top: calc(100% + 12px); right: 0; background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 180px; padding: 8px; animation: modalOpen 0.2s; }
-        #profile-dropdown.active { display: block; }
-        #profile-dropdown .btn { width: 100%; justify-content: flex-start; }
-        #mobile-menu { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background-color: var(--color-surface); transform: translateX(-100%); transition: transform 0.3s var(--ease-cubic); z-index: 1020; padding: 24px; box-shadow: var(--shadow-lg); }
-        #mobile-menu.active { transform: translateX(0); }
-        .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .mobile-menu-title { font-size: 1.2rem; font-weight: 600; }
-        #mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(15, 23, 42, 0.6); z-index: 1010; }
-        #mobile-menu-overlay.active { display: block; }
-        #mobile-menu-content { display: flex; flex-direction: column; gap: 12px; }
-        
-        /* --- 4. COMPONENT LIBRARY --- */
+        main { padding-top: 24px; padding-bottom: 48px; }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-md); }
-        .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
-        .btn-icon { background: none; border: none; padding: 10px; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-        .btn-icon:hover { color: var(--color-text-primary); background-color: var(--color-border); }
         .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-
-        /* --- 5. VIEW-SPECIFIC STYLES --- */
-        .user-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--color-border); cursor: pointer; }
-        /* Employee Dashboard */
         .employee-welcome { text-align: center; padding: 2rem 0; }
         .employee-welcome img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 1rem; border: 3px solid var(--color-primary-light); }
         .detail-view-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -110,50 +119,92 @@
         .calendar-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--color-border); }
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
         .legend-color { width: 12px; height: 12px; border-radius: 50%; }
-
-        /* --- 6. UTILITIES & FEEDBACK --- */
         #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
         .spinner { width: 48px; height: 48px; border: 5px solid var(--color-primary-light); border-bottom-color: var(--color-primary); border-radius: 50%; animation: rotation 1s linear infinite; }
-        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: var(--radius-md); color: white; font-weight: 500; box-shadow: var(--shadow-lg); transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1001; }
-        #toast.show { bottom: 30px; }
-        #toast.success { background-color: var(--color-primary); }
-
-        /* --- 7. ANIMATIONS & RESPONSIVE --- */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes modalOpen { from { opacity: 0; transform: translateY(-30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes count-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .stat-card-value span { animation: count-up 0.5s var(--ease-cubic); }
-        
-        @media (max-width: 768px) {
-            .container { padding: 0 16px; }
-            .desktop-only { display: none !important; }
-            .nav-menu-btn { display: inline-flex; }
-            main { padding-top: 24px; padding-bottom: 24px; }
-            .app-header { padding: 0 16px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; }
-            .card { padding: 16px; }
-            .detail-view-grid { grid-template-columns: 1fr; }
-            .stat-card { padding: 16px; } .stat-card-value { font-size: 2rem; } .stat-card-label { font-size: 0.75rem; }
-        }
-        @media (min-width: 769px) { .mobile-only { display: none !important; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; } .card { padding: 16px; } .detail-view-grid { grid-template-columns: 1fr; } .stat-card { padding: 16px; } .stat-card-value { font-size: 2rem; } .stat-card-label { font-size: 0.75rem; } }
     </style>
 </head>
 
 <body>
-    <div id="app-container" class="app-container">
-        <header id="app-header" class="app-header"></header>
-        
-        <div id="mobile-menu-overlay" data-app-action="close-menu"></div>
-        <div id="mobile-menu">
-            <div class="mobile-menu-header">
-                <span class="mobile-menu-title">Menu</span>
-                <button class="btn-icon" data-app-action="close-menu">
-                    <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
-            </div>
-            <div id="mobile-menu-content"></div>
+    <header class="header">
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-left">
+                    <a href="employee-dashboard.html">
+                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
+                    </a>
+                    <div class="nav-links">
+                        <a class="nav-link" href="employee-dashboard.html">Home</a>
+                        <a class="nav-link" href="view-orders.html">All Orders</a>
+                        <a class="nav-link" href="my-attendance.html">My Attendance</a>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="desktop-profile">
+                         <div class="profile-dropdown-container">
+                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
+                                <div class="profile-info">
+                                    <span class="profile-name" id="desktop-profile-name">Loading...</span>
+                                    <span class="profile-email" id="desktop-profile-email"></span>
+                                </div>
+                            </div>
+                            <div class="logout-popup" id="logoutPopup">
+                                <button class="logout-button" data-app-action="logout">Logout</button>
+                            </div>
+                         </div>
+                    </div>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <div class="divider"></div>
         </div>
+    </header>
 
+    <div id="mobileMenu" role="dialog" aria-modal="true">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+            <svg viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-section">
+                <a href="employee-dashboard.html" class="mobile-nav-link">
+                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                     <span>Home</span>
+                </a>
+                <a href="view-orders.html" class="mobile-nav-link">
+                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                     <span>All Orders</span>
+                </a>
+                <a href="my-attendance.html" class="mobile-nav-link">
+                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                     <span>My Attendance</span>
+                </a>
+            </div>
+        </div>
+        <div class="mobile-menu-bottom">
+            <div class="profile-container">
+                <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
+                <div class="profile-info">
+                    <span class="profile-name" id="mobile-profile-name">Loading...</span>
+                    <span class="profile-email" id="mobile-profile-email"></span>
+                </div>
+            </div>
+            <button class="logout-button" data-app-action="logout">Logout</button>
+        </div>
+    </div>
+    <div id="menuOverlay"></div>
+
+    <div id="app-container" class="app-container">
         <main>
             <div class="container" id="main-container">
                 <div id="employee-dashboard-view" class="view active">
@@ -163,7 +214,6 @@
         </main>
     </div>
     
-    <div id="toast"></div>
     <div id="loader"><div class="spinner"></div></div>
 
     <script type="module">
@@ -171,17 +221,15 @@
         import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // IMPORTANT: Replace with your actual Firebase configuration
-// Firebase configuration will be injected by Netlify during build
-const firebaseConfig = {
-    apiKey: "__API_KEY__",
-    authDomain: "__AUTH_DOMAIN__",
-    projectId: "__PROJECT_ID__",
-    storageBucket: "__STORAGE_BUCKET__",
-    messagingSenderId: "__MESSAGING_SENDER_ID__",
-    appId: "__APP_ID__",
-    measurementId: "__MEASUREMENT_ID__"
-};
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
         
         let db, auth;
         let currentUserAuth = null;
@@ -189,68 +237,45 @@ const firebaseConfig = {
         let currentCalendarDate = new Date();
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
-        // --- HELPER FUNCTIONS ---
         const showLoader = () => document.getElementById('loader').style.display = 'flex';
         const hideLoader = () => document.getElementById('loader').style.display = 'none';
-        const formatDate = (date) => {
-            const d = new Date(date);
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        };
+        const formatDate = (date) => { const d = new Date(date); const year = d.getFullYear(); const month = String(d.getMonth() + 1).padStart(2, '0'); const day = String(d.getDate()).padStart(2, '0'); return `${year}-${month}-${day}`; };
 
-        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             try {
-                if (!firebaseConfig.apiKey || firebaseConfig.projectId === "your-project-id") { throw new Error("Firebase config is not set."); }
-                
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
+                initializeNavbar();
                 bindEventListeners();
-                initializeTheme();
                 listenForAuthStateChanges();
             } catch (error) {
                 console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<div class="full-page-center"><h2>Error initializing application.</h2></div>`;
+                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
             }
         });
 
-        // --- AUTHENTICATION & ROUTING ---
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 showLoader();
                 if (user) {
                     currentUserAuth = user;
-                    if (user.email === ADMIN_EMAIL) {
-                        window.location.href = 'admin-dashboard.html';
-                        return;
-                    }
+                    if (user.email === ADMIN_EMAIL) { window.location.href = 'admin-dashboard.html'; return; }
                     
                     const userRef = doc(db, "users", user.uid);
                     const userDoc = await getDoc(userRef);
-
-                    if (!userDoc.exists() || !userDoc.data().status) {
-                        window.location.href = 'login.html'; // Re-login to create profile
-                        return;
-                    }
+                    if (!userDoc.exists() || !userDoc.data().status) { window.location.href = 'login.html'; return; }
 
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
 
                     switch (currentUserProfile.status) {
                         case 'approved':
-                            renderHeader();
+                            populateNavbar(currentUserAuth);
                             await initializeEmployeeView(currentUserProfile.employeeId);
                             break;
-                        case 'denied':
-                            window.location.href = 'access-denied.html';
-                            break;
-                        case 'pending':
-                        default:
-                             window.location.href = 'pending-approval.html';
-                             break;
+                        case 'denied': window.location.href = 'access-denied.html'; break;
+                        case 'pending': default: window.location.href = 'pending-approval.html'; break;
                     }
                 } else {
                     window.location.href = 'login.html';
@@ -258,24 +283,45 @@ const firebaseConfig = {
                 hideLoader();
             });
         }
-
-        async function handleLogout() { await signOut(auth); }
         
-        // --- CORE PAGE LOGIC ---
-        async function initializeEmployeeView(employeeId) {
-            if (!employeeId) {
-                document.getElementById('main-container').innerHTML = `<h2>Error: Your user profile is not linked to an employee record.</h2>`;
-                return;
+        // --- NAVBAR FUNCTIONS ---
+        function populateNavbar(user) {
+            if (!user) return;
+            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Employee';
+            document.getElementById('desktop-profile-email').textContent = user.email || '';
+            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Employee';
+            document.getElementById('mobile-profile-email').textContent = user.email || '';
+        }
+        
+        function initializeNavbar() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
+            const logoutPopup = document.getElementById('logoutPopup');
+            function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+            menuOverlay.addEventListener('click', closeMobileMenu);
+            if (desktopProfileTrigger && logoutPopup) {
+                desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); });
+                window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
             }
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
+            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
+        }
+
+        async function initializeEmployeeView(employeeId) {
+            if (!employeeId) { document.getElementById('main-container').innerHTML = `<h2>Error: Your user profile is not linked to an employee record.</h2>`; return; }
             currentCalendarDate = new Date();
             const mainContainer = document.getElementById('employee-dashboard-view');
             const empDoc = await getDoc(doc(db, "employees", employeeId));
-            if (!empDoc.exists()) {
-                mainContainer.innerHTML = `<p>Error: Your employee profile could not be found.</p>`;
-                return;
-            }
+            if (!empDoc.exists()) { mainContainer.innerHTML = `<p>Error: Your employee profile could not be found.</p>`; return; }
             const employee = { id: empDoc.id, ...empDoc.data() };
-            
             mainContainer.innerHTML = `
                 <div class="employee-welcome card">
                     <img src="${currentUserAuth.photoURL}" alt="${employee.name}">
@@ -284,17 +330,14 @@ const firebaseConfig = {
                 <div class="card">
                     <div class="section-header"><h2>My Attendance</h2></div>
                     <div class="calendar-header">
-                        <button data-app-action="calendar-prev" class="nav-button"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg> </button>
+                        <button data-app-action="calendar-prev" class="nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
                         <h3 id="month-year" class="month-year-display"></h3>
-                        <button data-app-action="calendar-next" class="nav-button"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> </button>
+                        <button data-app-action="calendar-next" class="nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
                     </div>
-                    <div id="weekdays" class="weekdays-grid"></div>
-                    <div id="days-grid" class="days-grid"></div>
+                    <div id="weekdays" class="weekdays-grid"></div> <div id="days-grid" class="days-grid"></div>
                     <div class="calendar-legend">
-                        <div class="legend-item"><span class="legend-color" style="background:var(--color-success)"></span>Present</div>
-                        <div class="legend-item"><span class="legend-color" style="background:var(--color-danger)"></span>Absent</div>
-                        <div class="legend-item"><span class="legend-color" style="background:var(--gradient-half-day)"></span>Half Day</div>
-                        <div class="legend-item"><span class="legend-color" style="background:var(--color-warning)"></span>Paid Holiday</div>
+                        <div class="legend-item"><span class="legend-color" style="background:var(--color-success)"></span>Present</div> <div class="legend-item"><span class="legend-color" style="background:var(--color-danger)"></span>Absent</div>
+                        <div class="legend-item"><span class="legend-color" style="background:var(--gradient-half-day)"></span>Half Day</div> <div class="legend-item"><span class="legend-color" style="background:var(--color-warning)"></span>Paid Holiday</div>
                     </div>
                 </div>
                 <div class="card">
@@ -303,11 +346,8 @@ const firebaseConfig = {
                         <div class="card stat-card" id="employee-overall-summary" style="margin:0;"></div>
                         <div class="card stat-card" id="employee-monthly-summary" style="margin:0;"></div>
                     </div>
-                    <button class="btn btn-primary" style="width:100%;" data-app-action="view-my-payment-history">
-                        View Full Payment History
-                    </button>
+                    <button class="btn btn-primary" style="width:100%;" data-app-action="view-my-payment-history">View Full Payment History</button>
                 </div>`;
-                
             await renderEmployeeCalendarAndSummary(employeeId);
             await renderEmployeeFinancialSummaries(employeeId);
         }
@@ -322,55 +362,40 @@ const firebaseConfig = {
             const empDoc = await getDoc(doc(db, "employees", employeeId));
             if (!empDoc.exists()) return;
             const employee = { id: empDoc.id, ...empDoc.data() };
-            
-            const [allAttSnap, allPaySnap] = await Promise.all([
-                getDocs(collection(db, `employees/${employeeId}/attendance`)),
-                getDocs(collection(db, `employees/${employeeId}/payments`))
-            ]);
+            const [allAttSnap, allPaySnap] = await Promise.all([ getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`)) ]);
             const allAttendance = allAttSnap.docs.map(d => d.data());
             const allPayments = allPaySnap.docs.map(d => d.data());
-
-            const year = currentCalendarDate.getFullYear();
-            const month = currentCalendarDate.getMonth();
-            const startOfMonth = new Date(year, month, 1);
-            const endOfMonth = new Date(year, month + 1, 0);
+            const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth();
+            const startOfMonth = new Date(year, month, 1); const endOfMonth = new Date(year, month + 1, 0);
             const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth));
             const overall = calculateFinancials(employee, allAttendance, allPayments);
             const monthly = calculateFinancials(employee, monthlyAttendance, []);
-            
             const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : 'success-text';
             const overallSummaryEl = document.getElementById('employee-overall-summary');
             const monthlySummaryEl = document.getElementById('employee-monthly-summary');
-
             if (overallSummaryEl) { overallSummaryEl.innerHTML = `<h3 class="stat-card-label">Overall Due to You</h3><div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div>`; }
             if (monthlySummaryEl) { monthlySummaryEl.innerHTML = `<h3 class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Earnings</h3><div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div>`; }
-            
             document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000));
         }
 
         function calculateFinancials(employee, attendance, payments) {
             if (!employee || !Array.isArray(attendance) || !Array.isArray(payments)) return { totalEarned: 0, dueAmount: 0 };
-            let p = 0, h = 0, ph = 0;
+            let p=0, h=0, ph=0;
             attendance.forEach(a => { if (a?.status === 'present') p++; else if (a?.status === 'half-day') h++; else if (a?.status === 'paid-holiday') ph++; });
             const earned = (p + (h * 0.5) + ph) * (employee.dailySalary || 0);
             const paid = payments.reduce((s, p) => s + (p?.amount || 0), 0);
             return { totalEarned: earned, dueAmount: earned - paid };
         }
 
-        // --- UI & DATA RENDERING FUNCTIONS ---
         function renderCalendar(attendanceData) {
-            const monthYearEl = document.getElementById('month-year');
-            const daysGridEl = document.getElementById('days-grid');
-            const weekdaysEl = document.getElementById('weekdays');
+            const monthYearEl = document.getElementById('month-year'); const daysGridEl = document.getElementById('days-grid'); const weekdaysEl = document.getElementById('weekdays');
             if(!monthYearEl || !daysGridEl || !weekdaysEl) return;
             monthYearEl.textContent = currentCalendarDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-            daysGridEl.innerHTML = '';
-            weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join('');
+            daysGridEl.innerHTML = ''; weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join('');
             const month = currentCalendarDate.getMonth(); const year = currentCalendarDate.getFullYear();
             const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate();
             const prevLastDay = new Date(year, month, 0).getDate(); const lastDayIndex = new Date(year, month, lastDay).getDay();
-            const nextDays = 7 - lastDayIndex - 1;
-            const todayString = formatDate(new Date());
+            const nextDays = 7 - lastDayIndex - 1; const todayString = formatDate(new Date());
             const attendanceMap = new Map(attendanceData.map(item => [item.date, item.status]));
             let daysHTML = '';
             for (let x = firstDayIndex; x > 0; x--) { daysHTML += `<div class="day prev-month">${prevLastDay - x + 1}</div>`; }
@@ -384,26 +409,17 @@ const firebaseConfig = {
             daysGridEl.innerHTML = daysHTML;
         }
 
-        function renderHeader() { /* ... standard header rendering ... */ }
         function animateValue(obj, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); obj.innerHTML = Math.abs(progress * (end - start) + start).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); if (progress < 1) window.requestAnimationFrame(step); else { obj.innerHTML = Math.abs(end).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); } }; window.requestAnimationFrame(step); }
         function initializeTheme() { const theme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', theme); }
-        function toggleTheme() { const currentTheme = document.documentElement.getAttribute('data-theme'); const newTheme = currentTheme === 'light' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); }
-        function toggleMenu(show) { document.getElementById('mobile-menu').classList.toggle('active', show); document.getElementById('mobile-menu-overlay').classList.toggle('active', show); }
-        function toggleProfileDropdown(show) { const dropdown = document.getElementById('profile-dropdown'); if (show === undefined) { dropdown.classList.toggle('active'); } else { dropdown.classList.toggle('active', show); } }
-
-        // --- EVENT HANDLING ---
+        
         function bindEventListeners() {
              document.body.addEventListener('click', async (e) => {
-                const target = e.target;
-                const appAction = target.closest('[data-app-action]');
-                if (!appAction?.dataset?.appAction) { if (!target.closest('.profile-menu')) toggleProfileDropdown(false); return; }
-                
+                const appAction = e.target.closest('[data-app-action]');
+                if (!appAction?.dataset?.appAction) return;
                 e.preventDefault();
                 const action = appAction.dataset.appAction;
                 switch (action) {
-                    case 'view-my-payment-history':
-                        window.location.href = `employee-payment-history.html`;
-                        break;
+                    case 'view-my-payment-history': window.location.href = `employee-payment-history.html`; break;
                     case 'calendar-prev':
                         currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
                         await renderEmployeeCalendarAndSummary(currentUserProfile.employeeId);
@@ -414,11 +430,7 @@ const firebaseConfig = {
                         await renderEmployeeCalendarAndSummary(currentUserProfile.employeeId);
                         await renderEmployeeFinancialSummaries(currentUserProfile.employeeId);
                         break;
-                    case 'logout': await handleLogout(); break;
-                    case 'toggle-menu': toggleMenu(true); break;
-                    case 'close-menu': toggleMenu(false); break;
-                    case 'toggle-profile-dropdown': toggleProfileDropdown(); break;
-                    case 'toggle-theme': toggleTheme(); break;
+                    case 'logout': await signOut(auth); break;
                 }
             });
         }
