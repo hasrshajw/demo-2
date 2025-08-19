@@ -1,600 +1,477 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PayrollPro - Admin Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<style>
-/* --- NEW NAVBAR CSS --- */
-/* Universal box-sizing */
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-    /* Body styles */
-    body {
-        font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        line-height: 1.6;
-        padding-top: 72px; /* For fixed header */
-    }
-
-    /* Header styles */
-    .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 50;
-        transition-property: all;
-        transition-duration: 0.3s;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: visible;
-        background-color: #fff;
-    }
-
-    /* Container */
-    .header-container {
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    @media (min-width: 48rem) {
-        .header-container {
-            width: 80%;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayrollPro - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        /* --- NAVBAR STYLES (FROM EXAMINED CODE) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    }
-
-    @media (max-width: 768px) {
-        .header-container {
-            padding-left: 16px;
-            padding-right: 16px;
+        body {
+            padding-top: 72px; /* Adjust body padding to prevent content from being hidden under the fixed navbar */
+        }
+        .header {
+            position: fixed;
+            top: 0;
             width: 100%;
+            z-index: 1050; /* Higher z-index to be above other elements */
+            transition-property: all;
+            transition-duration: 0.3s;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible;
+            background-color: hsla(0, 0%, 100%, 0.8);
+            border-bottom: 1px solid #e5e7eb;
+            backdrop-filter: blur(8px);
         }
-        .nav-left, .nav-right {
-            margin: 0;
-            padding: 0;
+        .header-container {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .logo, .menu-button {
-            margin: 0;
-            padding: 0;
+        @media (min-width: 48rem) {
+            .header-container {
+                width: 80%;
+                max-width: 1200px; /* Aligns with main container */
+            }
         }
-    }
-
-    /* Navigation */
-    .nav {
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    /* Logo and nav links container */
-    .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-    }
-    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            .header-container {
+                padding-left: 16px;
+                padding-right: 16px;
+                width: 100%;
+            }
+        }
         .nav {
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
-        }
-    }
-    
-    /* Logo image */
-    .logo {
-        margin-right: 1.5rem;
-        width: 100px;
-        height: 40px;
-        color: transparent;
-    }
-
-    /* Nav links (hidden on mobile, flex on md) */
-    .nav-links {
-        display: none;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    @media (min-width: 48rem) {
-        .nav-links {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-    }
-
-    /* Nav link hover effect */
-    .nav-link {
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #012726;
-        transition: color 0.15s, background-color 0.15s;
-        text-decoration: none;
-        border-radius: 0.375rem;
-    }
-
-    @media (hover: hover) {
-        .nav-link:hover {
-            color: #fff;
-            background-color: #012726;
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
         }
-    }
-
-    /* Right-side container */
-    .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    /* Mobile menu button */
-    .menu-button {
-        display: flex;
-        padding: 0.375rem;
-        border: 1px solid #012726;
-        border-radius: 0.375rem;
-        color: #012726;
-        background-color: transparent;
-        cursor: pointer;
-    }
-
-    @media (min-width: 48rem) {
+        .logo {
+            width: 100px;
+            height: 40px;
+            color: transparent;
+            object-fit: contain; /* Ensure logo scales nicely */
+        }
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+        @media (min-width: 48rem) {
+            .nav-links {
+                display: flex;
+            }
+        }
+        .nav-link {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #012726;
+            transition: color 0.15s, background-color 0.15s;
+            text-decoration: none;
+            border-radius: 0.375rem;
+        }
+        @media (hover: hover) {
+            .nav-link:hover {
+                color: #fff;
+                background-color: #012726;
+            }
+        }
         .menu-button {
+            display: flex;
+            padding: 0.375rem;
+            border: 1px solid #012726;
+            border-radius: 0.375rem;
+            color: #012726;
+            background-color: transparent;
+            cursor: pointer;
+        }
+        @media (min-width: 48rem) {
+            .menu-button {
+                display: none;
+            }
+        }
+        #mobileMenu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 75vw;
+            max-width: 320px;
+            background: #ffffff;
+            padding: 24px 16px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-top-left-radius: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        #mobileMenu.active { transform: translateX(0); }
+        #menuOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
             display: none;
         }
-    }
-
-    /* Mobile menu styles */
-    #mobileMenu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 75vw;
-        max-width: 320px;
-        background: #ffffff;
-        padding: 24px 16px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
-        z-index: 1000;
-        border-top-left-radius: 16px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    #mobileMenu.active {
-        transform: translateX(0);
-    }
-
-    #menuOverlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
-        display: none;
-    }
-
-    #menuOverlay.active {
-        display: block;
-    }
-
-    .mobile-menu-close {
-        padding: 8px;
-        border-radius: 8px;
-        border: none;
-        background: transparent;
-        transition: background 0.2s ease, transform 0.2s ease;
-        align-self: flex-end;
-        margin-bottom: 24px;
-        cursor: pointer;
-    }
-
-    .mobile-menu-close svg {
-        width: 24px;
-        height: 24px;
-        color: #4b5563;
-    }
-
-    .mobile-menu-content {
-        flex-grow: 1;
-        overflow-y: auto;
-    }
-
-    .mobile-menu-section {
-        display: flex;
-        flex-direction: column;
-        gap: 8px; /* Space between the new buttons */
-    }
-    
-    .mobile-nav-link {
-        display: flex;
-        align-items: center;
-        padding: 12px 16px;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        font-weight: 500;
-        color: #012726;
-        background-color: #f8f9fa;
-        transition: background-color 0.15s;
-    }
-    
-    .mobile-nav-link:hover {
-        background-color: #e9ecef;
-    }
-    
-    .mobile-nav-icon {
-        width: 20px;
-        height: 20px;
-        margin-right: 12px;
-        color: #495057;
-    }
-
-    .mobile-menu-bottom {
-        flex-shrink: 0;
-        margin-top: auto; /* Pushes profile to the bottom */
-        padding-top: 16px;
-        border-top: 1px solid #e9ecef;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    /* Divider */
-    .divider {
-        height: 1px;
-        background-color: #e9ecef;
-    }
-
-    @media (max-width: 768px) {
-        .divider {
-            width: 100%;
-            margin: 0;
-            padding: 0;
+        #menuOverlay.active { display: block; }
+        .mobile-menu-close {
+            padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease;
+            align-self: flex-end; margin-bottom: 24px; cursor: pointer;
         }
-    }
-    
-    .desktop-profile {
-        display: none;
-    }
-    
-    @media (min-width: 48rem) {
-        .desktop-profile {
-            display: flex;
+        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
+        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
+        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
+        .mobile-nav-link {
+            display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500;
+            color: #012726; background-color: #f8f9fa; transition: background-color 0.15s;
         }
-    }
-    
-    .profile-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        cursor: pointer;
-        border-radius: 0.375rem;
-        padding: 4px;
-    }
+        .mobile-nav-link:hover { background-color: #e9ecef; }
+        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
+        .mobile-menu-bottom {
+            flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex;
+            flex-direction: column; gap: 16px;
+        }
+        .desktop-profile { display: none; }
+        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
+        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
+        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
+        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
+        .profile-name { font-weight: 500; color: #012726; }
+        .profile-email { font-size: 0.85rem; color: #6c757d; }
+        .profile-dropdown-container { position: relative; }
+        .logout-popup {
+            display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff;
+            border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px;
+        }
+        .logout-popup.show { display: block; }
+        .logout-button {
+            background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem;
+            font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s;
+        }
+        .logout-button:hover { background-color: #c82333; }
 
-    .profile-pic {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #e9ecef;
-    }
-
-    .profile-info {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.3;
-    }
-
-    .profile-name {
-        font-weight: 500;
-        color: #012726;
-    }
-
-    .profile-email {
-        font-size: 0.85rem;
-        color: #6c757d;
-    }
-    
-    .profile-dropdown-container {
-        position: relative;
-    }
-
-    .logout-popup {
-        display: none;
-        position: absolute;
-        top: calc(100% + 8px);
-        right: 0;
-        background-color: #fff;
-        border-radius: 0.375rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        padding: 8px;
-        z-index: 60;
-        width: 150px;
-    }
-
-    .logout-popup.show {
-        display: block;
-    }
-    
-    .logout-button {
-        background-color: #dc3545;
-        color: #fff;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 0.375rem;
-        font-weight: 500;
-        cursor: pointer;
-        width: 100%;
-        text-align: center;
-        transition: background-color 0.15s;
-    }
-
-    .logout-button:hover {
-        background-color: #c82333;
-    }
-
-    /* --- EXISTING APPLICATION CSS --- */
-    :root {
-        --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
-        --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
-        --light-text-primary: #012726; --light-text-secondary: #52616b; --light-border: #e5e7eb;
-        --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
-        --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
-        --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
-    }
-    [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
-    [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
-    
-    html, body { height: 100%; }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--font-alt); background-color: var(--color-background); color: var(--light-text-secondary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
-    h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; color: var(--light-text-primary); }
-    .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-    .app-container { display: block; }
-    main { padding-top: 24px; padding-bottom: 48px; } /* Adjusted padding */
-    .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-    .btn:hover:not(:disabled) { transform: translateY(-1px); }
-    .btn-success { background-color: var(--color-success); color: white; }
-    .btn-danger { background-color: var(--color-danger); color: white; }
-    .btn-warning { background-color: var(--color-warning); color: #1f2937; }
-    .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
-    .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
-    .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-    .card .title { color: var(--light-text-primary); font-size: 22px; font-weight: 600; margin: 0; line-height: 1.2; }
-    .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; }
-    .employee-row:first-of-type { border-top: 1px solid var(--light-border); }
-    .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
-    .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; gap: 8px; }
-    #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
-    .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
-    .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
-    .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .upcoming-order-card .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
-    .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
-    .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
-    .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
-    .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
-    .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
-    .link-tile:hover svg { transform: translateX(3px); }
-    .global-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; }
-    .global-stat { display: flex; flex-direction: column; gap: 4px; }
-    .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); font-family: var(--font-alt); }
-    .global-stat .value.danger-text { color: var(--color-danger); }
-    .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
-    .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
-    .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-    .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; transition: transform 0.3s ease; }
-    .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
-    .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
-    .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
-    .fab-menu.show { visibility: visible; opacity: 1; }
-    .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; }
-    .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
-    .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
-    .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
-    .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
-    .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
-    #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-    .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
-    .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
-    .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
-    .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
-</style>
+        /* --- DASHBOARD STYLES (ORIGINAL CODE) --- */
+        :root {
+            --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
+            --light-text-primary: #012726; --light-text-secondary: #52616b; --light-border: #e5e7eb;
+            --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
+            --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
+            --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
+        }
+        [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
+        [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
+        html, body { height: 100%; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-alt); background-color: var(--color-background); color: var(--light-text-secondary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; color: var(--light-text-primary); }
+        .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
+        .app-container { display: block; }
+        main { padding-top: 48px; padding-bottom: 48px; }
+        .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn:hover:not(:disabled) { transform: translateY(-1px); }
+        .btn-success { background-color: var(--color-success); color: white; }
+        .btn-danger { background-color: var(--color-danger); color: white; }
+        .btn-warning { background-color: var(--color-warning); color: #1f2937; }
+        .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
+        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
+        .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+        .card .title { color: var(--light-text-primary); font-size: 22px; font-weight: 600; margin: 0; line-height: 1.2; }
+        .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; }
+        .employee-row:first-of-type { border-top: 1px solid var(--light-border); }
+        .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
+        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; gap: 8px; }
+        #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
+        .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
+        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .upcoming-order-card .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
+        .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
+        .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
+        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
+        .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
+        .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
+        .link-tile:hover svg { transform: translateX(3px); }
+        .global-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; }
+        .global-stat { display: flex; flex-direction: column; gap: 4px; }
+        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); font-family: var(--font-alt); }
+        .global-stat .value.danger-text { color: var(--color-danger); }
+        .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
+        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; transition: transform 0.3s ease; }
+        .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
+        .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
+        .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
+        .fab-menu.show { visibility: visible; opacity: 1; }
+        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; }
+        .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
+        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
+        .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
+        .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
+        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
+        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
+        .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
+        .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
+        .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
-<div id="app-container" class="app-container">
-      <!-- === NEW NAVBAR HTML INSERTED HERE === -->
-    <header class="header">
-        <div class="header-container">
-            <nav class="nav">
-                <div class="nav-left">
-                    <a href="admin-dashboard.html">
-                        <!-- Using a placeholder for logo, you can replace src -->
-                        <h2 style="color: var(--color-primary);">PayrollPro</h2>
-                    </a>
-                    <div class="nav-links">
-                        <a class="nav-link" href="admin-dashboard.html">Home</a>
-                        <a class="nav-link" href="view-orders.html">All Orders</a>
-                        <a class="nav-link" href="admin-employees.html">Manage Employees</a>
+    <div id="app-container" class="app-container">
+        <!-- NEW NAVBAR - REPLACED OLD HEADER -->
+        <header class="header">
+            <div class="header-container">
+                <nav class="nav">
+                    <div class="nav-left">
+                        <a href="admin-dashboard.html">
+                            <img class="logo" src="https://i.imgur.com/your-logo.png" alt="PayrollPro Logo" >
+                        </a>
+                        <div class="nav-links">
+                            <a class="nav-link" href="admin-dashboard.html">Home</a>
+                            <a class="nav-link" href="view-orders.html">All Orders</a>
+                            <a class="nav-link" href="admin-employees.html">Manage Employees</a>
+                        </div>
                     </div>
-                </div>
-                <div class="nav-right">
-                    <!-- Desktop Profile Display with Dropdown -->
-                    <div class="desktop-profile">
-                         <div class="profile-dropdown-container">
-                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="profile-pic" alt="Profile Picture">
-                                <div class="profile-info">
-                                    <span class="profile-name">Loading...</span>
-                                    <span class="profile-email"></span>
+                    <div class="nav-right">
+                        <!-- Desktop Profile Display with Dropdown -->
+                        <div class="desktop-profile">
+                             <div class="profile-dropdown-container">
+                                 <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <img src="" class="profile-pic" alt="Profile Picture" id="desktopProfilePic">
+                                    <div class="profile-info">
+                                        <span class="profile-name" id="desktopProfileName"></span>
+                                        <span class="profile-email" id="desktopProfileEmail"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="logout-popup" id="logoutPopup">
-                                <button class="logout-button" data-app-action="logout">Logout</button>
-                            </div>
-                         </div>
+                                <div class="logout-popup" id="logoutPopup">
+                                    <button class="logout-button" id="desktopLogoutBtn">Logout</button>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- Mobile Menu Button -->
+                        <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
                     </div>
-                    <!-- Mobile Menu Button -->
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </nav>
+                <div id="mobileMenu" role="dialog" aria-modal="true">
+                    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+                        <svg viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
-                </div>
-            </nav>
-            <div id="mobileMenu" role="dialog" aria-modal="true">
-                <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-                    <svg viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-                <div class="mobile-menu-content">
-                    <div class="mobile-menu-section">
-                        <a href="admin-dashboard.html" class="mobile-nav-link">
-                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                             <span>Home</span>
-                        </a>
-                        <a href="view-orders.html" class="mobile-nav-link">
-                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                             <span>All Orders</span>
-                        </a>
-                        <a href="admin-employees.html" class="mobile-nav-link">
-                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                             <span>Manage Employees</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="mobile-menu-bottom">
-                    <div class="profile-container">
-                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="profile-pic" alt="Profile Picture">
-                        <div class="profile-info">
-                            <span class="profile-name">Loading...</span>
-                            <span class="profile-email"></span>
+                    <div class="mobile-menu-content">
+                        <div class="mobile-menu-section">
+                            <a href="admin-dashboard.html" class="mobile-nav-link">
+                                 <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                 <span>Home</span>
+                            </a>
+                            <a href="view-orders.html" class="mobile-nav-link">
+                                 <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                                 <span>All Orders</span>
+                            </a>
+                            <a href="admin-employees.html" class="mobile-nav-link">
+                                 <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                 <span>Manage Employees</span>
+                            </a>
                         </div>
                     </div>
-                    <button class="logout-button" data-app-action="logout">Logout</button>
+                    <div class="mobile-menu-bottom">
+                        <div class="profile-container">
+                            <img src="" class="profile-pic" alt="Profile Picture" id="mobileProfilePic">
+                            <div class="profile-info">
+                                <span class="profile-name" id="mobileProfileName"></span>
+                                <span class="profile-email" id="mobileProfileEmail"></span>
+                            </div>
+                        </div>
+                        <button class="logout-button" id="mobileLogoutBtn">Logout</button>
+                    </div>
+                </div>
+                <div id="menuOverlay"></div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container" id="main-container">
+                <div id="home-view" class="view active">
+                    <div id="dashboard-layout">
+                        <!-- Card 1: Attendance -->
+                        <div id="attendance-card" class="card" style="display: none;">
+                            <div class="card-content">
+                                <h2 class="title">Today's Attendance</h2>
+                            </div>
+                            <div id="attendance-tracker"></div>
+                        </div>
+
+                        <!-- Card 2: Orders -->
+                        <div id="orders-card" class="card">
+                            <div class="card-content">
+                                <h2 class="title">Upcoming & Overdue Orders</h2>
+                            </div>
+                            <div id="upcoming-overdue-list" class="upcoming-cards-container"></div>
+                        </div>
+                        
+                        <!-- Card 3: Actions Container -->
+                        <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                            <a href="view-orders.html" class="link-tile">
+                                <span>View All Orders</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
+                            </a>
+                            <a href="admin-employees.html" class="link-tile">
+                                <span>Manage All Employees</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
+                            </a>
+                        </div>
+
+                        <!-- Card 4: Month in Review -->
+                        <div id="global-summary-card" class="card"></div>
+                    </div>
                 </div>
             </div>
-            <div id="menuOverlay"></div>
-            <div class="divider"></div>
-        </div>
-    </header>
-
-    <main>
-        <div class="container" id="main-container">
-            <div id="home-view" class="view active">
-                <div id="dashboard-layout">
-                    <!-- Card 1: Attendance -->
-                    <div id="attendance-card" class="card" style="display: none;">
-                        <div class="card-content">
-                            <h2 class="title">Today's Attendance</h2>
-                        </div>
-                        <div id="attendance-tracker"></div>
-                    </div>
-
-                    <!-- Card 2: Orders -->
-                    <div id="orders-card" class="card">
-                        <div class="card-content">
-                            <h2 class="title">Upcoming & Overdue Orders</h2>
-                        </div>
-                        <div id="upcoming-overdue-list" class="upcoming-cards-container"></div>
-                    </div>
-                    
-                    <!-- Card 3: Actions Container -->
-                    <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                        <a href="view-orders.html" class="link-tile">
-                            <span>View All Orders</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
-                        </a>
-                        <a href="admin-employees.html" class="link-tile">
-                            <span>Manage All Employees</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
-                        </a>
-                    </div>
-
-                    <!-- Card 4: Month in Review -->
-                    <div id="global-summary-card" class="card"></div>
-                </div>
-            </div>
-        </div>
-    </main>
-</div>
-
-<div class="fab-container" id="fabContainer">
-    <div class="fab-menu" id="fabMenu">
-        <div class="fab-item" data-app-action="navigate-order-form">
-            <span class="label">Take Order</span>
-            <div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div>
-        </div>
-        <div class="fab-item" data-app-action="navigate-add-payment">
-            <span class="label">Add Payment</span>
-            <div class="action-button"><span class="material-symbols-outlined">payments</span></div>
-        </div>
+        </main>
     </div>
-    <button class="fab-button" id="fabButton" data-app-action="toggle-fab">
-        <span class="material-symbols-outlined">add</span>
-    </button>
-</div>
-
-<div id="loader"><div class="spinner"></div></div>
-<div id="other-options-modal" class="modal"></div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    // Firebase configuration will be injected by Netlify during build
-    const firebaseConfig = {
-        apiKey: "__API_KEY__",
-        authDomain: "__AUTH_DOMAIN__",
-        projectId: "__PROJECT_ID__",
-        storageBucket: "__STORAGE_BUCKET__",
-        messagingSenderId: "__MESSAGING_SENDER_ID__",
-        appId: "__APP_ID__",
-        measurementId: "__MEASUREMENT_ID__"
-    };
     
-    let db, auth, currentUserProfile;
+    <div class="fab-container" id="fabContainer">
+        <!-- FAB content remains the same -->
+        <div class="fab-menu" id="fabMenu">
+            <div class="fab-item" data-app-action="navigate-order-form">
+                <span class="label">Take Order</span>
+                <div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div>
+            </div>
+            <div class="fab-item" data-app-action="navigate-add-payment">
+                <span class="label">Add Payment</span>
+                <div class="action-button"><span class="material-symbols-outlined">payments</span></div>
+            </div>
+        </div>
+        <button class="fab-button" id="fabButton" data-app-action="toggle-fab">
+            <span class="material-symbols-outlined">add</span>
+        </button>
+    </div>
+    
+    <div id="loader"><div class="spinner"></div></div>
+    <div id="other-options-modal" class="modal"></div>
 
-    const showLoader = () => document.getElementById('loader').style.display = 'flex';
-    const hideLoader = () => document.getElementById('loader').style.display = 'none';
-    const openModal = (id) => document.getElementById(id).style.display = 'block';
-    const closeModal = (id) => document.getElementById(id).style.display = 'none';
-    const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    document.addEventListener('DOMContentLoaded', () => {
-        try {
-            // --- Navbar Interactivity Logic ---
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
+        
+        let db, auth, currentUserProfile;
+
+        const showLoader = () => document.getElementById('loader').style.display = 'flex';
+        const hideLoader = () => document.getElementById('loader').style.display = 'none';
+        const openModal = (id) => document.getElementById(id).style.display = 'block';
+        const closeModal = (id) => document.getElementById(id).style.display = 'none';
+        const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
+                bindEventListeners();
+                listenForAuthStateChanges();
+                initializeNavbar(); // Initialize the new navbar logic
+            } catch (error) {
+                console.error("Initialization Failed:", error);
+                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
+            }
+        });
+        
+        function updateProfileDetails(profile) {
+            if (!profile) return;
+            const defaultPic = 'https://i.pravatar.cc/40'; // Fallback image
+            // Desktop
+            document.getElementById('desktopProfilePic').src = profile.photoURL || defaultPic;
+            document.getElementById('desktopProfileName').textContent = profile.displayName || 'Admin';
+            document.getElementById('desktopProfileEmail').textContent = profile.email || '';
+            // Mobile
+            document.getElementById('mobileProfilePic').src = profile.photoURL || defaultPic;
+            document.getElementById('mobileProfileName').textContent = profile.displayName || 'Admin';
+            document.getElementById('mobileProfileEmail').textContent = profile.email || '';
+        }
+
+        function listenForAuthStateChanges() {
+            onAuthStateChanged(auth, async (user) => {
+                showLoader();
+                if (user && user.email === "__ADMIN_EMAIL__") {
+                    const userRef = doc(db, "users", user.uid);
+                    await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
+                    const userDoc = await getDoc(userRef);
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                    updateProfileDetails(currentUserProfile); // Update navbar with user info
+                    await initializeAdminView();
+                } else {
+                    window.location.href = 'login.html';
+                }
+                hideLoader();
+            });
+        }
+
+        async function initializeAdminView() {
+            // The renderHeader() function is no longer needed.
+            listenForOrders();
+            const employeesSnap = await getDocs(collection(db, "employees"));
+            const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            await refreshAttendanceTracker(employees);
+            await calculateAndRenderGlobalSummary(employees);
+        }
+
+        function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
+        
+        function initializeNavbar() {
+            // --- Mobile Menu Logic ---
             const mobileMenu = document.getElementById('mobileMenu');
             const mobileMenuButton = document.getElementById('mobileMenuButton');
             const mobileMenuClose = document.getElementById('mobileMenuClose');
             const menuOverlay = document.getElementById('menuOverlay');
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
-            const logoutPopup = document.getElementById('logoutPopup');
-            
+
             function closeMobileMenu() {
                 if (mobileMenu.classList.contains('active')) {
                      mobileMenu.classList.remove('active');
@@ -602,221 +479,179 @@ box-sizing: border-box;
                      document.body.style.overflow = '';
                 }
             }
-            
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.add('active');
-                    menuOverlay.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
-            }
-            [mobileMenuClose, menuOverlay].forEach(el => el?.addEventListener('click', closeMobileMenu));
-            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                menuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+            menuOverlay.addEventListener('click', closeMobileMenu);
+            document.addEventListener('keydown', (e) => e.key === 'Escape' && closeMobileMenu());
+            window.addEventListener('resize', () => window.innerWidth > 768 && closeMobileMenu());
+
+            // --- Desktop Profile Dropdown Logic ---
+            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
+            const logoutPopup = document.getElementById('logoutPopup');
             if (desktopProfileTrigger && logoutPopup) {
                 desktopProfileTrigger.addEventListener('click', (event) => {
                     event.stopPropagation();
                     logoutPopup.classList.toggle('show');
-                    desktopProfileTrigger.setAttribute('aria-expanded', String(logoutPopup.classList.contains('show')));
+                    desktopProfileTrigger.setAttribute('aria-expanded', logoutPopup.classList.contains('show'));
                 });
                 window.addEventListener('click', (event) => {
-                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {
+                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target) && logoutPopup.classList.contains('show')) {
+                        logoutPopup.classList.remove('show');
+                        desktopProfileTrigger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+                document.addEventListener('keydown', (e) => {
+                     if (e.key === 'Escape' && logoutPopup.classList.contains('show')) {
                         logoutPopup.classList.remove('show');
                         desktopProfileTrigger.setAttribute('aria-expanded', 'false');
                     }
                 });
             }
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeMobileMenu();
-                    if (logoutPopup.classList.contains('show')) {
-                        logoutPopup.classList.remove('show');
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                    }
+
+            // --- Logout Button Logic ---
+            document.getElementById('desktopLogoutBtn').addEventListener('click', () => signOut(auth));
+            document.getElementById('mobileLogoutBtn').addEventListener('click', () => signOut(auth));
+        }
+
+        function bindEventListeners() {
+            document.body.addEventListener('click', async (e) => {
+                const appAction = e.target.closest('[data-app-action]');
+                // Close FAB menu if clicking outside
+                if (!e.target.closest('.fab-container')) { 
+                    document.getElementById('fabMenu').classList.remove('show'); 
+                    document.getElementById('fabButton').classList.remove('open'); 
+                }
+                if (!appAction) return;
+                if (!appAction.href) e.preventDefault();
+                
+                const action = appAction.dataset.appAction;
+                if (action !== 'toggle-fab') { 
+                    document.getElementById('fabMenu').classList.remove('show');
+                    document.getElementById('fabButton').classList.remove('open');
+                }
+                
+                switch (action) {
+                    case 'toggle-fab': toggleFabMenu(); break;
+                    case 'navigate-order-form': window.location.href='order-form.html'; break;
+                    case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
+                    // Logout is now handled by initializeNavbar, but we keep this as a fallback if any old buttons remain.
+                    case 'logout': await signOut(auth); break;
+                    case 'close-modal': closeModal(appAction.dataset.modalId); break;
+                    case 'open-other-options-modal': 
+                        const { id, name } = appAction.dataset; 
+                        document.getElementById('other-options-title').textContent = `Mark Attendance: ${name}`; 
+                        document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
+                        openModal('other-options-modal'); 
+                        break;
+                    case 'mark-attendance': 
+                        await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
+                        closeModal('other-options-modal');
+                        break;
                 }
             });
-            
-            window.addEventListener('resize', () => window.innerWidth > 768 && closeMobileMenu());
-            // --- End Navbar Logic ---
-
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            
-            document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
-            bindEventListeners();
-            listenForAuthStateChanges();
-        } catch (error) {
-            console.error("Initialization Failed:", error);
-            document.body.innerHTML = `<h2>Error initializing application.</h2>`;
         }
-    });
-
-    function listenForAuthStateChanges() {
-        onAuthStateChanged(auth, async (user) => {
+        
+        // --- ALL OTHER FUNCTIONS (handleAttendanceClick, refreshAttendanceTracker, etc.) REMAIN THE SAME ---
+        async function handleAttendanceClick(employeeId, status) {
             showLoader();
-            if (user && user.email === "__ADMIN_EMAIL__") {
-                const userRef = doc(db, "users", user.uid);
-                await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
-                const userDoc = await getDoc(userRef);
-                currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                await initializeAdminView();
+            try {
+                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
+                const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
+                if(rowToHide) rowToHide.classList.add('hidden');
+                setTimeout(async () => {
+                    const allEmployees = (await getDocs(collection(db, "employees"))).docs.map(d => ({ id: d.id, ...d.data() }));
+                    await refreshAttendanceTracker(allEmployees);
+                }, 500);
+            } catch (err) { console.error(err); } 
+            finally { hideLoader(); }
+        }
+
+        async function refreshAttendanceTracker(employees) {
+            const today = getIndiaDateString();
+            const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
+            const attendanceDocs = await Promise.all(attendancePromises);
+            const attendedTodayIds = new Set(attendanceDocs.filter(docSnap => docSnap.exists()).map(docSnap => docSnap.ref.parent.parent.id));
+            const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
+            renderAttendanceTracker(employeesToTrack);
+        }
+
+        function renderAttendanceTracker(employeesToTrack) {
+            const attendanceCard = document.getElementById('attendance-card');
+            const container = document.getElementById('attendance-tracker');
+            if (employeesToTrack.length === 0) {
+                attendanceCard.style.display = 'none';
             } else {
-                window.location.href = 'login.html';
+                attendanceCard.style.display = 'block';
+                container.innerHTML = employeesToTrack.map(emp => `<div class="employee-row" data-employee-row-id="${emp.id}"><div class="employee-name">${emp.name}</div><div class="actions"><button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button><button class="btn btn-secondary" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button></div></div>`).join('');
             }
-            hideLoader();
-        });
-    }
-
-    async function initializeAdminView() {
-        // Populate navbar with real user data
-        document.querySelectorAll('.profile-name').forEach(el => el.textContent = currentUserProfile.displayName || "Admin");
-        document.querySelectorAll('.profile-email').forEach(el => el.textContent = currentUserProfile.email);
-        document.querySelectorAll('.profile-pic').forEach(el => el.src = currentUserProfile.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserProfile.displayName || 'A')}&background=012726&color=fff`);
-
-        // Initialize dashboard components
-        listenForOrders();
-        const employeesSnap = await getDocs(collection(db, "employees"));
-        const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        await refreshAttendanceTracker(employees);
-        await calculateAndRenderGlobalSummary(employees);
-    }
-
-    function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
-
-    function bindEventListeners() {
-        document.body.addEventListener('click', async (e) => {
-            const appAction = e.target.closest('[data-app-action]');
-            // Do not close FAB menu if clicking inside it
-            if (!e.target.closest('.fab-container')) { 
-                document.getElementById('fabMenu').classList.remove('show'); 
-                document.getElementById('fabButton').classList.remove('open'); 
-            }
-            if (!appAction) return;
-            
-            const action = appAction.dataset.appAction;
-            if (action !== 'toggle-fab') { 
-                document.getElementById('fabMenu').classList.remove('show'); 
-                document.getElementById('fabButton').classList.remove('open'); 
-            }
-            if (!appAction.href) e.preventDefault();
-
-            switch (action) {
-                case 'toggle-fab': toggleFabMenu(); break;
-                case 'navigate-order-form': window.location.href='order-form.html'; break;
-                case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
-                case 'logout': await signOut(auth); break;
-                case 'close-modal': closeModal(appAction.dataset.modalId); break;
-                case 'open-other-options-modal': 
-                    const { id, name } = appAction.dataset; 
-                    document.getElementById('other-options-title').textContent = `Mark Attendance: ${name}`; 
-                    document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
-                    openModal('other-options-modal'); 
-                    break;
-                case 'mark-attendance': 
-                    await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
-                    closeModal('other-options-modal');
-                    break;
-            }
-        });
-    }
-    
-    async function handleAttendanceClick(employeeId, status) {
-        showLoader();
-        try {
-            await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-            const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
-            if(rowToHide) rowToHide.classList.add('hidden');
-            setTimeout(async () => {
-                const allEmployees = (await getDocs(collection(db, "employees"))).docs.map(d => ({ id: d.id, ...d.data() }));
-                await refreshAttendanceTracker(allEmployees);
-            }, 500);
-        } catch (err) { console.error(err); } 
-        finally { hideLoader(); }
-    }
-
-    async function refreshAttendanceTracker(employees) {
-        const today = getIndiaDateString();
-        const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
-        const attendanceDocs = await Promise.all(attendancePromises);
-        const attendedTodayIds = new Set(attendanceDocs.filter(docSnap => docSnap.exists()).map(docSnap => docSnap.ref.parent.parent.id));
-        const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
-        renderAttendanceTracker(employeesToTrack);
-    }
-
-    function renderAttendanceTracker(employeesToTrack) {
-        const attendanceCard = document.getElementById('attendance-card');
-        const container = document.getElementById('attendance-tracker');
-        if (employeesToTrack.length === 0) {
-            attendanceCard.style.display = 'none';
-        } else {
-            attendanceCard.style.display = 'block';
-            container.innerHTML = employeesToTrack.map(emp => `<div class="employee-row" data-employee-row-id="${emp.id}"><div class="employee-name">${emp.name}</div><div class="actions"><button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button><button class="btn btn-secondary" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button></div></div>`).join('');
         }
-    }
-    
-    function listenForOrders() {
-        const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
-        onSnapshot(ordersQuery, (snapshot) => {
-            const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            populateUpcomingOverdueList(orders);
-        });
-    }
-
-    const getStatusInfo = (order, today) => {
-        if (order.status === 'completed') return null;
-        const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
-        if (!dueDate) return null;
-        if (dueDate < today) return { text: 'Overdue', className: 'overdue' };
-        const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
-        if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };
-        return null;
-    };
-    
-    function populateUpcomingOverdueList(orders) {
-        const container = document.getElementById('upcoming-overdue-list');
-        const today = new Date(); today.setHours(0,0,0,0);
-        const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) }))
-                                     .filter(order => order.statusInfo !== null)
-                                     .sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
-        if (criticalOrders.length === 0) {
-            container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>';
-        } else {
-            container.innerHTML = criticalOrders.map(order => `
-                <div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'">
-                    <div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div>
-                </div>`).join('');
+        
+        function listenForOrders() {
+            const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
+            onSnapshot(ordersQuery, (snapshot) => {
+                const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                populateUpcomingOverdueList(orders);
+            });
         }
-    }
 
-    async function calculateAndRenderGlobalSummary(employees) {
-        const container = document.getElementById('global-summary-card');
-        if (!container) return;
-        const todayInIndia = getIndiaDateString();
-        const [year, month] = todayInIndia.split('-');
-        const startDate = `${year}-${month}-01`;
-        const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
-        const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
-        let totalEarned = 0, totalPaid = 0;
-        const promises = employees.map(async emp => {
-            const [attSnap, paySnap] = await Promise.all([ 
-                getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
-                getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
-            ]);
-            let p=0,h=0,ph=0;
-            attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
-            totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
-            paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
-        });
-        await Promise.all(promises);
-        container.innerHTML = `
-            <div class="card-content"><h2 class="title">Month in Review</h2></div>
-            <div class="global-summary-grid">
-                <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
-                <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
-                <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
-            </div>`;
-    }
-</script>
+        const getStatusInfo = (order, today) => {
+            if (order.status === 'completed') return null;
+            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
+            if (!dueDate) return null;
+            if (dueDate < today) return { text: 'Overdue', className: 'overdue' };
+            const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
+            if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };
+            return null;
+        };
+        
+        function populateUpcomingOverdueList(orders) {
+            const container = document.getElementById('upcoming-overdue-list');
+            const today = new Date(); today.setHours(0,0,0,0);
+            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) }))
+                                         .filter(order => order.statusInfo !== null)
+                                         .sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
+            if (criticalOrders.length === 0) {
+                container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>';
+            } else {
+                container.innerHTML = criticalOrders.map(order => `
+                    <div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'">
+                        <div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div>
+                    </div>`).join('');
+            }
+        }
+
+        async function calculateAndRenderGlobalSummary(employees) {
+            const container = document.getElementById('global-summary-card');
+            if (!container) return;
+            const todayInIndia = getIndiaDateString();
+            const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`;
+            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
+            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+            let totalEarned = 0, totalPaid = 0;
+            const promises = employees.map(async emp => {
+                const [attSnap, paySnap] = await Promise.all([ 
+                    getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
+                    getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
+                ]);
+                let p=0,h=0,ph=0;
+                attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
+                totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
+                paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
+            });
+            await Promise.all(promises);
+            container.innerHTML = `
+                <div class="card-content"><h2 class="title">Month in Review</h2></div>
+                <div class="global-summary-grid">
+                    <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
+                </div>`;
+        }
+    </script>
 </body>
 </html>
