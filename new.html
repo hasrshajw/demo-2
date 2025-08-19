@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayrollPro - Order Form</title>
+    <!-- Google Fonts for IBM Plex Sans & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <!-- Leaflet Map Library -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
@@ -16,7 +19,12 @@
         :root {--font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;--font-icon: "Material Symbols Outlined";--light-bg-primary: #ffffff;--light-bg-secondary: #f7f9fc;--light-bg-tertiary: #f1f3f6;--light-text-primary: #012726;--light-text-secondary: #52616b;--light-text-muted: #9ca3af;--light-border: #e5e7eb;--light-border-hover: #d1d5db;--color-primary: #012726;--color-primary-hover: #023d3c;--color-primary-text: #ffffff;--color-accent: #33C375;--color-accent-hover: #2CAC66;--color-accent-text: #012726;--color-danger: #ef4444;--color-danger-hover: #dc2626;--color-danger-text: #ffffff;--color-warning: #f59e0b;--color-warning-hover: #d97706;--color-warning-text: #ffffff;--color-reopen: #6f42c1;--color-reopen-hover: #5a3d9a;--color-reopen-text: #ffffff;--status-pending-bg: #eef2ff;--status-pending-text: #4338ca;--status-completed-bg: #f0fdf4;--status-completed-text: #166534;--status-overdue-bg: #fef2f2;--status-overdue-text: #be123c;--status-overdue-border: #fecaca;--status-upcoming-bg: #fffbeb;--status-upcoming-text: #b45309;--status-upcoming-border: #fde68a;--color-focus-ring: rgba(51, 195, 117, 0.35);--radius-sm: 0.25rem;--radius-md: 0.5rem;--radius-lg: 1rem;--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);--shadow-lg: 0 10px 20px -3px rgb(0 0 0 / 0.07), 0 4px 8px -4px rgb(0 0 0 / 0.07);--ease: cubic-bezier(.4,0,.2,1);}
         *, *::before, *::after { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body {font-family: var(--font-main);background-color: var(--light-bg-secondary);color: var(--light-text-secondary);margin: 0;min-height: 100vh;padding: 1rem;padding-top: calc(72px + 1rem);}
+        body {font-family: var(--font-main);background-color: var(--light-bg-secondary);color: var(--light-text-secondary);margin: 0;min-height: 100vh;padding-top: 72px;}
+        .app-container {max-width: 72rem;margin: 2rem auto;padding: 0 1rem;width: 100%;}
+        h1, h2, h3 {font-weight: 600;color: var(--light-text-primary);margin: 0;}
+        h1 { font-size: 1.875rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        .screen { display: none; } .screen.active { display: block; animation: fadeUp 0.5s var(--ease) forwards; }
         
         /* --- NAVBAR STYLES --- */
         .header {position: fixed; top: 0; width: 100%; z-index: 50;background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
@@ -57,15 +65,10 @@
         .profile-dropdown-container { position: relative; }
         .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
         .logout-popup.show { display: block; }
-        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
-        .logout-button:hover { background-color: #c82333; }
+        .logout-button { background-color: var(--color-danger); color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
+        .logout-button:hover { background-color: var(--color-danger-hover); }
 
-        /* --- PAGE-SPECIFIC STYLES --- */
-        .app-container {max-width: 72rem;margin: 0 auto;padding: 0;width: 100%;}
-        h1, h2, h3 {font-weight: 600;color: var(--light-text-primary);margin: 0;}
-        h1 { font-size: 1.875rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
-        .screen { display: none; } .screen.active { display: block; animation: fadeUp 0.5s var(--ease) forwards; }
+        /* --- FORM & PAGE STYLES --- */
         button, .btn {display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;padding: 0.75rem 1.25rem;border-radius: var(--radius-md);font-weight: 600; font-size: 0.875rem;transition: all 0.2s var(--ease);border: 1px solid transparent; cursor: pointer;-webkit-user-select: none; user-select: none;}
         button:hover:not(:disabled), .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); } button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-sm); } button:disabled, .btn:disabled { opacity: 0.6; cursor: not-allowed; } button:focus-visible, .btn:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
         .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); } .btn-primary:hover:not(:disabled) { background-color: var(--color-primary-hover); }
@@ -96,7 +99,6 @@
         .loading-overlay {position: fixed; inset: 0; width: 100%; height: 100%;background-color: rgba(255, 255, 255, 0.9); z-index: 1001;display: flex; align-items: center; justify-content: center;}
         .spinner {border: 6px solid var(--light-bg-tertiary); border-top: 6px solid var(--color-primary);border-radius: 50%; width: 50px; height: 50px;animation: spin 1s linear infinite;}
         .map-pin {position: absolute; top: 50%; left: 50%;transform: translate(-50%, -100%); width: 40px; height: 40px;background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ef4444" width="40px" height="40px"><path d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/></svg>');background-size: contain; pointer-events: none; z-index: 1000;}
-        
         @media (max-width: 640px) {
             body { padding: 0; padding-top: 72px; background-color: var(--light-bg-primary); }
             .app-container { margin: 0; padding: 0; }
@@ -117,8 +119,10 @@
                     <a href="#" id="dashboard-link">
                         <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
                     </a>
-                    <div id="nav-links-container" class="nav-links">
-                        <!-- Links will be injected by JS -->
+                    <div class="nav-links">
+                        <a class="nav-link" id="nav-link-home" href="#">Home</a>
+                        <a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a>
+                        <a class="nav-link" id="nav-link-secondary" href="#"></a>
                     </div>
                 </div>
                 <div class="nav-right">
@@ -137,9 +141,7 @@
                          </div>
                     </div>
                     <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                 </div>
             </nav>
@@ -148,14 +150,10 @@
     </header>
 
     <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-            <svg viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
-            <div id="mobile-nav-links-container" class="mobile-menu-section">
-                <!-- Mobile links will be injected by JS -->
+            <div class="mobile-menu-section" id="mobile-menu-links">
+                <!-- Links will be injected by JS -->
             </div>
         </div>
         <div class="mobile-menu-bottom">
@@ -173,7 +171,9 @@
     
     <div class="app-container">
         <div id="form-screen" class="screen active">
-            <div class="page-header"><h2 id="form-title">Loading Form...</h2></div>
+            <div class="page-header">
+                <h2 id="form-title">Loading Form...</h2>
+            </div>
             <div class="card">
                 <form id="order-form">
                     <input type="hidden" id="order-id"><input type="hidden" id="customer-lat"><input type="hidden" id="customer-lon"><input type="hidden" id="original-order-data">
@@ -207,19 +207,8 @@
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, addDoc, getDoc, updateDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "__API_KEY__",
-            authDomain: "__AUTH_DOMAIN__",
-            projectId: "__PROJECT_ID__",
-            storageBucket: "__STORAGE_BUCKET__",
-            messagingSenderId: "__MESSAGING_SENDER_ID__",
-            appId: "__APP_ID__",
-            measurementId: "__MEASUREMENT_ID__"
-        };
-        
         // --- ALL DOM ELEMENTS & STATE VARIABLES ---
         const loadingOverlay = document.getElementById('loading-overlay');
-        const dashboardLink = document.getElementById('dashboard-link');
         const orderForm = document.getElementById('order-form');
         const formTitle = document.getElementById('form-title');
         const orderIdInput = document.getElementById('order-id');
@@ -244,97 +233,15 @@
         const confirmLocationBtn = document.getElementById('confirm-location-btn');
         const locationPickerCloseBtn = document.getElementById('location-picker-close-btn');
         const cancelLocationBtn = document.getElementById('cancel-location-btn');
-        let db, auth, map, currentUserName = "Unknown User";
+        let db, auth, map, currentUserAuth;
 
+        // --- ALL UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
-        
-        // --- NAVBAR FUNCTIONS ---
-        function populateNavbar(user, userProfile) {
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'User';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'User';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
-            
-            const isAdmin = userProfile.role === 'admin';
-            dashboardLink.href = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
-
-            const navLinks = isAdmin ? [
-                { href: 'admin-dashboard.html', text: 'Home' },
-                { href: 'view-orders.html', text: 'All Orders' },
-                { href: 'admin-employees.html', text: 'Manage Employees' }
-            ] : [
-                { href: 'employee-dashboard.html', text: 'Home' },
-                { href: 'view-orders.html', text: 'All Orders' },
-                { href: 'my-attendance.html', text: 'My Attendance' }
-            ];
-            
-            const desktopLinksHTML = navLinks.map(link => `<a class="nav-link" href="${link.href}">${link.text}</a>`).join('');
-            document.getElementById('nav-links-container').innerHTML = desktopLinksHTML;
-
-            const mobileLinksHTML = navLinks.map(link => `<a href="${link.href}" class="mobile-nav-link"><span>${link.text}</span></a>`).join('');
-            document.getElementById('mobile-nav-links-container').innerHTML = mobileLinksHTML;
-        }
-        
-        function initializeNavbar() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenuClose = document.getElementById('mobileMenuClose');
-            const menuOverlay = document.getElementById('menuOverlay');
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
-            const logoutPopup = document.getElementById('logoutPopup');
-            function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
-            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
-            mobileMenuClose.addEventListener('click', closeMobileMenu);
-            menuOverlay.addEventListener('click', closeMobileMenu);
-            if (desktopProfileTrigger && logoutPopup) {
-                desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); });
-                window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
-            }
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
-            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
-        }
-        
-        async function initializeFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
-                        
-                        const userProfile = userDoc.data();
-                        currentUserName = userProfile.displayName || "User";
-                        
-                        initializeNavbar();
-                        populateNavbar(user, userProfile);
-
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const orderId = urlParams.get('id');
-                        if (orderId) { await loadOrderForEditing(orderId); } 
-                        else { setupFormForCreate(); }
-                    } else { window.location.href = 'login.html'; }
-                });
-            } catch (error) { console.error("Firebase Init Error:", error); showMessageModal("Could not connect to the database."); hideLoading(); }
-        }
-
-        async function loadOrderForEditing(orderId) {
-            showLoading();
-            try {
-                const orderSnap = await getDoc(doc(db, 'upvc_orders', orderId));
-                if (orderSnap.exists()) { setupFormForEdit({ id: orderSnap.id, ...orderSnap.data() }); } 
-                else { showMessageModal("Order not found. Redirecting...", "view-orders.html"); }
-            } catch (error) { console.error("Error loading order:", error); hideLoading(); }
-        }
-        
-        // --- FORM LOGIC & OTHER FUNCTIONS (UNCHANGED) ---
-        const showMessageModal = (message, redirectUrl = null) => { messageText.textContent = message; messageModal.style.display = 'flex'; if (redirectUrl) { setTimeout(() => { messageModal.style.display = 'none'; window.location.href = redirectUrl; }, 1500); } };
+        const showMessageModal = (message, redirectUrl = null) => {
+            messageText.textContent = message; messageModal.style.display = 'flex';
+            if (redirectUrl) { setTimeout(() => { messageModal.style.display = 'none'; window.location.href = redirectUrl; }, 1500); }
+        };
         const addWindowInput = (container, index, data = {}) => {
             const { height = '', width = '', hasGlass = false, glassName = '', itemType = 'sliding window' } = data;
             const windowEntryDiv = document.createElement('div');
@@ -357,15 +264,100 @@
         function loadDraft() { const draftJSON = localStorage.getItem('orderDraft'); if (draftJSON) { const data = JSON.parse(draftJSON); customerNameInput.value = data.name || ''; customerMobileInput.value = data.mobile || ''; customerAddressInput.value = data.address || ''; dueDateInput.value = data.dueDate || ''; customerLatInput.value = data.lat || ''; customerLonInput.value = data.lon || ''; sameGlassAllCheckbox.checked = data.sameGlass || false; globalGlassNameInput.value = data.globalGlassName || ''; globalGlassNameContainer.style.display = data.sameGlass ? 'block' : 'none'; if (data.lat && data.lon) { getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit'; getLocationBtn.classList.add('btn-success'); } windowsContainer.innerHTML = ''; if (data.windows && data.windows.length > 0) { data.windows.forEach((win, i) => addWindowInput(windowsContainer, i + 1, win)); } else { addWindowInput(windowsContainer, 1); } showMessageModal("Your unsaved draft has been restored."); } }
         const openLocationPicker = async () => { locationPickerModal.style.display = 'flex'; showLoading(); let initialLat = customerLatInput.value || 20.5937; let initialLon = customerLonInput.value || 78.9629; let initialZoom = customerLatInput.value ? 16 : 5; const setupMap = (lat, lon, zoom) => { if (!map) { map = L.map('map-container').setView([lat, lon], zoom); L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' }).addTo(map); } else { map.setView([lat, lon], zoom); } setTimeout(() => map.invalidateSize(), 10); hideLoading(); }; if ("geolocation" in navigator && !customerLatInput.value) { navigator.geolocation.getCurrentPosition( (position) => { setupMap(position.coords.latitude, position.coords.longitude, 18); }, (error) => { console.warn(`Geolocation error (${error.code}): ${error.message}`); showMessageModal("Could not get your location. Please select manually."); setupMap(initialLat, initialLon, initialZoom); }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 } ); } else { setupMap(initialLat, initialLon, initialZoom); } };
         const confirmSelectedLocation = () => { const center = map.getCenter(); customerLatInput.value = center.lat.toFixed(6); customerLonInput.value = center.lng.toFixed(6); getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit'; getLocationBtn.classList.remove('btn-secondary'); getLocationBtn.classList.add('btn-success'); locationPickerModal.style.display = 'none'; saveDraft(); };
-        async function logHistory(orderId, action, details = {}) { if (!orderId) return; try { await addDoc(collection(db, `upvc_orders/${orderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
+        async function logHistory(orderId, action, details = {}) { if (!orderId) return; try { await addDoc(collection(db, `upvc_orders/${orderId}/history`), { action, details, modifiedBy: currentUserAuth.displayName || "User", timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
         const createChangeLog = (original, newData) => { const changes = {}; const simpleFields = ['name', 'address', 'mobileNumber', 'dueDate']; simpleFields.forEach(field => { if (original[field] !== newData[field]) { changes[field.charAt(0).toUpperCase() + field.slice(1)] = `"${original[field] || ''}" → "${newData[field] || ''}"`; } }); let oldWindows = []; try {oldWindows = JSON.parse(original.windows || '[]')} catch(e){} let newWindows = []; try {newWindows = JSON.parse(newData.windows || '[]')} catch(e){} const windowChanges = {}; const maxLen = Math.max(oldWindows.length, newWindows.length); for (let i = 0; i < maxLen; i++) { const oldW = oldWindows[i]; const newW = newWindows[i]; const changeDetails = []; if (oldW && !newW) { windowChanges[`Item ${i + 1} (Deleted)`] = `(was ${oldW.width}x${oldW.height})`; } else if (!oldW && newW) { windowChanges[`Item ${i + 1} (Added)`] = `${newW.itemType}: ${newW.width}x${newW.height}, Glass: ${newW.hasGlass ? (newW.glassName || 'Yes') : 'No'}`; } else if (oldW && newW) { if (oldW.itemType !== newW.itemType) changeDetails.push(`Type: "${oldW.itemType}"→"${newW.itemType}"`); if (oldW.width !== newW.width) changeDetails.push(`W: ${oldW.width}→${newW.width}`); if (oldW.height !== newW.height) changeDetails.push(`H: ${oldW.height}→${newW.height}`); if (oldW.hasGlass !== newW.hasGlass) { changeDetails.push(`Glass: ${oldW.hasGlass ? 'On' : 'Off'}→${newW.hasGlass ? 'On' : 'Off'}`); } if (oldW.glassName !== newW.glassName) { changeDetails.push(`Glass Name: "${oldW.glassName || ''}"→"${newW.glassName || ''}"`); } if (changeDetails.length > 0) { windowChanges[`Item ${i + 1}`] = changeDetails.join(', '); } } } if (Object.keys(windowChanges).length > 0) { changes['Windows'] = windowChanges; } return changes; };
+        
+        // --- NAVBAR FUNCTIONS ---
+        function populateNavbar(user, userProfile) {
+            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('desktop-profile-name').textContent = user.displayName || 'User';
+            document.getElementById('desktop-profile-email').textContent = user.email || '';
+            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('mobile-profile-name').textContent = user.displayName || 'User';
+            document.getElementById('mobile-profile-email').textContent = user.email || '';
+
+            const isAdmin = userProfile.role === 'admin';
+            const homeLink = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
+            const secondaryLink = isAdmin ? { href: 'admin-employees.html', text: 'Manage Employees' } : { href: 'my-attendance.html', text: 'My Attendance' };
+            
+            document.getElementById('dashboard-link').href = homeLink;
+            document.getElementById('nav-link-home').href = homeLink;
+            const navLinkSecondary = document.getElementById('nav-link-secondary');
+            navLinkSecondary.href = secondaryLink.href;
+            navLinkSecondary.textContent = secondaryLink.text;
+            navLinkSecondary.style.display = 'flex';
+
+            const mobileLinksContainer = document.getElementById('mobile-menu-links');
+            mobileLinksContainer.innerHTML = `
+                <a href="${homeLink}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
+                <a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
+                <a href="${secondaryLink.href}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isAdmin ? 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' : 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'}" /></svg><span>${secondaryLink.text}</span></a>`;
+        }
+        
+        function initializeNavbar() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
+            const logoutPopup = document.getElementById('logoutPopup');
+            function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+            menuOverlay.addEventListener('click', closeMobileMenu);
+            if (desktopProfileTrigger && logoutPopup) {
+                desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); });
+                window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
+            }
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
+            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
+        }
+        
+        // --- FIREBASE & MAIN LOGIC ---
+        async function initializeAppLogic() {
+            showLoading();
+            const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" };
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUserAuth = user;
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
+                    const userProfile = userDoc.data();
+                    
+                    populateNavbar(user, userProfile);
+                    
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const orderId = urlParams.get('id');
+                    if (orderId) { await loadOrderForEditing(orderId); } 
+                    else { setupFormForCreate(); }
+                } else { window.location.href = 'login.html'; }
+            });
+        }
+
+        async function loadOrderForEditing(orderId) {
+            showLoading();
+            try {
+                const orderSnap = await getDoc(doc(db, 'upvc_orders', orderId));
+                if (orderSnap.exists()) { setupFormForEdit({ id: orderSnap.id, ...orderSnap.data() }); } 
+                else { showMessageModal("Order not found. Redirecting...", "view-orders.html"); }
+            } catch (error) { console.error("Error loading order:", error); hideLoading(); }
+        }
+
         async function handleFormSubmit(e) {
             e.preventDefault(); showLoading();
-            const orderId = orderIdInput.value; const isUpdating = !!orderId; const isSameGlass = sameGlassAllCheckbox.checked;
+            const orderId = orderIdInput.value;
+            const isUpdating = !!orderId;
+            const isSameGlass = sameGlassAllCheckbox.checked;
             const globalGlass = globalGlassNameInput.value.trim();
             const windowsData = Array.from(windowsContainer.querySelectorAll('.window-entry')).map(entry => {
                 const hasGlass = entry.querySelector('.has-glass-checkbox').checked;
-                let glassName = ''; if (hasGlass) { glassName = isSameGlass ? globalGlass : entry.querySelector('.individual-glass-name').value.trim(); }
+                let glassName = '';
+                if (hasGlass) { glassName = isSameGlass ? globalGlass : entry.querySelector('.individual-glass-name').value.trim(); }
                 return { itemType: entry.querySelector('.item-type-select').value, height: entry.querySelector('.window-height-input').value, width: entry.querySelector('.window-width-input').value, hasGlass, glassName };
             });
             const orderData = { name: customerNameInput.value.trim(), address: customerAddressInput.value.trim(), mobileNumber: customerMobileInput.value.trim(), dueDate: dueDateInput.value, windows: JSON.stringify(windowsData), latitude: customerLatInput.value, longitude: customerLonInput.value };
@@ -373,39 +365,51 @@
             try {
                 const collectionRef = collection(db, `upvc_orders`);
                 if(isUpdating) {
-                    const originalOrder = JSON.parse(originalOrderDataInput.value); const changes = createChangeLog(originalOrder, orderData);
+                    const originalOrder = JSON.parse(originalOrderDataInput.value);
+                    const changes = createChangeLog(originalOrder, orderData);
                     await updateDoc(doc(collectionRef, orderId), { ...orderData, updatedAt: serverTimestamp() });
                     if(Object.keys(changes).length > 0) { await logHistory(orderId, 'Order Edited', changes); }
                     showMessageModal("Order updated successfully!", `order-details.html?id=${finalOrderId}`);
                 } else {
-                    const newDocRef = await addDoc(collectionRef, { ...orderData, status: 'pending', createdBy: currentUserName, createdAt: serverTimestamp() });
-                    finalOrderId = newDocRef.id; await logHistory(finalOrderId, 'Order Created'); localStorage.removeItem('orderDraft');
+                    const newDocRef = await addDoc(collectionRef, { ...orderData, status: 'pending', createdBy: currentUserAuth.displayName || "User", createdAt: serverTimestamp() });
+                    finalOrderId = newDocRef.id;
+                    await logHistory(finalOrderId, 'Order Created');
+                    localStorage.removeItem('orderDraft');
                     showMessageModal("Order created successfully!", `order-details.html?id=${finalOrderId}`);
                 }
             } catch (error) { console.error("Error saving order:", error); showMessageModal("Failed to save order."); hideLoading(); }
         }
         
-        // --- EVENT LISTENERS ---
-        orderForm.addEventListener('submit', handleFormSubmit);
-        addWindowBtn.addEventListener('click', () => addWindowInput(windowsContainer, windowsContainer.children.length + 1));
-        messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
-        getLocationBtn.addEventListener('click', openLocationPicker);
-        confirmLocationBtn.addEventListener('click', confirmSelectedLocation);
-        locationPickerCloseBtn.addEventListener('click', () => locationPickerModal.style.display = 'none');
-        cancelLocationBtn.addEventListener('click', () => locationPickerModal.style.display = 'none');
-        sameGlassAllCheckbox.addEventListener('change', () => { globalGlassNameContainer.style.display = sameGlassAllCheckbox.checked ? 'block' : 'none'; updateAllWindowGlassUIs(); saveDraft(); });
-        customerNameInput.addEventListener('input', saveDraft); customerMobileInput.addEventListener('input', saveDraft); customerAddressInput.addEventListener('input', saveDraft); dueDateInput.addEventListener('change', saveDraft); globalGlassNameInput.addEventListener('input', saveDraft);
-        document.body.addEventListener('click', async (e) => {
-            const appAction = e.target.closest('[data-app-action]');
-            if (appAction && appAction.dataset.appAction === 'logout') {
-                showLoading();
-                try { await signOut(auth); } catch (e) { hideLoading(); }
-            }
+        // --- EVENT BINDING ---
+        function bindEventListeners() {
+            document.body.addEventListener('click', async (e) => {
+                const actionTarget = e.target.closest('[data-app-action]');
+                if (actionTarget) {
+                    const action = actionTarget.dataset.appAction;
+                    if(action === 'logout') {
+                        e.preventDefault();
+                        showLoading();
+                        try { await signOut(auth); } catch(err) { hideLoading(); }
+                    }
+                }
+            });
+            orderForm.addEventListener('submit', handleFormSubmit);
+            addWindowBtn.addEventListener('click', () => addWindowInput(windowsContainer, windowsContainer.children.length + 1));
+            messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
+            getLocationBtn.addEventListener('click', openLocationPicker);
+            confirmLocationBtn.addEventListener('click', confirmSelectedLocation);
+            locationPickerCloseBtn.addEventListener('click', () => locationPickerModal.style.display = 'none');
+            cancelLocationBtn.addEventListener('click', () => locationPickerModal.style.display = 'none');
+            sameGlassAllCheckbox.addEventListener('change', () => { globalGlassNameContainer.style.display = sameGlassAllCheckbox.checked ? 'block' : 'none'; updateAllWindowGlassUIs(); saveDraft(); });
+            customerNameInput.addEventListener('input', saveDraft); customerMobileInput.addEventListener('input', saveDraft); customerAddressInput.addEventListener('input', saveDraft); dueDateInput.addEventListener('change', saveDraft); globalGlassNameInput.addEventListener('input', saveDraft);
+        }
+
+        // --- APP INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeNavbar();
+            bindEventListeners();
+            initializeAppLogic();
         });
-        
-        // --- INITIALIZATION ---
-        showLoading();
-        initializeFirebase();
     </script>
 </body>
 </html>
