@@ -10,46 +10,71 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        /* --- NAVBAR STYLES (FROM EXAMINED CODE) --- */
+        /* --- NEW NAVBAR CSS --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        /* Body styles */
         body {
-            padding-top: 72px; /* Adjust body padding to prevent content from being hidden under the fixed navbar */
+            /* font-family is set below in the original styles */
+            line-height: 1.6;
+            padding-top: 72px; /* IMPORTANT: Pushes content below fixed navbar */
         }
+
+
+        /* Header styles */
         .header {
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1050; /* Higher z-index to be above other elements */
+            z-index: 1050; /* Higher than other elements */
             transition-property: all;
             transition-duration: 0.3s;
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             overflow: visible;
             background-color: hsla(0, 0%, 100%, 0.8);
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--light-border);
             backdrop-filter: blur(8px);
         }
+        [data-theme="dark"] .header {
+             background-color: hsla(222, 47%, 11%, 0.8);
+        }
+
+        /* Container */
         .header-container {
             width: 90%;
             margin-left: auto;
             margin-right: auto;
+            max-width: 1200px; /* Aligns with main container */
         }
+
         @media (min-width: 48rem) {
             .header-container {
-                width: 80%;
-                max-width: 1200px; /* Aligns with main container */
+                width: 100%;
+                padding: 0 16px;
             }
         }
+
         @media (max-width: 768px) {
             .header-container {
                 padding-left: 16px;
                 padding-right: 16px;
                 width: 100%;
             }
+            .nav-left, .nav-right {
+                margin: 0;
+                padding: 0;
+            }
+            .logo, .menu-button {
+                margin: 0;
+                padding: 0;
+            }
         }
+
+        /* Navigation */
         .nav {
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
@@ -57,27 +82,42 @@
             align-items: center;
             justify-content: space-between;
         }
-        .nav-left, .nav-right {
+
+        /* Logo and nav links container */
+        .nav-left {
             display: flex;
             align-items: center;
             gap: 1.5rem;
         }
-        .logo {
-            width: 100px;
-            height: 40px;
-            color: transparent;
-            object-fit: contain; /* Ensure logo scales nicely */
+        @media (max-width: 768px) {
+            .nav {
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+            }
         }
+        
+        /* Logo image */
+        .logo {
+            margin-right: 1.5rem;
+            width: 100px;
+            height: auto;
+            color: transparent;
+        }
+
+        /* Nav links (hidden on mobile, flex on md) */
         .nav-links {
             display: none;
             align-items: center;
             gap: 1rem;
         }
+
         @media (min-width: 48rem) {
             .nav-links {
                 display: flex;
             }
         }
+
+        /* Nav link hover effect */
         .nav-link {
             padding: 0.5rem 1rem;
             font-size: 1rem;
@@ -87,12 +127,22 @@
             text-decoration: none;
             border-radius: 0.375rem;
         }
+
         @media (hover: hover) {
             .nav-link:hover {
                 color: #fff;
                 background-color: #012726;
             }
         }
+
+        /* Right-side container */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Mobile menu button */
         .menu-button {
             display: flex;
             padding: 0.375rem;
@@ -102,11 +152,14 @@
             background-color: transparent;
             cursor: pointer;
         }
+
         @media (min-width: 48rem) {
             .menu-button {
                 display: none;
             }
         }
+
+        /* Mobile menu styles */
         #mobileMenu {
             position: fixed;
             top: 0;
@@ -114,7 +167,7 @@
             bottom: 0;
             width: 75vw;
             max-width: 320px;
-            background: #ffffff;
+            background: var(--color-surface);
             padding: 24px 16px;
             transform: translateX(100%);
             transition: transform 0.3s ease;
@@ -124,7 +177,11 @@
             display: flex;
             flex-direction: column;
         }
-        #mobileMenu.active { transform: translateX(0); }
+
+        #mobileMenu.active {
+            transform: translateX(0);
+        }
+
         #menuOverlay {
             position: fixed;
             top: 0;
@@ -135,44 +192,163 @@
             z-index: 999;
             display: none;
         }
-        #menuOverlay.active { display: block; }
-        .mobile-menu-close {
-            padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease;
-            align-self: flex-end; margin-bottom: 24px; cursor: pointer;
-        }
-        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
-        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
-        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
-        .mobile-nav-link {
-            display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500;
-            color: #012726; background-color: #f8f9fa; transition: background-color 0.15s;
-        }
-        .mobile-nav-link:hover { background-color: #e9ecef; }
-        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
-        .mobile-menu-bottom {
-            flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex;
-            flex-direction: column; gap: 16px;
-        }
-        .desktop-profile { display: none; }
-        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
-        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
-        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
-        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
-        .profile-name { font-weight: 500; color: #012726; }
-        .profile-email { font-size: 0.85rem; color: #6c757d; }
-        .profile-dropdown-container { position: relative; }
-        .logout-popup {
-            display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff;
-            border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px;
-        }
-        .logout-popup.show { display: block; }
-        .logout-button {
-            background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem;
-            font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s;
-        }
-        .logout-button:hover { background-color: #c82333; }
 
-        /* --- DASHBOARD STYLES (ORIGINAL CODE) --- */
+        #menuOverlay.active {
+            display: block;
+        }
+
+        .mobile-menu-close {
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            transition: background 0.2s ease, transform 0.2s ease;
+            align-self: flex-end;
+            margin-bottom: 24px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-close svg {
+            width: 24px;
+            height: 24px;
+            color: #4b5563;
+        }
+
+        .mobile-menu-content {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .mobile-menu-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px; /* Space between the new buttons */
+        }
+        
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--light-text-primary);
+            background-color: var(--light-bg-secondary);
+            transition: background-color 0.15s;
+        }
+        
+        .mobile-nav-link:hover {
+            background-color: var(--light-bg-tertiary);
+        }
+        
+        .mobile-nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            color: var(--light-text-secondary);
+        }
+
+        .mobile-menu-bottom {
+            flex-shrink: 0;
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--light-border);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Divider under navbar */
+        .divider {
+            height: 1px;
+            background-color: var(--light-border);
+        }
+        
+        /* --- PROFILE STYLES --- */
+        .desktop-profile {
+            display: none;
+        }
+        
+        @media (min-width: 48rem) {
+            .desktop-profile {
+                display: flex;
+            }
+        }
+        
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0.375rem;
+            padding: 4px;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--light-border);
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .profile-name {
+            font-weight: 500;
+            color: var(--light-text-primary);
+        }
+
+        .profile-email {
+            font-size: 0.85rem;
+            color: var(--light-text-secondary);
+        }
+        
+        /* --- LOGOUT BUTTON AND DROPDOWN STYLES --- */
+        .profile-dropdown-container {
+            position: relative;
+        }
+
+        .logout-popup {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background-color: var(--color-surface);
+            border: 1px solid var(--light-border);
+            border-radius: 0.375rem;
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            z-index: 60;
+            width: 150px;
+        }
+
+        .logout-popup.show {
+            display: block;
+        }
+        
+        .logout-button {
+            background-color: var(--color-danger);
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.15s;
+        }
+        .logout-button:hover {
+            opacity: 0.9;
+        }
+
+        /* --- MERGED & COMPLETE ORIGINAL CSS --- */
         :root {
             --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
@@ -187,7 +363,7 @@
         [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
         html, body { height: 100%; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-alt); background-color: var(--color-background); color: var(--light-text-secondary); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--font-alt); background-color: var(--color-background); color: var(--light-text-secondary); -webkit-font-smoothing: antialiased; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; color: var(--light-text-primary); }
         .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
@@ -248,83 +424,87 @@
         @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
+
 <body>
-    <div id="app-container" class="app-container">
-        <!-- NEW NAVBAR - REPLACED OLD HEADER -->
-        <header class="header">
-            <div class="header-container">
-                <nav class="nav">
-                    <div class="nav-left">
-                        <a href="admin-dashboard.html">
-                            <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="PayrollPro Logo" >
-                        </a>
-                        <div class="nav-links">
-                            <a class="nav-link" href="admin-dashboard.html">Home</a>
-                            <a class="nav-link" href="view-orders.html">All Orders</a>
-                            <a class="nav-link" href="admin-employees.html">Manage Employees</a>
-                        </div>
-                    </div>
-                    <div class="nav-right">
-                        <!-- Desktop Profile Display with Dropdown -->
-                        <div class="desktop-profile">
-                             <div class="profile-dropdown-container">
-                                 <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <img src="" class="profile-pic" alt="Profile Picture" id="desktopProfilePic">
-                                    <div class="profile-info">
-                                        <span class="profile-name" id="desktopProfileName"></span>
-                                        <span class="profile-email" id="desktopProfileEmail"></span>
-                                    </div>
-                                </div>
-                                <div class="logout-popup" id="logoutPopup">
-                                    <button class="logout-button" id="desktopLogoutBtn">Logout</button>
-                                </div>
-                             </div>
-                        </div>
-                        <!-- Mobile Menu Button -->
-                        <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                            </svg>
-                        </button>
-                    </div>
-                </nav>
-                <div id="mobileMenu" role="dialog" aria-modal="true">
-                    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-                        <svg viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                    <div class="mobile-menu-content">
-                        <div class="mobile-menu-section">
-                            <a href="admin-dashboard.html" class="mobile-nav-link">
-                                 <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                                 <span>Home</span>
-                            </a>
-                            <a href="view-orders.html" class="mobile-nav-link">
-                                 <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                                 <span>All Orders</span>
-                            </a>
-                            <a href="admin-employees.html" class="mobile-nav-link">
-                                 <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                                 <span>Manage Employees</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="mobile-menu-bottom">
-                        <div class="profile-container">
-                            <img src="" class="profile-pic" alt="Profile Picture" id="mobileProfilePic">
-                            <div class="profile-info">
-                                <span class="profile-name" id="mobileProfileName"></span>
-                                <span class="profile-email" id="mobileProfileEmail"></span>
-                            </div>
-                        </div>
-                        <button class="logout-button" id="mobileLogoutBtn">Logout</button>
+    <!-- NEW NAVBAR -->
+    <header class="header">
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-left">
+                    <a href="admin-dashboard.html">
+                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo">
+                    </a>
+                    <div class="nav-links">
+                        <a class="nav-link" href="admin-dashboard.html">Home</a>
+                        <a class="nav-link" href="view-orders.html">All Orders</a>
+                        <a class="nav-link" href="admin-employees.html">Manage Employees</a>
                     </div>
                 </div>
-                <div id="menuOverlay"></div>
+                <div class="nav-right">
+                    <!-- Desktop Profile Display with Dropdown -->
+                    <div class="desktop-profile">
+                         <div class="profile-dropdown-container">
+                             <div class="profile-container" data-app-action="toggle-desktop-dropdown" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="" class="profile-pic" alt="Profile Picture">
+                                <div class="profile-info">
+                                    <span class="profile-name">Loading...</span>
+                                    <span class="profile-email"></span>
+                                </div>
+                            </div>
+                            <div class="logout-popup" id="logoutPopup">
+                                <button class="logout-button" data-app-action="logout">Logout</button>
+                            </div>
+                         </div>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <button class="menu-button" aria-label="Open menu" data-app-action="toggle-mobile-menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <div id="mobileMenu" role="dialog" aria-modal="true">
+                <button class="mobile-menu-close" aria-label="Close menu" data-app-action="close-mobile-menu">
+                    <svg viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+                <div class="mobile-menu-content">
+                    <div class="mobile-menu-section">
+                        <a href="admin-dashboard.html" class="mobile-nav-link">
+                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                             <span>Home</span>
+                        </a>
+                        <a href="view-orders.html" class="mobile-nav-link">
+                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                             <span>All Orders</span>
+                        </a>
+                        <a href="admin-employees.html" class="mobile-nav-link">
+                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                             <span>Manage Employees</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile Profile Display and Logout Button -->
+                <div class="mobile-menu-bottom">
+                    <div class="profile-container">
+                        <img src="" class="profile-pic" alt="Profile Picture">
+                        <div class="profile-info">
+                            <span class="profile-name">Loading...</span>
+                            <span class="profile-email"></span>
+                        </div>
+                    </div>
+                    <button class="logout-button" data-app-action="logout">Logout</button>
+                </div>
             </div>
-        </header>
+            <div id="menuOverlay" data-app-action="close-mobile-menu"></div>
+            <div class="divider"></div>
+        </div>
+    </header>
+    <!-- END NEW NAVBAR -->
 
+    <div id="app-container" class="app-container">
         <main>
             <div class="container" id="main-container">
                 <div id="home-view" class="view active">
@@ -366,7 +546,6 @@
     </div>
     
     <div class="fab-container" id="fabContainer">
-        <!-- FAB content remains the same -->
         <div class="fab-menu" id="fabMenu">
             <div class="fab-item" data-app-action="navigate-order-form">
                 <span class="label">Take Order</span>
@@ -390,6 +569,7 @@
         import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        // Firebase configuration will be injected by Netlify during build
         const firebaseConfig = {
             apiKey: "__API_KEY__",
             authDomain: "__AUTH_DOMAIN__",
@@ -401,6 +581,10 @@
         };
         
         let db, auth, currentUserProfile;
+        
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const logoutPopup = document.getElementById('logoutPopup');
 
         const showLoader = () => document.getElementById('loader').style.display = 'flex';
         const hideLoader = () => document.getElementById('loader').style.display = 'none';
@@ -417,25 +601,11 @@
                 document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
                 bindEventListeners();
                 listenForAuthStateChanges();
-                initializeNavbar(); // Initialize the new navbar logic
             } catch (error) {
                 console.error("Initialization Failed:", error);
                 document.body.innerHTML = `<h2>Error initializing application.</h2>`;
             }
         });
-        
-        function updateProfileDetails(profile) {
-            if (!profile) return;
-            const defaultPic = 'https://i.pravatar.cc/40'; // Fallback image
-            // Desktop
-            document.getElementById('desktopProfilePic').src = profile.photoURL || defaultPic;
-            document.getElementById('desktopProfileName').textContent = profile.displayName || 'Admin';
-            document.getElementById('desktopProfileEmail').textContent = profile.email || '';
-            // Mobile
-            document.getElementById('mobileProfilePic').src = profile.photoURL || defaultPic;
-            document.getElementById('mobileProfileName').textContent = profile.displayName || 'Admin';
-            document.getElementById('mobileProfileEmail').textContent = profile.email || '';
-        }
 
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
@@ -445,7 +615,7 @@
                     await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    updateProfileDetails(currentUserProfile); // Update navbar with user info
+                    populateNavbarDetails(currentUserProfile);
                     await initializeAdminView();
                 } else {
                     window.location.href = 'login.html';
@@ -453,109 +623,103 @@
                 hideLoader();
             });
         }
+        
+        function populateNavbarDetails(profile) {
+            document.querySelectorAll('.profile-pic').forEach(el => el.src = profile.photoURL || '');
+            document.querySelectorAll('.profile-name').forEach(el => el.textContent = profile.displayName || 'Admin');
+            document.querySelectorAll('.profile-email').forEach(el => el.textContent = profile.email || '');
+        }
 
         async function initializeAdminView() {
-            // The renderHeader() function is no longer needed.
             listenForOrders();
             const employeesSnap = await getDocs(collection(db, "employees"));
             const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
             await refreshAttendanceTracker(employees);
             await calculateAndRenderGlobalSummary(employees);
         }
-
-        function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
         
-        function initializeNavbar() {
-            // --- Mobile Menu Logic ---
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenuClose = document.getElementById('mobileMenuClose');
-            const menuOverlay = document.getElementById('menuOverlay');
-
-            function closeMobileMenu() {
-                if (mobileMenu.classList.contains('active')) {
-                     mobileMenu.classList.remove('active');
-                     menuOverlay.classList.remove('active');
-                     document.body.style.overflow = '';
-                }
+        // --- NAVBAR FUNCTIONS ---
+        function closeMobileMenu() {
+            if (mobileMenu.classList.contains('active')) {
+                 mobileMenu.classList.remove('active');
+                 menuOverlay.classList.remove('active');
+                 document.body.style.overflow = ''; // Restore scrolling
             }
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
-                menuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            mobileMenuClose.addEventListener('click', closeMobileMenu);
-            menuOverlay.addEventListener('click', closeMobileMenu);
-            document.addEventListener('keydown', (e) => e.key === 'Escape' && closeMobileMenu());
-            window.addEventListener('resize', () => window.innerWidth > 768 && closeMobileMenu());
-
-            // --- Desktop Profile Dropdown Logic ---
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
-            const logoutPopup = document.getElementById('logoutPopup');
-            if (desktopProfileTrigger && logoutPopup) {
-                desktopProfileTrigger.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    logoutPopup.classList.toggle('show');
-                    desktopProfileTrigger.setAttribute('aria-expanded', logoutPopup.classList.contains('show'));
-                });
-                window.addEventListener('click', (event) => {
-                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target) && logoutPopup.classList.contains('show')) {
-                        logoutPopup.classList.remove('show');
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-                document.addEventListener('keydown', (e) => {
-                     if (e.key === 'Escape' && logoutPopup.classList.contains('show')) {
-                        logoutPopup.classList.remove('show');
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
-
-            // --- Logout Button Logic ---
-            document.getElementById('desktopLogoutBtn').addEventListener('click', () => signOut(auth));
-            document.getElementById('mobileLogoutBtn').addEventListener('click', () => signOut(auth));
         }
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        function toggleDesktopDropdown(forceClose = false) {
+            const isExpanded = logoutPopup.classList.contains('show');
+            if(forceClose) {
+                logoutPopup.classList.remove('show');
+            } else {
+                logoutPopup.classList.toggle('show');
+            }
+            document.querySelector('[data-app-action="toggle-desktop-dropdown"]').setAttribute('aria-expanded', !isExpanded);
+        }
+        
+        function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
 
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
-                const appAction = e.target.closest('[data-app-action]');
-                // Close FAB menu if clicking outside
-                if (!e.target.closest('.fab-container')) { 
-                    document.getElementById('fabMenu').classList.remove('show'); 
-                    document.getElementById('fabButton').classList.remove('open'); 
-                }
-                if (!appAction) return;
-                if (!appAction.href) e.preventDefault();
+                const appActionTarget = e.target.closest('[data-app-action]');
                 
-                const action = appAction.dataset.appAction;
-                if (action !== 'toggle-fab') { 
+                // Close menus if clicking outside
+                if (!e.target.closest('.profile-dropdown-container')) toggleDesktopDropdown(true);
+                if (!appActionTarget && !e.target.closest('.fab-container')) {
                     document.getElementById('fabMenu').classList.remove('show');
                     document.getElementById('fabButton').classList.remove('open');
                 }
+
+                if (!appActionTarget) return;
+
+                const action = appActionTarget.dataset.appAction;
+                if (!appActionTarget.href) e.preventDefault();
                 
+                // Always close mobile menu on action, unless it's the toggle button itself
+                if(action !== 'toggle-mobile-menu') closeMobileMenu();
+
                 switch (action) {
+                    case 'toggle-desktop-dropdown': toggleDesktopDropdown(); break;
+                    case 'toggle-mobile-menu': mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu(); break;
+                    case 'close-mobile-menu': closeMobileMenu(); break;
                     case 'toggle-fab': toggleFabMenu(); break;
                     case 'navigate-order-form': window.location.href='order-form.html'; break;
                     case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
-                    // Logout is now handled by initializeNavbar, but we keep this as a fallback if any old buttons remain.
                     case 'logout': await signOut(auth); break;
-                    case 'close-modal': closeModal(appAction.dataset.modalId); break;
+                    case 'close-modal': closeModal(appActionTarget.dataset.modalId); break;
                     case 'open-other-options-modal': 
-                        const { id, name } = appAction.dataset; 
+                        const { id, name } = appActionTarget.dataset; 
                         document.getElementById('other-options-title').textContent = `Mark Attendance: ${name}`; 
                         document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
                         openModal('other-options-modal'); 
                         break;
                     case 'mark-attendance': 
-                        await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
+                        await handleAttendanceClick(appActionTarget.dataset.id, appActionTarget.dataset.status); 
                         closeModal('other-options-modal');
                         break;
                 }
             });
+
+            // Keyboard listeners for accessibility
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeMobileMenu();
+                    toggleDesktopDropdown(true);
+                }
+            });
+
+            // Close mobile menu on resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+            });
         }
         
-        // --- ALL OTHER FUNCTIONS (handleAttendanceClick, refreshAttendanceTracker, etc.) REMAIN THE SAME ---
         async function handleAttendanceClick(employeeId, status) {
             showLoader();
             try {
