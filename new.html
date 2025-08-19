@@ -7,78 +7,211 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        /* --- CORE STYLES & VARIABLES --- */
-        :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--font-icon:"Material Symbols Outlined";--light-bg-primary:#fff;--light-bg-secondary:#f7f9fc;--light-bg-tertiary:#f1f3f6;--light-text-primary:#012726;--light-text-secondary:#52616b;--light-text-muted:#9ca3af;--light-border:#e5e7eb;--light-border-hover:#d1d5db;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--color-accent:#33c375;--color-accent-hover:#2cac66;--color-accent-text:#012726;--color-danger:#ef4444;--color-danger-hover:#dc2626;--color-danger-text:#fff;--color-reopen:#6f42c1;--color-reopen-hover:#5a3d9a;--color-reopen-text:#fff;--status-pending-bg:#eef2ff;--status-pending-text:#4338ca;--status-completed-bg:#f0fdf4;--status-completed-text:#166534;--status-overdue-bg:#fef2f2;--status-overdue-text:#be123c;--status-upcoming-bg:#fffbeb;--status-upcoming-text:#b45309;--color-focus-ring:rgba(51,195,117,.35);--radius-sm:0.25rem;--radius-md:0.5rem;--radius-lg:1rem;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04);--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--shadow-lg:0 10px 20px -3px rgba(0,0,0,.07),0 4px 8px -4px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1);--sticky-footer-height: 80px;}
-        *,:after,:before{box-sizing:border-box}
-        html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-        body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:var(--light-text-secondary);margin:0;padding-bottom:var(--sticky-footer-height);}
-        h1,h2,h3{font-weight:600;color:var(--light-text-primary);margin:0}
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
-        .screen.active{display:block;animation:fadeUp .5s var(--ease) forwards}
-        button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer;-webkit-user-select:none;user-select:none}
-        button:hover:not(:disabled),.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-md)}
-        button:active:not(:disabled),.btn:active:not(:disabled){transform:translateY(0);box-shadow:var(--shadow-sm)}
-        button:disabled,.btn:disabled{opacity:.6;cursor:not-allowed}
-        button:focus-visible,.btn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}
-        .btn-primary{background-color:var(--color-primary);color:var(--color-primary-text)}.btn-primary:hover:not(:disabled){background-color:var(--color-primary-hover)}
-        .btn-secondary{background-color:var(--light-bg-primary);color:var(--light-text-secondary);border-color:var(--light-border);box-shadow:var(--shadow-sm)}.btn-secondary:hover:not(:disabled){background-color:var(--light-bg-tertiary);border-color:var(--light-border-hover);color:var(--light-text-primary)}
-        .btn-danger{background-color:var(--color-danger);color:var(--color-danger-text)}.btn-danger:hover:not(:disabled){background-color:var(--color-danger-hover)}
-        .btn-success{background-color:var(--color-accent);color:var(--color-accent-text)}.btn-success:hover:not(:disabled){background-color:var(--color-accent-hover)}
-        .btn-reopen{background-color:var(--color-reopen);color:var(--color-reopen-text)}.btn-reopen:hover:not(:disabled){background-color:var(--color-reopen-hover)}
-        .status-tag{display:inline-flex;align-items:center;gap:.375rem;padding:.25rem .75rem;border-radius:9999px;font-size:.7rem;font-weight:600}.status-tag:before{content:"";display:block;width:.5rem;height:.5rem;border-radius:50%}.status-tag.pending{background-color:var(--status-pending-bg);color:var(--status-pending-text);border:1px solid var(--status-pending-text)}.status-tag.pending:before{background-color:var(--status-pending-text)}.status-tag.completed{background-color:var(--status-completed-bg);color:var(--status-completed-text);border:1px solid var(--status-completed-text)}.status-tag.completed:before{background-color:var(--status-completed-text)}.status-tag.overdue{background-color:var(--status-overdue-bg);color:var(--status-overdue-text);border:1px solid var(--status-overdue-text)}.status-tag.overdue:before{background-color:var(--status-overdue-text)}.status-tag.upcoming-due{background-color:var(--status-upcoming-bg);color:var(--status-upcoming-text);border:1px solid var(--status-upcoming-text)}.status-tag.upcoming-due:before{background-color:var(--status-upcoming-text)}
-        .modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:left;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary); text-align:center;}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }.form-group { margin-bottom: 1rem; } .form-group.col-span-2 { grid-column: span 2; }.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem; color: var(--light-text-secondary); }.input-field { width: 100%; padding: 0.75rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; }
+        /* --- CORE STYLES & DESIGN SYSTEM --- */
+        :root {
+            /* Font */
+            --font-main: "Inter", ui-sans-serif, system-ui, sans-serif;
+            --font-icon: "Material Symbols Outlined";
+            
+            /* Primary Colors */
+            --color-primary: #111827; /* Deep Charcoal Blue */
+            --color-primary-hover: #1f2937;
+            --color-primary-text: #ffffff;
+            --color-accent: #10b981; /* Vibrant Green */
+            --color-accent-hover: #059669;
+            --color-accent-text: #ffffff;
+            --color-danger: #ef4444;
+            --color-danger-hover: #dc2626;
+            --color-reopen: #6366f1; /* Indigo */
+            --color-reopen-hover: #4f46e5;
 
-        /* --- REDESIGNED LAYOUT --- */
-        .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
-        .page-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
-        .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
-        .details-header__title { display: flex; align-items: center; gap: 0.75rem; flex-grow: 1; min-width: 0; }
-        .details-header__title h1 { font-size: 1.1rem; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .icon-btn { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; display: flex; color: var(--light-text-secondary); transition: all .2s ease; flex-shrink: 0; }
-        .icon-btn:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); transform: none; box-shadow: none; }
+            /* Neutral Colors (Grays) */
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            /* Status Colors */
+            --status-pending-bg: #eef2ff; --status-pending-text: #4338ca;
+            --status-completed-bg: #ecfdf5; --status-completed-text: #047857;
+            --status-overdue-bg: #fef2f2; --status-overdue-text: #b91c1c;
+            --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309;
+
+            /* Layout & Spacing (8pt Grid System) */
+            --space-1: 0.25rem; /* 4px */
+            --space-2: 0.5rem;  /* 8px */
+            --space-3: 0.75rem; /* 12px */
+            --space-4: 1rem;    /* 16px */
+            --space-5: 1.25rem; /* 20px */
+            --space-6: 1.5rem;  /* 24px */
+            --space-8: 2rem;    /* 32px */
+            
+            /* Borders & Shadows */
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-full: 9999px;
+            --border-color: var(--gray-200);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --focus-ring: 2px solid rgba(16, 185, 129, 0.4);
+            
+            /* Transitions */
+            --ease: cubic-bezier(.4, 0, .2, 1);
+            --transition-short: all 150ms var(--ease);
+            
+            /* Other */
+            --sticky-footer-height: 80px;
+        }
+
+        /* --- GLOBAL RESETS & BASE STYLES --- */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { -webkit-font-smoothing: antialiased; -moz-osx-smoothing: grayscale; font-size: 16px; }
+        body { font-family: var(--font-main); background-color: var(--gray-50); color: var(--gray-700); margin: 0; padding-bottom: var(--sticky-footer-height); line-height: 1.6; }
+        h1, h2, h3 { font-weight: 700; color: var(--gray-900); margin: 0; line-height: 1.3; }
+        h1 { font-size: 1.5rem; }
+        h2 { font-size: 1.25rem; }
+        h3 { font-size: 1.125rem; font-weight: 600; }
+        p { margin: 0 0 var(--space-4); }
+        p:last-child { margin-bottom: 0; }
+        strong { font-weight: 600; color: var(--gray-800); }
+
+        /* --- KEYFRAMES --- */
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes popIn{0%{opacity:0;transform:scale(.95)}100%{opacity:1;transform:scale(1)}}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* --- REUSABLE COMPONENTS --- */
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3) var(--space-5); border-radius: var(--radius-md); font-weight: 600; font-size: 0.9rem; transition: var(--transition-short); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
+        .btn:hover:not(:disabled) { filter: brightness(1.1); }
+        .btn:disabled { opacity: .6; cursor: not-allowed; }
+        .btn:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+        .btn .material-symbols-outlined { font-size: 1.25rem; }
+        .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); }
+        .btn-secondary { background-color: #fff; color: var(--gray-700); border-color: var(--border-color); box-shadow: var(--shadow-sm); }
+        .btn-secondary:hover:not(:disabled) { border-color: var(--gray-300); background-color: var(--gray-50); filter: none; }
+        .btn-success { background-color: var(--color-accent); color: var(--color-accent-text); }
+        .btn-danger { background-color: var(--color-danger); color: var(--color-primary-text); }
+        .btn-reopen { background-color: var(--color-reopen); color: var(--color-primary-text); }
+        
+        .icon-btn { background: none; border: none; padding: var(--space-2); border-radius: var(--radius-full); cursor: pointer; display: flex; color: var(--gray-500); transition: var(--transition-short); }
+        .icon-btn:hover { background-color: var(--gray-100); color: var(--gray-900); }
+        
+        /* Status Tag */
+        .status-tag { display: inline-flex; align-items: center; gap: var(--space-1); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600; text-transform: capitalize; }
+        .status-tag::before { content: ""; display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
+        .status-tag.pending { background-color: var(--status-pending-bg); color: var(--status-pending-text); } .status-tag.pending::before { background-color: var(--status-pending-text); }
+        .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); } .status-tag.completed::before { background-color: var(--status-completed-text); }
+        .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
+        .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
+
+        /* Modals & Overlays */
+        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background-color: rgba(17,24,39,0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4); animation: fadeIn 0.3s var(--ease); }
+        .modal-content { background-color: #fff; padding: var(--space-8); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; max-width: 480px; text-align: left; animation: popIn 0.3s var(--ease); }
+        .modal-content h3 { margin-bottom: var(--space-6); text-align: center; }
+        .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: var(--space-6); color: var(--gray-900); text-align:center; }
+        .modal-buttons { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
+        .loading-overlay { display: none; position: fixed; inset: 0; background-color: rgba(255,255,255,0.9); z-index: 1001; display: flex; align-items: center; justify-content: center; }
+        .spinner { border: 6px solid var(--gray-100); border-top-color: var(--color-primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+        .form-group { margin-bottom: var(--space-4); } .form-group.col-span-2 { grid-column: span 2; }
+        .form-group label { display: block; margin-bottom: var(--space-2); font-weight: 500; font-size: 0.875rem; color: var(--gray-700); }
+        .input-field { width: 100%; padding: var(--space-3); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 1rem; transition: var(--transition-short); }
+        .input-field:focus { border-color: var(--color-accent); outline: var(--focus-ring); }
+
+        /* --- PAGE LAYOUT & STRUCTURE --- */
+        .page-container { max-width: 1200px; margin: 0 auto; }
+        
+        .details-header { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-4); background-color: #fff; border-bottom: 1px solid var(--border-color); }
+        .details-header__title { display: flex; align-items: center; gap: var(--space-3); flex-grow: 1; min-width: 0; }
+        .details-header__title h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        /* Actions Dropdown */
         .actions-menu-container { position: relative; }
-        .actions-dropdown { text-align: left; position: absolute; top: calc(100% + 8px); right: 0; background: var(--light-bg-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 8px; min-width: 200px; z-index: 1001; visibility: hidden; opacity: 0; transform: translateY(-10px); transition: all .2s ease-out; }
-        .actions-dropdown.show { visibility: visible; opacity: 1; transform: translateY(0); }
-        .actions-dropdown button { display: flex; align-items: center; justify-content: flex-start; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: 0 0; text-align: left; font-size: 14px; font-weight: 500; color: var(--light-text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: background-color .2s ease; }
-        .actions-dropdown button:hover { background-color: var(--light-bg-tertiary); transform: none; box-shadow: none; }
-        .actions-dropdown button .icon { font-size: 18px; color: var(--light-text-secondary); }
-        .actions-dropdown hr { border: none; border-top: 1px solid var(--light-border); margin: 8px 0; }
-        .key-metrics-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; background-color: var(--light-bg-primary); padding: 1rem; border-radius: var(--radius-lg); border: 1px solid var(--light-border); }
+        .actions-dropdown { display: none; text-align: left; position: absolute; top: calc(100% + 8px); right: 0; background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: var(--space-2); min-width: 220px; z-index: 100; animation: fadeUp .2s ease-out; }
+        .actions-dropdown.show { display: block; }
+        .actions-dropdown button { display: flex; align-items: center; justify-content: flex-start; gap: var(--space-3); width: 100%; padding: var(--space-2) var(--space-3); border: none; background: transparent; text-align: left; font-size: 0.9rem; font-weight: 500; color: var(--gray-800); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition-short); }
+        .actions-dropdown button:hover { background-color: var(--gray-100); }
+        .actions-dropdown button .material-symbols-outlined { font-size: 1.25rem; color: var(--gray-500); }
+        .actions-dropdown hr { border: none; border-top: 1px solid var(--border-color); margin: var(--space-2) 0; }
+        
+        .page-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); padding: var(--space-4); }
+
+        /* Content Card */
+        .content-card { background-color: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+        .content-card__header { padding: var(--space-4); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .content-card__body { padding: var(--space-6); }
+
+        /* Key Metrics Card */
+        .key-metrics-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: var(--space-4); background-color: #fff; padding: var(--space-4); border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
         .metric-item { text-align: center; }
-        .metric-item__label { font-size: 0.7rem; font-weight: 500; color: var(--light-text-secondary); margin-bottom: 0.25rem; text-transform: uppercase; }
-        .metric-item__value { font-size: 0.9rem; font-weight: 600; color: var(--light-text-primary); }
+        .metric-item__label { font-size: 0.75rem; font-weight: 500; color: var(--gray-500); margin-bottom: var(--space-1); text-transform: uppercase; letter-spacing: 0.05em; }
+        .metric-item__value { font-size: 1.125rem; font-weight: 700; color: var(--gray-900); }
         .metric-item__value.pending { color: var(--status-overdue-text); }
-        .tabs__nav { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--light-border); padding: 0 1rem; background-color: var(--light-bg-primary); border-radius: var(--radius-lg) var(--radius-lg) 0 0; border: 1px solid var(--light-border); border-bottom: none;}
-        .tabs__button { background: none; border: none; padding: 1rem 0.5rem; font-weight: 600; font-size: 0.8rem; color: var(--light-text-secondary); cursor: pointer; position: relative; border-bottom: 3px solid transparent; transform: none !important; box-shadow: none !important; border-radius: 0;}
+
+        /* Mobile Tabs */
+        .tabs { border-radius: var(--radius-lg); overflow: hidden; }
+        .tabs__nav { display: flex; border-bottom: 1px solid var(--border-color); background-color: #fff; }
+        .tabs__button { background: none; border: none; padding: var(--space-4) var(--space-3); font-weight: 600; font-size: 0.9rem; color: var(--gray-500); cursor: pointer; position: relative; border-bottom: 3px solid transparent; flex: 1; }
         .tabs__button.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
-        .tabs__content-pane { display: none; padding: 1.5rem; background-color: var(--light-bg-primary); border-radius: 0 0 var(--radius-lg) var(--radius-lg); border: 1px solid var(--light-border); border-top: none;}
-        .tabs__content-pane.active { display: block; }
-        .content-section { margin-bottom: 2rem; } .content-section:last-child { margin-bottom: 0; }
-        .content-section h3 { font-size: 1.1rem; margin-bottom: 1rem; }
-        .detail-window-item{display:flex;align-items:center;gap:1rem;padding:.75rem;background-color:var(--light-bg-tertiary);border-radius:var(--radius-md);margin-bottom:.5rem}.item-number{flex-shrink:0;width:2rem;height:2rem;background-color:var(--color-primary);color:var(--color-primary-text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem}.item-info{font-size:.85rem;color:var(--light-text-primary);line-height:1.4}.item-info small{display:block;color:var(--light-text-secondary);font-size:.75rem;margin-top:.25rem}
-        .financial-log { list-style: none; padding: 0; margin: 0; } .log-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--light-border); } .log-item:last-child { border-bottom: none; } .log-item__info { display: flex; flex-direction: column; } .log-item__amount { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); } .log-item__meta { font-size: 0.8rem; color: var(--light-text-muted); } .log-item__meta .notes { display: block; margin-top: 4px; color: var(--light-text-secondary); font-style: italic; } .log-item__actions { display: flex; gap: 0.5rem; }
-        .log-item--adjustment .log-item__amount { color: var(--light-text-secondary); font-weight: 500; font-size: 0.9rem; }
-        .log-item--adjustment .log-item__meta { font-style: italic; }
-        .history-list { list-style: none; padding: 0; margin: 0; } .history-item{padding:1rem;border-bottom:1px solid var(--light-border)}.history-item:last-child{border-bottom:none}.history-item-meta{font-size:.8rem;color:var(--light-text-muted);margin-bottom:.25rem}.history-item-action{font-weight:500;color:var(--light-text-primary)}.history-detail{font-size:.85rem;color:var(--light-text-secondary);padding-left:1rem;margin-top:.5rem;list-style-type:none; margin-left:0;}.history-detail ul{ padding-left: 1.25rem; margin-top: .25rem; }
-        .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; }
-        .sticky-action-bar .btn { flex-grow: 1; padding: 0.9rem; font-size: 0.9rem; box-shadow: var(--shadow-md) !important; transform: none !important; }
-        .desktop-view { display: none; }
-        .order-links-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
-        .order-links-container .btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
-        @media (min-width: 800px) {
-            .mobile-view { display: none; }
-            .desktop-view { display: flex; }
-            body { padding-bottom: 0; }
-            .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; }
-            .details-header { background: none; border: none; padding: 0 0 1rem 0; }
-            .details-header__title h1 { font-size: 1.75rem; }
-            .sticky-action-bar { display: none; }
-            .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); }
-            .grid-main { display: flex; flex-direction: column; gap: 1.5rem; }
-            .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        .tabs__content-pane { display: none; padding: var(--space-6); background-color: #fff; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+        .tabs__content-pane.active { display: block; animation: fadeIn .3s ease; }
+        .tabs__content-pane .content-card { border: none; box-shadow: none; padding: 0; border-radius: 0; }
+        .tabs__content-pane .content-card__body { padding: 0; }
+        .tabs__content-pane .content-card__header { padding: 0 0 var(--space-4) 0; }
+
+        /* Details Sections & Lists */
+        .details-list p { display: flex; justify-content: space-between; font-size: 0.9rem; margin: 0; padding: var(--space-2) 0; }
+        .order-links-container { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+        .order-links-container .btn { padding: var(--space-2) var(--space-3); font-size: 0.8rem; }
+        
+        .detail-window-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3); background-color: var(--gray-50); border-radius: var(--radius-md); margin-bottom: var(--space-2); border: 1px solid var(--border-color); }
+        .item-number { flex-shrink: 0; width: 2.25rem; height: 2.25rem; background-color: var(--gray-200); color: var(--gray-800); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem; }
+        .item-info { font-size: 0.9rem; color: var(--gray-900); line-height: 1.4; }
+        .item-info small { display: block; color: var(--gray-500); font-size: 0.8rem; margin-top: var(--space-1); }
+
+        .financial-log, .history-list { list-style: none; padding: 0; margin: 0; }
+        .log-item, .history-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--border-color); }
+        .log-item:last-child, .history-item:last-child { border-bottom: none; }
+        .log-item__info { display: flex; flex-direction: column; gap: var(--space-1); }
+        .log-item__amount { font-weight: 600; font-size: 1rem; color: var(--gray-900); }
+        .log-item__meta { font-size: 0.8rem; color: var(--gray-500); }
+        .log-item__meta .notes { display: block; margin-top: 4px; color: var(--gray-700); font-style: italic; }
+        .log-item--adjustment { color: var(--gray-500); font-size: 0.9rem; font-style: italic; }
+        .history-item-meta { font-size: 0.8rem; color: var(--gray-500); margin-bottom: var(--space-1); }
+        .history-item-action { font-weight: 500; color: var(--gray-900); }
+        .history-detail { font-size: 0.85rem; color: var(--gray-700); padding-left: var(--space-4); margin-top: var(--space-2); list-style-type: disc; }
+
+        /* Sticky Footer Action Bar (Mobile) */
+        .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: var(--space-4); padding: var(--space-4); background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--border-color); backdrop-filter: blur(8px); z-index: 999; }
+        .sticky-action-bar .btn { flex-grow: 1; padding: var(--space-4); font-size: 1rem; }
+        
+        /* --- DESKTOP ADAPTATIONS --- */
+        .desktop-only { display: none; }
+
+        @media (min-width: 992px) {
+            body { padding-bottom: 0; background-color: var(--gray-100); }
+            h1 { font-size: 2rem; }
+            .mobile-only { display: none; }
+            .desktop-only { display: revert; }
+
+            .details-header { background: none; border: none; padding: var(--space-6) 0; }
+            .page-grid { grid-template-columns: 1fr 380px; gap: var(--space-8); padding: 0 var(--space-8) var(--space-8); }
+            .grid-main { display: flex; flex-direction: column; gap: var(--space-6); }
+            .grid-sidebar { display: flex; flex-direction: column; gap: var(--space-6); }
+            
+            .sticky-action-bar, .tabs { display: none; }
+            
             .order-links-container { justify-content: flex-end; }
         }
     </style>
@@ -86,38 +219,32 @@
 <body>
     <div class="page-container">
         <!-- MODALS & OVERLAYS -->
-        <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn-danger">Confirm</button></div></div></div>
-        <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn-primary" style="min-width: 120px; margin-left:auto;">OK</button></div></div>
+        <div id="confirmation-modal" class="modal"><div class="modal-content"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
+        <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px;">OK</button></div></div></div>
         <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
         <div id="payment-modal" class="modal">
             <div class="modal-content">
-                <h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3>
+                <h3 id="payment-modal-title">Add Payment</h3>
                 <form id="payment-form">
                     <input type="hidden" id="payment-id">
                     <div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div>
-                    <div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div>
-                    <div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div>
-                    <div class="modal-buttons" style="margin-top: 1rem;"><button type="button" class="btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn-primary">Save Payment</button></div>
+                    <div class="form-group col-span-2"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div>
+                    <div class="form-group col-span-2"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div>
+                    <div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Payment</button></div>
                 </form>
             </div>
         </div>
         <div id="edit-total-modal" class="modal">
             <div class="modal-content">
                 <h3>Edit Final Amount</h3>
-                <form id="edit-total-form" style="margin-top: 1.5rem;">
-                    <div class="form-group">
-                        <label for="final-total-input">Final Order Total</label>
-                        <input id="final-total-input" type="number" step="0.01" required class="input-field">
-                    </div>
-                    <div class="modal-buttons" style="margin-top: 1.5rem;">
-                         <button type="button" class="btn-secondary" data-app-action="close-total-modal">Cancel</button>
-                         <button type="submit" class="btn-primary">Save Amount</button>
-                    </div>
+                <form id="edit-total-form">
+                    <div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" step="0.01" required class="input-field"></div>
+                    <div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Amount</button></div>
                 </form>
             </div>
         </div>
 
-        <!-- NEW PAGE STRUCTURE -->
+        <!-- PAGE STRUCTURE -->
         <main id="order-details-screen" class="screen active">
             <header class="details-header">
                 <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
@@ -128,118 +255,143 @@
                 <div class="actions-menu-container">
                     <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
                     <div id="actions-dropdown" class="actions-dropdown">
-                        <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
+                        <button id="menu-edit-btn"><span class="material-symbols-outlined">edit</span>Edit Order</button>
                         <hr id="menu-divider" style="display:none;">
-                        <button id="menu-edit-total-btn" style="display:none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
-                        <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined">delete</span>Delete Order</button>
+                        <button id="menu-edit-total-btn" style="display:none;"><span class="material-symbols-outlined">payments</span>Edit Final Amount</button>
+                        <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="material-symbols-outlined">delete</span>Delete Order</button>
                     </div>
                 </div>
             </header>
+
             <div class="page-grid">
                 <div class="grid-main">
-                    <!-- Mobile View Content -->
-                    <div class="mobile-view">
-                        <div class="tabs">
-                            <nav class="tabs__nav">
-                                <button class="tabs__button active" data-tab="details">Details</button>
-                                <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
-                                <button class="tabs__button" data-tab="history">History</button>
-                            </nav>
-                            <div id="tab-details" class="tabs__content-pane active">
-                                <section class="content-section">
-                                    <h3>Customer & Order Info</h3>
+                    
+                    <!-- Key Metrics: Visible on both mobile and desktop -->
+                    <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
+                        <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
+                        <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
+                        <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
+                    </div>
+
+                    <!-- Mobile Tabs -->
+                    <div class="tabs mobile-only">
+                        <nav class="tabs__nav">
+                            <button class="tabs__button active" data-tab="details">Details</button>
+                            <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
+                            <button class="tabs__button" data-tab="history">History</button>
+                        </nav>
+                        <div id="tab-details" class="tabs__content-pane active">
+                            <!-- JS will populate these from shared content blocks -->
+                        </div>
+                        <div id="tab-payments" class="tabs__content-pane">
+                            <div class="content-card">
+                                <div class="content-card__body">
+                                    <ul class="financial-log"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-history" class="tabs__content-pane">
+                             <div class="content-card">
+                                <div class="content-card__body">
+                                    <ul class="history-list"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shared Content Blocks -->
+                    <div id="details-content-block">
+                        <div class="content-card">
+                            <div class="content-card__header"><h3>Customer & Order Info</h3></div>
+                            <div class="content-card__body">
+                                <div class="details-list">
                                     <p><strong>Address:</strong> <span class="detail-customer-address"></span></p>
                                     <p><strong>Mobile:</strong> <span class="detail-customer-mobile"></span></p>
                                     <p><strong>Placed On:</strong> <span class="detail-order-taken-date"></span></p>
                                     <p><strong>Created By:</strong> <span class="detail-created-by"></span></p>
-                                    <div class="completed-info-block" style="display:none;">
+                                </div>
+                                <div class="completed-info-block" style="display:none; margin-top: var(--space-4);">
+                                    <div class="details-list">
                                         <p><strong>Completed On:</strong> <span class="detail-completed-date"></span></p>
                                         <p><strong>Completed By:</strong> <span class="detail-completed-by"></span></p>
                                     </div>
-                                    <div class="order-links-container">
-                                        <button class="btn btn-secondary detail-get-directions-btn"><span class="material-symbols-outlined">directions</span>Directions</button>
-                                        <button class="btn btn-secondary detail-view-quote-btn"><span class="material-symbols-outlined">request_quote</span>Quote</button>
-                                        <button class="btn btn-secondary detail-view-bill-btn"><span class="material-symbols-outlined">receipt_long</span>Bill</button>
-                                    </div>
-                                </section>
-                                <section class="content-section">
-                                    <h3>Windows (<span class="detail-window-count"></span>)</h3>
-                                    <div class="detail-windows-list"></div>
-                                </section>
-                            </div>
-                            <div id="tab-payments" class="tabs__content-pane">
-                                <section class="content-section" data-section="payment-management">
-                                    <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1rem;">
-                                        <h3>Financial Log</h3>
-                                    </div>
-                                    <ul class="financial-log"></ul>
-                                </section>
-                            </div>
-                            <div id="tab-history" class="tabs__content-pane">
-                                <section class="content-section" data-section="history">
-                                    <h3>Order History</h3>
-                                    <ul class="history-list"></ul>
-                                </section>
+                                </div>
+                                <div class="order-links-container">
+                                    <button class="btn btn-secondary detail-get-directions-btn"><span class="material-symbols-outlined">directions</span>Directions</button>
+                                    <button class="btn btn-secondary detail-view-quote-btn"><span class="material-symbols-outlined">request_quote</span>Quote</button>
+                                    <button class="btn btn-secondary detail-view-bill-btn"><span class="material-symbols-outlined">receipt_long</span>Bill</button>
+                                </div>
                             </div>
                         </div>
-                        <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
-                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
+                        <div class="content-card">
+                             <div class="content-card__header"><h3>Windows (<span class="detail-window-count"></span>)</h3></div>
+                             <div class="content-card__body">
+                                <div class="detail-windows-list"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Desktop View Content -->
-                    <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                        <div id="desktop-key-metrics-card" class="key-metrics-card" style="display:none;">
-                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="desktop-metric-due-date" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="desktop-metric-final-total" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="desktop-metric-pending-amount" class="metric-item__value pending"></div></div>
-                        </div>
-                        <section class="content-section">
-                                    <h3>Customer & Order Info</h3>
-                                    <p><strong>Address:</strong> <span class="detail-customer-address"></span></p>
-                                    <p><strong>Mobile:</strong> <span class="detail-customer-mobile"></span></p>
-                                    <p><strong>Placed On:</strong> <span class="detail-order-taken-date"></span></p>
-                                    <p><strong>Created By:</strong> <span class="detail-created-by"></span></p>
-                                    <div class="completed-info-block" style="display:none;">
-                                        <p><strong>Completed On:</strong> <span class="detail-completed-date"></span></p>
-                                        <p><strong>Completed By:</strong> <span class="detail-completed-by"></span></p>
-                                    </div>
-                                    <div class="order-links-container">
-                                        <button class="btn btn-secondary detail-get-directions-btn"><span class="material-symbols-outlined">directions</span>Directions</button>
-                                        <button class="btn btn-secondary detail-view-quote-btn"><span class="material-symbols-outlined">request_quote</span>Quote</button>
-                                        <button class="btn btn-secondary detail-view-bill-btn"><span class="material-symbols-outlined">receipt_long</span>Bill</button>
-                                    </div>
-                                </section>
-                                <section class="content-section">
-                                    <h3>Windows (<span class="detail-window-count"></span>)</h3>
-                                    <div class="detail-windows-list"></div>
-                                </section>
-                    </div>
                 </div>
-                <div class="grid-sidebar desktop-view">
-                    <section class="content-section" data-section="payment-management" style="display: none;">
-                        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1rem;">
+                <div class="grid-sidebar desktop-only">
+                    <div class="content-card" data-section="payment-management" style="display: none;">
+                        <div class="content-card__header">
                             <h3>Financial Log</h3>
-                            <button data-app-action="add-payment" class="btn-primary" style="display: none;"><span class="material-symbols-outlined">add_card</span> Add</button>
+                            <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: var(--space-2) var(--space-3);"><span class="material-symbols-outlined">add_card</span> Add</button>
                         </div>
-                        <ul class="financial-log"></ul>
-                    </section>
-                    <section class="content-section" data-section="history">
-                        <h3>Order History</h3>
-                        <ul class="history-list"><li>Loading...</li></ul>
-                    </section>
+                        <div class="content-card__body" style="padding-top: 0;">
+                            <ul class="financial-log"></ul>
+                        </div>
+                    </div>
+                    <div class="content-card" data-section="history">
+                        <div class="content-card__header"><h3>Order History</h3></div>
+                        <div class="content-card__body" style="padding-top: 0;">
+                            <ul class="history-list"><li>Loading...</li></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
+
+    <!-- Mobile Sticky Footer -->
     <footer class="sticky-action-bar">
-        <button data-app-action="add-payment" class="btn-secondary" style="display:none;">Add Payment</button>
-        <button id="detail-complete-btn" class="btn-success"></button>
+        <button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
+        <button id="detail-complete-btn" class="btn btn-success"></button>
     </footer>
 
     <script type="module">
+        // --- NOTE: THE ORIGINAL JAVASCRIPT IS COMPATIBLE WITH THIS NEW HTML ---
+        // --- ADDED A SMALL SCRIPT TO HANDLE MOVING CONTENT FOR RESPONSIVE VIEWS ---
+        
+        // --- THIS SCRIPT HANDLES THE RESPONSIVE CONTENT PLACEMENT ---
+        function setupResponsiveContent() {
+            const detailsTab = document.getElementById('tab-details');
+            const detailsContentBlock = document.getElementById('details-content-block');
+            
+            function moveContent() {
+                if (window.innerWidth < 992) {
+                    // Mobile view: Move content into the tab pane
+                    if (!detailsTab.contains(detailsContentBlock)) {
+                        detailsTab.appendChild(detailsContentBlock);
+                    }
+                } else {
+                    // Desktop view: Move content back to the main grid
+                    const gridMain = document.querySelector('.grid-main');
+                    if (!gridMain.contains(detailsContentBlock)) {
+                        // Insert it after the key metrics card
+                        gridMain.insertBefore(detailsContentBlock, gridMain.querySelector('.tabs').nextSibling);
+                    }
+                }
+            }
+            
+            // Initial check
+            moveContent();
+            
+            // Re-check on window resize
+            window.addEventListener('resize', moveContent);
+        }
+
+        // --- ALL ORIGINAL JAVASCRIPT LOGIC GOES HERE ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -338,17 +490,17 @@
             }
         }
         function renderFinancialLog(logItems, container) {
-            container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
+            container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--gray-500); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
                 if (item.type === 'adjustment') {
-                    return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`;
+                    return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__meta">Total Amount Adjusted from ${item.details.from} to ${item.details.to}</span></div><span class="log-item__meta">${item.date.toLocaleDateString()}</span></li>`;
                 }
                 const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : '';
-                const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`;
-                return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`;
+                const actionsHtml = `<div class="log-item__actions" style="display:flex; gap:0.5rem;"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 1.1rem;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 1.1rem;">delete</span></button></div>`;
+                return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} &bull; ${item.date.toLocaleDateString()}${notesHtml}</span></div>${actionsHtml}</li>`;
             }).join('');
         }
         function renderHistory(historyItems, container) {
-            container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => {
+            container.innerHTML = historyItems.length === 0 ? '<li class="history-item">No history found.</li>' : historyItems.map(entry => {
                 const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
                 let detailsHtml = '';
                 if (entry.details && Object.keys(entry.details).length > 0) { 
@@ -369,7 +521,7 @@
                 return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
             }).join('');
         }
-        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date, #desktop-metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total, #desktop-metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount, #desktop-metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
+        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
 
         // --- ACTION HANDLERS ---
@@ -463,8 +615,12 @@
         });
         
         // --- INITIALIZE APP ---
-        showLoading();
-        initializeFirebase();
+        document.addEventListener('DOMContentLoaded', () => {
+            showLoading();
+            setupResponsiveContent(); // Setup the responsive content logic
+            initializeFirebase();
+        });
+
     </script>
 </body>
 </html>
