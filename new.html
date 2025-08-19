@@ -250,6 +250,7 @@
                                         <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
                                         <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
                                         <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                        <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
                                         <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
                                     </dl>
                                     <div class="completed-info-block" style="display:none; margin-top: 1rem;">
@@ -280,6 +281,7 @@
                                 <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
                                 <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
                                 <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
                                 <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
                             </dl>
                             <div class="completed-info-block" style="display:none; margin-top: 1rem;">
@@ -373,6 +375,7 @@
             document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
             document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
             document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
+            document.querySelectorAll('.detail-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
             document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
             document.querySelectorAll('.completed-info-block').forEach(block => {
                 block.style.display = order.status === 'completed' ? 'block' : 'none';
