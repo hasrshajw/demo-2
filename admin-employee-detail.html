@@ -9,11 +9,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* --- MERGED & COMPLETE CSS --- */
+        :root {
+            --font-main: "IBM Plex Sans", sans-serif;
+            --font-alt: 'Inter', sans-serif;
+            --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-focus-ring: 0 0 0 3px;
+        }
+
+        [data-theme="light"] {
+            --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-secondary: #475569;
+            --color-background: #f8fafc; --color-surface: #ffffff; --color-text-primary: #1f2937; --color-text-secondary: #64748b;
+            --color-border: #e5e7eb; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b;
+            --color-success-bg: #f0fdf4; --color-danger-bg: #fef2f2; --color-warning-bg: #fffbeb;
+            --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
+        }
+
+        [data-theme="dark"] {
+            --color-primary: #818cf8; --color-primary-light: rgba(129, 140, 248, 0.16); --color-primary-dark: #a7affb; --color-secondary: #94a3b8;
+            --color-background: #0f172a; --color-surface: #1e293b; --color-text-primary: #f1f5f9; --color-text-secondary: #94a3b8;
+            --color-border: #334155; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15;
+            --color-success-bg: rgba(74, 222, 128, 0.1); --color-danger-bg: rgba(248, 113, 113, 0.1); --color-warning-bg: rgba(250, 204, 21, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+
+        body {
+            font-family: var(--font-alt); /* Using alt font for consistency with dashboard */
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            line-height: 1.5;
+            transition: background-color 0.3s var(--ease-cubic), color 0.3s var(--ease-cubic);
+            -webkit-font-smoothing: antialiased;
+            padding-top: 72px; /* Space for the new fixed navbar */
+        }
+
         /* --- NAVBAR STYLES --- */
-        .header { position: fixed; top: 0; width: 100%; z-index: 50; transition-property: all; transition-duration: 0.3s; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); overflow: visible; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px); }
+        .header {
+            position: fixed; top: 0; width: 100%; z-index: 50;
+            background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);
+        }
+        [data-theme="dark"] .header { background-color: hsla(222, 47%, 11%, 0.8); }
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) { .header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; } }
+        @media (max-width: 768px) {
+            .header-container { padding-left: 16px; padding-right: 16px; width: 100%; }
+            .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }
+        }
         .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
         .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
@@ -36,7 +83,7 @@
         .mobile-nav-link:hover { background-color: #e9ecef; }
         .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
         .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
-        .divider { height: 1px; background-color: #e5e7eb; }
+        .divider { height: 1px; background-color: var(--color-border); }
         @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
         .desktop-profile { display: none; }
         @media (min-width: 48rem) { .desktop-profile { display: flex; } }
@@ -50,19 +97,8 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-        [data-theme="dark"] .header { background-color: hsla(222, 47%, 11%, 0.8); }
-        [data-theme="dark"] #mobileMenu { background-color: #1e293b; }
-        [data-theme="dark"] .profile-name, [data-theme="dark"] .nav-link, [data-theme="dark"] .menu-button { color: #f1f5f9; }
-        [data-theme="dark"] .profile-email { color: #94a3b8; }
-        [data-theme="dark"] .divider { background-color: #334155; }
-
+        
         /* --- PAGE-SPECIFIC STYLES --- */
-        :root { --font-main: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1); --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px; --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); --shadow-focus-ring: 0 0 0 3px; }
-        [data-theme="light"] { --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-secondary: #475569; --color-background: #f8fafc; --color-surface: #ffffff; --color-text-primary: #1f2937; --color-text-secondary: #64748b; --color-border: #e5e7eb; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; --color-success-bg: #f0fdf4; --color-danger-bg: #fef2f2; --color-warning-bg: #fffbeb; --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%); }
-        [data-theme="dark"] { --color-primary: #818cf8; --color-primary-light: rgba(129, 140, 248, 0.16); --color-primary-dark: #a7affb; --color-secondary: #94a3b8; --color-background: #0f172a; --color-surface: #1e293b; --color-text-primary: #f1f5f9; --color-text-secondary: #94a3b8; --color-border: #334155; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; --color-success-bg: rgba(74, 222, 128, 0.1); --color-danger-bg: rgba(248, 113, 113, 0.1); --color-warning-bg: rgba(250, 204, 21, 0.1); }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; }
-        body { font-family: var(--font-main); background-color: var(--color-background); color: var(--color-text-primary); line-height: 1.5; transition: background-color 0.3s var(--ease-cubic), color 0.3s var(--ease-cubic); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; padding-top: 72px; /* For fixed navbar */ }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; }
         h1 { font-size: 2rem; margin-bottom: 0.5rem; }
@@ -70,7 +106,7 @@
         .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
         .icon-sm { width: 16px; height: 16px; } .icon-md { width: 20px; height: 20px; } .icon-lg { width: 24px; height: 24px; }
         .app-container { display: block; }
-        main { padding-top: 32px; padding-bottom: 48px; } /* Reduced top padding */
+        main { padding-top: 24px; padding-bottom: 48px; } /* Removed top padding, body handles it */
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-md); }
         .btn-danger { background-color: var(--color-danger); color: white; }
@@ -153,7 +189,7 @@
                     <div class="desktop-profile">
                          <div class="profile-dropdown-container">
                              <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="" class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
+                                <img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
                                 <div class="profile-info">
                                     <span class="profile-name" id="desktop-profile-name">Loading...</span>
                                     <span class="profile-email" id="desktop-profile-email"></span>
@@ -177,7 +213,9 @@
 
     <div id="mobileMenu" role="dialog" aria-modal="true">
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-            <svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
         </button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section">
@@ -235,7 +273,6 @@
         import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, deleteDoc, writeBatch, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Firebase configuration will be injected by Netlify during build
         const firebaseConfig = {
             apiKey: "__API_KEY__",
             authDomain: "__AUTH_DOMAIN__",
@@ -264,16 +301,14 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 currentEmployeeIdForDetail = urlParams.get('id');
                 if (!currentEmployeeIdForDetail) { throw new Error("No employee ID specified in URL."); }
-                if (!firebaseConfig.apiKey || firebaseConfig.projectId === "your-project-id") { throw new Error("Firebase config is not set."); }
                 
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
                 renderAppShellModals();
-                initializeNavbar(); // Initialize new navbar
+                initializeNavbar(); // Initialize the new navbar
                 bindEventListeners();
-                initializeTheme();
                 listenForAuthStateChanges();
 
             } catch (error) {
@@ -293,7 +328,7 @@
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
                     
-                    populateNavbar(currentUserProfile); // Populate new navbar
+                    populateNavbar(currentUserProfile); // Populate the new navbar
                     await showDetailView(); 
                     
                 } else {
@@ -302,7 +337,18 @@
             });
         }
         
-        // --- NAVBAR JAVASCRIPT ---
+        // --- NAVBAR FUNCTIONS ---
+        function populateNavbar(user) {
+            if (!user) return;
+            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('desktop-profile-email').textContent = user.email || '';
+            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('mobile-profile-email').textContent = user.email || '';
+        }
+        
         function initializeNavbar() {
             const mobileMenu = document.getElementById('mobileMenu');
             const mobileMenuButton = document.getElementById('mobileMenuButton');
@@ -355,27 +401,10 @@
                     }
                 }
             });
-
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768) closeMobileMenu();
-            });
+            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
         }
+        // --- END NAVBAR FUNCTIONS ---
 
-        function populateNavbar(user) {
-            if (!user) return;
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
-        }
-
-        async function handleLogout() { await signOut(auth); }
-        
         async function showDetailView(resetDate = true) {
             if (resetDate) currentCalendarDate = new Date();
             showLoader();
@@ -383,13 +412,11 @@
                 const empDoc = await getDoc(doc(db, "employees", currentEmployeeIdForDetail));
                 if (!empDoc.exists()) throw new Error("Employee not found");
                 const employee = { id: empDoc.id, ...empDoc.data() };
-
                 const [allAttSnap, allPaySnap] = await Promise.all([ getDocs(collection(db, `employees/${currentEmployeeIdForDetail}/attendance`)), getDocs(collection(db, `employees/${currentEmployeeIdForDetail}/payments`)) ]);
                 const allAttendance = allAttSnap.docs.map(d => d.data());
                 const allPayments = allPaySnap.docs.map(d => ({id: d.id, ...d.data()}));
                 
-                const detailView = document.getElementById('detail-view');
-                detailView.innerHTML = `
+                document.getElementById('detail-view').innerHTML = `
                     <div id="detail-view-header"> <button data-app-action="navigate-employees" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>Back to Employees</button> <button data-app-action="open-edit-options" data-id="${employee.id}" data-name="${employee.name}" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>Edit</button> </div>
                     <h1>${employee.name}</h1>
                     <div class="detail-view-grid">
@@ -416,15 +443,14 @@
             }
         }
         
-        // --- ALL ORIGINAL PAGE FUNCTIONS ARE INCLUDED BELOW ---
+        // --- ALL OTHER PAGE-SPECIFIC FUNCTIONS ---
+        // (All original functions from your script are maintained here)
         function renderCalendar(attendanceData) { const monthYearEl = document.getElementById('month-year'); const daysGridEl = document.getElementById('days-grid'); const weekdaysEl = document.getElementById('weekdays'); if(!monthYearEl || !daysGridEl || !weekdaysEl) return; monthYearEl.textContent = currentCalendarDate.toLocaleString('default', { month: 'long', year: 'numeric' }); daysGridEl.innerHTML = ''; weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join(''); const month = currentCalendarDate.getMonth(); const year = currentCalendarDate.getFullYear(); const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate(); const prevLastDay = new Date(year, month, 0).getDate(); const lastDayIndex = new Date(year, month, lastDay).getDay(); const nextDays = 7 - lastDayIndex - 1; const todayString = formatDate(new Date()); const attendanceMap = new Map(attendanceData.map(item => [item.date, item.status])); let daysHTML = ''; for (let x = firstDayIndex; x > 0; x--) { daysHTML += `<div class="day prev-month">${prevLastDay - x + 1}</div>`; } for (let i = 1; i <= lastDay; i++) { const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; const status = attendanceMap.get(dayStr); let classes = 'day'; if (dayStr === todayString) classes += ' today'; if (status) classes += ` ${status}`; daysHTML += `<div class="${classes}">${i}</div>`; } for (let j = 1; j <= nextDays; j++) { daysHTML += `<div class="day next-month">${j}</div>`; } daysGridEl.innerHTML = daysHTML; }
         function renderFinancialSummaries(employee, allAttendance, allPayments) { if (!Array.isArray(allAttendance) || !Array.isArray(allPayments)) return; const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth(); const startOfMonth = new Date(year, month, 1); const endOfMonth = new Date(year, month + 1, 0); const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth)); const overall = calculateFinancials(employee, allAttendance, allPayments); const monthly = calculateFinancials(employee, monthlyAttendance, []); const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : 'success-text'; const overallSummaryEl = document.getElementById('overall-summary'); const monthlySummaryEl = document.getElementById('monthly-summary'); if (overallSummaryEl) { overallSummaryEl.innerHTML = `<h3 class="stat-card-label">Overall Summary</h3><div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div><div class="stat-card-label">Total Amount Due</div>`; } if (monthlySummaryEl) { monthlySummaryEl.innerHTML = `<h3 class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Summary</h3><div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div><div class="stat-card-label">Earned This Month</div>`; } document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000)); }
         function calculateFinancials(employee, attendance, payments) { if (!employee || !Array.isArray(attendance) || !Array.isArray(payments)) { return { totalEarned: 0, dueAmount: 0 }; } let p=0,h=0,ph=0; attendance.forEach(a=>{if(a?.status==='present')p++;else if(a?.status==='half-day')h++;else if(a?.status==='paid-holiday')ph++;}); const earned=(p+(h*0.5)+ph)*(employee.dailySalary||0); const paid=payments.reduce((s,p)=>s+(p?.amount||0),0); return {totalEarned:earned, dueAmount:earned-paid}; }
         function renderPaymentList(allPayments, employee) { const container = document.getElementById('payment-list'); if (!container || !Array.isArray(allPayments) || !employee) return; if (allPayments.length === 0) { container.innerHTML = '<p style="padding: 1rem 0; color: var(--color-text-secondary); text-align: center;">No payments recorded.</p>'; return; } allPayments.sort((a, b) => new Date(b?.date) - new Date(a?.date)); const recentPayments = allPayments.slice(0, 3); container.innerHTML = `<ul>${recentPayments.map(p => `<li><div class="payment-details"><span>${p.date}<br><small style="color:var(--color-text-secondary)">${p.note || p.paymentMode}</small></span><strong>₹${p.amount.toFixed(2)}</strong></div><div class="payment-actions"><button class="btn-icon" title="Edit Payment" data-app-action="open-edit-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg></button><button class="btn-icon" title="Delete Payment" data-app-action="open-delete-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button></div></li>`).join('')}</ul>`; if (allPayments.length > 3) { container.innerHTML += `<div class="payment-history-actions"><button class="btn btn-secondary" data-app-action="navigate-payment-history" data-employee-id="${employee.id}" data-employee-name="${employee.name}">View Full History</button></div>`; } }
         function animateValue(obj, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); obj.innerHTML = Math.abs(progress * (end - start) + start).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); if (progress < 1) window.requestAnimationFrame(step); else { obj.innerHTML = Math.abs(end).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); } }; window.requestAnimationFrame(step); }
         function renderAppShellModals() { document.getElementById('edit-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="edit-options-modal">×</span><h2 id="edit-options-title"></h2><div id="edit-options-modal-content"></div></div>`; document.getElementById('employee-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="employee-modal">×</span><h2 id="employee-modal-title">Edit Employee</h2><form id="employee-form"><input type="hidden" id="employee-id"><div class="form-group"><label for="full-name">Full Name</label><input type="text" id="full-name" required></div><div class="form-group"><label for="daily-salary">Daily Salary</label><input type="number" id="daily-salary" required min="0" step="0.01"></div><button type="submit" class="btn btn-primary" style="width:100%">Save Changes</button></form></div>`; document.getElementById('payment-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="payment-modal">×</span><h2 id="payment-modal-title">Add Payment</h2><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-group"><label for="payment-amount">Amount</label><input type="number" id="payment-amount" required></div><div class="form-group"><label for="payment-date">Date</label><input type="date" id="payment-date" required></div><div class="form-group"><label for="payment-note">Note (Optional)</label><input type="text" id="payment-note"></div><div class="form-group"><label for="payment-mode">Mode</label><select id="payment-mode"><option>Cash</option><option>Online</option></select></div><button type="submit" class="btn btn-primary" style="width:100%">Save Payment</button></form></div>`; document.getElementById('missed-attendance-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="missed-attendance-modal">×</span><h2>Add Missed Attendance</h2><form id="missed-attendance-form"><div class="form-group"><label for="missed-attendance-date">Select Date</label><input type="date" id="missed-attendance-date" required></div><div class="form-group"><label for="missed-attendance-status">Status</label><select id="missed-attendance-status" required><option value="">-- Select --</option><option value="present">Present</option><option value="absent">Absent</option><option value="half-day">Half Day</option><option value="paid-holiday">Paid Holiday</option></select></div><button type="submit" class="btn btn-primary" style="width:100%">Save Attendance</button></form></div>`; document.getElementById('delete-employee-modal').innerHTML = `<div class="modal-content"> <span class="close-btn" data-app-action="close-modal" data-modal-id="delete-employee-modal">×</span> <h2 id="delete-modal-title">Delete Employee</h2> <p>You are about to delete <strong id="delete-employee-name"></strong>.</p> <div class="alert-danger"> <strong>Warning:</strong> This action is permanent and cannot be undone. All associated data will be erased. </div> <div class="form-group" style="margin-top: 1.5rem;"> <label for="delete-confirm-name">To confirm, please type the employee's full name:</label> <input type="text" id="delete-confirm-name" autocomplete="off"> </div> <button id="confirm-delete-btn" class="btn btn-danger" style="width:100%" disabled>Confirm Deletion</button> </div>`; document.getElementById('delete-payment-modal').innerHTML = `<div class="modal-content"> <span class="close-btn" data-app-action="close-modal" data-modal-id="delete-payment-modal">×</span> <h2>Delete Payment</h2> <p>Are you sure you want to permanently delete this payment record? This action cannot be undone.</p> <div class="modal-actions"> <button class="btn btn-secondary" data-app-action="close-modal" data-modal-id="delete-payment-modal">Cancel</button> <button id="confirm-delete-payment-btn" class="btn btn-danger">Confirm Deletion</button> </div> </div>`; document.getElementById('link-user-modal').innerHTML = `<div class="modal-content"></div>`; }
-        function initializeTheme() { const theme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', theme); }
-        function toggleTheme() { const currentTheme = document.documentElement.getAttribute('data-theme'); const newTheme = currentTheme === 'light' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); }
         async function handleMissedAttendanceSubmit(e) { e.preventDefault(); showLoader(); try { const date = document.getElementById('missed-attendance-date').value; const status = document.getElementById('missed-attendance-status').value; if (!date || !status) throw new Error("Date and status are required."); await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/attendance`, date), { status, date }); showToast("Missed attendance added.", "success"); closeModal('missed-attendance-modal'); await showDetailView(false); } catch(err) { console.error("Error adding missed attendance:", err); showToast(`Error: ${err.message}`, "error"); } finally { hideLoader(); } }
         async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoader(); const paymentId = document.getElementById('payment-id').value; const data = { amount: parseFloat(document.getElementById('payment-amount').value), date: document.getElementById('payment-date').value, note: document.getElementById('payment-note').value, paymentMode: document.getElementById('payment-mode').value }; try { if (!data.amount || !data.date) throw new Error("Amount and Date are required."); if (paymentId) { await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/payments`, paymentId), data); showToast("Payment updated!", "success"); } else { await addDoc(collection(db, `employees/${currentEmployeeIdForDetail}/payments`), data); showToast("Payment added!", "success"); } closeModal('payment-modal'); await showDetailView(false); } catch(err) { console.error("Error saving payment:", err); showToast(`Error: ${err.message}`, "error"); } finally { hideLoader(); } }
         async function openEmployeeModalForEdit(employeeId) { showLoader(); try { const empDoc = await getDoc(doc(db, "employees", employeeId)); if (!empDoc.exists()) throw new Error("Employee not found."); const employee = empDoc.data(); document.getElementById('employee-modal-title').textContent = 'Edit Employee'; document.getElementById('employee-id').value = employeeId; document.getElementById('full-name').value = employee.name; document.getElementById('daily-salary').value = employee.dailySalary; openModal('employee-modal'); } catch (error) { console.error("Error preparing edit form:", error); showToast(error.message, 'error'); } finally { hideLoader(); } }
@@ -440,15 +466,15 @@
         
         function bindEventListeners() {
              document.body.addEventListener('click', async (e) => {
-                const appAction = e.target.closest('[data-app-action]');
-                if (!appAction?.dataset?.appAction) { return; }
+                const target = e.target;
+                const appAction = target.closest('[data-app-action]');
+                if (!appAction?.dataset?.appAction) return; 
                 e.preventDefault();
                 const action = appAction.dataset.appAction;
                 switch (action) {
                     case 'navigate-employees': window.location.href = 'admin-employees.html'; break;
                     case 'navigate-payment-history': window.location.href = `admin-payment-history.html?id=${appAction.dataset.employeeId}`; break;
-                    case 'toggle-theme': toggleTheme(); break;
-                    case 'logout': await handleLogout(); break;
+                    case 'logout': await signOut(auth); break;
                     case 'open-modal': document.getElementById(appAction.dataset.formId)?.reset(); if(appAction.dataset.modalId === 'payment-modal') { document.getElementById('payment-modal-title').textContent = 'Add Payment'; document.getElementById('payment-id').value = ''; } openModal(appAction.dataset.modalId); break;
                     case 'close-modal': closeModal(appAction.dataset.modalId); break;
                     case 'calendar-prev': currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1); await showDetailView(false); break;
