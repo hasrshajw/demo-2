@@ -12,62 +12,24 @@
     <style>
         /* --- CORE STYLES & DESIGN SYSTEM --- */
         :root {
-            /* Font */
             --font-main: "Inter", ui-sans-serif, system-ui, sans-serif;
-            --font-icon: "Material Symbols Outlined";
-            
-            /* Primary Colors */
-            --color-primary: #111827; /* Deep Charcoal Blue */
-            --color-primary-hover: #1f2937;
-            --color-primary-text: #ffffff;
-            --color-accent: #10b981; /* Vibrant Green */
-            --color-accent-hover: #059669;
-            --color-accent-text: #ffffff;
-            --color-danger: #ef4444;
-            --color-danger-hover: #dc2626;
-            --color-reopen: #6366f1; /* Indigo */
-            --color-reopen-hover: #4f46e5;
-
-            /* Neutral Colors (Grays) */
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-500: #6b7280;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            
-            /* Status Colors */
+            --color-primary: #111827; --color-primary-hover: #1f2937; --color-primary-text: #ffffff;
+            --color-accent: #10b981; --color-accent-hover: #059669; --color-accent-text: #ffffff;
+            --color-danger: #ef4444; --color-danger-hover: #dc2626;
+            --color-reopen: #6366f1; --color-reopen-hover: #4f46e5;
+            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db; --gray-500: #6b7280; --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
             --status-pending-bg: #eef2ff; --status-pending-text: #4338ca;
             --status-completed-bg: #ecfdf5; --status-completed-text: #047857;
             --status-overdue-bg: #fef2f2; --status-overdue-text: #b91c1c;
             --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309;
-
-            /* Layout & Spacing (8pt Grid System) */
-            --space-1: 0.25rem; /* 4px */
-            --space-2: 0.5rem;  /* 8px */
-            --space-3: 0.75rem; /* 12px */
-            --space-4: 1rem;    /* 16px */
-            --space-5: 1.25rem; /* 20px */
-            --space-6: 1.5rem;  /* 24px */
-            --space-8: 2rem;    /* 32px */
-            
-            /* Borders & Shadows */
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-full: 9999px;
+            --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem;
+            --radius-md: 0.5rem; --radius-lg: 0.75rem; --radius-full: 9999px;
             --border-color: var(--gray-200);
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --focus-ring: 2px solid rgba(16, 185, 129, 0.4);
-            
-            /* Transitions */
-            --ease: cubic-bezier(.4, 0, .2, 1);
-            --transition-short: all 150ms var(--ease);
-            
-            /* Other */
+            --ease: cubic-bezier(.4, 0, .2, 1); --transition-short: all 150ms var(--ease);
             --sticky-footer-height: 80px;
         }
 
@@ -76,26 +38,14 @@
         html { -webkit-font-smoothing: antialiased; -moz-osx-smoothing: grayscale; font-size: 16px; }
         body { font-family: var(--font-main); background-color: var(--gray-50); color: var(--gray-700); margin: 0; padding-bottom: var(--sticky-footer-height); line-height: 1.6; }
         h1, h2, h3 { font-weight: 700; color: var(--gray-900); margin: 0; line-height: 1.3; }
-        h1 { font-size: 1.5rem; }
-        h2 { font-size: 1.25rem; }
-        h3 { font-size: 1.125rem; font-weight: 600; }
-        p { margin: 0 0 var(--space-4); }
-        p:last-child { margin-bottom: 0; }
+        h1 { font-size: 1.5rem; } h2 { font-size: 1.25rem; } h3 { font-size: 1.125rem; font-weight: 600; }
+        p { margin: 0 0 var(--space-4); } p:last-child { margin-bottom: 0; }
         strong { font-weight: 600; color: var(--gray-800); }
-
-        /* --- KEYFRAMES --- */
-        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes popIn{0%{opacity:0;transform:scale(.95)}100%{opacity:1;transform:scale(1)}}
-        @keyframes spin{to{transform:rotate(360deg)}}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}} @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}} @keyframes popIn{0%{opacity:0;transform:scale(.95)}100%{opacity:1;transform:scale(1)}} @keyframes spin{to{transform:rotate(360deg)}}
 
         /* --- REUSABLE COMPONENTS --- */
-
-        /* Buttons */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-3) var(--space-5); border-radius: var(--radius-md); font-weight: 600; font-size: 0.9rem; transition: var(--transition-short); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
-        .btn:hover:not(:disabled) { filter: brightness(1.1); }
-        .btn:disabled { opacity: .6; cursor: not-allowed; }
-        .btn:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+        .btn:hover:not(:disabled) { filter: brightness(1.1); } .btn:disabled { opacity: .6; cursor: not-allowed; } .btn:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
         .btn .material-symbols-outlined { font-size: 1.25rem; }
         .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); }
         .btn-secondary { background-color: #fff; color: var(--gray-700); border-color: var(--border-color); box-shadow: var(--shadow-sm); }
@@ -103,40 +53,29 @@
         .btn-success { background-color: var(--color-accent); color: var(--color-accent-text); }
         .btn-danger { background-color: var(--color-danger); color: var(--color-primary-text); }
         .btn-reopen { background-color: var(--color-reopen); color: var(--color-primary-text); }
-        
         .icon-btn { background: none; border: none; padding: var(--space-2); border-radius: var(--radius-full); cursor: pointer; display: flex; color: var(--gray-500); transition: var(--transition-short); }
         .icon-btn:hover { background-color: var(--gray-100); color: var(--gray-900); }
-        
-        /* Status Tag */
         .status-tag { display: inline-flex; align-items: center; gap: var(--space-1); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600; text-transform: capitalize; }
         .status-tag::before { content: ""; display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
         .status-tag.pending { background-color: var(--status-pending-bg); color: var(--status-pending-text); } .status-tag.pending::before { background-color: var(--status-pending-text); }
         .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); } .status-tag.completed::before { background-color: var(--status-completed-text); }
         .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
         .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
-
-        /* Modals & Overlays */
         .modal { display: none; position: fixed; z-index: 1000; inset: 0; background-color: rgba(17,24,39,0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: var(--space-4); animation: fadeIn 0.3s var(--ease); }
         .modal-content { background-color: #fff; padding: var(--space-8); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; max-width: 480px; text-align: left; animation: popIn 0.3s var(--ease); }
-        .modal-content h3 { margin-bottom: var(--space-6); text-align: center; }
-        .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: var(--space-6); color: var(--gray-900); text-align:center; }
-        .modal-buttons { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
+        .modal-content h3 { margin-bottom: var(--space-6); text-align: center; } .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: var(--space-6); color: var(--gray-900); text-align:center; } .modal-buttons { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
         .loading-overlay { display: none; position: fixed; inset: 0; background-color: rgba(255,255,255,0.9); z-index: 1001; display: flex; align-items: center; justify-content: center; }
         .spinner { border: 6px solid var(--gray-100); border-top-color: var(--color-primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
-        .form-group { margin-bottom: var(--space-4); } .form-group.col-span-2 { grid-column: span 2; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); } .form-group { margin-bottom: var(--space-4); } .form-group.col-span-2 { grid-column: span 2; }
         .form-group label { display: block; margin-bottom: var(--space-2); font-weight: 500; font-size: 0.875rem; color: var(--gray-700); }
         .input-field { width: 100%; padding: var(--space-3); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 1rem; transition: var(--transition-short); }
         .input-field:focus { border-color: var(--color-accent); outline: var(--focus-ring); }
 
         /* --- PAGE LAYOUT & STRUCTURE --- */
         .page-container { max-width: 1200px; margin: 0 auto; }
-        
         .details-header { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-4); background-color: #fff; border-bottom: 1px solid var(--border-color); }
         .details-header__title { display: flex; align-items: center; gap: var(--space-3); flex-grow: 1; min-width: 0; }
         .details-header__title h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* Actions Dropdown */
         .actions-menu-container { position: relative; }
         .actions-dropdown { display: none; text-align: left; position: absolute; top: calc(100% + 8px); right: 0; background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: var(--space-2); min-width: 220px; z-index: 100; animation: fadeUp .2s ease-out; }
         .actions-dropdown.show { display: block; }
@@ -145,73 +84,66 @@
         .actions-dropdown button .material-symbols-outlined { font-size: 1.25rem; color: var(--gray-500); }
         .actions-dropdown hr { border: none; border-top: 1px solid var(--border-color); margin: var(--space-2) 0; }
         
-        .page-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); padding: var(--space-4); }
+        /* Mobile Tabs Nav */
+        .tabs__nav { display: flex; background-color: #fff; padding: 0 var(--space-2); border-bottom: 1px solid var(--border-color); }
+        .tabs__button { background: none; border: none; padding: var(--space-4) var(--space-3); font-weight: 600; font-size: 0.9rem; color: var(--gray-500); cursor: pointer; position: relative; border-bottom: 3px solid transparent; flex: 1; }
+        .tabs__button.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+        .page-grid { display: grid; grid-template-columns: 1fr; padding: var(--space-4); gap: var(--space-4); }
+        .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: var(--space-4); }
 
         /* Content Card */
-        .content-card { background-color: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+        .content-card { background-color: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); animation: fadeUp 0.4s var(--ease); }
         .content-card__header { padding: var(--space-4); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .content-card__body { padding: var(--space-6); }
+        .content-card__body { padding: var(--space-4); }
 
         /* Key Metrics Card */
-        .key-metrics-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: var(--space-4); background-color: #fff; padding: var(--space-4); border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
+        .key-metrics-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); padding: var(--space-4); }
         .metric-item { text-align: center; }
         .metric-item__label { font-size: 0.75rem; font-weight: 500; color: var(--gray-500); margin-bottom: var(--space-1); text-transform: uppercase; letter-spacing: 0.05em; }
         .metric-item__value { font-size: 1.125rem; font-weight: 700; color: var(--gray-900); }
         .metric-item__value.pending { color: var(--status-overdue-text); }
 
-        /* Mobile Tabs */
-        .tabs { border-radius: var(--radius-lg); overflow: hidden; }
-        .tabs__nav { display: flex; border-bottom: 1px solid var(--border-color); background-color: #fff; }
-        .tabs__button { background: none; border: none; padding: var(--space-4) var(--space-3); font-weight: 600; font-size: 0.9rem; color: var(--gray-500); cursor: pointer; position: relative; border-bottom: 3px solid transparent; flex: 1; }
-        .tabs__button.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
-        .tabs__content-pane { display: none; padding: var(--space-6); background-color: #fff; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
-        .tabs__content-pane.active { display: block; animation: fadeIn .3s ease; }
-        .tabs__content-pane .content-card { border: none; box-shadow: none; padding: 0; border-radius: 0; }
-        .tabs__content-pane .content-card__body { padding: 0; }
-        .tabs__content-pane .content-card__header { padding: 0 0 var(--space-4) 0; }
-
         /* Details Sections & Lists */
         .details-list p { display: flex; justify-content: space-between; font-size: 0.9rem; margin: 0; padding: var(--space-2) 0; }
         .order-links-container { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
         .order-links-container .btn { padding: var(--space-2) var(--space-3); font-size: 0.8rem; }
-        
         .detail-window-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3); background-color: var(--gray-50); border-radius: var(--radius-md); margin-bottom: var(--space-2); border: 1px solid var(--border-color); }
         .item-number { flex-shrink: 0; width: 2.25rem; height: 2.25rem; background-color: var(--gray-200); color: var(--gray-800); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem; }
         .item-info { font-size: 0.9rem; color: var(--gray-900); line-height: 1.4; }
         .item-info small { display: block; color: var(--gray-500); font-size: 0.8rem; margin-top: var(--space-1); }
-
         .financial-log, .history-list { list-style: none; padding: 0; margin: 0; }
         .log-item, .history-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--border-color); }
         .log-item:last-child, .history-item:last-child { border-bottom: none; }
         .log-item__info { display: flex; flex-direction: column; gap: var(--space-1); }
         .log-item__amount { font-weight: 600; font-size: 1rem; color: var(--gray-900); }
         .log-item__meta { font-size: 0.8rem; color: var(--gray-500); }
-        .log-item__meta .notes { display: block; margin-top: 4px; color: var(--gray-700); font-style: italic; }
         .log-item--adjustment { color: var(--gray-500); font-size: 0.9rem; font-style: italic; }
         .history-item-meta { font-size: 0.8rem; color: var(--gray-500); margin-bottom: var(--space-1); }
         .history-item-action { font-weight: 500; color: var(--gray-900); }
-        .history-detail { font-size: 0.85rem; color: var(--gray-700); padding-left: var(--space-4); margin-top: var(--space-2); list-style-type: disc; }
+
+        /* Mobile Tab Content Visibility */
+        .tab-content-card { display: none; }
+        .tab-details-active #customer-info-card,
+        .tab-details-active #windows-card { display: block; }
+        .tab-payments-active #payments-card { display: block; }
+        .tab-history-active #history-card { display: block; }
 
         /* Sticky Footer Action Bar (Mobile) */
         .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: var(--space-4); padding: var(--space-4); background-color: rgba(255,255,255,0.9); border-top: 1px solid var(--border-color); backdrop-filter: blur(8px); z-index: 999; }
         .sticky-action-bar .btn { flex-grow: 1; padding: var(--space-4); font-size: 1rem; }
         
         /* --- DESKTOP ADAPTATIONS --- */
-        .desktop-only { display: none; }
-
         @media (min-width: 992px) {
             body { padding-bottom: 0; background-color: var(--gray-100); }
             h1 { font-size: 2rem; }
             .mobile-only { display: none; }
-            .desktop-only { display: revert; }
-
-            .details-header { background: none; border: none; padding: var(--space-6) 0; }
-            .page-grid { grid-template-columns: 1fr 380px; gap: var(--space-8); padding: 0 var(--space-8) var(--space-8); }
-            .grid-main { display: flex; flex-direction: column; gap: var(--space-6); }
-            .grid-sidebar { display: flex; flex-direction: column; gap: var(--space-6); }
-            
-            .sticky-action-bar, .tabs { display: none; }
-            
+            .sticky-action-bar, .tabs__nav { display: none; }
+            .details-header { background: none; border: none; padding: var(--space-6) var(--space-8) 0; }
+            .page-grid { grid-template-columns: 1fr 380px; gap: var(--space-8); padding: var(--space-6) var(--space-8) var(--space-8); }
+            .grid-main, .grid-sidebar { gap: var(--space-6); }
+            /* On desktop, show all tab content cards */
+            .tab-content-card { display: block !important; }
             .order-links-container { justify-content: flex-end; }
         }
     </style>
@@ -245,7 +177,7 @@
         </div>
 
         <!-- PAGE STRUCTURE -->
-        <main id="order-details-screen" class="screen active">
+        <main id="order-details-screen" class="screen active tab-details-active">
             <header class="details-header">
                 <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
                 <div class="details-header__title">
@@ -262,91 +194,74 @@
                     </div>
                 </div>
             </header>
+            
+            <!-- Mobile Tabs Nav -->
+            <nav class="tabs__nav">
+                <button class="tabs__button active" data-tab="details">Details</button>
+                <button class="tabs__button" data-tab="payments" style="display:none;">Financials</button>
+                <button class="tabs__button" data-tab="history">History</button>
+            </nav>
 
             <div class="page-grid">
                 <div class="grid-main">
-                    
-                    <!-- Key Metrics: Visible on both mobile and desktop -->
-                    <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
+                    <!-- Key Metrics: Visible in all views -->
+                    <div id="key-metrics-card" class="content-card key-metrics-card" style="display:none;">
                         <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
                         <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
                         <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
                     </div>
 
-                    <!-- Mobile Tabs -->
-                    <div class="tabs mobile-only">
-                        <nav class="tabs__nav">
-                            <button class="tabs__button active" data-tab="details">Details</button>
-                            <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
-                            <button class="tabs__button" data-tab="history">History</button>
-                        </nav>
-                        <div id="tab-details" class="tabs__content-pane active">
-                            <!-- JS will populate these from shared content blocks -->
-                        </div>
-                        <div id="tab-payments" class="tabs__content-pane">
-                            <div class="content-card">
-                                <div class="content-card__body">
-                                    <ul class="financial-log"></ul>
-                                </div>
+                    <!-- Details Tab Content -->
+                    <div id="customer-info-card" class="content-card tab-content-card">
+                        <div class="content-card__header"><h3>Customer & Order Info</h3></div>
+                        <div class="content-card__body">
+                            <div class="details-list">
+                                <p><strong>Address:</strong> <span class="detail-customer-address"></span></p>
+                                <p><strong>Mobile:</strong> <span class="detail-customer-mobile"></span></p>
+                                <p><strong>Placed On:</strong> <span class="detail-order-taken-date"></span></p>
+                                <p><strong>Created By:</strong> <span class="detail-created-by"></span></p>
+                            </div>
+                            <div class="completed-info-block" style="display:none; margin-top: var(--space-4);"><div class="details-list"><p><strong>Completed On:</strong> <span class="detail-completed-date"></span></p><p><strong>Completed By:</strong> <span class="detail-completed-by"></span></p></div></div>
+                            <div class="order-links-container">
+                                <button class="btn btn-secondary detail-get-directions-btn"><span class="material-symbols-outlined">directions</span>Directions</button>
+                                <button class="btn btn-secondary detail-view-quote-btn"><span class="material-symbols-outlined">request_quote</span>Quote</button>
+                                <button class="btn btn-secondary detail-view-bill-btn"><span class="material-symbols-outlined">receipt_long</span>Bill</button>
                             </div>
                         </div>
-                        <div id="tab-history" class="tabs__content-pane">
-                             <div class="content-card">
-                                <div class="content-card__body">
-                                    <ul class="history-list"></ul>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div id="windows-card" class="content-card tab-content-card">
+                         <div class="content-card__header"><h3>Windows (<span class="detail-window-count"></span>)</h3></div>
+                         <div class="content-card__body"><div class="detail-windows-list"></div></div>
                     </div>
                     
-                    <!-- Shared Content Blocks -->
-                    <div id="details-content-block">
-                        <div class="content-card">
-                            <div class="content-card__header"><h3>Customer & Order Info</h3></div>
-                            <div class="content-card__body">
-                                <div class="details-list">
-                                    <p><strong>Address:</strong> <span class="detail-customer-address"></span></p>
-                                    <p><strong>Mobile:</strong> <span class="detail-customer-mobile"></span></p>
-                                    <p><strong>Placed On:</strong> <span class="detail-order-taken-date"></span></p>
-                                    <p><strong>Created By:</strong> <span class="detail-created-by"></span></p>
-                                </div>
-                                <div class="completed-info-block" style="display:none; margin-top: var(--space-4);">
-                                    <div class="details-list">
-                                        <p><strong>Completed On:</strong> <span class="detail-completed-date"></span></p>
-                                        <p><strong>Completed By:</strong> <span class="detail-completed-by"></span></p>
-                                    </div>
-                                </div>
-                                <div class="order-links-container">
-                                    <button class="btn btn-secondary detail-get-directions-btn"><span class="material-symbols-outlined">directions</span>Directions</button>
-                                    <button class="btn btn-secondary detail-view-quote-btn"><span class="material-symbols-outlined">request_quote</span>Quote</button>
-                                    <button class="btn btn-secondary detail-view-bill-btn"><span class="material-symbols-outlined">receipt_long</span>Bill</button>
-                                </div>
-                            </div>
+                    <!-- Financials Tab Content -->
+                    <div id="payments-card" class="content-card tab-content-card" data-section="payment-management" style="display: none;">
+                        <div class="content-card__header">
+                            <h3>Financial Log</h3>
+                            <button data-app-action="add-payment" class="btn btn-primary mobile-only" style="display: none; padding: var(--space-2) var(--space-3);"><span class="material-symbols-outlined">add_card</span> Add</button>
                         </div>
-                        <div class="content-card">
-                             <div class="content-card__header"><h3>Windows (<span class="detail-window-count"></span>)</h3></div>
-                             <div class="content-card__body">
-                                <div class="detail-windows-list"></div>
-                            </div>
-                        </div>
+                        <div class="content-card__body"><ul class="financial-log"></ul></div>
                     </div>
 
+                    <!-- History Tab Content -->
+                    <div id="history-card" class="content-card tab-content-card" data-section="history">
+                        <div class="content-card__header"><h3>Order History</h3></div>
+                        <div class="content-card__body"><ul class="history-list"><li>Loading...</li></ul></div>
+                    </div>
                 </div>
-                <div class="grid-sidebar desktop-only">
-                    <div class="content-card" data-section="payment-management" style="display: none;">
+
+                <!-- Desktop Sidebar -->
+                <div class="grid-sidebar">
+                    <div id="payments-card-desktop" class="content-card" data-section="payment-management" style="display: none;">
                         <div class="content-card__header">
                             <h3>Financial Log</h3>
                             <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: var(--space-2) var(--space-3);"><span class="material-symbols-outlined">add_card</span> Add</button>
                         </div>
-                        <div class="content-card__body" style="padding-top: 0;">
-                            <ul class="financial-log"></ul>
-                        </div>
+                        <div class="content-card__body"><ul class="financial-log"></ul></div>
                     </div>
-                    <div class="content-card" data-section="history">
+                    <div id="history-card-desktop" class="content-card" data-section="history">
                         <div class="content-card__header"><h3>Order History</h3></div>
-                        <div class="content-card__body" style="padding-top: 0;">
-                            <ul class="history-list"><li>Loading...</li></ul>
-                        </div>
+                        <div class="content-card__body"><ul class="history-list"><li>Loading...</li></ul></div>
                     </div>
                 </div>
             </div>
@@ -360,38 +275,7 @@
     </footer>
 
     <script type="module">
-        // --- NOTE: THE ORIGINAL JAVASCRIPT IS COMPATIBLE WITH THIS NEW HTML ---
-        // --- ADDED A SMALL SCRIPT TO HANDLE MOVING CONTENT FOR RESPONSIVE VIEWS ---
-        
-        // --- THIS SCRIPT HANDLES THE RESPONSIVE CONTENT PLACEMENT ---
-        function setupResponsiveContent() {
-            const detailsTab = document.getElementById('tab-details');
-            const detailsContentBlock = document.getElementById('details-content-block');
-            
-            function moveContent() {
-                if (window.innerWidth < 992) {
-                    // Mobile view: Move content into the tab pane
-                    if (!detailsTab.contains(detailsContentBlock)) {
-                        detailsTab.appendChild(detailsContentBlock);
-                    }
-                } else {
-                    // Desktop view: Move content back to the main grid
-                    const gridMain = document.querySelector('.grid-main');
-                    if (!gridMain.contains(detailsContentBlock)) {
-                        // Insert it after the key metrics card
-                        gridMain.insertBefore(detailsContentBlock, gridMain.querySelector('.tabs').nextSibling);
-                    }
-                }
-            }
-            
-            // Initial check
-            moveContent();
-            
-            // Re-check on window resize
-            window.addEventListener('resize', moveContent);
-        }
-
-        // --- ALL ORIGINAL JAVASCRIPT LOGIC GOES HERE ---
+        // --- ORIGINAL JAVASCRIPT LOGIC ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -407,10 +291,9 @@
         const menuDeleteBtn = document.getElementById('menu-delete-btn');
         const menuDivider = document.getElementById('menu-divider');
         const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        const tabsContainer = document.querySelector('.tabs');
+        const tabsNav = document.querySelector('.tabs__nav');
         const tabButtons = document.querySelectorAll('.tabs__button');
         const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
-        const contentPanes = document.querySelectorAll('.tabs__content-pane');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
@@ -442,18 +325,17 @@
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
-            document.querySelectorAll('#detail-customer-name').forEach(el => el.textContent = order.name);
-            document.querySelectorAll('#detail-status-tag').forEach(el => {
-                const today = new Date(); today.setHours(0,0,0,0);
-                const statusInfo = getStatusInfo(order, today);
-                el.className = 'status-tag ' + statusInfo.className;
-                el.textContent = statusInfo.text;
-            });
+            document.querySelector('#detail-customer-name').textContent = order.name;
+            const statusTag = document.querySelector('#detail-status-tag');
+            const today = new Date(); today.setHours(0,0,0,0);
+            const statusInfo = getStatusInfo(order, today);
+            statusTag.className = 'status-tag ' + statusInfo.className;
+            statusTag.textContent = statusInfo.text;
+            
             document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
             document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
             document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
             document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
-            
             document.querySelectorAll('.completed-info-block').forEach(block => {
                 block.style.display = order.status === 'completed' ? 'block' : 'none';
                 if (order.status === 'completed') {
@@ -467,11 +349,10 @@
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
-            
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'inline-flex' : 'none');
             
             if (isAdmin) {
-                document.querySelectorAll('.key-metrics-card').forEach(card => card.style.display = 'grid');
+                document.querySelector('#key-metrics-card').style.display = 'grid';
                 paymentsTabButton.style.display = 'flex';
                 menuDeleteBtn.style.display = 'flex';
                 menuEditTotalBtn.style.display = 'flex';
@@ -491,9 +372,7 @@
         }
         function renderFinancialLog(logItems, container) {
             container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--gray-500); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => {
-                if (item.type === 'adjustment') {
-                    return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__meta">Total Amount Adjusted from ${item.details.from} to ${item.details.to}</span></div><span class="log-item__meta">${item.date.toLocaleDateString()}</span></li>`;
-                }
+                if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__meta">Total Amount Adjusted from ${item.details.from} to ${item.details.to}</span></div><span class="log-item__meta">${item.date.toLocaleDateString()}</span></li>`; }
                 const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : '';
                 const actionsHtml = `<div class="log-item__actions" style="display:flex; gap:0.5rem;"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 1.1rem;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 1.1rem;">delete</span></button></div>`;
                 return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} &bull; ${item.date.toLocaleDateString()}${notesHtml}</span></div>${actionsHtml}</li>`;
@@ -503,25 +382,11 @@
             container.innerHTML = historyItems.length === 0 ? '<li class="history-item">No history found.</li>' : historyItems.map(entry => {
                 const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now';
                 let detailsHtml = '';
-                if (entry.details && Object.keys(entry.details).length > 0) { 
-                    detailsHtml += '<ul class="history-detail">'; 
-                    for (const [key, value] of Object.entries(entry.details)) { 
-                        if (typeof value === 'object' && value !== null) { 
-                            detailsHtml += `<li><strong>${key}:</strong><ul>`; 
-                            for (const [subKey, subValue] of Object.entries(value)) { 
-                                detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; 
-                            } 
-                            detailsHtml += '</ul></li>'; 
-                        } else { 
-                            detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; 
-                        } 
-                    } 
-                    detailsHtml += '</ul>'; 
-                }
+                if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml = `<ul style="list-style-type:disc; padding-left:1.25rem; margin-top:0.5rem;">${Object.entries(entry.details).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>`; }
                 return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`;
             }).join('');
         }
-        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
+        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelector('#metric-due-date').textContent = currentOrder.dueDate || 'N/A'; document.querySelector('#metric-final-total').textContent = formatCurrency(finalTotal); document.querySelector('#metric-pending-amount').textContent = formatCurrency(pendingAmount); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
 
         // --- ACTION HANDLERS ---
@@ -539,45 +404,16 @@
             const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`));
             const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
             const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
-            
             const financialLogItems = [];
             const operationalHistoryItems = [];
-            
-            historySnap.docs.forEach(doc => {
-                const entry = doc.data();
-                const action = entry.action || '';
-                if (action.includes('Payment') || action.includes('Total')) {
-                    if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') {
-                        financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
-                    }
-                } else {
-                    operationalHistoryItems.push(entry);
-                }
-            });
-            
+            historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } });
             const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) }));
-            if (currentUserProfile?.role === 'admin') {
-                financialLogItems.push(...payments);
-                financialLogItems.sort((a, b) => b.date - a.date);
-            }
-
+            if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => b.date - a.date); }
             document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list));
-            if (currentUserProfile?.role === 'admin') {
-                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log));
-                updateMetrics(payments);
-            }
+            if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(payments); }
         }
         async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
-        async function loadAndDisplayOrder(orderId) {
-            showLoading();
-            const orderRef = doc(db, 'upvc_orders', orderId);
-            const orderSnap = await getDoc(orderRef);
-            if (orderSnap.exists()) {
-                renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() });
-                await loadFinancialAndHistoryData();
-            } else { showMessageModal("Order not found."); }
-            hideLoading();
-        }
+        async function loadAndDisplayOrder(orderId) { showLoading(); const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); } hideLoading(); }
         
         // --- EVENT LISTENERS ---
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
@@ -587,7 +423,13 @@
         menuEditTotalBtn.addEventListener('click', openEditTotalModal);
         menuDeleteBtn.addEventListener('click', handleDeleteOrder);
         detailCompleteBtn.addEventListener('click', handleCompleteOrder);
-        tabsContainer.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; tabButtons.forEach(btn => btn.classList.remove('active')); contentPanes.forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); });
+        tabsNav.addEventListener('click', (e) => {
+            const clickedTab = e.target.closest('.tabs__button');
+            if (!clickedTab) return;
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            clickedTab.classList.add('active');
+            mainScreen.className = `screen active tab-${clickedTab.dataset.tab}-active`;
+        });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
         cancelActionBtn.addEventListener('click', hideConfirmationModal);
         confirmActionBtn.addEventListener('click', performConfirmedAction);
@@ -596,20 +438,12 @@
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
         editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
         mainScreen.addEventListener('click', (e) => {
-            const directionsBtn = e.target.closest('.detail-get-directions-btn');
-            if (directionsBtn) { window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
-
-            const quoteBtn = e.target.closest('.detail-view-quote-btn');
-            if (quoteBtn) { window.location.href = `quote.html?id=${currentOrderId}`; }
-
-            const billBtn = e.target.closest('.detail-view-bill-btn');
-            if (billBtn) { window.location.href = `bill.html?id=${currentOrderId}`; }
-            
+            if (e.target.closest('.detail-get-directions-btn')) { window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
+            if (e.target.closest('.detail-view-quote-btn')) { window.location.href = `quote.html?id=${currentOrderId}`; }
+            if (e.target.closest('.detail-view-bill-btn')) { window.location.href = `bill.html?id=${currentOrderId}`; }
             if (e.target.closest('[data-app-action="add-payment"]')) { openPaymentModal(); }
-
             const editPaymentBtn = e.target.closest('[data-app-action="edit-payment"]'); 
             if (editPaymentBtn) { openPaymentModalForEdit(editPaymentBtn.dataset.id); } 
-            
             const deletePaymentBtn = e.target.closest('[data-app-action="delete-payment"]'); 
             if(deletePaymentBtn) { handleDeletePayment(deletePaymentBtn.dataset.id, parseFloat(deletePaymentBtn.dataset.amount)); }
         });
@@ -617,10 +451,8 @@
         // --- INITIALIZE APP ---
         document.addEventListener('DOMContentLoaded', () => {
             showLoading();
-            setupResponsiveContent(); // Setup the responsive content logic
             initializeFirebase();
         });
-
     </script>
 </body>
 </html>
