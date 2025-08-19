@@ -98,39 +98,22 @@
         .metric-item__value { font-size: 1rem; font-weight: 600; color: var(--light-text-primary); line-height: 1.2; }
         .metric-item__value.pending { color: var(--color-danger); }
 
-        /* [NEW] Modern Tab Design */
         .tabs { margin-top: 1rem; }
         .tabs__nav { display: flex; background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); overflow-x: auto; padding: 0 0.5rem; }
         .tabs__button { background: none; border: none; padding: 1rem; font-weight: 600; font-size: 0.875rem; color: var(--light-text-secondary); cursor: pointer; transition: color 0.2s ease; white-space: nowrap; flex-shrink: 0; border-bottom: 3px solid transparent; }
         .tabs__button.active { color: var(--color-primary);  border-color: var(--color-primary); border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md); }
-        .tabs__content-pane { display: none; padding: 1.5rem; background-color: var(--light-bg-primary); border-radius: var(--radius-lg); margin-top: -1px; /* Overlap border */ }
+        .tabs__content-pane { display: none; padding: 1.5rem; background-color: var(--light-bg-primary); border-radius: var(--radius-lg); margin-top: -1px; }
         .tabs__content-pane.active { display: block; animation: fadeIn 0.3s ease; }
-        .tabs__nav + .tabs__content-pane.active { border-top-left-radius: 0; } /* Adjust radius for seamless look */
+        .tabs__nav + .tabs__content-pane.active { border-top-left-radius: 0; }
         
         .content-section { margin-bottom: 2.5rem; } .content-section:last-child { margin-bottom: 0; }
         .content-section h3 { font-size: 1.125rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border); }
         
-/* [NEW & IMPROVED] Customer Info Grid & Action Links List */
-.info-grid { display: grid; grid-template-columns: 1fr; gap: 0; font-size: 0.9375rem; }
-.info-grid-item {
-    display: flex;
-    flex-direction: column; /* <-- Stacks items vertically */
-    padding: 0.875rem 0;
-    border-bottom: 1px solid var(--light-border);
-}
-.info-grid-item:last-child { border-bottom: none; }
-.info-grid dt {
-    font-weight: 500;
-    color: var(--light-text-muted);
-    font-size: 0.8rem; /* <-- Make label slightly smaller */
-    margin-bottom: 0.125rem; /* <-- Add space between label and value */
-}
-.info-grid dd {
-    color: var(--light-text-primary);
-    margin: 0;
-    text-align: left; /* <-- Ensure text is left-aligned */
-    font-weight: 500; /* <-- Make value slightly bolder */
-}
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 0; font-size: 0.9375rem; }
+        .info-grid-item { display: flex; flex-direction: column; padding: 0.875rem 0; border-bottom: 1px solid var(--light-border); }
+        .info-grid-item:last-child { border-bottom: none; }
+        .info-grid dt { font-weight: 500; color: var(--light-text-muted); font-size: 0.8rem; margin-bottom: 0.125rem; }
+        .info-grid dd { color: var(--light-text-primary); margin: 0; text-align: left; font-weight: 500; }
         
         .action-links { margin-top: 1.5rem; background-color: var(--light-bg-tertiary); border: 1px solid var(--light-border); border-radius: var(--radius-md); }
         .action-link-item { display: flex; align-items: center; padding: 1rem; text-decoration: none; color: var(--light-text-primary); font-weight: 500; border-bottom: 1px solid var(--light-border); transition: background-color 0.2s ease; }
@@ -163,7 +146,6 @@
         .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255, 255, 255, 0.85); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; box-shadow: 0 -4px 10px rgba(0,0,0,0.04); }
         .sticky-action-bar .btn { flex-grow: 1; padding: 1.125rem; font-size: 1rem; }
 
-        /* --- Modals & Forms (No changes from previous good version) --- */
         .modal { display: none; position: fixed; z-index: 1000; inset: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; animation: fadeIn 0.3s var(--ease); padding: 1rem; }
         .modal-content { background-color: #fff; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; max-width: 450px; text-align: left; animation: popIn 0.3s var(--ease); }
         .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--light-text-primary); text-align: center; }
@@ -177,7 +159,6 @@
         .input-field { width: 100%; padding: 0.875rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
         .input-field:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px var(--color-focus-ring); }
 
-        /* --- DESKTOP STYLES (Breakpoint >= 900px) --- */
         .desktop-view { display: none; }
         @media (min-width: 900px) {
             .mobile-view { display: none; }
@@ -190,8 +171,8 @@
             .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); margin: 0; }
             .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
             .info-grid { grid-template-columns: 120px 1fr; }
-            .info-grid-item { display: grid; grid-template-columns: subgrid; grid-column: span 2; }
-            .info-grid dt { text-align: left; }
+            .info-grid-item { display: grid; flex-direction: row; grid-template-columns: subgrid; grid-column: span 2; }
+            .info-grid dt { text-align: left; font-size: 0.9375rem; margin-bottom: 0; }
             .action-links { margin-top: 2rem; }
         }
     </style>
@@ -224,7 +205,7 @@
             </div>
         </div>
 
-        <!-- UPDATED PAGE STRUCTURE -->
+        <!-- PAGE STRUCTURE -->
         <main id="order-details-screen" class="screen active">
             <header class="details-header">
                 <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
@@ -250,7 +231,6 @@
                         <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
                     </div>
                     
-                    <!-- Mobile View Content -->
                     <div class="mobile-view">
                         <div class="tabs">
                             <nav class="tabs__nav">
@@ -271,24 +251,19 @@
                                     <div class="completed-info-block" style="display:none; margin-top: 1rem;">
                                         <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
                                     </div>
-                                    <!-- [NEW] Action Links List -->
                                     <div class="action-links">
                                         <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                         <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                         <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                     </div>
                                 </section>
-                                <section class="content-section">
-                                    <h3>Windows (<span class="detail-window-count"></span>)</h3>
-                                    <div class="detail-windows-list"></div>
-                                </section>
+                                <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
                             </div>
                             <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
                             <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
                         </div>
                     </div>
 
-                    <!-- Desktop View Content -->
                     <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
                         <section class="content-section">
                             <h3>Customer & Order Info</h3>
@@ -330,7 +305,6 @@
     </footer>
 
     <script type="module">
-        // --- JAVASCRIPT IS LARGELY UNCHANGED, EXCEPT FOR ONE CRITICAL FIX ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -435,21 +409,93 @@
         function renderHistory(historyItems, container) { container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => { const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, value] of Object.entries(entry.details)) { if (typeof value === 'object' && value !== null) { detailsHtml += `<li><strong>${key}:</strong><ul>`; for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } detailsHtml += '</ul></li>'; } else { detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; } } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join(''); }
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
-
+        
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
+        
+        // --- [UPDATED FUNCTION] ---
+        async function handlePaymentFormSubmit(e) {
+            e.preventDefault();
+            showLoading();
+            const paymentId = paymentForm.querySelector('#payment-id').value;
+            const data = {
+                amount: parseFloat(paymentForm.querySelector('#payment-amount').value),
+                date: paymentForm.querySelector('#payment-date').value,
+                type: paymentForm.querySelector('#payment-type').value,
+                notes: paymentForm.querySelector('#payment-notes').value.trim(),
+                timestamp: serverTimestamp() // Add timestamp for accurate sorting
+            };
+            try {
+                const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`);
+                if (paymentId) {
+                    await setDoc(doc(paymentsRef, paymentId), data);
+                    await logHistory("Payment Edited");
+                } else {
+                    await addDoc(paymentsRef, data);
+                    await logHistory("Payment Added");
+                }
+                paymentModal.style.display = 'none';
+                await loadFinancialAndHistoryData();
+            } catch (error) {
+                console.error("Error saving payment:", error);
+                showMessageModal("Could not save payment.");
+            } finally {
+                hideLoading();
+            }
+        }
+        
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
         function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
         async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
         
-        async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`)); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => b.date - a.date); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(payments); } }
+        // --- [UPDATED FUNCTION] ---
+        async function loadFinancialAndHistoryData() {
+            const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc'));
+            const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
+            const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
+            
+            const financialLogItems = [];
+            const operationalHistoryItems = [];
+            
+            historySnap.docs.forEach(doc => {
+                const entry = doc.data();
+                const action = entry.action || '';
+                if (action.includes('Payment') || action.includes('Total')) {
+                    if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') {
+                        financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
+                    }
+                } else {
+                    operationalHistoryItems.push(entry);
+                }
+            });
+            
+            const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) }));
+            const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data());
+
+            if (currentUserProfile?.role === 'admin') {
+                financialLogItems.push(...payments);
+                financialLogItems.sort((a, b) => {
+                    const dateA = a.timestamp?.toDate();
+                    const dateB = b.timestamp?.toDate();
+                    if (!dateA && !dateB) return b.date - a.date;
+                    if (!dateA) return 1;
+                    if (!dateB) return -1;
+                    return dateB - dateA;
+                });
+            }
+
+            document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list));
+            if (currentUserProfile?.role === 'admin') {
+                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log));
+                updateMetrics(paymentsForMetrics);
+            }
+        }
+        
         async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
         async function loadAndDisplayOrder(orderId) { showLoading(); const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); } hideLoading(); }
         
-        // --- EVENT LISTENERS ---
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
         actionsMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); actionsDropdown.classList.toggle('show'); });
         window.addEventListener('click', () => { if (actionsDropdown.classList.contains('show')) actionsDropdown.classList.remove('show'); });
@@ -465,28 +511,20 @@
         document.querySelector('[data-app-action="close-total-modal"]').addEventListener('click', () => editTotalModal.style.display = 'none');
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
         editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
-
-        // [FIXED] Event listener moved to document.body to capture clicks everywhere, including the sticky footer.
         document.body.addEventListener('click', (e) => {
             const directionsBtn = e.target.closest('.detail-get-directions-btn');
             if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
-
             const quoteBtn = e.target.closest('.detail-view-quote-btn');
             if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
-
             const billBtn = e.target.closest('.detail-view-bill-btn');
             if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
-            
             if (e.target.closest('[data-app-action="add-payment"]')) { openPaymentModal(); }
-
             const editPaymentBtn = e.target.closest('[data-app-action="edit-payment"]'); 
             if (editPaymentBtn) { openPaymentModalForEdit(editPaymentBtn.dataset.id); } 
-            
             const deletePaymentBtn = e.target.closest('[data-app-action="delete-payment"]'); 
             if(deletePaymentBtn) { handleDeletePayment(deletePaymentBtn.dataset.id, parseFloat(deletePaymentBtn.dataset.amount)); }
         });
         
-        // --- INITIALIZE APP ---
         showLoading();
         initializeFirebase();
     </script>
