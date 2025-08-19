@@ -3,64 +3,6 @@
 <head>
      <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Author Guidelines | IHTNAS Journal</title>
-  <meta name="description" content="Read the author guidelines for submitting manuscripts to IHTNAS Journal. Follow formatting, citation, and submission requirements.">
-  <meta name="robots" content="index, follow">
-  <meta name="application-name" content="IHTNAS">
-  <link rel="canonical" href="https://ihtnas.com/guidelines" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://ihtnas.com/favicon.ico" type="image/x-icon" />
-  <link rel="shortcut icon" href="https://ihtnas.com/favicon.ico" type="image/x-icon" />
-  <link rel="icon" type="image/png" sizes="192x192" href="https://ihtnas.com/assets/ihtnas.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="https://ihtnas.com/assets/ihtnas.png" />
-
-  <!-- Manifest -->
-  <link rel="manifest" href="https://ihtnas.com/manifest.json" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Author Guidelines | IHTNAS Journal" />
-  <meta property="og:description" content="IHTNAS Journal submission instructions for authors. Learn manuscript format, style, references, and ethical compliance." />
-  <meta property="og:url" content="https://ihtnas.com/guidelines" />
-  <meta property="og:site_name" content="IHTNAS" />
-  <meta property="og:image" content="https://ihtnas.com/assets/ihtnas.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="en_US" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Author Guidelines | IHTNAS Journal" />
-  <meta name="twitter:description" content="Get detailed author guidelines for submitting papers to IHTNAS Journal including style, format, and ethical requirements.">
-  <meta name="twitter:image" content="https://ihtnas.com/assets/ihtnas.png" />
-
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Author Guidelines",
-    "url": "https://ihtnas.com/guidelines",
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://ihtnas.com"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Author Guidelines",
-          "item": "https://ihtnas.com/guidelines"
-        }
-      ]
-    }
-  }
   </script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
        <style>
@@ -71,28 +13,9 @@
             box-sizing: border-box;
         }
 
-        /* Root variables */
-        :root {
-            --spacing: 0.25rem;
-            --color-gray-200: oklch(92.8% 0.006 264.531);
-            --color-white: #fff;
-            --color-black: #000;
-            --color-dark-teal: #012726;
-            --color-teal-hover: #004D4B;
-            --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            --font-weight-medium: 500;
-            --font-weight-normal: 400;
-            --font-weight-bold: 700;
-            --text-base: 1rem;
-            --text-base--line-height: 1.5;
-            --radius-md: 0.375rem;
-            --default-transition-duration: 0.15s;
-            --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
         /* Body styles */
         body {
-            font-family: var(--font-sans);
+            font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             line-height: 1.6;
             padding-top: 72px;
         }
@@ -106,9 +29,9 @@
             z-index: 50;
             transition-property: all;
             transition-duration: 0.3s;
-            transition-timing-function: var(--default-transition-timing-function);
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             overflow: visible;
-            background-color: var(--color-white);
+            background-color: #fff;
         }
 
         /* Container */
@@ -142,8 +65,8 @@
 
         /* Navigation */
         .nav {
-            padding-top: calc(var(--spacing) * 3);
-            padding-bottom: calc(var(--spacing) * 3);
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -153,18 +76,18 @@
         .nav-left {
             display: flex;
             align-items: center;
-            gap: calc(var(--spacing) * 6);
+            gap: 1.5rem;
         }
         @media (max-width: 768px) {
             .nav {
-                padding-top: calc(var(--spacing) * 3);
-                padding-bottom: calc(var(--spacing) * 3);
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
             }
         }
         
         /* Logo image */
         .logo {
-            margin-right: calc(var(--spacing) * 6);
+            margin-right: 1.5rem;
             width: 100px;
             height: 40px;
             color: transparent;
@@ -174,7 +97,7 @@
         .nav-links {
             display: none;
             align-items: center;
-            gap: calc(var(--spacing) * 4);
+            gap: 1rem;
         }
 
         @media (min-width: 48rem) {
@@ -185,42 +108,36 @@
 
         /* Nav link hover effect */
         .nav-link {
-            padding-left: calc(var(--spacing) * 4);
-            padding-right: calc(var(--spacing) * 4);
-            padding-top: calc(var(--spacing) * 2);
-            padding-bottom: calc(var(--spacing) * 2);
-            font-size: var(--text-base);
-            line-height: var(--text-base--line-height);
-            font-weight: var(--font-weight-medium);
-            color: var(--color-dark-teal);
-            transition-property: color, background-color;
-            transition-duration: var(--default-transition-duration);
-            transition-timing-function: var(--default-transition-timing-function);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #012726;
+            transition: color 0.15s, background-color 0.15s;
             text-decoration: none;
-            border-radius: var(--radius-md);
+            border-radius: 0.375rem;
         }
 
         @media (hover: hover) {
             .nav-link:hover {
-                color: var(--color-white);
-                background-color: var(--color-dark-teal);
+                color: #fff;
+                background-color: #012726;
             }
         }
 
-        /* Right-side buttons container */
+        /* Right-side container */
         .nav-right {
             display: flex;
             align-items: center;
-            gap: calc(var(--spacing) * 4);
+            gap: 1rem;
         }
 
         /* Mobile menu button */
         .menu-button {
             display: flex;
-            padding: calc(var(--spacing) * 1.5);
-            border: 1px solid var(--color-dark-teal);
-            border-radius: var(--radius-md);
-            color: var(--color-dark-teal);
+            padding: 0.375rem;
+            border: 1px solid #012726;
+            border-radius: 0.375rem;
+            color: #012726;
             background-color: transparent;
             cursor: pointer;
         }
@@ -294,107 +211,47 @@
         .mobile-menu-section {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 8px; /* Space between the new buttons */
         }
-
-        .mobile-menu-group {
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 8px;
-        }
-
-        .mobile-menu-header {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2d3436;
-            margin: 0;
-            padding: 12px 0;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            cursor: pointer;
+        
+        /* --- NEW MOBILE NAV BUTTON STYLES --- */
+        .mobile-nav-link {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            padding: 12px 16px;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            color: #012726;
+            background-color: #f8f9fa;
+            transition: background-color 0.15s;
+        }
+        
+        .mobile-nav-link:hover {
+            background-color: #e9ecef;
+        }
+        
+        .mobile-nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            color: #495057;
         }
 
-        .mobile-menu-auth {
+        .mobile-menu-bottom {
             flex-shrink: 0;
-            padding-top: 20px;
-        }
-
-        .mobile-menu-auth-buttons {
+            margin-top: auto; /* Pushes profile to the bottom */
+            padding-top: 16px;
+            border-top: 1px solid #e9ecef;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-        }
-
-        .mobile-menu-auth-button {
-            padding: 12px;
-            text-align: center;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background 0.2s ease;
-            font-weight: 600;
-        }
-
-        .mobile-menu-auth-button.submit {
-            background: var(--color-dark-teal);
-            color: var(--color-white);
-        }
-
-        @media (hover: hover) {
-            .mobile-menu-auth-button.submit:hover {
-                background: var(--color-teal-hover);
-            }
-        }
-
-        /* Auth buttons container */
-        .auth-buttons {
-            display: none;
-            align-items: center;
-            gap: calc(var(--spacing) * 4);
-        }
-
-        @media (min-width: 48rem) {
-            .auth-buttons {
-                display: flex;
-            }
-        }
-
-        /* Auth button */
-        .auth-button {
-            padding-left: calc(var(--spacing) * 5);
-            padding-right: calc(var(--spacing) * 5);
-            padding-top: calc(var(--spacing) * 2);
-            padding-bottom: calc(var(--spacing) * 2);
-            font-size: var(--text-base);
-            line-height: var(--text-base--line-height);
-            font-weight: var(--font-weight-medium);
-            border: 1px solid var(--color-dark-teal);
-            border-radius: var(--radius-md);
-            color: var(--color-dark-teal);
-            transition-property: color, background-color;
-            transition-duration: var(--default-transition-duration);
-            transition-timing-function: var(--default-transition-timing-function);
-            text-decoration: none;
-            background-color: transparent;
-        }
-
-        .auth-button.submit {
-            background-color: var(--color-dark-teal);
-            color: var(--color-white);
-            border: none;
-        }
-
-        @media (hover: hover) {
-            .auth-button.submit:hover {
-                background-color: var(--color-teal-hover);
-            }
+            gap: 16px;
         }
 
         /* Divider */
         .divider {
             height: 1px;
-            background-color: var(--color-gray-200);
+            background-color: #e9ecef;
         }
 
         @media (max-width: 768px) {
@@ -403,6 +260,90 @@
                 margin: 0;
                 padding: 0;
             }
+        }
+        
+        /* --- PROFILE STYLES --- */
+        .desktop-profile {
+            display: none;
+        }
+        
+        @media (min-width: 48rem) {
+            .desktop-profile {
+                display: flex;
+            }
+        }
+        
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0.375rem;
+            padding: 4px;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e9ecef;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .profile-name {
+            font-weight: 500;
+            color: #012726;
+        }
+
+        .profile-email {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        /* --- LOGOUT BUTTON AND DROPDOWN STYLES --- */
+        .profile-dropdown-container {
+            position: relative;
+        }
+
+        .logout-popup {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background-color: #fff;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 8px;
+            z-index: 60;
+            width: 150px;
+        }
+
+        .logout-popup.show {
+            display: block;
+        }
+        
+        .logout-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.15s;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -421,53 +362,62 @@
                     </div>
                 </div>
                 <div class="nav-right">
+                    <!-- Desktop Profile Display with Dropdown -->
+                    <div class="desktop-profile">
+                         <div class="profile-dropdown-container">
+                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="https://i.pravatar.cc/40?u=alexdoe" class="profile-pic" alt="Profile Picture">
+                                <div class="profile-info">
+                                    <span class="profile-name">Alex Doe</span>
+                                    <span class="profile-email">alex.doe@example.com</span>
+                                </div>
+                            </div>
+                            <div class="logout-popup" id="logoutPopup">
+                                <button class="logout-button">Logout</button>
+                            </div>
+                         </div>
+                    </div>
+                    <!-- Mobile Menu Button -->
                     <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
-                    <div class="auth-buttons">
-                        <a class="auth-button submit" href="/login">Login</a>
-                    </div>
                 </div>
             </nav>
-            <div id="mobileMenu" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
-                <div class="mobile-menu-header-container">
-                     <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-                        <svg viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
+            <div id="mobileMenu" role="dialog" aria-modal="true">
+                <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
+                    <svg viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
                 <div class="mobile-menu-content">
                     <div class="mobile-menu-section">
-                        <a href="/archive" style="text-decoration: none;">
-                            <div class="mobile-menu-group">
-                                <h3 class="mobile-menu-header">
-                                    <span>Home</span>
-                                </h3>
-                            </div>
+                        <!-- UPDATED MOBILE NAV LINKS -->
+                        <a href="/archive" class="mobile-nav-link">
+                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                             <span>Home</span>
                         </a>
-                        <a href="/about-us" style="text-decoration: none;">
-                            <div class="mobile-menu-group">
-                                <h3 class="mobile-menu-header">
-                                    <span>All Orders</span>
-                                </h3>
-                            </div>
+                        <a href="/about-us" class="mobile-nav-link">
+                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                             <span>All Orders</span>
                         </a>
-                        <a href="/archive" style="text-decoration: none;">
-                            <div class="mobile-menu-group">
-                                <h3 class="mobile-menu-header">
-                                    <span>Manage Employees</span>
-                                </h3>
-                            </div>
+                        <a href="/archive" class="mobile-nav-link">
+                             <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                             <span>Manage Employees</span>
                         </a>
                     </div>
                 </div>
-                <div class="mobile-menu-auth">
-                    <div class="mobile-menu-auth-buttons">
-                        <a href="/login" class="mobile-menu-auth-button submit">Login</a>
+                <!-- Mobile Profile Display and Logout Button -->
+                <div class="mobile-menu-bottom">
+                    <div class="profile-container">
+                        <img src="https://i.pravatar.cc/40?u=alexdoe" class="profile-pic" alt="Profile Picture">
+                        <div class="profile-info">
+                            <span class="profile-name">Alex Doe</span>
+                            <span class="profile-email">alex.doe@example.com</span>
+                        </div>
                     </div>
+                    <button class="logout-button">Logout</button>
                 </div>
             </div>
             <div id="menuOverlay"></div>
@@ -476,7 +426,7 @@
     </header>
 
 <script>
-    // Mobile Menu
+    // --- Mobile Menu Logic ---
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenuClose = document.getElementById('mobileMenuClose');
@@ -485,9 +435,7 @@
     function toggleMobileMenu() {
         const isOpen = mobileMenu.classList.contains('active');
         if (isOpen) {
-            mobileMenu.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
+            closeMobileMenu();
         } else {
             mobileMenu.classList.add('active');
             menuOverlay.classList.add('active');
@@ -495,7 +443,6 @@
         }
     }
     
-    // Function to close menu
     function closeMobileMenu() {
         if (mobileMenu.classList.contains('active')) {
              mobileMenu.classList.remove('active');
@@ -508,19 +455,49 @@
     mobileMenuClose.addEventListener('click', closeMobileMenu);
     menuOverlay.addEventListener('click', closeMobileMenu);
 
-    // Close on ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeMobileMenu();
         }
     });
 
-    // Handle window resize
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             closeMobileMenu();
         }
     });
+
+    // --- Desktop Profile Dropdown Logic ---
+    const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
+    const logoutPopup = document.getElementById('logoutPopup');
+    
+    if (desktopProfileTrigger && logoutPopup) {
+        desktopProfileTrigger.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevents the window click listener from closing it immediately
+            const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';
+            logoutPopup.classList.toggle('show');
+            desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);
+        });
+
+        // Close the dropdown if clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {
+                if (logoutPopup.classList.contains('show')) {
+                    logoutPopup.classList.remove('show');
+                    desktopProfileTrigger.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+
+        // Close dropdown on 'Escape' key press
+        document.addEventListener('keydown', (e) => {
+             if (e.key === 'Escape' && logoutPopup.classList.contains('show')) {
+                logoutPopup.classList.remove('show');
+                desktopProfileTrigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
