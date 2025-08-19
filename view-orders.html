@@ -16,8 +16,8 @@
         /* --- 2. BASE STYLES & ANIMATIONS --- */
         *, *::before, *::after { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body {font-family: var(--font-main);background-color: var(--light-bg-secondary);color: var(--light-text-secondary);margin: 0;min-height: 100vh;padding-top: 70px;}
-        .app-container {max-width: 72rem;margin: 2rem auto;padding: 0 1rem;width: 100%;}
+        body {font-family: var(--font-main);background-color: var(--light-bg-secondary);color: var(--light-text-secondary);margin: 0;min-height: 100vh;padding-top: 72px; padding-bottom: 100px;} /* Added padding-bottom for FAB safe area */
+        .app-container {max-width: 80rem;margin: 2rem auto;padding: 0 1.5rem;width: 100%;}
         h1, h2, h3 {font-weight: 600;color: var(--light-text-primary);margin: 0;}
         h2 { font-size: 1.5rem; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -25,46 +25,78 @@
         .screen.active { display: block; animation: fadeUp 0.5s var(--ease) forwards; }
         .text-center { text-align: center; }
 
-        /* --- 3. GLOBAL COMPONENTS (Buttons, Tags, Cards) --- */
-        button, .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.875rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; -webkit-user-select: none; user-select: none; }
-        button:hover:not(:disabled), .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        /* --- 3. NAVBAR STYLES --- */
+        .header {position: fixed; top: 0; width: 100%; z-index: 50;background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
+        .header-container { width: 90%; margin-left: auto; margin-right: auto; }
+        @media (min-width: 48rem) { .header-container { width: 80%; max-width: 80rem; } }
+        @media (max-width: 768px) { .header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; } }
+        .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
+        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
+        .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
+        .nav-links { display: none; align-items: center; gap: 1rem; }
+        @media (min-width: 48rem) { .nav-links { display: flex; } }
+        .nav-link { padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #012726; transition: color 0.15s, background-color 0.15s; text-decoration: none; border-radius: 0.375rem; }
+        @media (hover: hover) { .nav-link:hover { color: #fff; background-color: #012726; } }
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .menu-button { display: flex; padding: 0.375rem; border: 1px solid #012726; border-radius: 0.375rem; color: #012726; background-color: transparent; cursor: pointer; }
+        @media (min-width: 48rem) { .menu-button { display: none; } }
+        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; }
+        #mobileMenu.active { transform: translateX(0); }
+        #menuOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        #menuOverlay.active { display: block; }
+        .mobile-menu-close { padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease; align-self: flex-end; margin-bottom: 24px; cursor: pointer; }
+        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
+        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
+        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
+        .mobile-nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500; color: #012726; background-color: #f8f9fa; transition: background-color 0.15s; }
+        .mobile-nav-link:hover { background-color: #e9ecef; }
+        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
+        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
+        .divider { height: 1px; background-color: var(--light-border); }
+        @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
+        .desktop-profile { display: none; }
+        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
+        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
+        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
+        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
+        .profile-name { font-weight: 500; color: #012726; }
+        .profile-email { font-size: 0.85rem; color: #6c757d; }
+        .profile-dropdown-container { position: relative; }
+        .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
+        .logout-popup.show { display: block; }
+        .logout-button { background-color: var(--color-danger); color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
+        .logout-button:hover { background-color: var(--color-danger-hover); }
+        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .fab-button .icon { font-size: 32px; font-weight: 300; line-height: 1; }
+        .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
+
+        /* --- [NEW] UI/UX IMPROVEMENT STYLES --- */
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .filter-card { background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem; }
+        .filter-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 768px) { .filter-grid { grid-template-columns: 1fr 1fr; } }
+        .input-group { position: relative; }
+        .input-field { width: 100%; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; padding: 1rem; color: var(--light-text-primary); transition: all 0.2s; outline: none; }
+        .input-label { position: absolute; top: 1rem; left: 1rem; color: var(--light-text-secondary); pointer-events: none; transition: all 0.2s var(--ease); background-color: var(--light-bg-primary); padding: 0 0.25rem; }
+        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label { top: -0.625rem; font-size: 0.75rem; color: var(--color-primary); }
+        .input-field:focus { border-color: var(--color-primary); }
+        #order-filter { padding-top: 1rem; padding-bottom: 1rem; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%236b7280%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20clip-rule%3D%22evenodd%22%20/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right .7rem center; background-size: 1.5em 1.5em; }
+        .order-list-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .order-card { background-color: white; border: 1px solid var(--light-border); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: var(--shadow-sm); transition: all 0.2s var(--ease); cursor: pointer; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .order-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--light-border-hover); }
+        .order-card-status { position: absolute; top: 1.5rem; right: 1.5rem; }
+        .order-card-body { padding-right: 6rem; } /* Space for the status tag */
+        .order-card-customer { font-size: 1.25rem; font-weight: 600; color: var(--light-text-primary); line-height: 1.3; }
+        .order-card-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--light-text-secondary); margin-top: 0.5rem; }
+        .order-card-detail .icon { font-size: 1.125rem; }
+        .order-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 1.25rem; border-top: 1px solid var(--light-border); }
         .status-tag { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
         .status-tag::before { content: ''; display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
         .status-tag.pending { background-color: var(--status-pending-bg); color: var(--status-pending-text); } .status-tag.pending::before { background-color: var(--status-pending-text); }
         .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); } .status-tag.completed::before { background-color: var(--status-completed-text); }
         .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
         .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
-        .card { background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); }
-        .input-group { position: relative; }
-        .input-field { width: 100%; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; padding: 1rem; color: var(--light-text-primary); transition: all 0.2s; outline: none; }
-        .input-label { position: absolute; top: 1rem; left: 1rem; color: var(--light-text-secondary); pointer-events: none; transition: all 0.2s var(--ease); background-color: var(--light-bg-primary); padding: 0 0.25rem; }
-        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label { top: -0.625rem; font-size: 0.75rem; color: var(--color-primary); }
-        .input-field:focus { border-color: var(--color-primary); }
-
-        /* --- 4. NAVBAR & FAB STYLES --- */
-        .navbar { background-color: var(--light-bg-primary); padding: 10px 2rem; box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 70px; }
-        .navbar-logo a { text-decoration: none; color: var(--light-text-primary); font-weight: 700; font-size: 1.5rem; }
-        .navbar-profile { position: relative; }
-        .navbar-profile .profile-image { height: 45px; width: 45px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #e0e0e0; }
-        .profile-dropdown { position: absolute; top: calc(100% + 12px); right: 0; background: var(--light-bg-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 8px; min-width: 160px; z-index: 1001; visibility: hidden; opacity: 0; transform: translateY(-10px); transition: all 0.2s ease-out; }
-        .profile-dropdown.show { visibility: visible; opacity: 1; transform: translateY(0); }
-        .profile-dropdown button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: none; background: none; text-align: left; font-size: 15px; color: var(--light-text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: background-color 0.2s ease; }
-        .profile-dropdown button:hover { background-color: var(--light-bg-tertiary); }
-        .profile-dropdown .icon { font-size: 18px; }
-        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
-        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        .fab-button .icon { font-size: 32px; font-weight: 300; line-height: 1; }
-        .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
-
-        /* --- 5. ORDER LIST & SKELETON LOADER --- */
-        .order-list-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-        .order-card { background-color: white; border: 1px solid var(--light-border); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: var(--shadow-sm); transition: all 0.2s var(--ease); cursor: pointer; display: flex; flex-direction: column; gap: 1rem; }
-        .order-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--light-border-hover); }
-        .order-card-header { display: flex; flex-direction: column; gap: 0.25rem; }
-        .order-card-customer { font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
-        .order-card-mobile { font-size: 0.875rem; color: var(--light-text-secondary); }
-        .order-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 1rem; border-top: 1px dashed var(--light-border); }
-        .order-card-date { font-size: 0.875rem; font-weight: 500; color: var(--light-text-primary); }
         .skeleton-card { background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: var(--shadow-sm); }
         .skeleton { background-color: var(--light-bg-tertiary); border-radius: var(--radius-sm); animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes pulse { 50% { opacity: .5; } }
@@ -72,35 +104,88 @@
         .loading-overlay { position: fixed; inset: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.9); z-index: 1001; display: flex; align-items: center; justify-content: center; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .spinner { border: 6px solid var(--light-bg-tertiary); border-top: 6px solid var(--color-primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-        
-        @media (max-width: 640px) { body { padding-left: 0; padding-right: 0; } .app-container { padding: 0; margin: 1rem auto; } }
+        #order-list-empty { padding: 4rem 1rem; }
+        #order-list-empty .icon { font-size: 3.5rem; color: var(--light-text-muted); }
+        #order-list-empty p { margin-top: 1rem; font-size: 1.125rem; color: var(--light-text-secondary); }
+
+        @media (max-width: 768px) {
+            .app-container { padding: 0; margin: 0; }
+            .page-header { padding: 1.5rem 1rem 0 1rem; }
+            .filter-card { border-radius: 0; box-shadow: none; border-left: 0; border-right: 0; margin-bottom: 1rem; background-color: var(--light-bg-secondary); }
+            .order-list-container { padding: 0 1rem; }
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="navbar-logo">
-            <a href="#" id="dashboard-link">PayrollPro</a>
+    <header class="header">
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-left">
+                    <a href="#" id="dashboard-link">
+                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
+                    </a>
+                    <div class="nav-links">
+                        <a class="nav-link" id="nav-link-home" href="#">Home</a>
+                        <a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a>
+                        <a class="nav-link" id="nav-link-secondary" href="#"></a>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="desktop-profile">
+                         <div class="profile-dropdown-container">
+                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
+                                <div class="profile-info">
+                                    <span class="profile-name" id="desktop-profile-name">Loading...</span>
+                                    <span class="profile-email" id="desktop-profile-email"></span>
+                                </div>
+                            </div>
+                            <div class="logout-popup" id="logoutPopup">
+                                <button class="logout-button" data-app-action="logout">Logout</button>
+                            </div>
+                         </div>
+                    </div>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </nav>
+            <div class="divider"></div>
         </div>
-        <div class="navbar-profile" id="profileContainer">
-            <img src="https://i.stack.imgur.com/34AD2.jpg" alt="User Profile" class="profile-image" id="profileImage">
-            <div class="profile-dropdown" id="profileDropdown">
-                <button id="nav-logout-btn"><span class="icon material-symbols-outlined">logout</span>Logout</button>
+    </header>
+
+    <div id="mobileMenu" role="dialog" aria-modal="true">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-section" id="mobile-menu-links"></div>
+        </div>
+        <div class="mobile-menu-bottom">
+            <div class="profile-container">
+                <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
+                <div class="profile-info">
+                    <span class="profile-name" id="mobile-profile-name">Loading...</span>
+                    <span class="profile-email" id="mobile-profile-email"></span>
+                </div>
             </div>
+            <button class="logout-button" data-app-action="logout">Logout</button>
         </div>
-    </nav>
+    </div>
+    <div id="menuOverlay"></div>
     
     <div class="app-container">
         <div id="view-orders-screen" class="screen active">
-            <div class="card" style="margin-bottom: 2rem;">
-                <h2 style="margin-bottom: 1.5rem;">Filter Orders</h2>
-                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; @media (min-width: 768px) { grid-template-columns: 1fr 1fr; }">
+            <div class="page-header">
+                <h2>All Customer Orders</h2>
+            </div>
+            <div class="filter-card">
+                <div class="filter-grid">
                     <div class="input-group">
                         <input type="text" id="order-search" class="input-field" placeholder=" ">
                         <label for="order-search" class="input-label">Search by Name, Mobile, or Address</label>
                     </div>
                     <div class="input-group">
-                        <select id="order-filter" class="input-field" style="padding-top: 1rem; padding-bottom: 1rem;">
+                        <select id="order-filter" class="input-field">
                             <option value="all">All Statuses</option>
                             <option value="pending">Pending</option>
                             <option value="completed">Completed</option>
@@ -110,12 +195,10 @@
                     </div>
                 </div>
             </div>
-            <div id="order-list-container" class="order-list-container">
-                <!-- Skeleton loaders or order cards will be injected here -->
-            </div>
-            <div id="order-list-empty" class="text-center" style="display: none; padding: 3rem;">
-                <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--light-text-muted);">folder_off</span>
-                <p style="margin-top: 1rem; color: var(--light-text-secondary);">No orders found matching your criteria.</p>
+            <div id="order-list-container" class="order-list-container"></div>
+            <div id="order-list-empty" class="text-center" style="display: none;">
+                <span class="icon material-symbols-outlined">folder_off</span>
+                <p>No orders found matching your criteria.</p>
             </div>
         </div>
     </div>
@@ -133,26 +216,64 @@
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, onSnapshot, collection, query, orderBy, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- DOM ELEMENTS & APP STATE ---
         const loadingOverlay = document.getElementById('loading-overlay');
-        const profileImage = document.getElementById('profileImage');
-        const profileDropdown = document.getElementById('profileDropdown');
-        const navLogoutBtn = document.getElementById('nav-logout-btn');
-        const dashboardLink = document.getElementById('dashboard-link');
         const orderListContainer = document.getElementById('order-list-container');
         const orderListEmpty = document.getElementById('order-list-empty');
         const orderSearchInput = document.getElementById('order-search');
         const orderFilterSelect = document.getElementById('order-filter');
         let auth, db, orders = [];
 
-        // --- UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
-        function toggleProfileMenu() { profileDropdown.classList.toggle('show'); }
         const createSkeletonCard = () => `<div class="skeleton-card"><div class="skeleton h-6 w-3_4"></div><div class="skeleton h-4 w-1_2 mt-2"></div><div class="skeleton h-4 w-1_3 mt-4"></div></div>`;
         const showSkeletonLoaders = (count = 6) => { orderListContainer.innerHTML = Array(count).fill(createSkeletonCard()).join(''); orderListContainer.style.display = 'grid'; orderListEmpty.style.display = 'none'; };
 
-        // --- DATA & RENDERING FUNCTIONS ---
+        function populateNavbar(user, userProfile) {
+            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('desktop-profile-name').textContent = user.displayName || 'User';
+            document.getElementById('desktop-profile-email').textContent = user.email || '';
+            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('mobile-profile-name').textContent = user.displayName || 'User';
+            document.getElementById('mobile-profile-email').textContent = user.email || '';
+
+            const isAdmin = userProfile.role === 'admin';
+            const homeLink = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
+            const secondaryLink = isAdmin ? { href: 'admin-employees.html', text: 'Manage Employees' } : { href: 'my-attendance.html', text: 'My Attendance' };
+            
+            document.getElementById('dashboard-link').href = homeLink;
+            document.getElementById('nav-link-home').href = homeLink;
+            const navLinkSecondary = document.getElementById('nav-link-secondary');
+            navLinkSecondary.href = secondaryLink.href;
+            navLinkSecondary.textContent = secondaryLink.text;
+            navLinkSecondary.style.display = 'flex';
+
+            const mobileLinksContainer = document.getElementById('mobile-menu-links');
+            mobileLinksContainer.innerHTML = `
+                <a href="${homeLink}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
+                <a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
+                <a href="${secondaryLink.href}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isAdmin ? 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' : 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'}" /></svg><span>${secondaryLink.text}</span></a>`;
+        }
+        
+        function initializeNavbar() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
+            const logoutPopup = document.getElementById('logoutPopup');
+            function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+            menuOverlay.addEventListener('click', closeMobileMenu);
+            if (desktopProfileTrigger && logoutPopup) {
+                desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); });
+                window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
+            }
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
+            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
+        }
+
         const getStatusInfo = (order, today) => {
             if (order.status === 'completed') { return { text: 'Completed', className: 'completed' }; }
             const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
@@ -181,7 +302,7 @@
             orderListContainer.innerHTML = ''; 
 
             filteredOrders
-                .sort((a, b) => { // Sort by status priority then due date
+                .sort((a, b) => {
                     const statusOrder = { 'overdue': 1, 'upcoming-due': 2, 'pending': 3, 'completed': 4 };
                     const statusA = getStatusInfo(a, today).className;
                     const statusB = getStatusInfo(b, today).className;
@@ -192,50 +313,27 @@
                     const card = document.createElement('div');
                     card.className = 'order-card';
                     const statusInfo = getStatusInfo(order, today);
-                    card.innerHTML = `<div class="order-card-header"><span class="order-card-customer">${order.name}</span><span class="order-card-mobile">${order.mobileNumber || 'No mobile'}</span></div><div class="status-tag ${statusInfo.className}">${statusInfo.text}</div><div class="order-card-footer"><span class="order-card-date">Due: ${order.dueDate || 'Not set'}</span><span class="material-symbols-outlined" style="color: var(--light-text-muted);">arrow_forward_ios</span></div>`;
-                    // This link assumes you will create an 'order-details.html' page
+                    card.innerHTML = `
+                        <div class="order-card-status"><div class="status-tag ${statusInfo.className}">${statusInfo.text}</div></div>
+                        <div class="order-card-body">
+                            <div class="order-card-customer">${order.name}</div>
+                            <div class="order-card-detail">
+                                <span class="icon material-symbols-outlined">call</span>
+                                <span>${order.mobileNumber || 'No mobile'}</span>
+                            </div>
+                        </div>
+                        <div class="order-card-footer">
+                             <div class="order-card-detail">
+                                <span class="icon material-symbols-outlined">calendar_today</span>
+                                <span>Due: ${order.dueDate || 'Not set'}</span>
+                            </div>
+                        </div>
+                    `;
                     card.addEventListener('click', () => window.location.href = `order-details.html?id=${order.id}`); 
                     orderListContainer.appendChild(card);
                 });
         };
 
-        // --- FIREBASE & CORE LOGIC ---
-        async function initializeFirebase() {
-            try {
-// Firebase configuration will be injected by Netlify during build
-const firebaseConfig = {
-    apiKey: "__API_KEY__",
-    authDomain: "__AUTH_DOMAIN__",
-    projectId: "__PROJECT_ID__",
-    storageBucket: "__STORAGE_BUCKET__",
-    messagingSenderId: "__MESSAGING_SENDER_ID__",
-    appId: "__APP_ID__",
-    measurementId: "__MEASUREMENT_ID__"
-};
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (!userDoc.exists() || userDoc.data().status !== 'approved') {
-                            window.location.href = 'login.html';
-                            return;
-                        }
-                        const userProfile = userDoc.data();
-                        profileImage.src = user.photoURL || 'https://i.stack.imgur.com/34AD2.jpg';
-                        dashboardLink.href = userProfile.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
-                        listenForOrders();
-                    } else {
-                        window.location.href = 'login.html';
-                    }
-                });
-            } catch (error) { console.error("Firebase Init Error:", error); hideLoading(); }
-        }
-        
-        async function handleSignOut() { showLoading(); try { await signOut(auth); } catch (error) { hideLoading(); } }
-        
         function listenForOrders() {
             showSkeletonLoaders();
             const q = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
@@ -245,16 +343,39 @@ const firebaseConfig = {
                 hideLoading();
             }, (error) => { console.error("Firestore Snapshot Error:", error); hideLoading(); });
         }
+        
+        function bindEventListeners() {
+            document.body.addEventListener('click', async (e) => {
+                const actionTarget = e.target.closest('[data-app-action]');
+                if (actionTarget) {
+                    if (actionTarget.dataset.appAction === 'logout') {
+                        e.preventDefault(); showLoading();
+                        try { await signOut(auth); } catch(err) { hideLoading(); }
+                    }
+                }
+            });
+            orderSearchInput.addEventListener('input', renderOrderList);
+            orderFilterSelect.addEventListener('change', renderOrderList);
+        }
 
-        // --- EVENT LISTENERS ---
-        navLogoutBtn.addEventListener('click', handleSignOut);
-        orderSearchInput.addEventListener('input', renderOrderList);
-        orderFilterSelect.addEventListener('change', renderOrderList);
-        profileImage.addEventListener('click', (e) => { e.stopPropagation(); toggleProfileMenu(); });
-        window.addEventListener('click', () => { if (profileDropdown.classList.contains('show')) { toggleProfileMenu(); } });
+        document.addEventListener('DOMContentLoaded', () => {
+            const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" };
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            initializeNavbar();
+            bindEventListeners();
 
-        // --- INITIALIZATION ---
-        initializeFirebase();
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
+                    populateNavbar(user, userDoc.data());
+                    listenForOrders();
+                } else { window.location.href = 'login.html'; }
+            });
+        });
     </script>
 </body>
 </html>
