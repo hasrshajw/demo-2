@@ -76,14 +76,9 @@
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
         @keyframes shimmer { 100% { left: 150%; } }
-        .skeleton-title { height: 28px; width: 40%; border-radius: var(--radius-sm); }
-        .skeleton-text { height: 20px; border-radius: var(--radius-sm); }
-        .skeleton-button { height: 32px; width: 80px; border-radius: var(--radius-md); }
-        .skeleton-icon-button { height: 36px; width: 36px; border-radius: 50%; }
-        .skeleton-card { height: 52px; border-radius: var(--radius-md); }
-        .skeleton-link { height: 56px; border-radius: 999px; }
         .skeleton-stat-label { height: 16px; width: 60%; border-radius: var(--radius-sm); margin-bottom: 8px; }
         .skeleton-stat-value { height: 34px; width: 40%; border-radius: var(--radius-sm); }
+        .skeleton-link { height: 56px; border-radius: 999px; }
         
         /* --- UPDATED DASHBOARD STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
@@ -94,13 +89,7 @@
         .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
         @media (min-width: 1024px) { .dashboard-grid { grid-template-columns: 2fr 1fr; } }
         .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
-        @media (max-width: 1023px) {
-            .dashboard-grid { display: flex; flex-direction: column; }
-            #attendance-card { order: 1; }
-            #orders-card { order: 2; }
-            #quick-actions-card { order: 3; }
-            #global-summary-card { order: 4; }
-        }
+        @media (max-width: 1023px) { .dashboard-grid { display: flex; flex-direction: column; } #attendance-card { order: 1; } #orders-card { order: 2; } #quick-actions-card { order: 3; } #global-summary-card { order: 4; } }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-success { background-color: var(--color-success); color: white; } .btn-danger { background-color: var(--color-danger); color: white; } .btn-warning { background-color: var(--color-warning); color: #1f2937; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
@@ -110,12 +99,14 @@
         .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         .card-title { font-family: var(--font-main); font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
-        .employee-row-v2 { display: flex; align-items: center; gap: 16px; padding: 10px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); opacity: 1; transform: translateY(0); }
+        .employee-row-v2 { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); opacity: 1; transform: translateY(0); }
         .employee-row-v2.hidden { opacity: 0; transform: translateY(-10px); height: 0; padding-top: 0; padding-bottom: 0; margin: 0; border: none; }
         .employee-row-v2:first-of-type { border-top: 1px solid var(--light-border); }
-        .employee-info-v2 { display: flex; align-items: center; gap: 12px; margin-left: auto; } /* Pushes info to the right */
+        .employee-info-v2 { display: flex; align-items: center; gap: 12px; }
         .employee-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: var(--light-bg-tertiary); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; }
         .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; align-items: center; gap: 8px; }
+        .attendance-done { text-align: center; padding: 24px 0; color: var(--light-text-secondary); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .attendance-done .material-symbols-outlined { color: var(--color-success); font-size: 2.5rem; }
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
         .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
         .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -150,7 +141,7 @@
         .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } .employee-row-v2 { flex-direction: row; align-items: center; gap: 16px; } .actions { display: flex; margin-left: 0; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } .employee-row-v2 { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; } }
     </style>
 </head>
 
@@ -217,14 +208,8 @@
                             <div id="attendance-card" class="card">
                                 <div class="card-header"><div class="skeleton" style="height: 24px; width: 40%;"></div></div>
                                 <div id="attendance-tracker">
-                                    <div class="employee-row-v2">
-                                        <div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div>
-                                        <div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 120px;"></div></div>
-                                    </div>
-                                    <div class="employee-row-v2">
-                                        <div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div>
-                                        <div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 150px;"></div></div>
-                                    </div>
+                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 120px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 150px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
                                 </div>
                             </div>
                             <div id="orders-card" class="card">
@@ -355,20 +340,20 @@
             const container = document.getElementById('attendance-tracker');
             attendanceCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Today's Attendance</h2>`;
             if (employeesToTrack.length === 0) {
-                attendanceCard.style.display = 'none'; // HIDE CARD IF COMPLETE
+                attendanceCard.style.display = 'none';
             } else {
-                attendanceCard.style.display = 'block'; // SHOW CARD IF INCOMPLETE
+                attendanceCard.style.display = 'block';
                 container.innerHTML = employeesToTrack.map(emp => `
                     <div class="employee-row-v2" data-employee-row-id="${emp.id}">
+                        <div class="employee-info-v2">
+                            <div class="employee-avatar">${getInitials(emp.name)}</div>
+                            <span class="employee-name">${emp.name}</span>
+                        </div>
                         <div class="actions">
                             <button class="btn btn-success btn-sm" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
                             <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">
                                 <span class="material-symbols-outlined">more_vert</span>
                             </button>
-                        </div>
-                        <div class="employee-info-v2">
-                            <div class="employee-avatar">${getInitials(emp.name)}</div>
-                            <span class="employee-name">${emp.name}</span>
                         </div>
                     </div>`).join('');
             }
