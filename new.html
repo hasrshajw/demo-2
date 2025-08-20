@@ -17,18 +17,16 @@
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
-            --light-text-primary: #012726; --light-text-secondary: #52616b; --light-border: #e5e7eb;
+            --light-text-primary: #1f2937; --light-text-secondary: #52616b; --light-border: #e5e7eb;
             --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
             --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
             --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
         }
         [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
-        [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
-        html, body { height: 100%; }
         html { scroll-behavior: smooth; }
         
         body {
-            font-family: "IBM Plex Sans", sans-serif; line-height: 1.6; background-color: var(--color-background);
+            font-family: var(--font-alt); line-height: 1.6; background-color: var(--color-background);
             color: var(--light-text-secondary); padding-top: 72px; -webkit-font-smoothing: antialiased;
         }
 
@@ -74,38 +72,40 @@
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
 
-        /* --- ADVANCED SKELETON LOADER STYLES --- */
+        /* --- SKELETON LOADER STYLES --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; }
-        .skeleton::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0)); animation: shimmer 2s infinite; }
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 100% { left: 150%; } }
         .skeleton-title { height: 28px; width: 40%; border-radius: var(--radius-sm); }
         .skeleton-text { height: 20px; border-radius: var(--radius-sm); }
-        .skeleton-button { height: 44px; width: 100px; border-radius: var(--radius-md); }
-        .skeleton-icon-button { height: 44px; width: 44px; border-radius: 50%; }
+        .skeleton-button { height: 40px; width: 90px; border-radius: var(--radius-md); }
+        .skeleton-icon-button { height: 36px; width: 36px; border-radius: 50%; }
         .skeleton-card { height: 52px; border-radius: var(--radius-md); }
         .skeleton-link { height: 56px; border-radius: 999px; }
-        .skeleton-stat-label { height: 16px; width: 60%; border-radius: var(--radius-sm); }
+        .skeleton-stat-label { height: 16px; width: 60%; border-radius: var(--radius-sm); margin-bottom: 8px; }
         .skeleton-stat-value { height: 34px; width: 40%; border-radius: var(--radius-sm); }
         
-        /* --- DASHBOARD STYLES --- */
+        /* --- UPDATED DASHBOARD STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; color: var(--light-text-primary); }
-        .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
         main { padding-top: 24px; padding-bottom: 48px; }
+        .page-header { margin-bottom: 24px; }
+        .page-title { font-family: var(--font-main); font-size: 1.75rem; font-weight: 600; color: var(--light-text-primary); }
+        .welcome-message { font-size: 1rem; color: var(--light-text-secondary); }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 1024px) { .dashboard-grid { grid-template-columns: 2fr 1fr; } }
+        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-success { background-color: var(--color-success); color: white; } .btn-danger { background-color: var(--color-danger); color: white; } .btn-warning { background-color: var(--color-warning); color: #1f2937; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
-        /* NEW ICON BUTTON STYLE */
         .btn-icon { background-color: transparent; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s var(--ease-cubic); }
         .btn-icon:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
         .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
-        .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-        .card .title { color: var(--light-text-primary); font-size: 22px; font-weight: 600; margin: 0; line-height: 1.2; }
-        .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-title { font-family: var(--font-main); font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
+        .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 56px; overflow: hidden; }
         .employee-row:first-of-type { border-top: 1px solid var(--light-border); }
         .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
         .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; align-items: center; gap: 8px; }
-        #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
         .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
         .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -113,13 +113,13 @@
         .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
         .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
         .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
-        /* UNCHANGED BUTTON STYLES AS REQUESTED */
+        .quick-actions-container { display: flex; flex-direction: column; gap: 1rem; }
         .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
         .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
         .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
         .link-tile:hover svg { transform: translateX(3px); }
-        .global-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; }
+        .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; text-align: left; }
         .global-stat { display: flex; flex-direction: column; gap: 4px; }
         .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); font-family: var(--font-alt); }
         .global-stat .value.danger-text { color: var(--color-danger); }
@@ -139,9 +139,8 @@
         .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
         .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; } }
     </style>
 </head>
 
@@ -197,32 +196,45 @@
         <main>
             <div class="container" id="main-container">
                 <div id="home-view" class="view active">
-                    <div id="dashboard-layout">
-                        <!-- INITIAL SKELETON LOADER UI -->
-                        <div id="attendance-card" class="card">
-                            <div class="card-content"><div class="skeleton skeleton-title"></div></div>
-                            <div id="attendance-tracker">
-                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 30%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
-                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 40%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
-                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 25%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Admin Dashboard</h1>
+                            <p class="welcome-message" id="welcome-message">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="main-column">
+                            <div id="attendance-card" class="card">
+                                <div class="card-header"><div class="skeleton skeleton-title"></div></div>
+                                <div id="attendance-tracker">
+                                    <div class="employee-row"><div class="skeleton skeleton-text" style="width: 30%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
+                                    <div class="employee-row"><div class="skeleton skeleton-text" style="width: 40%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
+                                    <div class="employee-row"><div class="skeleton skeleton-text" style="width: 25%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
+                                </div>
+                            </div>
+                            <div id="orders-card" class="card">
+                                <div class="card-header"><div class="skeleton skeleton-title"></div></div>
+                                <div id="upcoming-overdue-list" class="upcoming-cards-container">
+                                    <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+                                    <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+                                </div>
                             </div>
                         </div>
-                        <div id="orders-card" class="card">
-                            <div class="card-content"><div class="skeleton skeleton-title"></div></div>
-                            <div id="upcoming-overdue-list" class="upcoming-cards-container">
-                                <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
-                                <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+                        <div class="sidebar-column">
+                            <div id="global-summary-card" class="card">
+                                <div class="card-header"><div class="skeleton skeleton-title"></div></div>
+                                <div class="global-summary-grid">
+                                    <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                                    <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                                    <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                                </div>
                             </div>
-                        </div>
-                        <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                            <div class="skeleton skeleton-link"></div><div class="skeleton skeleton-link"></div>
-                        </div>
-                        <div id="global-summary-card" class="card">
-                            <div class="card-content"><div class="skeleton skeleton-title"></div></div>
-                            <div class="global-summary-grid">
-                                <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
-                                <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
-                                <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                            <div id="quick-actions-card" class="card">
+                                <div class="card-header"><div class="skeleton skeleton-title"></div></div>
+                                <div class="quick-actions-container">
+                                    <div class="skeleton skeleton-link"></div>
+                                    <div class="skeleton skeleton-link"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -274,35 +286,20 @@
             onAuthStateChanged(auth, async (user) => {
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
-                    // Fetch user profile and main data in parallel for speed
-                    const profilePromise = setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true })
-                        .then(() => getDoc(userRef))
-                        .then(userDoc => {
-                            currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                            populateNavbar(currentUserProfile);
-                        });
+                    const profilePromise = setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true }).then(() => getDoc(userRef)).then(userDoc => { currentUserProfile = { id: userDoc.id, ...userDoc.data() }; populateNavbar(currentUserProfile); });
                     await Promise.all([ profilePromise, initializeAdminView() ]);
-                } else {
-                    window.location.href = 'login.html';
-                }
+                } else { window.location.href = 'login.html'; }
             });
         }
         
-        function populateNavbar(user) { if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
-        
+        function populateNavbar(user) { if (!user) return; document.getElementById('welcome-message').textContent = `Welcome back, ${user.displayName.split(' ')[0]}!`; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
         async function initializeAdminView() {
-            listenForOrders(); // This will update its own UI when data arrives
+            listenForOrders();
             const employeesSnap = await getDocs(collection(db, "employees"));
             const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-            // Run final data calculations in parallel
-            await Promise.all([
-                refreshAttendanceTracker(employees),
-                calculateAndRenderGlobalSummary(employees)
-            ]);
+            await Promise.all([ refreshAttendanceTracker(employees), calculateAndRenderGlobalSummary(employees) ]);
         }
-        
         function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
-        
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
@@ -327,13 +324,10 @@
                 }
             });
         }
-        
         function initializeNavbar() { const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup'); function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } } mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }); mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu); if (desktopProfileTrigger && logoutPopup) { desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); }); window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); } document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
-        
         async function handleAttendanceClick(employeeId, status) {
             try { await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`); if(rowToHide) rowToHide.classList.add('hidden'); } catch (err) { console.error(err); } 
         }
-
         async function refreshAttendanceTracker(employees) {
             const today = getIndiaDateString();
             const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
@@ -342,55 +336,41 @@
             const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
             renderAttendanceTracker(employeesToTrack);
         }
-
         function renderAttendanceTracker(employeesToTrack) {
             const attendanceCard = document.getElementById('attendance-card');
             const container = document.getElementById('attendance-tracker');
-            
-            // This check now correctly handles showing/hiding the card post-skeleton
+            attendanceCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Today's Attendance</h2>`;
             if (employeesToTrack.length === 0) {
-                attendanceCard.style.display = 'none';
-                return;
+                container.innerHTML = `<p style="color: var(--light-text-secondary); padding: 12px 4px;">Everyone's attendance has been marked for today.</p>`;
+            } else {
+                container.innerHTML = employeesToTrack.map(emp => `
+                    <div class="employee-row" data-employee-row-id="${emp.id}">
+                        <span class="employee-name">${emp.name}</span>
+                        <div class="actions">
+                            <button class="btn btn-success btn-sm" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
+                            <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                    </div>`).join('');
             }
-            
-            attendanceCard.style.display = 'block';
-            document.querySelector('#attendance-card .card-content').innerHTML = `<h2 class="title">Today's Attendance</h2>`;
-            container.innerHTML = employeesToTrack.map(emp => `
-                <div class="employee-row" data-employee-row-id="${emp.id}">
-                    <div class="employee-name">${emp.name}</div>
-                    <div class="actions">
-                        <button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
-                        <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">
-                            <span class="material-symbols-outlined">more_vert</span>
-                        </button>
-                    </div>
-                </div>`).join('');
         }
-        
         function listenForOrders() {
             const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
             onSnapshot(ordersQuery, (snapshot) => {
                 const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 populateUpcomingOverdueList(orders);
-            }, (error) => {
-                console.error("Error fetching orders:", error);
-                document.querySelector('#orders-card .card-content').innerHTML = `<h2 class="title">Upcoming & Overdue Orders</h2>`;
-                document.getElementById('upcoming-overdue-list').innerHTML = `<p style="color: var(--light-text-secondary);">Could not load orders.</p>`;
             });
         }
-
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null;};
-        
         function populateUpcomingOverdueList(orders) {
             const container = document.getElementById('upcoming-overdue-list');
             const today = new Date(); today.setHours(0,0,0,0);
             const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
-            
-            document.querySelector('#orders-card .card-content').innerHTML = `<h2 class="title">Upcoming & Overdue Orders</h2>`;
+            document.querySelector('#orders-card .card-header').innerHTML = `<h2 class="card-title">Critical Orders</h2>`;
             if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
             else { container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); }
         }
-
         async function calculateAndRenderGlobalSummary(employees) {
             const container = document.getElementById('global-summary-card');
             const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
@@ -402,13 +382,11 @@
                 totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0); paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
             });
             await Promise.all(promises);
-
-            // Replace skeleton content with real data
-            container.innerHTML = `<div class="card-content"><h2 class="title">Month in Review</h2></div><div class="global-summary-grid"><div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div></div>`;
-            
-            // Also replace the action links skeleton
-            const actionsContainer = document.getElementById('home-actions-container');
-            actionsContainer.innerHTML = `<a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a><a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
+            container.querySelector('.card-header').innerHTML = `<h2 class="card-title">Month in Review</h2>`;
+            container.querySelector('.global-summary-grid').innerHTML = `<div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>`;
+            const actionsCard = document.getElementById('quick-actions-card');
+            actionsCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Quick Actions</h2>`;
+            actionsCard.querySelector('.quick-actions-container').innerHTML = `<a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a><a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
         }
     </script>
 </body>
