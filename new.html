@@ -91,7 +91,8 @@
             #attendance-card { order: 1; }
             #orders-card { order: 2; }
             #quick-actions-card { order: 3; }
-            #global-summary-card { order: 4; }
+            #recent-orders-card { order: 4; } /* New mobile order */
+            #global-summary-card { order: 5; }
         }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-success { background-color: var(--color-success); color: white; } .btn-danger { background-color: var(--color-danger); color: white; } .btn-warning { background-color: var(--color-warning); color: #1f2937; }
@@ -144,6 +145,13 @@
         .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        /* NEW RECENT ORDERS STYLES */
+        .recent-order-row { display: flex; align-items: center; gap: 1rem; padding: 12px 4px; border-bottom: 1px solid var(--light-border); }
+        .recent-order-row:last-child { border-bottom: none; }
+        .order-customer-info { flex-grow: 1; }
+        .order-customer-name { font-weight: 500; color: var(--light-text-primary); }
+        .order-due-date { font-size: 0.8rem; }
+        .order-added-by { font-size: 0.8rem; background-color: var(--light-bg-tertiary); padding: 2px 8px; border-radius: 999px; color: var(--light-text-secondary); white-space: nowrap; }
         @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } }
     </style>
 </head>
@@ -213,6 +221,14 @@
                                 <div id="attendance-tracker">
                                     <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 120px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
                                     <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 150px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                </div>
+                            </div>
+                            <div id="recent-orders-card" class="card">
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 55%;"></div></div>
+                                <div id="recent-orders-list">
+                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
                                 </div>
                             </div>
                             <div id="orders-card" class="card">
@@ -333,12 +349,11 @@
                 const rowToHide = document.querySelector(`.employee-row-v2[data-employee-row-id="${employeeId}"]`); 
                 if(rowToHide) {
                     rowToHide.classList.add('hidden');
-                    // Check if this was the last one
                     setTimeout(() => {
                         if (document.querySelectorAll('.employee-row-v2:not(.hidden)').length === 0) {
                             document.getElementById('attendance-card').style.display = 'none';
                         }
-                    }, 500); // Wait for CSS transition
+                    }, 500);
                 }
             } catch (err) { console.error(err); } 
         }
@@ -356,7 +371,7 @@
             const container = document.getElementById('attendance-tracker');
             attendanceCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Today's Attendance</h2>`;
             if (employeesToTrack.length === 0) {
-                attendanceCard.style.display = 'none'; // Instantly hide the card
+                attendanceCard.style.display = 'none';
             } else {
                 attendanceCard.style.display = 'block';
                 container.innerHTML = employeesToTrack.map(emp => `
@@ -379,6 +394,7 @@
             onSnapshot(ordersQuery, (snapshot) => {
                 const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 populateUpcomingOverdueList(orders);
+                populateRecentOrdersList(orders); // Also populate the new recent orders list
             });
         }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null;};
@@ -389,6 +405,20 @@
             document.querySelector('#orders-card .card-header').innerHTML = `<h2 class="card-title">Critical Orders</h2>`;
             if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
             else { container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); }
+        }
+        function populateRecentOrdersList(orders) {
+            const container = document.getElementById('recent-orders-list');
+            const recentOrders = orders.slice(0, 5); // Get the 5 most recent
+            document.querySelector('#recent-orders-card .card-header').innerHTML = `<h2 class="card-title">Recently Added Orders</h2>`;
+            if (recentOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); padding: 12px 4px;">No recent orders to display.</p>'; } 
+            else { container.innerHTML = recentOrders.map(order => `<div class="recent-order-row">
+                        <div class="order-customer-info">
+                            <div class="order-customer-name">${order.name}</div>
+                            <div class="order-due-date">Due: ${order.dueDate || 'N/A'}</div>
+                        </div>
+                        <span class="order-added-by">${order.createdBy ? order.createdBy.split(' ')[0] : 'Admin'}</span>
+                        <a href="order-details.html?id=${order.id}" class="btn btn-secondary btn-sm">View</a>
+                    </div>`).join(''); }
         }
         async function calculateAndRenderGlobalSummary(employees) {
             const container = document.getElementById('global-summary-card');
