@@ -26,14 +26,14 @@
         [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
         html, body { height: 100%; }
         html { scroll-behavior: smooth; }
+        
         body {
-            font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; line-height: 1.6;
-            background-color: var(--color-background); color: var(--light-text-secondary);
-            padding-top: 72px; -webkit-font-smoothing: antialiased;
+            font-family: "IBM Plex Sans", sans-serif; line-height: 1.6; background-color: var(--color-background);
+            color: var(--light-text-secondary); padding-top: 72px; -webkit-font-smoothing: antialiased;
         }
 
         /* --- NAVBAR STYLES (UNCHANGED) --- */
-        .header {position: fixed; top: 0; width: 100%; z-index: 50; transition-property: all; transition-duration: 0.3s; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); overflow: visible; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
+        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
         @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
@@ -74,20 +74,35 @@
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
 
+        /* --- SKELETON LOADER STYLES --- */
+        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; }
+        [data-theme="dark"] .skeleton { background-color: #334155; }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0)); animation: shimmer 2s infinite; }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        .skeleton-title { height: 28px; width: 40%; border-radius: var(--radius-sm); }
+        .skeleton-text { height: 20px; border-radius: var(--radius-sm); }
+        .skeleton-button { height: 44px; width: 100px; border-radius: var(--radius-md); }
+        .skeleton-card { height: 52px; border-radius: var(--radius-md); }
+        .skeleton-link { height: 56px; border-radius: 999px; }
+        .skeleton-stat-label { height: 16px; width: 60%; border-radius: var(--radius-sm); }
+        .skeleton-stat-value { height: 34px; width: 40%; border-radius: var(--radius-sm); }
+        
         /* --- DASHBOARD STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; color: var(--light-text-primary); }
         .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
         main { padding-top: 24px; padding-bottom: 48px; }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .btn:hover:not(:disabled) { transform: translateY(-1px); }
-        .btn-success { background-color: var(--color-success); color: white; }
-        .btn-danger { background-color: var(--color-danger); color: white; }
-        .btn-warning { background-color: var(--color-warning); color: #1f2937; }
+        .btn-success { background-color: var(--color-success); color: white; } .btn-danger { background-color: var(--color-danger); color: white; } .btn-warning { background-color: var(--color-warning); color: #1f2937; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
         .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
         .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
         .card .title { color: var(--light-text-primary); font-size: 22px; font-weight: 600; margin: 0; line-height: 1.2; }
-        #dashboard-layout { display: flex; flex-direction: column; gap: 24px; animation: fadeIn 0.5s var(--ease-cubic); }
+        .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; }
+        .employee-row:first-of-type { border-top: 1px solid var(--light-border); }
+        .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
+        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; gap: 8px; }
+        #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
         .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
         .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -114,45 +129,15 @@
         .fab-menu.show { visibility: visible; opacity: 1; }
         .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; }
         .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
-        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
-        .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
+        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; } .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
         .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
         .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
         .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
         .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
-        
-        /* --- ADVANCED SKELETON LOADER --- */
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
-        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; }
-        .skeleton::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0)); animation: shimmer 2s infinite; }
-        .skeleton-card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
-        .skeleton-title { height: 28px; width: 40%; border-radius: var(--radius-md); margin-bottom: 24px; }
-        .skeleton-row { display: flex; align-items: center; gap: 16px; padding: 12px 4px; border-bottom: 1px solid var(--light-border); }
-        .skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
-        .skeleton-text { height: 20px; flex-grow: 1; border-radius: var(--radius-sm); }
-        .skeleton-btn { height: 38px; width: 80px; border-radius: var(--radius-md); }
-        .skeleton-tile { height: 58px; border-radius: 9999px; }
-        .skeleton-stat { display: flex; flex-direction: column; gap: 8px; }
-        .skeleton-stat-label { height: 12px; width: 60%; border-radius: var(--radius-sm); }
-        .skeleton-stat-value { height: 28px; width: 80%; border-radius: var(--radius-sm); }
-
-        /* --- ADVANCED ATTENDANCE UI --- */
-        .attendance-row { display: flex; align-items: center; gap: 16px; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: opacity 0.4s ease, transform 0.4s ease, height 0.4s ease; }
-        .attendance-row.hidden { opacity: 0; transform: scale(0.95); height: 0; padding-top: 0; padding-bottom: 0; margin: 0; border: none; }
-        .attendance-employee { display: flex; align-items: center; gap: 12px; flex-grow: 1; }
-        .attendance-avatar { width: 40px; height: 40px; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 1.1rem; flex-shrink: 0; }
-        .attendance-name { font-weight: 500; color: var(--light-text-primary); }
-        .attendance-actions { display: flex; align-items: center; gap: 8px; }
-        .btn-icon { background: none; border: none; padding: 8px; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-        .btn-icon:hover { color: var(--light-text-primary); background-color: var(--light-bg-tertiary); }
-        
-        @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .global-summary-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 
@@ -204,13 +189,7 @@
             </div>
         </div>
         <div class="mobile-menu-bottom">
-            <div class="profile-container">
-                <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
-                <div class="profile-info">
-                    <span class="profile-name" id="mobile-profile-name">Loading...</span>
-                    <span class="profile-email" id="mobile-profile-email"></span>
-                </div>
-            </div>
+            <div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div>
             <button class="logout-button" data-app-action="logout">Logout</button>
         </div>
     </div>
@@ -220,37 +199,34 @@
         <main>
             <div class="container" id="main-container">
                 <div id="home-view" class="view active">
-                    <!-- SKELETON LOADER -->
-                    <div id="skeleton-loader" style="display: flex; flex-direction: column; gap: 24px;">
-                        <div class="skeleton-card">
-                            <div class="skeleton skeleton-title"></div>
-                            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-btn"></div><div class="skeleton skeleton-btn" style="width: 40px;"></div></div>
-                            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-btn"></div><div class="skeleton skeleton-btn" style="width: 40px;"></div></div>
-                            <div class="skeleton-row" style="border-bottom: none;"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-btn"></div><div class="skeleton skeleton-btn" style="width: 40px;"></div></div>
-                        </div>
-                        <div class="skeleton-card">
-                            <div class="skeleton skeleton-title"></div>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;"><div class="skeleton-row" style="height: 60px; border-radius: var(--radius-md);"><div class="skeleton skeleton-text" style="height: 24px;"></div></div><div class="skeleton-row" style="height: 60px; border-radius: var(--radius-md);"><div class="skeleton skeleton-text" style="height: 24px;"></div></div></div>
-                        </div>
-                        <div class="skeleton skeleton-tile"></div>
-                        <div class="skeleton skeleton-tile"></div>
-                    </div>
-
-                    <!-- ACTUAL DASHBOARD LAYOUT (Initially hidden) -->
-                    <div id="dashboard-layout" style="display: none;">
-                        <div id="attendance-card" class="card" style="display: none;">
-                            <div class="card-content"><h2 class="title">Today's Attendance</h2></div>
-                            <div id="attendance-tracker"></div>
+                    <div id="dashboard-layout">
+                        <!-- SKELETON LOADER UI -->
+                        <div id="attendance-card" class="card">
+                            <div class="card-content"><div class="skeleton skeleton-title"></div></div>
+                            <div id="attendance-tracker">
+                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 30%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button"></div></div></div>
+                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 40%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button"></div></div></div>
+                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 25%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button"></div></div></div>
+                            </div>
                         </div>
                         <div id="orders-card" class="card">
-                            <div class="card-content"><h2 class="title">Upcoming & Overdue Orders</h2></div>
-                            <div id="upcoming-overdue-list" class="upcoming-cards-container"></div>
+                            <div class="card-content"><div class="skeleton skeleton-title"></div></div>
+                            <div id="upcoming-overdue-list" class="upcoming-cards-container">
+                                <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+                                <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+                            </div>
                         </div>
                         <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                            <a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
-                            <a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
+                            <div class="skeleton skeleton-link"></div><div class="skeleton skeleton-link"></div>
                         </div>
-                        <div id="global-summary-card" class="card"></div>
+                        <div id="global-summary-card" class="card">
+                            <div class="card-content"><div class="skeleton skeleton-title"></div></div>
+                            <div class="global-summary-grid">
+                                <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                                <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                                <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -265,20 +241,25 @@
         <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
     </div>
     
-    <div id="loader"><div class="spinner"></div></div>
     <div id="other-options-modal" class="modal"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__", measurementId: "__MEASUREMENT_ID__" };
+        
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
         
         let db, auth, currentUserProfile;
-
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
+        
         const openModal = (id) => document.getElementById(id).style.display = 'block';
         const closeModal = (id) => document.getElementById(id).style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
@@ -286,39 +267,62 @@
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 const app = initializeApp(firebaseConfig);
-                db = getFirestore(app); auth = getAuth(app);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
                 document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
-                initializeNavbar(); bindEventListeners(); listenForAuthStateChanges();
-            } catch (error) { console.error("Initialization Failed:", error); document.body.innerHTML = `<h2>Error initializing application.</h2>`; }
+                
+                initializeNavbar(); 
+                bindEventListeners();
+                listenForAuthStateChanges();
+            } catch (error) {
+                console.error("Initialization Failed:", error);
+                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
+            }
         });
 
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
-                    await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
-                    const userDoc = await getDoc(userRef);
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    populateNavbar(currentUserProfile);
-                    await initializeAdminView();
-                } else { window.location.href = 'login.html'; }
+                    // This can be done in parallel with other data fetching
+                    const profilePromise = setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true })
+                        .then(() => getDoc(userRef))
+                        .then(userDoc => {
+                            currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                            populateNavbar(currentUserProfile);
+                        });
+                    
+                    await Promise.all([
+                        profilePromise,
+                        initializeAdminView()
+                    ]);
+                } else {
+                    window.location.href = 'login.html';
+                }
             });
         }
         
-        function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
+        function populateNavbar(user) {
+            if (!user) return;
+            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('desktop-profile-email').textContent = user.email || '';
+            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('mobile-profile-email').textContent = user.email || '';
+        }
 
         async function initializeAdminView() {
+            listenForOrders();
             const employeesSnap = await getDocs(collection(db, "employees"));
             const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-            
+            // Run final data calculations in parallel
             await Promise.all([
                 refreshAttendanceTracker(employees),
-                calculateAndRenderGlobalSummary(employees),
-                new Promise(resolve => listenForOrders(resolve))
+                calculateAndRenderGlobalSummary(employees)
             ]);
-
-            document.getElementById('skeleton-loader').style.display = 'none';
-            document.getElementById('dashboard-layout').style.display = 'flex';
         }
         
         function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
@@ -343,23 +347,33 @@
                         document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
                         openModal('other-options-modal'); 
                         break;
-                    case 'mark-attendance': await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); closeModal('other-options-modal'); break;
+                    case 'mark-attendance': 
+                        await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
+                        closeModal('other-options-modal');
+                        break;
                 }
             });
         }
         
-        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
+        function initializeNavbar() {
+            const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup');
+            function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+            mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu);
+            if (desktopProfileTrigger && logoutPopup) {
+                desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); });
+                window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
+            }
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
+            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
+        }
 
         async function handleAttendanceClick(employeeId, status) {
-            const rowToMark = document.querySelector(`.attendance-row[data-employee-id="${employeeId}"]`);
-            if (rowToMark) { rowToMark.style.pointerEvents = 'none'; rowToMark.style.opacity = '0.5'; }
             try {
                 await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-                rowToMark.classList.add('hidden');
-            } catch (err) { 
-                console.error(err); 
-                if (rowToMark) { rowToMark.style.pointerEvents = 'auto'; rowToMark.style.opacity = '1'; }
-            }
+                const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
+                if(rowToHide) rowToHide.classList.add('hidden');
+            } catch (err) { console.error(err); } 
         }
 
         async function refreshAttendanceTracker(employees) {
@@ -374,73 +388,79 @@
         function renderAttendanceTracker(employeesToTrack) {
             const attendanceCard = document.getElementById('attendance-card');
             const container = document.getElementById('attendance-tracker');
-            const avatarColors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6', '#8b5cf6', '#d946ef'];
             if (employeesToTrack.length === 0) {
                 attendanceCard.style.display = 'none';
             } else {
-                attendanceCard.style.display = 'block';
-                container.innerHTML = employeesToTrack.map((emp, index) => {
-                    const initial = emp.name.charAt(0).toUpperCase();
-                    const color = avatarColors[index % avatarColors.length];
-                    return `
-                    <div class="attendance-row" data-employee-id="${emp.id}">
-                        <div class="attendance-employee">
-                            <div class="attendance-avatar" style="background-color: ${color};">${initial}</div>
-                            <span class="attendance-name">${emp.name}</span>
-                        </div>
-                        <div class="attendance-actions">
-                            <button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
-                            <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" title="More options">
-                                <span class="material-symbols-outlined">more_vert</span>
-                            </button>
-                        </div>
-                    </div>`;
-                }).join('');
+                attendanceCard.style.display = 'block'; // Ensure it's visible
+                container.innerHTML = employeesToTrack.map(emp => `<div class="employee-row" data-employee-row-id="${emp.id}"><div class="employee-name">${emp.name}</div><div class="actions"><button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button><button class="btn btn-secondary" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button></div></div>`).join('');
+                document.querySelector('#attendance-card .card-content').innerHTML = `<h2 class="title">Today's Attendance</h2>`; // Replace skeleton title
             }
         }
         
-        function listenForOrders(resolveCallback) {
+        function listenForOrders() {
             const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
-            const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
+            onSnapshot(ordersQuery, (snapshot) => {
                 const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 populateUpcomingOverdueList(orders);
-                if (resolveCallback) {
-                    resolveCallback();
-                    resolveCallback = null; // Ensure it only resolves once
-                }
-            }, (error) => {
-                console.error("Error listening for orders:", error);
-                if (resolveCallback) {
-                    resolveCallback(); // Resolve even on error to not block the UI
-                    resolveCallback = null;
-                }
             });
         }
 
-        const getStatusInfo = (order, today) => {if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null;};
+        const getStatusInfo = (order, today) => {
+            if (order.status === 'completed') return null;
+            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
+            if (!dueDate) return null;
+            if (dueDate < today) return { text: 'Overdue', className: 'overdue' };
+            const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
+            if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };
+            return null;
+        };
         
         function populateUpcomingOverdueList(orders) {
             const container = document.getElementById('upcoming-overdue-list');
             const today = new Date(); today.setHours(0,0,0,0);
-            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
-            if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
-            else { container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); }
+            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) }))
+                                         .filter(order => order.statusInfo !== null)
+                                         .sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
+            document.querySelector('#orders-card .card-content').innerHTML = `<h2 class="title">Upcoming & Overdue Orders</h2>`; // Replace skeleton
+            if (criticalOrders.length === 0) {
+                container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>';
+            } else {
+                container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join('');
+            }
         }
 
         async function calculateAndRenderGlobalSummary(employees) {
             const container = document.getElementById('global-summary-card');
-            if (!container) return;
-            const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
-            const startDate = `${year}-${month}-01`; const lastDay = new Date(year, parseInt(month, 10), 0).getDate(); const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+            const todayInIndia = getIndiaDateString();
+            const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`;
+            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
+            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
             let totalEarned = 0, totalPaid = 0;
             const promises = employees.map(async emp => {
-                const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
-                let p=0,h=0,ph=0; attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
+                const [attSnap, paySnap] = await Promise.all([ 
+                    getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
+                    getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
+                ]);
+                let p=0,h=0,ph=0;
+                attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
                 totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
                 paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
             });
             await Promise.all(promises);
-            container.innerHTML = `<div class="card-content"><h2 class="title">Month in Review</h2></div><div class="global-summary-grid"><div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div></div>`;
+            container.innerHTML = `
+                <div class="card-content"><h2 class="title">Month in Review</h2></div>
+                <div class="global-summary-grid">
+                    <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
+                </div>`;
+            
+            // Replace static skeleton links with real links
+            const actionsContainer = document.getElementById('home-actions-container');
+            actionsContainer.innerHTML = `
+                <a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
+                <a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
         }
     </script>
 </body>
