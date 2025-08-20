@@ -144,7 +144,7 @@
         .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } .employee-row-v2 { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } }
     </style>
 </head>
 
@@ -328,7 +328,19 @@
         }
         function initializeNavbar() { const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup'); function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } } mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }); mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu); if (desktopProfileTrigger && logoutPopup) { desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); }); window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); } document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
         async function handleAttendanceClick(employeeId, status) {
-            try { await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); const rowToHide = document.querySelector(`.employee-row-v2[data-employee-row-id="${employeeId}"]`); if(rowToHide) rowToHide.classList.add('hidden'); } catch (err) { console.error(err); } 
+            try { 
+                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); 
+                const rowToHide = document.querySelector(`.employee-row-v2[data-employee-row-id="${employeeId}"]`); 
+                if(rowToHide) {
+                    rowToHide.classList.add('hidden');
+                    // Check if this was the last one
+                    setTimeout(() => {
+                        if (document.querySelectorAll('.employee-row-v2:not(.hidden)').length === 0) {
+                            document.getElementById('attendance-card').style.display = 'none';
+                        }
+                    }, 500); // Wait for CSS transition
+                }
+            } catch (err) { console.error(err); } 
         }
         async function refreshAttendanceTracker(employees) {
             const today = getIndiaDateString();
@@ -346,7 +358,7 @@
             if (employeesToTrack.length === 0) {
                 attendanceCard.style.display = 'none'; // Instantly hide the card
             } else {
-                attendanceCard.style.display = 'block'; // Ensure card is visible if there are employees
+                attendanceCard.style.display = 'block';
                 container.innerHTML = employeesToTrack.map(emp => `
                     <div class="employee-row-v2" data-employee-row-id="${emp.id}">
                         <div class="employee-info-v2">
