@@ -46,18 +46,12 @@
             padding-top: 72px; /* Space for the new fixed navbar */
         }
         
-        /* --- NAVBAR STYLES --- */
-        .header {
-            position: fixed; top: 0; width: 100%; z-index: 50;
-            background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);
-        }
+        /* --- NAVBAR STYLES (UNCHANGED) --- */
+        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         [data-theme="dark"] .header { background-color: hsla(222, 47%, 11%, 0.8); }
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) {
-            .header-container { padding-left: 16px; padding-right: 16px; width: 100%; }
-            .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }
-        }
+        @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
         .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
         .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
@@ -95,42 +89,54 @@
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
         
-        /* --- PAGE-SPECIFIC STYLES --- */
+        /* --- UPDATED UI/UX STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; }
-        h2 { font-size: 1.25rem; color: var(--color-text-primary); margin-bottom: 0; }
+        h1 { font-size: 1.75rem; color: var(--color-text-primary); }
         .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
         .icon-sm { width: 16px; height: 16px; } .icon-lg { width: 24px; height: 24px; }
         .danger-text { color: var(--color-danger) !important; } .success-text { color: var(--color-success) !important; }
-        .app-container { display: block; }
         main { padding-top: 24px; padding-bottom: 48px; }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-md); }
+        .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-sm); }
+        .btn-primary:hover { background-color: var(--color-primary-dark); }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
-        .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 0; box-shadow: var(--shadow-sm); }
-        .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
-        #employees-view-header { display:flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        #employee-summaries { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        .summary-card { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; padding: 20px; }
-        .summary-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--color-primary); }
-        .summary-card .stat { margin-top: 8px; color: var(--color-text-secondary); font-size: 0.9rem; }
-        .summary-card .stat strong { color: var(--color-text-primary); font-weight: 600; }
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .breadcrumb { font-size: 0.9rem; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .breadcrumb:hover { color: var(--color-text-primary); }
+        #employee-list-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .employee-card { display: flex; align-items: center; gap: 1rem; background: var(--color-surface); padding: 1.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); transition: all 0.2s var(--ease-cubic); text-decoration: none; }
+        .employee-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--color-primary); }
+        .employee-icon { flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background-color: var(--color-primary-light); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; }
+        .employee-info { flex-grow: 1; }
+        .employee-name { font-weight: 600; color: var(--color-text-primary); font-size: 1.1rem; }
+        .employee-stats { display: flex; gap: 1rem; color: var(--color-text-secondary); font-size: 0.85rem; margin-top: 0.25rem; }
+        .employee-stats strong { color: var(--color-text-primary); font-weight: 500; }
+        .employee-arrow { color: var(--color-border); transition: color 0.2s; }
+        .employee-card:hover .employee-arrow { color: var(--color-primary); }
+        .empty-state { text-align: center; padding: 4rem 1rem; background-color: var(--color-surface); border: 2px dashed var(--color-border); border-radius: var(--radius-lg); }
+        .empty-state-icon { font-size: 3rem; color: var(--color-text-secondary); }
+        .empty-state h3 { margin-top: 1rem; color: var(--color-text-primary); }
+        .empty-state p { color: var(--color-text-secondary); margin-top: 0.5rem; }
+        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(248, 250, 252, 0.7); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
         .spinner { width: 48px; height: 48px; border: 5px solid var(--color-primary-light); border-bottom-color: var(--color-primary); border-radius: 50%; animation: rotation 1s linear infinite; }
         #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: var(--radius-md); color: white; font-weight: 500; box-shadow: var(--shadow-lg); transition: bottom 0.5s; z-index: 1001; }
-        #toast.show { bottom: 30px; }
-        #toast.success { background-color: var(--color-primary); }
-        #toast.error { background-color: var(--color-danger); }
-        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px); }
-        .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 500px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
-        .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--color-text-secondary); background: transparent; border: none; cursor: pointer; }
-        .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-secondary); font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-background); color: var(--color-text-primary); }
+        #toast.success { background-color: var(--color-primary); } #toast.error { background-color: var(--color-danger); }
+        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center;}
+        .modal-content { background-color: var(--color-surface); margin: 1rem; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 500px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-header h2 { margin: 0; }
+        .close-btn { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .close-btn:hover { color: var(--color-text-primary); background-color: var(--color-border); }
+        .form-group { position: relative; margin-bottom: 1.5rem; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-background); color: var(--color-text-primary); font-size: 1rem; }
+        .form-group label { position: absolute; top: 12px; left: 12px; color: var(--color-text-secondary); pointer-events: none; transition: all 0.2s var(--ease-cubic); background-color: var(--color-surface); padding: 0 4px; }
+        .form-group input:focus + label, .form-group input:not(:placeholder-shown) + label,
+        .form-group select:focus + label, .form-group select:valid + label { top: -10px; font-size: 0.8rem; color: var(--color-primary); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } #employee-summaries { grid-template-columns: 1fr; gap: 16px; } .section-header { flex-direction: column; align-items: flex-start; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; } #employee-list-container { grid-template-columns: 1fr; gap: 1rem; } }
     </style>
 </head>
 
@@ -164,9 +170,7 @@
                          </div>
                     </div>
                     <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                 </div>
             </nav>
@@ -175,25 +179,12 @@
     </header>
 
     <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-            <svg viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section">
-                <a href="admin-dashboard.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                     <span>Home</span>
-                </a>
-                <a href="view-orders.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                     <span>All Orders</span>
-                </a>
-                <a href="admin-employees.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                     <span>Manage Employees</span>
-                </a>
+                <a href="admin-dashboard.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
+                <a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
+                <a href="admin-employees.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span>Manage Employees</span></a>
             </div>
         </div>
         <div class="mobile-menu-bottom">
@@ -244,7 +235,7 @@
         const showLoader = () => document.getElementById('loader').style.display = 'flex';
         const hideLoader = () => document.getElementById('loader').style.display = 'none';
         const showToast = (message, type = 'success') => { const t = document.getElementById('toast'); t.textContent = message; t.className = `show ${type}`; setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); }
-        const openModal = (id) => document.getElementById(id).style.display = 'block';
+        const openModal = (id) => document.getElementById(id).style.display = 'flex';
         const closeModal = (id) => document.getElementById(id).style.display = 'none';
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -276,91 +267,26 @@
             });
         }
         
-        // --- NAVBAR FUNCTIONS ---
-        function populateNavbar(user) {
-            if (!user) return;
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
-        }
+        // --- NAVBAR FUNCTIONS (UNCHANGED) ---
+        function populateNavbar(user) {if (!user) return;const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';document.getElementById('desktop-profile-email').textContent = user.email || '';document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';document.getElementById('mobile-profile-email').textContent = user.email || '';}
+        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
         
-        function initializeNavbar() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenuClose = document.getElementById('mobileMenuClose');
-            const menuOverlay = document.getElementById('menuOverlay');
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
-            const logoutPopup = document.getElementById('logoutPopup');
-
-            function closeMobileMenu() {
-                if (mobileMenu.classList.contains('active')) {
-                     mobileMenu.classList.remove('active');
-                     menuOverlay.classList.remove('active');
-                     document.body.style.overflow = '';
-                }
-            }
-            
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
-                menuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            mobileMenuClose.addEventListener('click', closeMobileMenu);
-            menuOverlay.addEventListener('click', closeMobileMenu);
-
-            if (desktopProfileTrigger && logoutPopup) {
-                desktopProfileTrigger.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';
-                    logoutPopup.classList.toggle('show');
-                    desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);
-                });
-
-                window.addEventListener('click', (event) => {
-                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {
-                        if (logoutPopup.classList.contains('show')) {
-                            logoutPopup.classList.remove('show');
-                            desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                        }
-                    }
-                });
-            }
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeMobileMenu();
-                    if (logoutPopup && logoutPopup.classList.contains('show')) {
-                        logoutPopup.classList.remove('show');
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                    }
-                }
-            });
-            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
-        }
-        
+        // --- UPDATED UI/UX LOGIC ---
         async function showEmployeesView() {
             const view = document.getElementById('employees-view');
             view.innerHTML = `
-                <div id="employees-view-header">
-                    <a href="admin-dashboard.html" class="btn btn-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                        Back to Dashboard
-                    </a>
+                <a href="admin-dashboard.html" class="breadcrumb">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                    <span>Back to Dashboard</span>
+                </a>
+                <div class="page-header">
+                    <h1>Manage Employees</h1>
+                    <button class="btn btn-primary" data-app-action="open-manual-add-modal">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 11a1 1 0 100-2h-1v-1a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1z" /></svg>
+                        <span>Add Employee</span>
+                    </button>
                 </div>
-                <div class="card">
-                    <div class="section-header">
-                        <h2>All Employees</h2>
-                        <button class="btn btn-primary" data-app-action="open-manual-add-modal">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 11a1 1 0 100-2h-1v-1a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1z" /></svg>
-                            Add Manually
-                        </button>
-                    </div>
-                    <div id="employee-summaries"></div>
-                </div>`;
+                <div id="employee-list-container"></div>`;
             
             try {
                 const employeesSnap = await getDocs(collection(db, "employees"));
@@ -368,7 +294,12 @@
                 if (employees.length > 0) {
                     await renderEmployeeSummaries(employees);
                 } else {
-                    document.getElementById('employee-summaries').innerHTML = '<p style="text-align: center; padding: 20px; color: var(--color-text-secondary);">No employees found. Add one manually to get started.</p>';
+                    document.getElementById('employee-list-container').innerHTML = `
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="empty-state-icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 48px; height: 48px; color: var(--color-text-secondary);"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-4.59c.12-.344.242-.69.368-1.036.144-.423.29-1.006.368-1.484a3.397 3.397 0 00-2.403-3.26C6.737 7.95 6 6.522 6 5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 5c0 1.522-.737 2.95-1.903 3.682A3.397 3.397 0 0015 11.558c-.078.478-.224 1.061-.368 1.484-.126.346-.248.692-.368 1.036a6.375 6.375 0 01-1.24 3.07m0-12.222a3 3 0 00-3-3c-1.657 0-3 1.343-3 3a3 3 0 003 3c1.657 0 3-1.343 3-3z" /></svg>
+                        <h3>No Employees Found</h3>
+                        <p>Get started by adding your first employee manually.</p>
+                    </div>`;
                 }
             } catch (error) {
                 showToast("Could not load employees.", "error");
@@ -376,13 +307,25 @@
         }
 
         async function renderEmployeeSummaries(employees) {
-            const container = document.getElementById('employee-summaries');
+            const container = document.getElementById('employee-list-container');
             if (!container) return;
             const summariesPromises = employees.map(async (emp) => {
                 const [attSnap, paySnap] = await Promise.all([ getDocs(collection(db, `employees/${emp.id}/attendance`)), getDocs(collection(db, `employees/${emp.id}/payments`)) ]);
-                const { dueAmount, totalEarned } = calculateFinancials(emp, attSnap.docs.map(d => d.data()), paySnap.docs.map(d => d.data()));
+                const { dueAmount } = calculateFinancials(emp, attSnap.docs.map(d => d.data()), paySnap.docs.map(d => d.data()));
                 const dueAmountClass = dueAmount > 0 ? 'danger-text' : 'success-text';
-                return `<div class="summary-card card" data-app-action="navigate-detail" data-employee-id="${emp.id}"><h3>${emp.name}</h3><div class="stat">Amount Due: <strong class="${dueAmountClass}">₹${dueAmount.toFixed(2)}</strong></div><div class="stat">Total Earned: <strong>₹${totalEarned.toFixed(2)}</strong></div></div>`;
+                return `
+                <a href="#" class="employee-card" data-app-action="navigate-detail" data-employee-id="${emp.id}">
+                    <div class="employee-icon">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="icon-lg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+                    </div>
+                    <div class="employee-info">
+                        <div class="employee-name">${emp.name}</div>
+                        <div class="employee-stats">
+                            <span>Amount Due: <strong class="${dueAmountClass}">₹${dueAmount.toFixed(2)}</strong></span>
+                        </div>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-lg employee-arrow" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </a>`;
             });
             container.innerHTML = (await Promise.all(summariesPromises)).join('');
         }
@@ -404,7 +347,34 @@
                 const usersSnap = await getDocs(usersQuery);
                 const availableUsers = usersSnap.docs.map(d => ({id: d.id, ...d.data()}));
                 const userOptions = availableUsers.map(user => `<option value="${user.id}">${user.displayName} (${user.email})</option>`).join('');
-                modal.innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="manual-employee-modal">×</span><h2>Add Employee Manually</h2><form id="manual-employee-form"><div class="form-group"><label for="manual-full-name">Full Name</label><input type="text" id="manual-full-name" required></div><div class="form-group"><label for="manual-daily-salary">Daily Salary</label><input type="number" id="manual-daily-salary" required min="0" step="0.01"></div><div class="form-group"><label for="manual-link-user">Link Gmail Account (Optional)</label><select id="manual-link-user"><option value="">None (No Gmail Link)</option>${userOptions}</select></div><button type="submit" class="btn btn-primary" style="width:100%">Save Employee</button></form></div>`;
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Add Employee</h2>
+                            <button class="close-btn" data-app-action="close-modal" data-modal-id="manual-employee-modal">
+                                <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+                        <form id="manual-employee-form">
+                            <div class="form-group">
+                                <input type="text" id="manual-full-name" placeholder=" " required>
+                                <label for="manual-full-name">Full Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="manual-daily-salary" placeholder=" " required min="0" step="0.01">
+                                <label for="manual-daily-salary">Daily Salary</label>
+                            </div>
+                            <div class="form-group">
+                                <select id="manual-link-user" required>
+                                    <option value="" disabled selected hidden></option>
+                                    <option value="none">None (No Gmail Link)</option>
+                                    ${userOptions}
+                                </select>
+                                <label for="manual-link-user">Link Gmail Account (Optional)</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width:100%">Save Employee</button>
+                        </form>
+                    </div>`;
                 document.getElementById('manual-employee-form').addEventListener('submit', handleManualEmployeeFormSubmit);
                 openModal('manual-employee-modal');
             } catch (err) {
@@ -422,9 +392,9 @@
             const dailySalary = parseFloat(document.getElementById('manual-daily-salary').value);
             const userUID = document.getElementById('manual-link-user').value;
             try {
-                const employeeData = { name, dailySalary, userUID: userUID || null };
+                const employeeData = { name, dailySalary, userUID: userUID === 'none' ? null : userUID };
                 const employeeDocRef = await addDoc(collection(db, "employees"), employeeData);
-                if (userUID) {
+                if (userUID && userUID !== 'none') {
                     const userRef = doc(db, "users", userUID);
                     await setDoc(userRef, { status: 'approved', role: 'employee', employeeId: employeeDocRef.id }, { merge: true });
                 }
