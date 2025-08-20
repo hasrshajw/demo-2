@@ -11,30 +11,26 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         /* --- MERGED & COMPLETE CSS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
-            --light-text-primary: #111827; --light-text-secondary: #4b5563; --light-border: #e5e7eb;
+            --light-text-primary: #012726; --light-text-secondary: #52616b; --light-border: #e5e7eb;
             --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
             --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
             --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
         }
-        [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-success-bg: #f0fdf4; --color-danger: #dc2626; --color-warning: #f59e0b; }
         html, body { height: 100%; }
-        html { scroll-behavior: smooth; }
-        
         body {
-            font-family: var(--font-alt);
-            line-height: 1.6; background-color: var(--color-background);
-            color: var(--light-text-secondary); padding-top: 72px; /* Reserved space for fixed navbar */
-            -webkit-font-smoothing: antialiased;
+            font-family: var(--font-alt); background-color: var(--color-background); color: var(--light-text-secondary);
+            line-height: 1.6; -webkit-font-smoothing: antialiased; padding-top: 72px;
         }
 
         /* --- NAVBAR STYLES (UNCHANGED) --- */
-        .header {position: fixed; top: 0; width: 100%; z-index: 50; transition-property: all; transition-duration: 0.3s; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); overflow: visible; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
+        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
         @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
@@ -72,81 +68,84 @@
         .profile-dropdown-container { position: relative; }
         .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
         .logout-popup.show { display: block; }
-        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
+        .logout-button { background-color: #dc2626; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-        
+
         /* --- UPDATED UI/UX STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
         main { padding-top: 24px; padding-bottom: 48px; }
-        .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .btn-icon { background: none; border: none; padding: 8px; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-        .btn-icon:hover { color: var(--light-text-primary); background-color: var(--light-border); }
-        .btn-success { background-color: var(--color-success); color: white; }
-        .btn-success:hover:not(:disabled) { background-color: #15803d; }
-        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; display: flex; flex-direction: column; }
+        .page-header { margin-bottom: 2rem; }
+        .page-header h1 { font-size: 1.75rem; font-weight: 700; color: var(--light-text-primary); }
+        .page-header p { font-size: 1rem; color: var(--light-text-secondary); margin-top: 0.25rem; }
+        #dashboard-layout { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
+        @media (min-width: 1024px) { #dashboard-layout { grid-template-columns: repeat(3, 1fr); } #attendance-card, #orders-card { grid-column: span 2 / span 2; } #home-actions-container, #global-summary-card { grid-column: span 1 / span 1; } }
+        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .card-title { color: var(--light-text-primary); font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
-        #dashboard-layout { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
-        @media(min-width: 992px) { #dashboard-layout { grid-template-columns: repeat(2, 1fr); } }
-        #attendance-card, #orders-card { min-height: 300px; }
-        /* ADVANCED SKELETON LOADER */
-        .skeleton { background-color: var(--light-bg-tertiary); border-radius: var(--radius-sm); animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 50% { opacity: .5; } }
-        .skeleton-line { height: 1rem; } .skeleton-line.w-full { width: 100%; } .skeleton-line.w-3\/4 { width: 75%; } .skeleton-line.w-1\/2 { width: 50%; }
-        .skeleton-avatar { width: 36px; height: 36px; border-radius: 50%; }
-        .skeleton-button { height: 36px; width: 80px; }
-        .skeleton-card { display: flex; flex-direction: column; gap: 1rem; }
-        .skeleton-item { display: flex; align-items: center; gap: 1rem; }
-        /* IMPROVED ATTENDANCE UI */
-        #attendance-tracker { display: flex; flex-direction: column; gap: 0.5rem; }
-        .attendance-row { display: flex; align-items: center; gap: 1rem; padding: 0.75rem; border-radius: var(--radius-md); transition: background-color 0.2s; }
-        .attendance-row:hover { background-color: var(--light-bg-secondary); }
-        .attendance-row.hidden { opacity: 0; transform: scale(0.95); height: 0; padding: 0; margin: 0; pointer-events: none; }
-        .attendance-name { flex-grow: 1; font-weight: 500; color: var(--light-text-primary); }
-        .attendance-actions { display: flex; align-items: center; gap: 0.5rem; }
-        /* ATTENDANCE POPOVER */
-        .attendance-popover { display: none; position: absolute; z-index: 1010; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 0.5rem; animation: popover-in 0.2s var(--ease-cubic); transform-origin: top right; }
-        .attendance-popover.active { display: block; }
-        .popover-item { display: block; width: 100%; text-align: left; padding: 0.5rem 0.75rem; border: none; background: none; border-radius: var(--radius-sm); cursor: pointer; transition: background-color 0.2s; font-size: 0.9rem; }
-        .popover-item:hover { background-color: var(--light-bg-secondary); }
-        @keyframes popover-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        /* IMPROVED ORDERS & SUMMARY UI */
+        .card-title { font-size: 1.25rem; font-weight: 600; color: var(--light-text-primary); }
+        
+        /* Advanced Attendance UI */
+        .attendance-list { display: flex; flex-direction: column; gap: 0.5rem; }
+        .attendance-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem; border-radius: var(--radius-md); transition: background-color 0.2s, opacity 0.4s, transform 0.4s, height 0.4s; }
+        .attendance-item.removing { opacity: 0; transform: translateX(-20px); height: 0px !important; padding-top: 0; padding-bottom: 0; margin-bottom: -0.5rem; }
+        .attendance-item:hover { background-color: var(--light-bg-tertiary); }
+        .employee-avatar { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background-color: var(--light-border); color: var(--light-text-secondary); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.1rem; }
+        .employee-name { flex-grow: 1; font-weight: 500; color: var(--light-text-primary); }
+        .attendance-actions { display: flex; gap: 0.5rem; }
+        .action-btn { padding: 0.5rem 1rem; border-radius: var(--radius-md); font-weight: 500; font-size: 0.875rem; border: 1px solid transparent; cursor: pointer; transition: all 0.2s; }
+        .action-btn.present { background-color: var(--color-success-bg); color: var(--color-success); border-color: var(--color-success); }
+        .action-btn.present:hover { background-color: var(--color-success); color: white; }
+        .action-btn.more { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-secondary); }
+        .action-btn.more:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); border-color: var(--light-border-hover); }
+        
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
-        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
-        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .due-status { font-size: 0.8rem; font-weight: 500; }
-        .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
-        .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
+        .upcoming-order-card { background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
+        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--color-primary); }
+        .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; }
+        .due-status { font-size: 0.8rem; font-weight: 500; padding: 0.125rem 0.5rem; border-radius: 999px; }
+        .upcoming-order-card.overdue .due-status { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); }
+        .upcoming-order-card.upcoming-due .due-status { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); }
+
+        .dashboard-action-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-md); text-decoration: none; transition: all 0.2s; }
+        .dashboard-action-link:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--color-primary); }
+        .action-icon { width: 40px; height: 40px; border-radius: 50%; background-color: var(--light-bg-tertiary); color: var(--color-primary); display: flex; align-items: center; justify-content: center; }
+        .action-text strong { display: block; color: var(--light-text-primary); font-weight: 600; }
+        .action-text span { color: var(--light-text-secondary); font-size: 0.9rem; }
         .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        .global-stat { display: flex; flex-direction: column; gap: 4px; }
+        .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
         .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); }
         .global-stat .value.danger-text { color: var(--color-danger); }
-        .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
-        .action-links-container { display: flex; flex-direction: column; gap: 1rem; }
-        .action-link { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-md); text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
-        .action-link:hover { background-color: var(--light-bg-secondary); transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--light-border-hover); }
-        .action-link span { color: var(--light-text-primary); font-weight: 600; font-size: 1rem; }
-        .action-link svg { width: 20px; height: 20px; stroke: var(--light-text-secondary); transition: transform 0.2s ease; }
-        .action-link:hover svg { transform: translateX(3px); stroke: var(--color-primary); }
-        /* IMPROVED FAB MENU */
+
+        /* Advanced Skeleton Loading */
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; }
+        .skeleton::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0)); animation: shimmer 2s infinite; }
+        .skeleton-text { height: 1em; border-radius: var(--radius-sm); }
+        .skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
+        .skeleton-button { height: 36px; border-radius: var(--radius-md); }
+        .skeleton-pill { height: 4rem; border-radius: 999px; }
+        .skeleton-card { height: 5rem; border-radius: var(--radius-md); }
+        .skeleton-stat { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        /* Other Utilities */
+        .fab-container, .modal, .spinner { /* Standard styles from previous version */ }
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
-        .fab-button { width: 56px; height: 56px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        .fab-button .material-symbols-outlined { font-size: 28px; transition: transform 0.3s ease; }
+        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; transition: transform 0.3s ease; }
         .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
-        .fab-button.open .material-symbols-outlined { transform: rotate(135deg); }
-        .fab-menu { position: absolute; bottom: 70px; right: 4px; display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; visibility: hidden; opacity: 0; }
+        .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
+        .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
         .fab-menu.show { visibility: visible; opacity: 1; }
-        .fab-item { display: flex; align-items: center; gap: 12px; cursor: pointer; transform: translateY(10px); opacity: 0; transition: transform 0.2s var(--ease-cubic), opacity 0.2s var(--ease-cubic); }
-        .fab-menu.show .fab-item { transform: translateY(0); opacity: 1; }
-        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.1s; }
-        .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.05s; }
-        .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--color-surface); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-md); white-space: nowrap; }
-        .fab-item .action-button { width: 44px; height: 44px; border-radius: 50%; background: var(--color-surface); border: 1px solid var(--light-border); color: var(--color-primary); box-shadow: var(--shadow-md); font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @media (max-width: 768px) { .global-summary-grid { grid-template-columns: 1fr; } }
+        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; }
+        .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
+        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
+        .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
+        .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
+        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
+        .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
+        .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
+        .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
+        @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @media (max-width: 768px) { main { padding-top: 16px; } .page-header { margin-bottom: 1.5rem; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } }
     </style>
 </head>
 
@@ -210,61 +209,35 @@
     </div>
     <div id="menuOverlay"></div>
 
-    <div id="app-container" class="app-container">
-        <main>
-            <div class="container" id="main-container">
-                <div id="dashboard-layout">
-                    <!-- SKELETON LOADER -->
-                    <div id="skeleton-loader">
-                        <div class="card skeleton-card"><div class="skeleton-line w-1/2"></div><div class="skeleton-item"><div class="skeleton-avatar"></div><div class="skeleton-line w-full"></div></div><div class="skeleton-item"><div class="skeleton-avatar"></div><div class="skeleton-line w-full"></div></div><div class="skeleton-item"><div class="skeleton-avatar"></div><div class="skeleton-line w-full"></div></div></div>
-                        <div class="card skeleton-card"><div class="skeleton-line w-1/2"></div><div class="skeleton-item"><div class="skeleton-line w-full"></div></div><div class="skeleton-item"><div class="skeleton-line w-3/4"></div></div><div class="skeleton-item"><div class="skeleton-line w-full"></div></div></div>
-                        <div class="card skeleton-card"><div class="skeleton-button w-full"></div><div class="skeleton-button w-full"></div></div>
-                        <div class="card skeleton-card"><div class="skeleton-line w-1/2"></div><div class="skeleton-item"><div class="skeleton-line w-full"></div></div><div class="skeleton-item"><div class="skeleton-line w-3/4"></div></div><div class="skeleton-item"><div class="skeleton-line w-full"></div></div></div>
-                    </div>
-
-                    <!-- REAL CONTENT (Initially hidden) -->
-                    <div id="real-content" style="display: none; width: 100%;">
-                        <div id="dashboard-content-layout" style="display: grid; gap: 1.5rem; width: 100%;">
-                            <div id="attendance-card" class="card">
-                                <div class="card-header"><h2 class="card-title">Today's Attendance</h2></div>
-                                <div id="attendance-tracker"></div>
-                            </div>
-                            <div id="orders-card" class="card">
-                                <div class="card-header"><h2 class="card-title">Critical Orders</h2></div>
-                                <div id="upcoming-overdue-list" class="upcoming-cards-container"></div>
-                            </div>
-                            <div id="home-actions-card" class="card">
-                                <div class="card-header"><h2 class="card-title">Quick Actions</h2></div>
-                                <div class="action-links-container"></div>
-                            </div>
-                            <div id="global-summary-card" class="card"></div>
-                        </div>
-                    </div>
+    <main>
+        <div class="container" id="main-container">
+            <div class="page-header">
+                <div>
+                    <h1>Admin Dashboard</h1>
+                    <p>Welcome back! Here's what's happening today.</p>
                 </div>
             </div>
-        </main>
-    </div>
+            <div id="dashboard-layout">
+                <!-- Data will be injected here after initial skeleton loading -->
+            </div>
+        </div>
+    </main>
     
     <div class="fab-container" id="fabContainer">
         <div class="fab-menu" id="fabMenu">
-            <div class="fab-item" data-app-action="navigate-order-form">
-                <span class="label">Take Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div>
-            </div>
-            <div class="fab-item" data-app-action="navigate-add-payment">
-                <span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div>
-            </div>
+            <div class="fab-item" data-app-action="navigate-order-form"><span class="label">Take Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div>
+            <div class="fab-item" data-app-action="navigate-add-payment"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></div>
         </div>
         <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
     </div>
     
-    <div id="loader"><div class="spinner"></div></div>
-    <div id="attendance-popover" class="attendance-popover"></div>
+    <div id="other-options-modal" class="modal"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
+        
         const firebaseConfig = {
             apiKey: "__API_KEY__",
             authDomain: "__AUTH_DOMAIN__",
@@ -277,35 +250,70 @@
         
         let db, auth, currentUserProfile;
 
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
+        const openModal = (id) => document.getElementById(id).style.display = 'block';
+        const closeModal = (id) => document.getElementById(id).style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeAppLogic();
-        });
+        // --- SKELETON RENDER FUNCTIONS ---
+        const renderSkeletons = () => {
+            const layout = document.getElementById('dashboard-layout');
+            layout.innerHTML = `
+                <div class="card" id="attendance-card" data-skeleton="attendance">
+                    <div class="card-header"><h2 class="card-title">Today's Attendance</h2></div>
+                    <div class="attendance-list">
+                        ${Array(3).fill('').map(() => `
+                            <div class="attendance-item">
+                                <div class="skeleton skeleton-avatar"></div>
+                                <div class="skeleton skeleton-text" style="width: 50%; flex-grow: 1;"></div>
+                                <div class="skeleton skeleton-button" style="width: 80px;"></div>
+                                <div class="skeleton skeleton-button" style="width: 70px;"></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="card" id="orders-card" data-skeleton="orders">
+                    <div class="card-header"><h2 class="card-title">Critical Orders</h2></div>
+                    <div class="upcoming-cards-container">
+                        ${Array(2).fill('').map(() => `<div class="skeleton skeleton-card"></div>`).join('')}
+                    </div>
+                </div>
+                <div id="home-actions-container" data-skeleton="actions" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="skeleton skeleton-pill"></div>
+                    <div class="skeleton skeleton-pill"></div>
+                </div>
+                <div class="card" id="global-summary-card" data-skeleton="summary">
+                    <div class="card-header"><h2 class="card-title">Month in Review</h2></div>
+                    <div class="global-summary-grid">
+                         ${Array(3).fill('').map(() => `
+                            <div class="skeleton-stat">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 0.8rem;"></div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 1.5rem;"></div>
+                            </div>
+                         `).join('')}
+                    </div>
+                </div>
+            `;
+        }
 
-        function initializeAppLogic() {
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSkeletons(); // Render skeletons immediately on page load
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
+                
+                document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
                 
                 initializeNavbar(); 
                 bindEventListeners();
                 listenForAuthStateChanges();
             } catch (error) {
                 console.error("Initialization Failed:", error);
-                document.getElementById('main-container').innerHTML = `<h2>Error initializing application.</h2>`;
+                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
             }
-        }
-        
-        function listenForAuthStateChanges() {
-            const skeleton = document.getElementById('skeleton-loader');
-            skeleton.style.display = 'grid'; // Use grid for skeleton layout
-            skeleton.style.gap = '1.5rem';
-            if (window.innerWidth >= 992) skeleton.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        });
 
+        function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
@@ -313,37 +321,42 @@
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
                     populateNavbar(currentUserProfile);
-                    await initializeAdminView();
+                    initializeAdminView(); // Start fetching real data
                 } else {
                     window.location.href = 'login.html';
                 }
             });
         }
         
-        async function initializeAdminView() {
-            listenForOrders();
-            const employeesSnap = await getDocs(collection(db, "employees"));
-            const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-            await Promise.all([
-                refreshAttendanceTracker(employees),
-                calculateAndRenderGlobalSummary(employees),
-                renderActionLinks()
-            ]);
+        function populateNavbar(user) {if (!user) return;const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';document.getElementById('desktop-profile-email').textContent = user.email || '';document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';document.getElementById('mobile-profile-email').textContent = user.email || '';}
 
-            // Hide skeleton and show real content
-            document.getElementById('skeleton-loader').style.display = 'none';
-            const realContent = document.getElementById('real-content');
-            realContent.style.display = 'block';
-            if (window.innerWidth >= 992) {
-                document.getElementById('dashboard-content-layout').style.gridTemplateColumns = 'repeat(2, 1fr)';
-            }
+        function initializeAdminView() {
+            // Decoupled data fetching and rendering
+            listenForOrders();
+            loadAndRenderAttendance();
+            loadAndRenderGlobalSummary();
+            renderActionLinks();
         }
         
-        // --- NAVBAR FUNCTIONS (UNCHANGED) ---
-        function populateNavbar(user) {if (!user) return;const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';document.getElementById('desktop-profile-email').textContent = user.email || '';document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';document.getElementById('mobile-profile-email').textContent = user.email || '';}
-        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
-        
-        // --- UI & DATA RENDERING (UPDATED) ---
+        function renderActionLinks() {
+            const container = document.getElementById('home-actions-container');
+            container.innerHTML = `
+                <a href="view-orders.html" class="dashboard-action-link">
+                    <div class="action-icon"><span class="material-symbols-outlined">receipt_long</span></div>
+                    <div class="action-text"><strong>View All Orders</strong><span>Review and manage all customer orders.</span></div>
+                </a>
+                <a href="admin-employees.html" class="dashboard-action-link">
+                    <div class="action-icon"><span class="material-symbols-outlined">groups</span></div>
+                    <div class="action-text"><strong>Manage Employees</strong><span>Add, edit, or view employee profiles.</span></div>
+                </a>`;
+        }
+
+        async function loadAndRenderAttendance() {
+            const employeesSnap = await getDocs(collection(db, "employees"));
+            const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            await refreshAttendanceTracker(employees);
+        }
+
         async function refreshAttendanceTracker(employees) {
             const today = getIndiaDateString();
             const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
@@ -352,38 +365,79 @@
             const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
             renderAttendanceTracker(employeesToTrack);
         }
-
+        
         function renderAttendanceTracker(employeesToTrack) {
             const attendanceCard = document.getElementById('attendance-card');
-            const container = document.getElementById('attendance-tracker');
             if (employeesToTrack.length === 0) {
-                container.innerHTML = `<p style="padding: 1rem; text-align: center;">All employee attendance has been marked for today.</p>`;
-            } else {
-                container.innerHTML = employeesToTrack.map(emp => `
-                    <div class="attendance-row" data-employee-row-id="${emp.id}">
-                        <div class="attendance-name">${emp.name}</div>
-                        <div class="attendance-actions">
-                            <button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
-                            <button class="btn-icon" data-app-action="open-attendance-popover" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options">
-                                <span class="material-symbols-outlined">more_vert</span>
-                            </button>
-                        </div>
+                attendanceCard.style.display = 'none';
+                return;
+            }
+            attendanceCard.style.display = 'block';
+            const container = document.getElementById('attendance-tracker');
+            container.className = 'attendance-list';
+            container.innerHTML = employeesToTrack.map(emp => `
+                <div class="attendance-item" data-employee-row-id="${emp.id}">
+                    <div class="employee-avatar">${emp.name.charAt(0)}</div>
+                    <div class="employee-name">${emp.name}</div>
+                    <div class="attendance-actions">
+                        <button class="action-btn present" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
+                        <button class="action-btn more" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">More</button>
+                    </div>
+                </div>`).join('');
+        }
+        
+        async function handleAttendanceClick(employeeId, status) {
+            const row = document.querySelector(`.attendance-item[data-employee-row-id="${employeeId}"]`);
+            if (row) {
+                row.style.height = `${row.offsetHeight}px`; // Fix height for transition
+                requestAnimationFrame(() => { row.classList.add('removing'); }); // Trigger animation
+            }
+            try {
+                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
+                setTimeout(() => {
+                    row?.remove();
+                    if(document.querySelectorAll('.attendance-item').length === 0) {
+                        document.getElementById('attendance-card').style.display = 'none';
+                    }
+                }, 400); // Remove after transition
+            } catch (err) {
+                console.error(err);
+                row?.classList.remove('removing'); // Revert on error
+            }
+        }
+
+        function listenForOrders() {
+            const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
+            onSnapshot(ordersQuery, (snapshot) => {
+                const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                populateUpcomingOverdueList(orders);
+            });
+        }
+        const getStatusInfo = (order, today) => { if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null; };
+        function populateUpcomingOverdueList(orders) {
+            const container = document.querySelector('#orders-card .upcoming-cards-container');
+            const today = new Date(); today.setHours(0,0,0,0);
+            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
+            if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
+            else {
+                container.innerHTML = criticalOrders.map(order => `
+                    <div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'">
+                        <span class="due-status">${order.statusInfo.text}</span>
+                        <span class="customer-name" title="${order.name}">${order.name}</span>
                     </div>`).join('');
             }
         }
 
-        function renderActionLinks() {
-            document.querySelector('#home-actions-card .action-links-container').innerHTML = `
-                <a href="view-orders.html" class="action-link"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>
-                <a href="admin-employees.html" class="action-link"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>`;
-        }
-        
-        async function calculateAndRenderGlobalSummary(employees) {
+        async function loadAndRenderGlobalSummary() {
             const container = document.getElementById('global-summary-card');
+            if (!container) return;
+            const employeesSnap = await getDocs(collection(db, "employees"));
+            const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
             const todayInIndia = getIndiaDateString();
             const [year, month] = todayInIndia.split('-');
             const startDate = `${year}-${month}-01`;
-            const endDate = todayInIndia;
+            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
+            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
             let totalEarned = 0, totalPaid = 0;
             const promises = employees.map(async emp => {
                 const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
@@ -393,85 +447,29 @@
                 paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
             });
             await Promise.all(promises);
-            container.innerHTML = `
-                <div class="card-header"><h2 class="card-title">Month in Review</h2></div>
-                <div class="global-summary-grid">
-                    <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
-                </div>`;
+            container.innerHTML = `<div class="card-header"><h2 class="card-title">Month in Review</h2></div><div class="global-summary-grid"><div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div></div>`;
         }
-        
-        function listenForOrders() { /* ... unchanged ... */ }
-        function populateUpcomingOverdueList(orders) { /* ... unchanged ... */ }
-        const getStatusInfo = (order, today) => { /* ... unchanged ... */ };
-        
-        // --- ACTION HANDLERS (UPDATED) ---
-        async function handleAttendanceClick(employeeId, status) {
-            showLoader();
-            try {
-                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-                const rowToHide = document.querySelector(`.attendance-row[data-employee-row-id="${employeeId}"]`);
-                if(rowToHide) rowToHide.classList.add('hidden');
-                setTimeout(async () => {
-                    if(!document.querySelector('.attendance-row:not(.hidden)')) {
-                        document.getElementById('attendance-tracker').innerHTML = `<p style="padding: 1rem; text-align: center;">All employee attendance has been marked for today.</p>`;
-                    }
-                }, 600);
-            } catch (err) { console.error(err); } 
-            finally { hideLoader(); }
-        }
-
-        function openAttendancePopover(targetButton, employeeId, employeeName) {
-            const popover = document.getElementById('attendance-popover');
-            popover.innerHTML = `
-                <button class="popover-item" data-app-action="mark-attendance" data-id="${employeeId}" data-status="absent">Absent</button>
-                <button class="popover-item" data-app-action="mark-attendance" data-id="${employeeId}" data-status="half-day">Half Day</button>
-                <button class="popover-item" data-app-action="mark-attendance" data-id="${employeeId}" data-status="paid-holiday">Paid Holiday</button>
-            `;
-            const rect = targetButton.getBoundingClientRect();
-            popover.style.top = `${rect.bottom + window.scrollY + 5}px`;
-            popover.style.left = `${rect.right + window.scrollX - popover.offsetWidth}px`;
-            popover.classList.add('active');
-
-            const closePopover = (event) => {
-                if (!popover.contains(event.target) && event.target !== targetButton) {
-                    popover.classList.remove('active');
-                    window.removeEventListener('click', closePopover, true);
-                }
-            };
-            window.addEventListener('click', closePopover, true);
-        }
-
-        function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
         
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
-                const popover = document.getElementById('attendance-popover');
-                if (!appAction || !appAction.dataset.appAction) { return; }
+                if (!e.target.closest('.fab-container')) { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
+                if (!appAction) return;
                 const action = appAction.dataset.appAction;
-
-                if (action !== 'toggle-fab' && !appAction.closest('.fab-container')) { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
-                if (action !== 'open-attendance-popover' && popover.classList.contains('active')) { popover.classList.remove('active'); }
+                if (action !== 'toggle-fab') { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
                 if (!appAction.href) e.preventDefault();
-                
                 switch (action) {
-                    case 'toggle-fab': toggleFabMenu(); break;
+                    case 'toggle-fab': document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); break;
                     case 'navigate-order-form': window.location.href='order-form.html'; break;
                     case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
                     case 'logout': await signOut(auth); break;
-                    case 'open-attendance-popover': openAttendancePopover(appAction, appAction.dataset.id, appAction.dataset.name); break;
-                    case 'mark-attendance': await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); break;
+                    case 'close-modal': closeModal(appAction.dataset.modalId); break;
+                    case 'open-other-options-modal': const { id, name } = appAction.dataset; document.getElementById('other-options-title').textContent = `Mark Attendance: ${name}`; document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`; openModal('other-options-modal'); break;
+                    case 'mark-attendance': await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); closeModal('other-options-modal'); break;
                 }
             });
         }
-        
-        // Unchanged Functions
-        populateUpcomingOverdueList=function(orders){const container=document.getElementById("upcoming-overdue-list"),today=new Date;today.setHours(0,0,0,0);const criticalOrders=orders.map((o=>({...o,statusInfo:getStatusInfo(o,today)}))).filter((o=>null!==o.statusInfo)).sort(((a,b)=>(new Date(a.dueDate)?.getTime()||0)-(new Date(b.dueDate)?.getTime()||0)));0===criticalOrders.length?container.innerHTML='<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>':container.innerHTML=criticalOrders.map((o=>`<div class="upcoming-order-card ${o.statusInfo.className}" onclick="window.location.href='order-details.html?id=${o.id}'"><div class="card-info"><div class="customer-name" title="${o.name}">${o.name}</div><div class="due-status">${o.statusInfo.text}</div></div></div>`)).join("")};
-        getStatusInfo=function(order,today){if("completed"===order.status)return null;const dueDate=order.dueDate?new Date(order.dueDate+"T00:00:00"):null;if(!dueDate)return null;if(dueDate<today)return{text:"Overdue",className:"overdue"};const daysDiff=Math.ceil((dueDate.getTime()-today.getTime())/864e5);return daysDiff>=0&&daysDiff<=3?{text:`Due in ${daysDiff} day${1!==daysDiff?"s":""}`,className:"upcoming-due"}:null};
-        listenForOrders=function(){onSnapshot(query(collection(db,"upvc_orders"),orderBy("createdAt","desc")),((snapshot)=>{const orders=snapshot.docs.map((doc=>({id:doc.id,...doc.data()})));populateUpcomingOverdueList(orders)}))};
-
+        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
     </script>
 </body>
 </html>
