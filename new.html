@@ -76,12 +76,12 @@
 
         /* --- SKELETON LOADER STYLES --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; }
-        [data-theme="dark"] .skeleton { background-color: #334155; }
         .skeleton::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0)); animation: shimmer 2s infinite; }
         @keyframes shimmer { 100% { transform: translateX(100%); } }
         .skeleton-title { height: 28px; width: 40%; border-radius: var(--radius-sm); }
         .skeleton-text { height: 20px; border-radius: var(--radius-sm); }
         .skeleton-button { height: 44px; width: 100px; border-radius: var(--radius-md); }
+        .skeleton-icon-button { height: 44px; width: 44px; border-radius: 50%; }
         .skeleton-card { height: 52px; border-radius: var(--radius-md); }
         .skeleton-link { height: 56px; border-radius: 999px; }
         .skeleton-stat-label { height: 16px; width: 60%; border-radius: var(--radius-sm); }
@@ -95,13 +95,16 @@
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-success { background-color: var(--color-success); color: white; } .btn-danger { background-color: var(--color-danger); color: white; } .btn-warning { background-color: var(--color-warning); color: #1f2937; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
+        /* NEW ICON BUTTON STYLE */
+        .btn-icon { background-color: transparent; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s var(--ease-cubic); }
+        .btn-icon:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
         .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
         .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
         .card .title { color: var(--light-text-primary); font-size: 22px; font-weight: 600; margin: 0; line-height: 1.2; }
         .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; }
         .employee-row:first-of-type { border-top: 1px solid var(--light-border); }
         .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
-        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; gap: 8px; }
+        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; align-items: center; gap: 8px; }
         #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
         .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
@@ -137,7 +140,7 @@
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 
@@ -146,9 +149,7 @@
         <div class="header-container">
             <nav class="nav">
                 <div class="nav-left">
-                    <a href="admin-dashboard.html">
-                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
-                    </a>
+                    <a href="admin-dashboard.html"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
                     <div class="nav-links">
                         <a class="nav-link" href="admin-dashboard.html">Home</a>
                         <a class="nav-link" href="view-orders.html">All Orders</a>
@@ -165,14 +166,10 @@
                                     <span class="profile-email" id="desktop-profile-email"></span>
                                 </div>
                             </div>
-                            <div class="logout-popup" id="logoutPopup">
-                                <button class="logout-button" data-app-action="logout">Logout</button>
-                            </div>
+                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                    </button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 </div>
             </nav>
             <div class="divider"></div>
@@ -200,13 +197,12 @@
             <div class="container" id="main-container">
                 <div id="home-view" class="view active">
                     <div id="dashboard-layout">
-                        <!-- SKELETON LOADER UI -->
                         <div id="attendance-card" class="card">
                             <div class="card-content"><div class="skeleton skeleton-title"></div></div>
                             <div id="attendance-tracker">
-                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 30%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button"></div></div></div>
-                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 40%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button"></div></div></div>
-                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 25%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button"></div></div></div>
+                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 30%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
+                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 40%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
+                                <div class="employee-row"><div class="skeleton skeleton-text" style="width: 25%;"></div><div class="actions"><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-icon-button"></div></div></div>
                             </div>
                         </div>
                         <div id="orders-card" class="card">
@@ -234,10 +230,7 @@
     </div>
     
     <div class="fab-container" id="fabContainer">
-        <div class="fab-menu" id="fabMenu">
-            <div class="fab-item" data-app-action="navigate-order-form"><span class="label">Take Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div>
-            <div class="fab-item" data-app-action="navigate-add-payment"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></div>
-        </div>
+        <div class="fab-menu" id="fabMenu"><div class="fab-item" data-app-action="navigate-order-form"><span class="label">Take Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div><div class="fab-item" data-app-action="navigate-add-payment"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></div></div>
         <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
     </div>
     
@@ -259,7 +252,6 @@
         };
         
         let db, auth, currentUserProfile;
-        
         const openModal = (id) => document.getElementById(id).style.display = 'block';
         const closeModal = (id) => document.getElementById(id).style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
@@ -269,64 +261,31 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
                 document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
-                
                 initializeNavbar(); 
                 bindEventListeners();
                 listenForAuthStateChanges();
-            } catch (error) {
-                console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
-            }
+            } catch (error) { document.body.innerHTML = `<h2>Error initializing application.</h2>`; }
         });
 
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
-                    // This can be done in parallel with other data fetching
-                    const profilePromise = setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true })
-                        .then(() => getDoc(userRef))
-                        .then(userDoc => {
-                            currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                            populateNavbar(currentUserProfile);
-                        });
-                    
-                    await Promise.all([
-                        profilePromise,
-                        initializeAdminView()
-                    ]);
-                } else {
-                    window.location.href = 'login.html';
-                }
+                    const profilePromise = setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true }).then(() => getDoc(userRef)).then(userDoc => { currentUserProfile = { id: userDoc.id, ...userDoc.data() }; populateNavbar(currentUserProfile); });
+                    await Promise.all([ profilePromise, initializeAdminView() ]);
+                } else { window.location.href = 'login.html'; }
             });
         }
         
-        function populateNavbar(user) {
-            if (!user) return;
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
-        }
-
+        function populateNavbar(user) { if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
         async function initializeAdminView() {
             listenForOrders();
             const employeesSnap = await getDocs(collection(db, "employees"));
             const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-            // Run final data calculations in parallel
-            await Promise.all([
-                refreshAttendanceTracker(employees),
-                calculateAndRenderGlobalSummary(employees)
-            ]);
+            await Promise.all([ refreshAttendanceTracker(employees), calculateAndRenderGlobalSummary(employees) ]);
         }
-        
         function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
-
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
@@ -347,35 +306,14 @@
                         document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
                         openModal('other-options-modal'); 
                         break;
-                    case 'mark-attendance': 
-                        await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
-                        closeModal('other-options-modal');
-                        break;
+                    case 'mark-attendance': await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); closeModal('other-options-modal'); break;
                 }
             });
         }
-        
-        function initializeNavbar() {
-            const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup');
-            function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
-            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
-            mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu);
-            if (desktopProfileTrigger && logoutPopup) {
-                desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); });
-                window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
-            }
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
-            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
-        }
-
+        function initializeNavbar() { const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup'); function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } } mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }); mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu); if (desktopProfileTrigger && logoutPopup) { desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); }); window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); } document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
         async function handleAttendanceClick(employeeId, status) {
-            try {
-                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-                const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
-                if(rowToHide) rowToHide.classList.add('hidden');
-            } catch (err) { console.error(err); } 
+            try { await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`); if(rowToHide) rowToHide.classList.add('hidden'); } catch (err) { console.error(err); } 
         }
-
         async function refreshAttendanceTracker(employees) {
             const today = getIndiaDateString();
             const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
@@ -384,19 +322,26 @@
             const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
             renderAttendanceTracker(employeesToTrack);
         }
-
         function renderAttendanceTracker(employeesToTrack) {
             const attendanceCard = document.getElementById('attendance-card');
             const container = document.getElementById('attendance-tracker');
             if (employeesToTrack.length === 0) {
                 attendanceCard.style.display = 'none';
             } else {
-                attendanceCard.style.display = 'block'; // Ensure it's visible
-                container.innerHTML = employeesToTrack.map(emp => `<div class="employee-row" data-employee-row-id="${emp.id}"><div class="employee-name">${emp.name}</div><div class="actions"><button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button><button class="btn btn-secondary" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button></div></div>`).join('');
-                document.querySelector('#attendance-card .card-content').innerHTML = `<h2 class="title">Today's Attendance</h2>`; // Replace skeleton title
+                attendanceCard.style.display = 'block';
+                container.innerHTML = employeesToTrack.map(emp => `
+                    <div class="employee-row" data-employee-row-id="${emp.id}">
+                        <div class="employee-name">${emp.name}</div>
+                        <div class="actions">
+                            <button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
+                            <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                    </div>`).join('');
+                document.querySelector('#attendance-card .card-content').innerHTML = `<h2 class="title">Today's Attendance</h2>`;
             }
         }
-        
         function listenForOrders() {
             const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
             onSnapshot(ordersQuery, (snapshot) => {
@@ -404,63 +349,29 @@
                 populateUpcomingOverdueList(orders);
             });
         }
-
-        const getStatusInfo = (order, today) => {
-            if (order.status === 'completed') return null;
-            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
-            if (!dueDate) return null;
-            if (dueDate < today) return { text: 'Overdue', className: 'overdue' };
-            const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
-            if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };
-            return null;
-        };
-        
+        const getStatusInfo = (order, today) => { if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null;};
         function populateUpcomingOverdueList(orders) {
             const container = document.getElementById('upcoming-overdue-list');
             const today = new Date(); today.setHours(0,0,0,0);
-            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) }))
-                                         .filter(order => order.statusInfo !== null)
-                                         .sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
-            document.querySelector('#orders-card .card-content').innerHTML = `<h2 class="title">Upcoming & Overdue Orders</h2>`; // Replace skeleton
-            if (criticalOrders.length === 0) {
-                container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>';
-            } else {
-                container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join('');
-            }
+            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
+            document.querySelector('#orders-card .card-content').innerHTML = `<h2 class="title">Upcoming & Overdue Orders</h2>`;
+            if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
+            else { container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); }
         }
-
         async function calculateAndRenderGlobalSummary(employees) {
             const container = document.getElementById('global-summary-card');
-            const todayInIndia = getIndiaDateString();
-            const [year, month] = todayInIndia.split('-');
-            const startDate = `${year}-${month}-01`;
-            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
-            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+            const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`; const lastDay = new Date(year, parseInt(month, 10), 0).getDate(); const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
             let totalEarned = 0, totalPaid = 0;
             const promises = employees.map(async emp => {
-                const [attSnap, paySnap] = await Promise.all([ 
-                    getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
-                    getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
-                ]);
-                let p=0,h=0,ph=0;
-                attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
-                totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
-                paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
+                const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
+                let p=0,h=0,ph=0; attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
+                totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0); paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
             });
             await Promise.all(promises);
-            container.innerHTML = `
-                <div class="card-content"><h2 class="title">Month in Review</h2></div>
-                <div class="global-summary-grid">
-                    <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
-                </div>`;
-            
-            // Replace static skeleton links with real links
+            container.innerHTML = `<div class="card-content"><h2 class="title">Month in Review</h2></div><div class="global-summary-grid"><div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div></div>`;
             const actionsContainer = document.getElementById('home-actions-container');
-            actionsContainer.innerHTML = `
-                <a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
-                <a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
+            actionsContainer.innerHTML = `<a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a><a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
         }
     </script>
 </body>
