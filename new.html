@@ -108,9 +108,9 @@
         
         /* ADVANCED ATTENDANCE UI */
         #attendance-tracker { display: flex; flex-direction: column; gap: 8px; }
-        .employee-row-att { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: var(--radius-md); transition: background-color 0.2s, opacity 0.5s, transform 0.5s, height 0.5s; overflow: hidden; height: 68px; }
+        .employee-row-att { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: var(--radius-md); transition: all 0.3s var(--ease-cubic); overflow: hidden; height: 68px; }
         .employee-row-att:hover { background-color: var(--light-bg-tertiary); }
-        .employee-row-att.hidden { opacity: 0; transform: translateX(-20px); height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: -8px; }
+        .employee-row-att.hidden { opacity: 0; transform: translateX(-20px); height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: -8px; border: none; }
         .employee-info-att { flex-grow: 1; display: flex; align-items: center; gap: 12px; }
         .employee-avatar-att { width: 40px; height: 40px; border-radius: 50%; background-color: var(--light-border); display: flex; align-items: center; justify-content: center; color: var(--light-text-secondary); flex-shrink: 0; }
         .employee-name-att { font-weight: 500; color: var(--light-text-primary); }
@@ -120,9 +120,9 @@
         .btn-more:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
         
         /* UPDATED "MORE" POPUP MENU */
-        #attendance-options-popup { display: none; position: absolute; background-color: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 8px; z-index: 100; width: 180px; }
+        #attendance-options-popup { display: none; position: absolute; background-color: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 8px; z-index: 100; width: 180px; animation: modalOpen 0.2s var(--ease-cubic); }
         #attendance-options-popup.show { display: block; }
-        .popup-title { font-size: 0.75rem; font-weight: 600; color: var(--light-text-secondary); padding: 4px 8px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .popup-title { font-size: 0.75rem; font-weight: 600; color: var(--light-text-secondary); padding: 4px 8px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .popup-option { width: 100%; background: none; border: none; padding: 8px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 8px; text-align: left; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s; }
         .popup-option:hover { background-color: var(--light-bg-tertiary); }
         .popup-option.danger { color: var(--color-danger); } .popup-option.warning { color: var(--color-warning); } .popup-option.secondary { color: var(--light-text-primary); }
@@ -142,7 +142,7 @@
         .global-stat .value.danger-text { color: var(--color-danger); }
         .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; }
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
-        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .fab-button .material-symbols-outlined { font-size: 32px; transition: transform 0.3s ease; }
         .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
         .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
@@ -151,8 +151,14 @@
         .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
         .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
         .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
-        .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); font-size: 14px; box-shadow: var(--shadow-sm); }
-        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
+        .fab-item .label { padding: 6px 12px; border-radius: 999px; background: var(--light-bg-primary); font-size: 14px; box-shadow: var(--shadow-md); font-weight: 500; color: var(--light-text-primary); }
+        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-md); font-size: 20px; display: flex; align-items: center; justify-content: center; }
+        .fab-item .action-button:hover { transform: scale(1.1); }
+        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
+        .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     </style>
 </head>
 
@@ -249,13 +255,13 @@
     
     <div class="fab-container" id="fabContainer">
         <div class="fab-menu" id="fabMenu">
-            <div class="fab-item" data-app-action="navigate-order-form"><span class="label">Take Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div>
+            <div class="fab-item" data-app-action="navigate-order-form"><span class="label">New Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div>
             <div class="fab-item" data-app-action="navigate-add-payment"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></div>
         </div>
         <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
     </div>
     
-    <div id="attendance-options-popup" class="options-popup"></div>
+    <div id="attendance-options-popup"></div>
     <div id="loader"><div class="spinner"></div></div>
 
     <script type="module">
@@ -275,8 +281,6 @@
         
         let db, auth, currentUserProfile;
 
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -298,10 +302,11 @@
             onAuthStateChanged(auth, async (user) => {
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
-                    await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
                     const userDoc = await getDoc(userRef);
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    
+                    if (!userDoc.exists()) {
+                         await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
+                    }
+                    currentUserProfile = { id: user.uid, ...userDoc.data(), ...user };
                     populateNavbar(currentUserProfile);
                     initializeAdminView();
                 } else {
@@ -313,7 +318,7 @@
         function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
 
         function initializeAdminView() {
-            hideLoader(); // Hide full-screen loader immediately as skeleton is visible
+            document.getElementById('loader')?.style.display == 'none'; // Hide full-screen loader
             listenForOrders();
             getDocs(collection(db, "employees")).then(snapshot => {
                 const employees = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -328,15 +333,8 @@
             const attendancePopup = document.getElementById('attendance-options-popup');
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
-                
-                // Close FAB menu if clicking outside
                 if (!e.target.closest('.fab-container')) { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
-                
-                // Close Attendance Popup if clicking outside
-                if (!e.target.closest('[data-app-action="open-other-options-modal"]') && !e.target.closest('#attendance-options-popup')) {
-                    attendancePopup.classList.remove('show');
-                }
-
+                if (!e.target.closest('[data-app-action="open-other-options-modal"]') && !e.target.closest('#attendance-options-popup')) { attendancePopup.classList.remove('show'); }
                 if (!appAction) return;
                 
                 const action = appAction.dataset.appAction;
@@ -349,18 +347,12 @@
                     case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
                     case 'logout': await signOut(auth); break;
                     case 'open-other-options-modal': 
-                        e.stopPropagation(); // Prevent body click from closing it instantly
+                        e.stopPropagation();
                         const { id, name } = appAction.dataset;
                         const buttonRect = appAction.getBoundingClientRect();
-                        
-                        attendancePopup.innerHTML = `
-                            <div class="popup-title">${name}</div>
-                            <button class="popup-option danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent"><span class="material-symbols-outlined">person_off</span>Absent</button>
-                            <button class="popup-option warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day"><span class="material-symbols-outlined">person_check</span>Half Day</button>
-                            <button class="popup-option secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday"><span class="material-symbols-outlined">beach_access</span>Paid Holiday</button>`;
-                        
+                        attendancePopup.innerHTML = `<div class="popup-title">${name}</div><button class="popup-option danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent"><span class="material-symbols-outlined">person_off</span>Absent</button><button class="popup-option warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day"><span class="material-symbols-outlined">person_check</span>Half Day</button><button class="popup-option secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday"><span class="material-symbols-outlined">beach_access</span>Paid Holiday</button>`;
                         attendancePopup.style.top = `${buttonRect.bottom + 8}px`;
-                        attendancePopup.style.left = `${buttonRect.right - 180}px`; // Align to the right of the button
+                        attendancePopup.style.left = `${buttonRect.right - 180}px`;
                         attendancePopup.classList.add('show');
                         break;
                     case 'mark-attendance': 
