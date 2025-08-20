@@ -10,161 +10,130 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        /* --- MERGED & COMPLETE CSS --- */
+        /* --- 1. DESIGN SYSTEM & BASE STYLES --- */
         :root {
             --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
-            --light-text-primary: #1f2937; --light-text-secondary: #52616b; --light-border: #e5e7eb;
+            --light-text-primary: #012726; --light-text-secondary: #52616b; --light-border: #e5e7eb;
             --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
             --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
             --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
         }
         [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
-        [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
-
+        [data-theme="dark"] { /* Add dark theme variables if needed */ }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; }
         html { scroll-behavior: smooth; }
-        
         body {
-            font-family: var(--font-alt); line-height: 1.6; background-color: var(--color-background);
-            color: var(--light-text-secondary); padding-top: 72px; -webkit-font-smoothing: antialiased;
+            font-family: var(--font-alt); line-height: 1.6;
+            background-color: var(--color-background); color: var(--light-text-secondary);
+            padding-top: 72px; /* Reserved space for fixed navbar */
+            -webkit-font-smoothing: antialiased;
         }
 
         /* --- NAVBAR STYLES (UNCHANGED) --- */
-        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
-        .header-container { width: 90%; margin-left: auto; margin-right: auto; }
-        @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) { .header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
-        .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
-        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
-        .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
-        .nav-links { display: none; align-items: center; gap: 1rem; }
-        @media (min-width: 48rem) { .nav-links { display: flex; } }
-        .nav-link { padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #012726; transition: color 0.15s, background-color 0.15s; text-decoration: none; border-radius: 0.375rem; }
-        @media (hover: hover) { .nav-link:hover { color: #fff; background-color: #012726; } }
-        .nav-right { display: flex; align-items: center; gap: 1rem; }
-        .menu-button { display: flex; padding: 0.375rem; border: 1px solid #012726; border-radius: 0.375rem; color: #012726; background-color: transparent; cursor: pointer; }
-        @media (min-width: 48rem) { .menu-button { display: none; } }
-        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; }
-        #mobileMenu.active { transform: translateX(0); }
-        #menuOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
-        #menuOverlay.active { display: block; }
-        .mobile-menu-close { padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease; align-self: flex-end; margin-bottom: 24px; cursor: pointer; }
-        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
-        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
-        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
-        .mobile-nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500; color: #012726; background-color: #f8f9fa; transition: background-color 0.15s; }
-        .mobile-nav-link:hover { background-color: #e9ecef; }
-        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
-        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
-        .divider { height: 1px; background-color: #e9ecef; }
-        @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
-        .desktop-profile { display: none; }
-        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
-        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
-        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
-        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
-        .profile-name { font-weight: 500; color: #012726; }
-        .profile-email { font-size: 0.85rem; color: #6c757d; }
-        .profile-dropdown-container { position: relative; }
-        .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
-        .logout-popup.show { display: block; }
-        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
-        .logout-button:hover { background-color: #c82333; }
+        .header{position:fixed;top:0;width:100%;z-index:50;transition-property:all;transition-duration:.3s;transition-timing-function:cubic-bezier(.4,0,.2,1);overflow:visible;background-color:hsla(0,0%,100%,.8);backdrop-filter:blur(8px)}.header-container{width:90%;margin-left:auto;margin-right:auto}@media (min-width:48rem){.header-container{width:80%}}@media (max-width:768px){.header-container{padding-left:16px;padding-right:16px;width:100%}.nav-left,.nav-right,.logo,.menu-button{margin:0;padding:0}}.nav{padding-top:.75rem;padding-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}.nav-left{display:flex;align-items:center;gap:1.5rem}.logo{margin-right:1.5rem;width:100px;height:40px;color:transparent;object-fit:contain}.nav-links{display:none;align-items:center;gap:1rem}@media (min-width:48rem){.nav-links{display:flex}}.nav-link{padding:.5rem 1rem;font-size:1rem;font-weight:500;color:#012726;transition:color .15s,background-color .15s;text-decoration:none;border-radius:.375rem}@media (hover:hover){.nav-link:hover{color:#fff;background-color:#012726}}.nav-right{display:flex;align-items:center;gap:1rem}.menu-button{display:flex;padding:.375rem;border:1px solid #012726;border-radius:.375rem;color:#012726;background-color:transparent;cursor:pointer}@media (min-width:48rem){.menu-button{display:none}}#mobileMenu{position:fixed;top:0;right:0;bottom:0;width:75vw;max-width:320px;background:#fff;padding:24px 16px;transform:translateX(100%);transition:transform .3s ease;box-shadow:-2px 0 8px rgba(0,0,0,.1);z-index:1000;border-top-left-radius:16px;display:flex;flex-direction:column}#mobileMenu.active{transform:translateX(0)}#menuOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:999;display:none}#menuOverlay.active{display:block}.mobile-menu-close{padding:8px;border-radius:8px;border:none;background:0 0;transition:background .2s ease,transform .2s ease;align-self:flex-end;margin-bottom:24px;cursor:pointer}.mobile-menu-close svg{width:24px;height:24px;color:#4b5563}.mobile-menu-content{flex-grow:1;overflow-y:auto}.mobile-menu-section{display:flex;flex-direction:column;gap:8px}.mobile-nav-link{display:flex;align-items:center;padding:12px 16px;border-radius:.5rem;text-decoration:none;font-weight:500;color:#012726;background-color:#f8f9fa;transition:background-color .15s}.mobile-nav-link:hover{background-color:#e9ecef}.mobile-nav-icon{width:20px;height:20px;margin-right:12px;color:#495057}.mobile-menu-bottom{flex-shrink:0;margin-top:auto;padding-top:16px;border-top:1px solid #e9ecef;display:flex;flex-direction:column;gap:16px}.divider{height:1px;background-color:#e9ecef}@media (max-width:768px){.divider{width:100%;margin:0;padding:0}}.desktop-profile{display:none}@media (min-width:48rem){.desktop-profile{display:flex}}.profile-container{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;border-radius:.375rem;padding:4px}.profile-pic{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #e9ecef}.profile-info{display:flex;flex-direction:column;line-height:1.3}.profile-name{font-weight:500;color:#012726}.profile-email{font-size:.85rem;color:#6c757d}.profile-dropdown-container{position:relative}.logout-popup{display:none;position:absolute;top:calc(100% + 8px);right:0;background-color:#fff;border-radius:.375rem;box-shadow:0 4px 12px rgba(0,0,0,.1);padding:8px;z-index:60;width:150px}.logout-popup.show{display:block}.logout-button{background-color:#dc3545;color:#fff;border:none;padding:10px 16px;border-radius:.375rem;font-weight:500;cursor:pointer;width:100%;text-align:center;transition:background-color .15s}.logout-button:hover{background-color:#c82333}
 
-        /* --- UPDATED DASHBOARD STYLES --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
-        main { padding-top: 2rem; padding-bottom: 2rem; }
-        h2.section-title { font-size: 1.25rem; font-weight: 600; color: var(--light-text-primary); margin-bottom: 1.5rem; }
-        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 1.5rem; }
-        #dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 1024px) { #dashboard-grid { grid-template-columns: 2fr 1fr; } }
-        .dashboard-main, .dashboard-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-
-        /* Advanced Skeleton Loading */
-        @keyframes pulse { 50% { opacity: .5; } }
-        .skeleton { background-color: var(--light-bg-tertiary); border-radius: var(--radius-md); animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        .skeleton.h-8 { height: 2rem; } .skeleton.h-5 { height: 1.25rem; } .skeleton.h-4 { height: 1rem; }
-        .skeleton.w-1_3 { width: 33.33%; } .skeleton.w-1_2 { width: 50%; } .skeleton.w-full { width: 100%; }
-        .skeleton-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0.5rem; }
-        .skeleton-row .skeleton:first-child { width: 40%; }
-        .skeleton-row .skeleton:last-child { width: 30%; }
-
-        /* Advanced Attendance UI */
-        #attendance-tracker { display: flex; flex-direction: column; gap: 0.5rem; }
-        .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-radius: var(--radius-md); transition: background-color 0.2s; }
-        .employee-row:hover { background-color: var(--light-bg-secondary); }
-        .employee-row.hidden { display: none; }
-        .employee-name { font-weight: 500; color: var(--light-text-primary); }
-        .actions { display: flex; align-items: center; gap: 0.5rem; position: relative; }
-        .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; border-radius: var(--radius-sm); }
-        .btn-icon-sm { padding: 0.5rem; border-radius: 50%; line-height: 1; }
-        .btn-present { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .btn-present:hover { background-color: #bbf7d0; }
-        .btn-more { background-color: var(--light-bg-tertiary); color: var(--light-text-secondary); border: 1px solid var(--light-border); }
-        .btn-more:hover { background-color: var(--light-border); color: var(--light-text-primary); }
-
-        /* More Options Popup */
-        #more-options-popup { display: none; position: absolute; background: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 0.5rem; z-index: 10; width: 150px; animation: popIn 0.2s var(--ease-cubic); }
-        #more-options-popup button { width: 100%; justify-content: flex-start; padding: 0.5rem 0.75rem; border: none; background: none; font-weight: 500; color: var(--light-text-primary); border-radius: var(--radius-sm); }
-        #more-options-popup button:hover { background-color: var(--light-bg-secondary); }
-        #more-options-popup button .material-symbols-outlined { font-size: 1rem; margin-right: 0.5rem; }
-        #more-options-popup .btn-danger { color: var(--color-danger); }
-        @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(5px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-
-        /* Orders & Summary Cards */
-        .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; cursor: pointer; transition: all 0.2s ease; }
-        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-        .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .due-status { font-size: 0.8rem; font-weight: 500; }
+        /* --- 2. UPDATED DASHBOARD LAYOUT & STYLES --- */
+        .container { max-width: 1400px; padding: 0 24px; }
+        main { padding-top: 32px; padding-bottom: 48px; }
+        #dashboard-layout { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-areas: "attendance orders sidebar" "attendance orders sidebar"; gap: 24px; }
+        #attendance-card { grid-area: attendance; }
+        #orders-card { grid-area: orders; }
+        #sidebar { grid-area: sidebar; display: flex; flex-direction: column; gap: 24px; }
+        @media (max-width: 1024px) { #dashboard-layout { grid-template-columns: 1fr; grid-template-areas: "attendance" "orders" "sidebar"; } }
+        
+        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; display: flex; flex-direction: column; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .card-title { color: var(--light-text-primary); font-size: 1.25rem; font-weight: 600; font-family: var(--font-main); }
+        .card-content { flex-grow: 1; }
+        
+        /* --- 3. ADVANCED ATTENDANCE UI --- */
+        #attendance-tracker { display: flex; flex-direction: column; gap: 8px; }
+        .attendance-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: var(--radius-md); transition: background-color 0.2s, box-shadow 0.2s; height: 60px; }
+        .attendance-item.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
+        .attendance-item:hover { background-color: var(--light-bg-secondary); }
+        .attn-item-info { display: flex; align-items: center; gap: 12px; }
+        .attn-item-avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--light-bg-tertiary); color: var(--light-text-secondary); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1rem; }
+        .attn-item-name { font-weight: 500; color: var(--light-text-primary); }
+        .attn-item-actions { display: flex; align-items: center; gap: 8px; }
+        .btn { padding: 8px 16px; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.875rem; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; }
+        .btn-success { background-color: var(--color-success); color: white; } .btn-success:hover { background-color: #15803d; }
+        .btn-danger { background-color: var(--color-danger); color: white; } .btn-danger:hover { background-color: #b91c1c; }
+        .btn-warning { background-color: var(--color-warning); color: #1f2937; } .btn-warning:hover { background-color: #b45309; }
+        .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-secondary); } .btn-secondary:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
+        .btn-icon { background: none; border: 1px solid transparent; padding: 8px; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); } .btn-icon:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
+        
+        /* --- 4. COMPACT MODAL FOR "MORE" OPTIONS --- */
+        .compact-modal { display: none; position: fixed; z-index: 1001; }
+        .compact-modal-content { background-color: var(--color-surface); padding: 16px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); animation: modalOpen 0.2s var(--ease-cubic); min-width: 200px; }
+        .compact-modal-header { font-size: 0.9rem; font-weight: 600; color: var(--light-text-primary); margin-bottom: 1rem; }
+        .compact-modal-actions { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        
+        /* --- 5. UPDATED DASHBOARD COMPONENTS --- */
+        .upcoming-cards-container { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 1280px) { .upcoming-cards-container { grid-template-columns: repeat(2, 1fr); } }
+        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
+        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .order-info .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; }
+        .order-info .due-status { font-size: 0.8rem; font-weight: 500; }
         .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
         .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
-        .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-        .global-stat { display: flex; flex-direction: column; }
-        .global-stat .value { font-size: 1.5rem; font-weight: 700; color: var(--light-text-primary); }
+        .link-tile { display: flex; align-items: center; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
+        .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--light-border-hover); }
+        .link-tile .icon { width: 32px; height: 32px; background-color: var(--light-bg-tertiary); color: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px; }
+        .link-tile .text-content span { color: var(--light-text-primary); font-weight: 600; font-size: 1rem; }
+        .link-tile .text-content small { color: var(--light-text-secondary); font-size: 0.85rem; }
+        .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; text-align: left; }
+        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); }
         .global-stat .value.danger-text { color: var(--color-danger); }
         .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
-        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-md); text-decoration: none; transition: all 0.2s ease; }
-        .link-tile:hover { background-color: var(--light-bg-secondary); border-color: var(--light-border-hover); }
-        .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 0.9rem; }
-        .link-tile .material-symbols-outlined { color: var(--light-text-secondary); transition: transform 0.2s ease; }
-        .link-tile:hover .material-symbols-outlined { transform: translateX(3px); }
-
-        /* Advanced FAB Menu */
+        
+        /* --- 6. ADVANCED FAB MENU --- */
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
         .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        .fab-button .material-symbols-outlined { font-size: 28px; transition: transform 0.3s ease; }
-        .fab-button:hover { background: var(--color-primary-hover); transform: scale(1.05); }
+        .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px) scale(1.05); }
+        .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; transition: transform 0.3s ease; }
         .fab-button.open .material-symbols-outlined { transform: rotate(135deg); }
-        .fab-menu { position: absolute; bottom: 75px; right: 5px; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; }
-        .fab-item { display: flex; align-items: center; gap: 0.75rem; transform: scale(0) translateY(20px); opacity: 0; transition: transform 0.2s var(--ease-cubic), opacity 0.2s var(--ease-cubic); cursor: pointer; }
-        .fab-button.open + .fab-menu .fab-item { transform: scale(1) translateY(0); opacity: 1; }
-        .fab-button.open + .fab-menu .fab-item:nth-child(2) { transition-delay: 0.05s; }
-        .fab-button.open + .fab-menu .fab-item:nth-child(1) { transition-delay: 0.1s; }
-        .fab-item .label { background-color: var(--color-surface); color: var(--light-text-primary); padding: 0.5rem 1rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); font-weight: 500; font-size: 0.9rem; }
-        .fab-item .action-icon { width: 48px; height: 48px; border-radius: 50%; background-color: var(--color-surface); color: var(--color-primary); box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; }
-        
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
+        .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
+        .fab-menu.show { visibility: visible; opacity: 1; }
+        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; text-decoration: none; }
+        .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
+        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
+        .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
+        .fab-item .label { padding: 6px 12px; border-radius: var(--radius-md); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-md); white-space: nowrap; }
+        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: 1px solid var(--light-border); color: var(--color-primary); box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; }
+
+        /* --- 7. ADVANCED SKELETON LOADER --- */
+        .skeleton { opacity: .7; animation: shimmer 2s linear infinite; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; border-radius: var(--radius-md); }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .skeleton-text { height: 1em; }
+        .skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
+        .skeleton-button { width: 80px; height: 36px; }
+        .spinner-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
         .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        @media (max-width: 1023px) { #dashboard-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 1.5rem; padding-bottom: 1.5rem; } .card { padding: 1rem; } h2.section-title { font-size: 1.1rem; } }
+        @keyframes modalOpen { from { opacity: 0; transform: translateY(-10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        @media (max-width: 768px) { #dashboard-layout { grid-template-columns: 1fr; grid-template-areas: "attendance" "orders" "sidebar"; } }
     </style>
 </head>
 
 <body>
+    <!-- Navbar remains unchanged -->
     <header class="header">
         <div class="header-container">
             <nav class="nav">
                 <div class="nav-left">
-                    <a href="admin-dashboard.html"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
+                    <a href="admin-dashboard.html">
+                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
+                    </a>
                     <div class="nav-links">
-                        <a class="nav-link" href="admin-dashboard.html">Home</a><a class="nav-link" href="view-orders.html">All Orders</a><a class="nav-link" href="admin-employees.html">Manage Employees</a>
+                        <a class="nav-link" href="admin-dashboard.html">Home</a>
+                        <a class="nav-link" href="view-orders.html">All Orders</a>
+                        <a class="nav-link" href="admin-employees.html">Manage Employees</a>
                     </div>
                 </div>
                 <div class="nav-right">
@@ -172,18 +141,26 @@
                          <div class="profile-dropdown-container">
                              <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
-                                <div class="profile-info"><span class="profile-name" id="desktop-profile-name">Loading...</span><span class="profile-email" id="desktop-profile-email"></span></div>
+                                <div class="profile-info">
+                                    <span class="profile-name" id="desktop-profile-name">Loading...</span>
+                                    <span class="profile-email" id="desktop-profile-email"></span>
+                                </div>
                             </div>
-                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
+                            <div class="logout-popup" id="logoutPopup">
+                                <button class="logout-button" data-app-action="logout">Logout</button>
+                            </div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
                 </div>
             </nav>
             <div class="divider"></div>
         </div>
     </header>
-
     <div id="mobileMenu" role="dialog" aria-modal="true">
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
@@ -196,75 +173,68 @@
         <div class="mobile-menu-bottom">
             <div class="profile-container">
                 <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
-                <div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div>
+                <div class="profile-info">
+                    <span class="profile-name" id="mobile-profile-name">Loading...</span>
+                    <span class="profile-email" id="mobile-profile-email"></span>
+                </div>
             </div>
             <button class="logout-button" data-app-action="logout">Logout</button>
         </div>
     </div>
     <div id="menuOverlay"></div>
 
-    <div id="app-container" class="app-container">
-        <main>
-            <div class="container" id="main-container">
-                <div id="home-view" class="view active">
-                    <div id="dashboard-grid">
-                        <div class="dashboard-main">
-                            <!-- Attendance Card -->
-                            <div class="card" id="attendance-card-container">
-                                <h2 class="section-title">Today's Attendance</h2>
-                                <div id="attendance-tracker">
-                                    <!-- Skeleton or real data here -->
-                                </div>
-                            </div>
-                            <!-- Orders Card -->
-                            <div class="card" id="orders-card-container">
-                                <h2 class="section-title">Critical Orders</h2>
-                                <div id="upcoming-overdue-list" class="upcoming-cards-container">
-                                    <!-- Skeleton or real data here -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dashboard-sidebar">
-                             <!-- Summary & Actions Card -->
-                             <div class="card" id="summary-actions-container">
-                                <h2 class="section-title">Month in Review</h2>
-                                <div id="global-summary-grid" class="global-summary-grid">
-                                     <!-- Skeleton or real data here -->
-                                </div>
-                                <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-border);">
-                                    <a href="view-orders.html" class="link-tile"><span class="material-symbols-outlined">receipt_long</span><span>View All Orders</span></a>
-                                    <a href="admin-employees.html" class="link-tile"><span class="material-symbols-outlined">groups</span><span>Manage All Employees</span></a>
-                                </div>
-                             </div>
-                        </div>
+    <main>
+        <div class="container" id="main-container">
+            <div id="dashboard-layout">
+                <div id="attendance-card" class="card">
+                    <div class="card-header"><h2 class="card-title">Today's Attendance</h2></div>
+                    <div class="card-content" id="attendance-tracker"></div>
+                </div>
+                <div id="orders-card" class="card">
+                    <div class="card-header"><h2 class="card-title">Critical Orders</h2></div>
+                    <div class="card-content" id="upcoming-overdue-list"></div>
+                </div>
+                <div id="sidebar">
+                    <div id="global-summary-card" class="card"></div>
+                    <div id="home-actions-container">
+                        <a href="view-orders.html" class="link-tile">
+                            <div class="icon"><span class="material-symbols-outlined">receipt_long</span></div>
+                            <div class="text-content"><span>View All Orders</span><small>See complete order history</small></div>
+                        </a>
+                        <a href="admin-employees.html" class="link-tile" style="margin-top: 1rem;">
+                            <div class="icon"><span class="material-symbols-outlined">groups</span></div>
+                            <div class="text-content"><span>Manage Employees</span><small>View and edit employee details</small></div>
+                        </a>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
     
     <div class="fab-container" id="fabContainer">
-        <button class="fab-button" id="fabButton" data-app-action="toggle-fab" aria-label="Open actions menu"><span class="material-symbols-outlined">add</span></button>
-        <ul class="fab-menu" id="fabMenu">
-            <li class="fab-item" data-app-action="navigate-add-payment">
+        <div class="fab-menu" id="fabMenu">
+            <a href="order-form.html" class="fab-item" data-app-action="navigate-order-form">
+                <span class="label">Take Order</span>
+                <div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div>
+            </a>
+            <a href="admin-add-payment.html" class="fab-item" data-app-action="navigate-add-payment">
                 <span class="label">Add Payment</span>
-                <div class="action-icon"><span class="material-symbols-outlined">payments</span></div>
-            </li>
-            <li class="fab-item" data-app-action="navigate-order-form">
-                <span class="label">New Order</span>
-                <div class="action-icon"><span class="material-symbols-outlined">add_shopping_cart</span></div>
-            </li>
-        </ul>
+                <div class="action-button"><span class="material-symbols-outlined">payments</span></div>
+            </a>
+        </div>
+        <button class="fab-button" id="fabButton" aria-label="Toggle Actions Menu">
+            <span class="material-symbols-outlined">add</span>
+        </button>
     </div>
     
-    <div id="more-options-popup"></div>
-    <div id="loader"><div class="spinner"></div></div>
+    <div id="spinner-overlay" class="spinner-overlay"><div class="spinner"></div></div>
+    <div id="other-options-modal" class="compact-modal"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
+        
         const firebaseConfig = {
             apiKey: "__API_KEY__",
             authDomain: "__AUTH_DOMAIN__",
@@ -277,8 +247,8 @@
         
         let db, auth, currentUserProfile;
 
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
+        const showSpinner = () => document.getElementById('spinner-overlay').style.display = 'flex';
+        const hideSpinner = () => document.getElementById('spinner-overlay').style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -290,37 +260,17 @@
                 initializeNavbar(); 
                 bindEventListeners();
                 listenForAuthStateChanges();
-                renderSkeletonLoaders();
             } catch (error) {
                 console.error("Initialization Failed:", error);
                 document.body.innerHTML = `<h2>Error initializing application.</h2>`;
             }
         });
-        
-        function renderSkeletonLoaders() {
-            const attendanceContainer = document.getElementById('attendance-tracker');
-            const ordersContainer = document.getElementById('upcoming-overdue-list');
-            const summaryContainer = document.getElementById('global-summary-grid');
-            
-            attendanceContainer.innerHTML = Array(3).fill('').map(() => `
-                <div class="skeleton-row">
-                    <div class="skeleton h-5"></div>
-                    <div class="skeleton h-8"></div>
-                </div>`).join('');
-
-            ordersContainer.innerHTML = Array(2).fill('').map(() => `<div class="skeleton h-5 w-full" style="height: 4.5rem;"></div>`).join('');
-            summaryContainer.innerHTML = Array(3).fill('').map(() => `
-                <div class="global-stat"><div class="skeleton h-4 w-1_2"></div><div class="skeleton h-8 w-1_3" style="margin-top: 4px;"></div></div>`).join('');
-        }
 
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
-                    const userDocSnap = await getDoc(userRef);
-                    if (!userDocSnap.exists()) {
-                        await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
-                    }
+                    await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
                     
@@ -335,66 +285,93 @@
         function populateNavbar(user) {
             if (!user) return;
             const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || '';
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';
+            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('desktop-profile-email').textContent = user.email || '';
+            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
+            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('mobile-profile-email').textContent = user.email || '';
         }
 
         async function initializeAdminView() {
-            showLoader();
+            renderSkeletons(); // Show skeletons immediately
             listenForOrders();
             const employeesSnap = await getDocs(collection(db, "employees"));
             const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-            await Promise.all([
-                refreshAttendanceTracker(employees),
-                calculateAndRenderGlobalSummary(employees)
-            ]);
-            hideLoader();
+            await refreshAttendanceTracker(employees);
+            await calculateAndRenderGlobalSummary(employees);
         }
 
-        function toggleFabMenu() { document.getElementById('fabButton').classList.toggle('open'); }
-        
-        function showMoreOptionsPopup(button, employeeId, employeeName) {
-            const popup = document.getElementById('more-options-popup');
-            popup.innerHTML = `
-                <button class="btn-danger" data-app-action="mark-attendance" data-id="${employeeId}" data-status="absent"><span class="material-symbols-outlined">person_off</span>Absent</button>
-                <button style="color: var(--color-warning);" data-app-action="mark-attendance" data-id="${employeeId}" data-status="half-day"><span class="material-symbols-outlined">star_half</span>Half Day</button>
-                <button style="color: var(--light-text-secondary);" data-app-action="mark-attendance" data-id="${employeeId}" data-status="paid-holiday"><span class="material-symbols-outlined">beach_access</span>Paid Holiday</button>`;
-            
-            document.body.appendChild(popup);
-            const rect = button.getBoundingClientRect();
-            popup.style.display = 'block';
-            popup.style.top = `${rect.bottom + window.scrollY + 5}px`;
-            popup.style.left = `${rect.right + window.scrollX - popup.offsetWidth}px`;
+        function toggleFabMenu() {
+            const fabMenu = document.getElementById('fabMenu');
+            const fabButton = document.getElementById('fabButton');
+            fabMenu.classList.toggle('show');
+            fabButton.classList.toggle('open');
         }
 
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
-                const popup = document.getElementById('more-options-popup');
-                if (popup.style.display === 'block' && !e.target.closest('#more-options-popup') && !e.target.closest('[data-app-action="open-other-options-modal"]')) {
-                    popup.style.display = 'none';
-                }
                 const appAction = e.target.closest('[data-app-action]');
+
+                // Close FAB menu and compact modal if clicking outside
+                if (!e.target.closest('.fab-container')) {
+                    document.getElementById('fabMenu').classList.remove('show');
+                    document.getElementById('fabButton').classList.remove('open');
+                }
+                if (!e.target.closest('.compact-modal') && !e.target.closest('[data-app-action="open-other-options-modal"]')) {
+                    closeCompactModal();
+                }
+                
                 if (!appAction) return;
                 
-                if (!appAction.href) e.preventDefault();
                 const action = appAction.dataset.appAction;
+                if (action !== 'toggle-fab') {
+                    document.getElementById('fabMenu').classList.remove('show');
+                    document.getElementById('fabButton').classList.remove('open');
+                }
+                
+                e.preventDefault();
 
                 switch (action) {
                     case 'toggle-fab': toggleFabMenu(); break;
                     case 'navigate-order-form': window.location.href='order-form.html'; break;
                     case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
-                    case 'logout': await signOut(auth); break;
-                    case 'open-other-options-modal': 
-                        showMoreOptionsPopup(e.target, appAction.dataset.id, appAction.dataset.name);
+                    case 'logout': showSpinner(); await signOut(auth); break;
+                    case 'open-other-options-modal':
+                        const { id, name } = appAction.dataset;
+                        showCompactModal(appAction, id, name);
                         break;
                     case 'mark-attendance': 
-                        popup.style.display = 'none';
+                        closeCompactModal();
                         await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
                         break;
                 }
             });
         }
         
+        function showCompactModal(targetButton, employeeId, employeeName) {
+            const modal = document.getElementById('other-options-modal');
+            modal.innerHTML = `
+                <div class="compact-modal-content">
+                    <h3 class="compact-modal-header">${employeeName}</h3>
+                    <div class="compact-modal-actions">
+                        <button class="btn btn-danger" data-app-action="mark-attendance" data-id="${employeeId}" data-status="absent">Absent</button>
+                        <button class="btn btn-warning" data-app-action="mark-attendance" data-id="${employeeId}" data-status="half-day">Half Day</button>
+                        <button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${employeeId}" data-status="paid-holiday">Paid Holiday</button>
+                    </div>
+                </div>`;
+            
+            const rect = targetButton.getBoundingClientRect();
+            modal.style.display = 'block';
+            modal.style.top = `${rect.bottom + 8}px`; // Position below the button
+            modal.style.left = `${rect.right - modal.offsetWidth}px`; // Align to the right of the button
+        }
+
+        function closeCompactModal() {
+            const modal = document.getElementById('other-options-modal');
+            if(modal) modal.style.display = 'none';
+        }
+
         function initializeNavbar() {
             const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup');
             function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
@@ -409,33 +386,71 @@
         }
 
         async function handleAttendanceClick(employeeId, status) {
-            showLoader();
+            showSpinner();
             try {
+                const row = document.querySelector(`.attendance-item[data-employee-row-id="${employeeId}"]`);
+                if(row) row.style.display = 'none'; // Optimistically hide
                 await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-                const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
-                if(rowToHide) rowToHide.classList.add('hidden');
-            } catch (err) { console.error(err); } 
-            finally { hideLoader(); }
+            } catch (err) { 
+                console.error(err); 
+                const row = document.querySelector(`.attendance-item[data-employee-row-id="${employeeId}"]`);
+                if(row) row.style.display = 'flex'; // Revert if error
+            } 
+            finally { hideSpinner(); }
+        }
+
+        function renderSkeletons() {
+            const attendanceContainer = document.getElementById('attendance-tracker');
+            attendanceContainer.innerHTML = Array(5).fill(0).map(() => `
+                <div class="attendance-item">
+                    <div class="attn-item-info">
+                        <div class="skeleton skeleton-avatar"></div>
+                        <div class="skeleton skeleton-text" style="width: 120px;"></div>
+                    </div>
+                    <div class="attn-item-actions">
+                        <div class="skeleton skeleton-button"></div>
+                        <div class="skeleton skeleton-button" style="width: 40px; border-radius: 50%;"></div>
+                    </div>
+                </div>`).join('');
+
+            const ordersContainer = document.getElementById('upcoming-overdue-list');
+            ordersContainer.innerHTML = Array(4).fill(0).map(() => `
+                <div class="upcoming-order-card"><div class="skeleton skeleton-text" style="width: 100%; height: 40px;"></div></div>`).join('');
+            
+            const summaryContainer = document.getElementById('global-summary-card');
+            summaryContainer.innerHTML = `
+                <div class="card-header"><div class="skeleton skeleton-text" style="width: 150px; height: 1.25rem;"></div></div>
+                <div class="global-summary-grid">
+                    ${Array(3).fill(0).map(() => `<div class="global-stat"><div class="skeleton skeleton-text" style="width: 100px; margin-bottom: 8px;"></div><div class="skeleton skeleton-text" style="width: 150px; height: 1.75rem;"></div></div>`).join('')}
+                </div>`;
         }
 
         async function refreshAttendanceTracker(employees) {
-            const container = document.getElementById('attendance-tracker');
             const today = getIndiaDateString();
             const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
             const attendanceDocs = await Promise.all(attendancePromises);
             const attendedTodayIds = new Set(attendanceDocs.filter(docSnap => docSnap.exists()).map(docSnap => docSnap.ref.parent.parent.id));
             const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
+            renderAttendanceTracker(employeesToTrack);
+        }
 
+        function renderAttendanceTracker(employeesToTrack) {
+            const attendanceCard = document.getElementById('attendance-card');
+            const container = document.getElementById('attendance-tracker');
             if (employeesToTrack.length === 0) {
-                document.getElementById('attendance-card-container').style.display = 'none';
+                container.innerHTML = '<p style="text-align: center; padding: 2rem 0;">All attendance marked for today!</p>';
             } else {
-                document.getElementById('attendance-card-container').style.display = 'block';
                 container.innerHTML = employeesToTrack.map(emp => `
-                    <div class="employee-row" data-employee-row-id="${emp.id}">
-                        <span class="employee-name">${emp.name}</span>
-                        <div class="actions">
-                            <button class="btn-sm btn-present" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
-                            <button class="btn-icon-sm btn-more" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">...</button>
+                    <div class="attendance-item" data-employee-row-id="${emp.id}">
+                        <div class="attn-item-info">
+                            <div class="attn-item-avatar">${emp.name.charAt(0)}</div>
+                            <span class="attn-item-name">${emp.name}</span>
+                        </div>
+                        <div class="attn-item-actions">
+                            <button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
+                            <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">
+                                <span class="material-symbols-outlined">more_horiz</span>
+                            </button>
                         </div>
                     </div>`).join('');
             }
@@ -449,56 +464,46 @@
             });
         }
 
-        const getStatusInfo = (order, today) => {
-            if (order.status === 'completed') return null;
-            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
-            if (!dueDate) return null;
-            if (dueDate < today) return { text: 'Overdue', className: 'overdue' };
-            const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
-            if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };
-            return null;
-        };
+        const getStatusInfo = (order, today) => { if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null; };
         
         function populateUpcomingOverdueList(orders) {
             const container = document.getElementById('upcoming-overdue-list');
             const today = new Date(); today.setHours(0,0,0,0);
-            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) }))
-                                         .filter(order => order.statusInfo !== null)
-                                         .sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
+            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
             if (criticalOrders.length === 0) {
-                container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>';
+                container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1; text-align: center; padding: 2rem 0;">No critical orders found.</p>';
             } else {
                 container.innerHTML = criticalOrders.map(order => `
                     <a href="order-details.html?id=${order.id}" class="upcoming-order-card ${order.statusInfo.className}" style="text-decoration: none;">
-                        <div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div>
+                        <div class="order-info">
+                            <div class="customer-name" title="${order.name}">${order.name}</div>
+                            <div class="due-status">${order.statusInfo.text}</div>
+                        </div>
+                        <span class="material-symbols-outlined" style="color: var(--light-text-secondary);">arrow_forward_ios</span>
                     </a>`).join('');
             }
         }
 
         async function calculateAndRenderGlobalSummary(employees) {
-            const container = document.getElementById('global-summary-grid');
+            const container = document.getElementById('global-summary-card');
             if (!container) return;
-            const todayInIndia = getIndiaDateString();
-            const [year, month] = todayInIndia.split('-');
-            const startDate = `${year}-${month}-01`;
-            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
-            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+            const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`; const lastDay = new Date(year, parseInt(month, 10), 0).getDate(); const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
             let totalEarned = 0, totalPaid = 0;
             const promises = employees.map(async emp => {
-                const [attSnap, paySnap] = await Promise.all([ 
-                    getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
-                    getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
-                ]);
-                let p=0,h=0,ph=0;
-                attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
+                const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
+                let p=0,h=0,ph=0; attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
                 totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
                 paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
             });
             await Promise.all(promises);
             container.innerHTML = `
-                <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
-                <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
-                <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>`;
+                <div class="card-header"><h2 class="card-title">Month in Review</h2></div>
+                <div class="global-summary-grid">
+                    <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
+                    <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
+                </div>`;
         }
     </script>
 </body>
