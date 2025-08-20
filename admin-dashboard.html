@@ -11,62 +11,30 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         /* --- MERGED & COMPLETE CSS --- */
-
-        /* Universal box-sizing */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --font-main: "IBM Plex Sans", sans-serif;
-            --font-alt: 'Inter', sans-serif;
-            --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
-            --light-text-primary: #012726; --light-text-secondary: #52616b; --light-border: #e5e7eb;
+            --light-text-primary: #1f2937; --light-text-secondary: #52616b; --light-border: #e5e7eb;
             --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
             --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
             --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
         }
         [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
-        [data-theme="dark"] { --color-background: #0f172a; --color-surface: #1e293b; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15; }
-
-        html, body { height: 100%; }
         html { scroll-behavior: smooth; }
         
         body {
-            font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            line-height: 1.6;
-            background-color: var(--color-background);
-            color: var(--light-text-secondary);
-            padding-top: 72px; /* Reserved space for fixed navbar */
-            -webkit-font-smoothing: antialiased;
+            font-family: var(--font-alt); line-height: 1.6; background-color: var(--color-background);
+            color: var(--light-text-secondary); padding-top: 72px; -webkit-font-smoothing: antialiased;
         }
 
-        /* --- NAVBAR STYLES --- */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 50;
-            transition-property: all;
-            transition-duration: 0.3s;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: visible;
-            background-color: hsla(0, 0%, 100%, 0.8);
-            backdrop-filter: blur(8px);
-        }
+        /* --- NAVBAR STYLES (UNCHANGED) --- */
+        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) {
-            .header-container { padding-left: 16px; padding-right: 16px; width: 100%; }
-            .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }
-        }
+        @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
         .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
         .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
@@ -103,27 +71,46 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-
-        /* --- DASHBOARD STYLES --- */
+        
+        /* --- ADVANCED SKELETON LOADER STYLES --- */
+        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 100% { left: 150%; } }
+        
+        /* --- UPDATED DASHBOARD STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
-        h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; color: var(--light-text-primary); }
-        .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-        .app-container { display: block; }
         main { padding-top: 24px; padding-bottom: 48px; }
+        .page-header { margin-bottom: 24px; }
+        .page-title { font-family: var(--font-main); font-size: 1.75rem; font-weight: 600; color: var(--light-text-primary); }
+        .welcome-message { font-size: 1rem; color: var(--light-text-secondary); }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 1024px) { .dashboard-grid { grid-template-columns: 2fr 1fr; } }
+        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
+        @media (max-width: 1023px) {
+            .dashboard-grid { display: flex; flex-direction: column; }
+            #attendance-card { order: 1; }
+            #orders-card { order: 2; }
+            #quick-actions-card { order: 3; }
+            #recent-orders-card { order: 4; } /* New mobile order */
+            #global-summary-card { order: 5; }
+        }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .btn:hover:not(:disabled) { transform: translateY(-1px); }
-        .btn-success { background-color: var(--color-success); color: white; }
-        .btn-danger { background-color: var(--color-danger); color: white; }
-        .btn-warning { background-color: var(--color-warning); color: #1f2937; }
+        .btn-success { background-color: var(--color-success); color: white; } .btn-danger { background-color: var(--color-danger); color: white; } .btn-warning { background-color: var(--color-warning); color: #1f2937; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
+        .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+        .btn-icon { background-color: transparent; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s var(--ease-cubic); }
+        .btn-icon:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
         .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
-        .card-content { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-        .card .title { color: var(--light-text-primary); font-size: 22px; font-weight: 600; margin: 0; line-height: 1.2; }
-        .employee-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); height: 68px; overflow: hidden; }
-        .employee-row:first-of-type { border-top: 1px solid var(--light-border); }
-        .employee-row.hidden { opacity: 0; height: 0; padding: 0; margin: 0; border: none; }
-        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; gap: 8px; }
-        #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-title { font-family: var(--font-main); font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
+        .employee-row-v2 { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); opacity: 1; transform: translateY(0); }
+        .employee-row-v2.hidden { opacity: 0; transform: translateY(-10px); height: 0; padding-top: 0; padding-bottom: 0; margin: 0; border: none; }
+        .employee-row-v2:first-of-type { border-top: 1px solid var(--light-border); }
+        .employee-info-v2 { display: flex; align-items: center; gap: 12px; }
+        .employee-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: var(--light-bg-tertiary); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; }
+        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; align-items: center; gap: 8px; }
+        .attendance-done { text-align: center; padding: 24px 0; color: var(--light-text-secondary); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .attendance-done .material-symbols-outlined { color: var(--color-success); font-size: 2.5rem; }
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
         .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
         .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -131,12 +118,13 @@
         .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
         .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
         .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
+        .quick-actions-container { display: flex; flex-direction: column; gap: 1rem; }
         .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
         .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
         .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
         .link-tile:hover svg { transform: translateX(3px); }
-        .global-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; }
+        .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; text-align: left; }
         .global-stat { display: flex; flex-direction: column; gap: 4px; }
         .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); font-family: var(--font-alt); }
         .global-stat .value.danger-text { color: var(--color-danger); }
@@ -148,21 +136,23 @@
         .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
         .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
         .fab-menu.show { visibility: visible; opacity: 1; }
-        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; }
+        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55); cursor: pointer; }
         .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
-        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
-        .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
+        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; } .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
         .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
         .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
         .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
         .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
         .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 20px; } .employee-row { height: auto; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px 4px; } .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .global-summary-grid { grid-template-columns: 1fr; } }
+        /* NEW RECENT ORDERS STYLES */
+        .recent-order-row { display: flex; align-items: center; gap: 1rem; padding: 12px 4px; border-bottom: 1px solid var(--light-border); }
+        .recent-order-row:last-child { border-bottom: none; }
+        .order-customer-info { flex-grow: 1; }
+        .order-customer-name { font-weight: 500; color: var(--light-text-primary); }
+        .order-due-date { font-size: 0.8rem; }
+        .order-added-by { font-size: 0.8rem; background-color: var(--light-bg-tertiary); padding: 2px 8px; border-radius: 999px; color: var(--light-text-secondary); white-space: nowrap; }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } }
     </style>
 </head>
 
@@ -171,9 +161,7 @@
         <div class="header-container">
             <nav class="nav">
                 <div class="nav-left">
-                    <a href="admin-dashboard.html">
-                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
-                    </a>
+                    <a href="admin-dashboard.html"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
                     <div class="nav-links">
                         <a class="nav-link" href="admin-dashboard.html">Home</a>
                         <a class="nav-link" href="view-orders.html">All Orders</a>
@@ -190,53 +178,27 @@
                                     <span class="profile-email" id="desktop-profile-email"></span>
                                 </div>
                             </div>
-                            <div class="logout-popup" id="logoutPopup">
-                                <button class="logout-button" data-app-action="logout">Logout</button>
-                            </div>
+                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 </div>
             </nav>
             <div class="divider"></div>
         </div>
     </header>
 
-    <!-- CORRECTED: Mobile Menu and Overlay are now OUTSIDE the header -->
     <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-            <svg viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section">
-                <a href="admin-dashboard.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                     <span>Home</span>
-                </a>
-                <a href="view-orders.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                     <span>All Orders</span>
-                </a>
-                <a href="admin-employees.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                     <span>Manage Employees</span>
-                </a>
+                <a href="admin-dashboard.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
+                <a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
+                <a href="admin-employees.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span>Manage Employees</span></a>
             </div>
         </div>
         <div class="mobile-menu-bottom">
-            <div class="profile-container">
-                <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
-                <div class="profile-info">
-                    <span class="profile-name" id="mobile-profile-name">Loading...</span>
-                    <span class="profile-email" id="mobile-profile-email"></span>
-                </div>
-            </div>
+            <div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div>
             <button class="logout-button" data-app-action="logout">Logout</button>
         </div>
     </div>
@@ -246,37 +208,53 @@
         <main>
             <div class="container" id="main-container">
                 <div id="home-view" class="view active">
-                    <div id="dashboard-layout">
-                        <!-- Card 1: Attendance -->
-                        <div id="attendance-card" class="card" style="display: none;">
-                            <div class="card-content">
-                                <h2 class="title">Today's Attendance</h2>
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Admin Dashboard</h1>
+                            <p class="welcome-message" id="welcome-message">Loading admin details...</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="main-column">
+                            <div id="attendance-card" class="card">
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 40%;"></div></div>
+                                <div id="attendance-tracker">
+                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 120px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 150px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                </div>
                             </div>
-                            <div id="attendance-tracker"></div>
-                        </div>
-
-                        <!-- Card 2: Orders -->
-                        <div id="orders-card" class="card">
-                            <div class="card-content">
-                                <h2 class="title">Upcoming & Overdue Orders</h2>
+                            <div id="recent-orders-card" class="card">
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 55%;"></div></div>
+                                <div id="recent-orders-list">
+                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                </div>
                             </div>
-                            <div id="upcoming-overdue-list" class="upcoming-cards-container"></div>
+                            <div id="orders-card" class="card">
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 50%;"></div></div>
+                                <div id="upcoming-overdue-list" class="upcoming-cards-container">
+                                    <div class="skeleton" style="height: 52px;"></div><div class="skeleton" style="height: 52px;"></div>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <!-- Card 3: Actions Container -->
-                        <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                            <a href="view-orders.html" class="link-tile">
-                                <span>View All Orders</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
-                            </a>
-                            <a href="admin-employees.html" class="link-tile">
-                                <span>Manage All Employees</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg>
-                            </a>
+                        <div class="sidebar-column">
+                            <div id="global-summary-card" class="card">
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 60%;"></div></div>
+                                <div class="global-summary-grid">
+                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                </div>
+                            </div>
+                            <div id="quick-actions-card" class="card">
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 45%;"></div></div>
+                                <div class="quick-actions-container">
+                                    <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
+                                    <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Card 4: Month in Review -->
-                        <div id="global-summary-card" class="card"></div>
                     </div>
                 </div>
             </div>
@@ -284,30 +262,17 @@
     </div>
     
     <div class="fab-container" id="fabContainer">
-        <div class="fab-menu" id="fabMenu">
-            <div class="fab-item" data-app-action="navigate-order-form">
-                <span class="label">Take Order</span>
-                <div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div>
-            </div>
-            <div class="fab-item" data-app-action="navigate-add-payment">
-                <span class="label">Add Payment</span>
-                <div class="action-button"><span class="material-symbols-outlined">payments</span></div>
-            </div>
-        </div>
-        <button class="fab-button" id="fabButton" data-app-action="toggle-fab">
-            <span class="material-symbols-outlined">add</span>
-        </button>
+        <div class="fab-menu" id="fabMenu"><div class="fab-item" data-app-action="navigate-order-form"><span class="label">Take Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div><div class="fab-item" data-app-action="navigate-add-payment"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></div></div>
+        <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
     </div>
     
-    <div id="loader"><div class="spinner"></div></div>
     <div id="other-options-modal" class="modal"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // Firebase configuration will be injected by Netlify during build
+        
         const firebaseConfig = {
             apiKey: "__API_KEY__",
             authDomain: "__AUTH_DOMAIN__",
@@ -319,9 +284,6 @@
         };
         
         let db, auth, currentUserProfile;
-
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
         const openModal = (id) => document.getElementById(id).style.display = 'block';
         const closeModal = (id) => document.getElementById(id).style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
@@ -331,75 +293,39 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
                 document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
-                
                 initializeNavbar(); 
                 bindEventListeners();
                 listenForAuthStateChanges();
-            } catch (error) {
-                console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
-            }
+            } catch (error) { document.body.innerHTML = `<h2>Error initializing application.</h2>`; }
         });
 
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
-                showLoader();
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
-                    await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
-                    const userDoc = await getDoc(userRef);
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    
-                    populateNavbar(currentUserProfile);
-                    await initializeAdminView();
-                } else {
-                    window.location.href = 'login.html';
-                }
-                hideLoader();
+                    const profilePromise = setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true }).then(() => getDoc(userRef)).then(userDoc => { currentUserProfile = { id: userDoc.id, ...userDoc.data() }; populateNavbar(currentUserProfile); });
+                    await Promise.all([ profilePromise, initializeAdminView() ]);
+                } else { window.location.href = 'login.html'; }
             });
         }
         
-        function populateNavbar(user) {
-            if (!user) return;
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
-        }
-
+        function populateNavbar(user) { if (!user) return; document.getElementById('welcome-message').textContent = `Welcome back, ${user.displayName.split(' ')[0]}!`; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
         async function initializeAdminView() {
             listenForOrders();
             const employeesSnap = await getDocs(collection(db, "employees"));
             const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-            await refreshAttendanceTracker(employees);
-            await calculateAndRenderGlobalSummary(employees);
+            await Promise.all([ refreshAttendanceTracker(employees), calculateAndRenderGlobalSummary(employees) ]);
         }
-        
         function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
-
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
-                if (!e.target.closest('.fab-container')) {
-                    document.getElementById('fabMenu').classList.remove('show');
-                    document.getElementById('fabButton').classList.remove('open');
-                }
+                if (!e.target.closest('.fab-container')) { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
                 if (!appAction) return;
-                
                 const action = appAction.dataset.appAction;
-                if (action !== 'toggle-fab') {
-                    document.getElementById('fabMenu').classList.remove('show');
-                    document.getElementById('fabButton').classList.remove('open');
-                }
+                if (action !== 'toggle-fab') { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
                 if (!appAction.href) e.preventDefault();
-
                 switch (action) {
                     case 'toggle-fab': toggleFabMenu(); break;
                     case 'navigate-order-form': window.location.href='order-form.html'; break;
@@ -412,86 +338,25 @@
                         document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
                         openModal('other-options-modal'); 
                         break;
-                    case 'mark-attendance': 
-                        await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
-                        closeModal('other-options-modal');
-                        break;
+                    case 'mark-attendance': await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); closeModal('other-options-modal'); break;
                 }
             });
         }
-        
-        function initializeNavbar() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenuClose = document.getElementById('mobileMenuClose');
-            const menuOverlay = document.getElementById('menuOverlay');
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
-            const logoutPopup = document.getElementById('logoutPopup');
-
-            function closeMobileMenu() {
-                if (mobileMenu.classList.contains('active')) {
-                     mobileMenu.classList.remove('active');
-                     menuOverlay.classList.remove('active');
-                     document.body.style.overflow = '';
-                }
-            }
-            
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
-                menuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            mobileMenuClose.addEventListener('click', closeMobileMenu);
-            menuOverlay.addEventListener('click', closeMobileMenu);
-
-            if (desktopProfileTrigger && logoutPopup) {
-                desktopProfileTrigger.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';
-                    logoutPopup.classList.toggle('show');
-                    desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);
-                });
-
-                window.addEventListener('click', (event) => {
-                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {
-                        if (logoutPopup.classList.contains('show')) {
-                            logoutPopup.classList.remove('show');
-                            desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                        }
-                    }
-                });
-            }
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeMobileMenu();
-                    if (logoutPopup && logoutPopup.classList.contains('show')) {
-                        logoutPopup.classList.remove('show');
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                    }
-                }
-            });
-
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768) closeMobileMenu();
-            });
-        }
-
+        function initializeNavbar() { const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup'); function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } } mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }); mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu); if (desktopProfileTrigger && logoutPopup) { desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); }); window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); } document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
         async function handleAttendanceClick(employeeId, status) {
-            showLoader();
-            try {
-                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-                const rowToHide = document.querySelector(`.employee-row[data-employee-row-id="${employeeId}"]`);
-                if(rowToHide) rowToHide.classList.add('hidden');
-                setTimeout(async () => {
-                    const allEmployees = (await getDocs(collection(db, "employees"))).docs.map(d => ({ id: d.id, ...d.data() }));
-                    await refreshAttendanceTracker(allEmployees);
-                }, 500);
+            try { 
+                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); 
+                const rowToHide = document.querySelector(`.employee-row-v2[data-employee-row-id="${employeeId}"]`); 
+                if(rowToHide) {
+                    rowToHide.classList.add('hidden');
+                    setTimeout(() => {
+                        if (document.querySelectorAll('.employee-row-v2:not(.hidden)').length === 0) {
+                            document.getElementById('attendance-card').style.display = 'none';
+                        }
+                    }, 500);
+                }
             } catch (err) { console.error(err); } 
-            finally { hideLoader(); }
         }
-
         async function refreshAttendanceTracker(employees) {
             const today = getIndiaDateString();
             const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
@@ -500,79 +365,77 @@
             const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
             renderAttendanceTracker(employeesToTrack);
         }
-
+        const getInitials = (name) => { const parts = name.split(' '); let initials = parts[0] ? parts[0][0] : ''; if (parts.length > 1) initials += parts[parts.length - 1][0]; return initials.toUpperCase(); };
         function renderAttendanceTracker(employeesToTrack) {
             const attendanceCard = document.getElementById('attendance-card');
             const container = document.getElementById('attendance-tracker');
+            attendanceCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Today's Attendance</h2>`;
             if (employeesToTrack.length === 0) {
                 attendanceCard.style.display = 'none';
             } else {
                 attendanceCard.style.display = 'block';
-                container.innerHTML = employeesToTrack.map(emp => `<div class="employee-row" data-employee-row-id="${emp.id}"><div class="employee-name">${emp.name}</div><div class="actions"><button class="btn btn-success" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button><button class="btn btn-secondary" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">Other...</button></div></div>`).join('');
+                container.innerHTML = employeesToTrack.map(emp => `
+                    <div class="employee-row-v2" data-employee-row-id="${emp.id}">
+                        <div class="employee-info-v2">
+                            <div class="employee-avatar">${getInitials(emp.name)}</div>
+                            <span class="employee-name">${emp.name}</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-success btn-sm" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
+                            <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                    </div>`).join('');
             }
         }
-        
         function listenForOrders() {
             const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
             onSnapshot(ordersQuery, (snapshot) => {
                 const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 populateUpcomingOverdueList(orders);
+                populateRecentOrdersList(orders); // Also populate the new recent orders list
             });
         }
-
-        const getStatusInfo = (order, today) => {
-            if (order.status === 'completed') return null;
-            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;
-            if (!dueDate) return null;
-            if (dueDate < today) return { text: 'Overdue', className: 'overdue' };
-            const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
-            if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };
-            return null;
-        };
-        
+        const getStatusInfo = (order, today) => { if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null;};
         function populateUpcomingOverdueList(orders) {
             const container = document.getElementById('upcoming-overdue-list');
             const today = new Date(); today.setHours(0,0,0,0);
-            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) }))
-                                         .filter(order => order.statusInfo !== null)
-                                         .sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
-            if (criticalOrders.length === 0) {
-                container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>';
-            } else {
-                container.innerHTML = criticalOrders.map(order => `
-                    <div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'">
-                        <div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div>
-                    </div>`).join('');
-            }
+            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
+            document.querySelector('#orders-card .card-header').innerHTML = `<h2 class="card-title">Critical Orders</h2>`;
+            if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
+            else { container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); }
         }
-
+        function populateRecentOrdersList(orders) {
+            const container = document.getElementById('recent-orders-list');
+            const recentOrders = orders.slice(0, 5); // Get the 5 most recent
+            document.querySelector('#recent-orders-card .card-header').innerHTML = `<h2 class="card-title">Recently Added Orders</h2>`;
+            if (recentOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); padding: 12px 4px;">No recent orders to display.</p>'; } 
+            else { container.innerHTML = recentOrders.map(order => `<div class="recent-order-row">
+                        <div class="order-customer-info">
+                            <div class="order-customer-name">${order.name}</div>
+                            <div class="order-due-date">Due: ${order.dueDate || 'N/A'}</div>
+                        </div>
+                        <span class="order-added-by">${order.createdBy ? order.createdBy.split(' ')[0] : 'Admin'}</span>
+                        <a href="order-details.html?id=${order.id}" class="btn btn-secondary btn-sm">View</a>
+                    </div>`).join(''); }
+        }
         async function calculateAndRenderGlobalSummary(employees) {
             const container = document.getElementById('global-summary-card');
-            if (!container) return;
-            const todayInIndia = getIndiaDateString();
-            const [year, month] = todayInIndia.split('-');
-            const startDate = `${year}-${month}-01`;
-            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
-            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+            const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`; const lastDay = new Date(year, parseInt(month, 10), 0).getDate(); const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
             let totalEarned = 0, totalPaid = 0;
             const promises = employees.map(async emp => {
-                const [attSnap, paySnap] = await Promise.all([ 
-                    getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), 
-                    getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) 
-                ]);
-                let p=0,h=0,ph=0;
-                attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
-                totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
-                paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
+                const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
+                let p=0,h=0,ph=0; attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
+                totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0); paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
             });
             await Promise.all(promises);
-            container.innerHTML = `
-                <div class="card-content"><h2 class="title">Month in Review</h2></div>
-                <div class="global-summary-grid">
-                    <div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div>
-                    <div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>
-                </div>`;
+            container.querySelector('.card-header').innerHTML = `<h2 class="card-title">Month in Review</h2>`;
+            container.querySelector('.global-summary-grid').innerHTML = `<div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>`;
+            const actionsCard = document.getElementById('quick-actions-card');
+            actionsCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Quick Actions</h2>`;
+            actionsCard.querySelector('.quick-actions-container').innerHTML = `<a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a><a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
         }
     </script>
 </body>
