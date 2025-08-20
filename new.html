@@ -102,9 +102,9 @@
         .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         .card-title { font-family: var(--font-main); font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
-        .employee-row-v2 { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--light-border); transition: opacity 0.3s ease, transform 0.3s ease, height 0.3s ease, padding 0.3s ease, margin 0.3s ease; opacity: 1; transform: translateY(0); height: 56px; }
-        .employee-row-v2:first-of-type { border-top: 1px solid var(--light-border); }
+        .employee-row-v2 { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); opacity: 1; transform: translateY(0); }
         .employee-row-v2.hidden { opacity: 0; transform: translateY(-10px); height: 0; padding-top: 0; padding-bottom: 0; margin: 0; border: none; }
+        .employee-row-v2:first-of-type { border-top: 1px solid var(--light-border); }
         .employee-info-v2 { display: flex; align-items: center; gap: 12px; }
         .employee-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: var(--light-bg-tertiary); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; }
         .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; align-items: center; gap: 8px; }
@@ -209,14 +209,14 @@
                     <div class="dashboard-grid">
                         <div class="main-column">
                             <div id="attendance-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 40%; border-radius: var(--radius-sm);"></div></div>
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 40%;"></div></div>
                                 <div id="attendance-tracker">
-                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 120px; border-radius: var(--radius-sm);"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
-                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 150px; border-radius: var(--radius-sm);"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 120px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                    <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 150px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
                                 </div>
                             </div>
                             <div id="orders-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 50%; border-radius: var(--radius-sm);"></div></div>
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 50%;"></div></div>
                                 <div id="upcoming-overdue-list" class="upcoming-cards-container">
                                     <div class="skeleton" style="height: 52px;"></div><div class="skeleton" style="height: 52px;"></div>
                                 </div>
@@ -224,17 +224,18 @@
                         </div>
                         <div class="sidebar-column">
                             <div id="global-summary-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 60%; border-radius: var(--radius-sm);"></div></div>
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 60%;"></div></div>
                                 <div class="global-summary-grid">
-                                    <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
-                                    <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
-                                    <div class="global-stat"><div class="skeleton skeleton-stat-label"></div><div class="skeleton skeleton-stat-value"></div></div>
+                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
                                 </div>
                             </div>
                             <div id="quick-actions-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 45%; border-radius: var(--radius-sm);"></div></div>
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 45%;"></div></div>
                                 <div class="quick-actions-container">
-                                    <div class="skeleton skeleton-link"></div><div class="skeleton skeleton-link"></div>
+                                    <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
+                                    <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -327,19 +328,7 @@
         }
         function initializeNavbar() { const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup'); function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } } mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }); mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu); if (desktopProfileTrigger && logoutPopup) { desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); }); window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); } document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
         async function handleAttendanceClick(employeeId, status) {
-            try {
-                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
-                const rowToHide = document.querySelector(`.employee-row-v2[data-employee-row-id="${employeeId}"]`);
-                if(rowToHide) {
-                    rowToHide.classList.add('hidden');
-                    setTimeout(() => {
-                        const remainingRows = document.querySelectorAll('#attendance-tracker .employee-row-v2:not(.hidden)');
-                        if (remainingRows.length === 0) {
-                            document.getElementById('attendance-card').style.display = 'none';
-                        }
-                    }, 300); // Wait for CSS transition to complete
-                }
-            } catch (err) { console.error(err); } 
+            try { await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); const rowToHide = document.querySelector(`.employee-row-v2[data-employee-row-id="${employeeId}"]`); if(rowToHide) rowToHide.classList.add('hidden'); } catch (err) { console.error(err); } 
         }
         async function refreshAttendanceTracker(employees) {
             const today = getIndiaDateString();
@@ -355,9 +344,9 @@
             const container = document.getElementById('attendance-tracker');
             attendanceCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Today's Attendance</h2>`;
             if (employeesToTrack.length === 0) {
-                attendanceCard.style.display = 'none'; // Hide card if done
+                attendanceCard.style.display = 'none'; // Instantly hide the card
             } else {
-                attendanceCard.style.display = 'block'; // Ensure card is visible
+                attendanceCard.style.display = 'block'; // Ensure card is visible if there are employees
                 container.innerHTML = employeesToTrack.map(emp => `
                     <div class="employee-row-v2" data-employee-row-id="${emp.id}">
                         <div class="employee-info-v2">
