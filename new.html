@@ -27,12 +27,8 @@
         html { scroll-behavior: smooth; }
         
         body {
-            font-family: var(--font-main);
-            line-height: 1.6;
-            background-color: var(--color-background);
-            color: var(--light-text-secondary);
-            padding-top: 72px; /* Reserved space for fixed navbar */
-            -webkit-font-smoothing: antialiased;
+            font-family: var(--font-main); line-height: 1.6; background-color: var(--color-background);
+            color: var(--light-text-secondary); padding-top: 72px; -webkit-font-smoothing: antialiased;
         }
 
         /* --- NAVBAR STYLES (UNCHANGED) --- */
@@ -77,19 +73,24 @@
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
 
-        /* --- DASHBOARD & CARD STYLES --- */
+        /* --- UPDATED DASHBOARD & CARD STYLES --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
         main { padding-top: 24px; padding-bottom: 48px; }
-        #dashboard-layout { display: flex; flex-direction: column; gap: 24px; }
+        #dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 1024px) { #dashboard-grid { grid-template-columns: 2fr 1fr; } }
+        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
         .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
-        .card-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .card-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .card .title { color: var(--light-text-primary); font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
-        .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
-        .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
-        .link-tile:hover svg { transform: translateX(3px); }
+        
+        /* --- UPDATED ACTION LINKS --- */
+        .actions-card { display: flex; flex-direction: column; gap: 1rem; }
+        .action-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-md); text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
+        .action-link:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--color-primary); }
+        .action-link-text { color: var(--light-text-primary); font-weight: 500; }
+        .action-link svg { width: 20px; height: 20px; stroke: var(--light-text-secondary); transition: transform 0.2s ease; }
+        .action-link:hover svg { stroke: var(--color-primary); transform: translateX(3px); }
 
         /* --- SKELETON LOADER STYLES --- */
         @keyframes pulse { 50% { opacity: .6; } }
@@ -105,17 +106,26 @@
         .skeleton-stat .skeleton-text:last-child { height: 16px; width: 80%; }
         
         /* --- ADVANCED ATTENDANCE UI --- */
-        .employee-row-att { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: var(--radius-md); transition: background-color 0.2s, opacity 0.5s, height 0.5s; overflow: hidden; height: 68px; }
+        .employee-row-att { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: var(--radius-md); transition: background-color 0.2s, opacity 0.3s, transform 0.3s, height 0.3s 0.1s; overflow: hidden; height: 68px; }
         .employee-row-att:not(:last-child) { margin-bottom: 8px; }
         .employee-row-att:hover { background-color: var(--light-bg-tertiary); }
-        .employee-row-att.hidden { opacity: 0; height: 0; padding: 0; margin: 0; }
+        .employee-row-att.hidden { opacity: 0; height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; transform: translateX(-20px); }
         .employee-info-att { flex-grow: 1; display: flex; align-items: center; gap: 12px; }
         .employee-avatar-att { width: 40px; height: 40px; border-radius: 50%; background-color: var(--light-border); display: flex; align-items: center; justify-content: center; color: var(--light-text-secondary); flex-shrink: 0; }
         .employee-name-att { font-weight: 500; color: var(--light-text-primary); }
-        .actions-att { display: flex; align-items: center; gap: 8px; }
+        .actions-att { display: flex; align-items: center; gap: 8px; position: relative; }
         .btn-present { background-color: var(--color-success); color: white; padding: 8px 16px; font-size: 0.85rem; }
         .btn-more { background-color: transparent; color: var(--light-text-secondary); border: 1px solid var(--light-border); padding: 8px; border-radius: 50%; line-height: 1; }
         .btn-more:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
+
+        /* --- NEW ATTENDANCE OPTIONS POPUP --- */
+        #attendance-options-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 160px; z-index: 1002; padding: 8px; animation: modalOpen 0.2s; }
+        #attendance-options-popup.show { display: block; }
+        .popup-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border: none; background: none; text-align: left; border-radius: var(--radius-sm); cursor: pointer; transition: background-color 0.2s; }
+        .popup-btn:hover { background-color: var(--light-bg-tertiary); }
+        .popup-btn.danger { color: var(--color-danger); }
+        .popup-btn.warning { color: var(--color-warning); }
+        .popup-btn.primary { color: var(--color-primary); }
         
         /* OTHER COMPONENTS (Orders, Summary, FAB, etc.) */
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
@@ -127,7 +137,7 @@
         .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
         .global-summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; text-align: left; }
         .global-stat { display: flex; flex-direction: column; gap: 4px; }
-        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); font-family: var(--font-alt); }
+        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); }
         .global-stat .value.danger-text { color: var(--color-danger); }
         .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
@@ -143,15 +153,9 @@
         .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
         .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
         .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
-        .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
-        .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 24px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
-        .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
-        @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card .title { font-size: 1.1rem; } .global-summary-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } .card { padding: 16px; } .card .title { font-size: 1.1rem; } }
     </style>
 </head>
 
@@ -160,9 +164,7 @@
         <div class="header-container">
             <nav class="nav">
                 <div class="nav-left">
-                    <a href="admin-dashboard.html">
-                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
-                    </a>
+                    <a href="admin-dashboard.html"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
                     <div class="nav-links">
                         <a class="nav-link" href="admin-dashboard.html">Home</a>
                         <a class="nav-link" href="view-orders.html">All Orders</a>
@@ -179,9 +181,7 @@
                                     <span class="profile-email" id="desktop-profile-email"></span>
                                 </div>
                             </div>
-                            <div class="logout-popup" id="logoutPopup">
-                                <button class="logout-button" data-app-action="logout">Logout</button>
-                            </div>
+                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
                     <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
@@ -217,45 +217,40 @@
         <main>
             <div class="container" id="main-container">
                 <div id="home-view" class="view active">
-                    <div id="dashboard-layout">
-                        <!-- Card 1: Attendance -->
-                        <div id="attendance-card" class="card">
-                            <div class="card-content">
-                                <h2 class="title">Today's Attendance</h2>
+                    <div id="dashboard-grid">
+                        <div class="main-column">
+                            <div id="attendance-card" class="card">
+                                <div class="card-content"><h2 class="title">Today's Attendance</h2></div>
+                                <div id="attendance-tracker">
+                                    <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
+                                    <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
+                                    <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
+                                </div>
                             </div>
-                            <div id="attendance-tracker">
-                                <!-- SKELETON LOADER FOR ATTENDANCE -->
-                                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
-                                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
-                                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Orders -->
-                        <div id="orders-card" class="card">
-                            <div class="card-content">
-                                <h2 class="title">Upcoming & Overdue Orders</h2>
-                            </div>
-                            <div id="upcoming-overdue-list" class="upcoming-cards-container">
-                                <!-- SKELETON LOADER FOR ORDERS -->
-                                <div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div>
+                            <div id="orders-card" class="card">
+                                <div class="card-content"><h2 class="title">Upcoming & Overdue Orders</h2></div>
+                                <div id="upcoming-overdue-list" class="upcoming-cards-container">
+                                    <div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Card 3: Actions Container -->
-                        <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                            <a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
-                            <a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
-                        </div>
-
-                        <!-- Card 4: Month in Review -->
-                        <div id="global-summary-card" class="card">
-                            <div class="card-content"><h2 class="title">Month in Review</h2></div>
-                            <div class="global-summary-grid">
-                                <!-- SKELETON LOADER FOR SUMMARY -->
-                                <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
-                                <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
-                                <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                        <div class="sidebar-column">
+                             <div id="global-summary-card" class="card">
+                                <div class="card-content"><h2 class="title">Month in Review</h2></div>
+                                <div class="global-summary-grid">
+                                    <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                                    <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                                    <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                                </div>
+                            </div>
+                             <div id="actions-card" class="card">
+                                <div class="card-content" style="margin-bottom: 0;">
+                                    <h2 class="title" style="margin: 0;">Quick Actions</h2>
+                                </div>
+                                <div class="actions-card">
+                                    <a href="view-orders.html" class="action-link"><span class="action-link-text">View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
+                                    <a href="admin-employees.html" class="action-link"><span class="action-link-text">Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -272,9 +267,13 @@
         <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
     </div>
     
-    <div id="loader"><div class="spinner"></div></div>
-    <div id="other-options-modal" class="modal"></div>
-
+    <!-- This popup is now positioned absolutely by JS -->
+    <div id="attendance-options-popup">
+        <button class="popup-btn danger" data-app-action="mark-attendance" data-status="absent"><span class="material-symbols-outlined">person_off</span>Absent</button>
+        <button class="popup-btn warning" data-app-action="mark-attendance" data-status="half-day"><span class="material-symbols-outlined">star_half</span>Half Day</button>
+        <button class="popup-btn primary" data-app-action="mark-attendance" data-status="paid-holiday"><span class="material-symbols-outlined">beach_access</span>Paid Holiday</button>
+    </div>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -292,10 +291,6 @@
         
         let db, auth, currentUserProfile;
 
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
-        const openModal = (id) => document.getElementById(id).style.display = 'flex';
-        const closeModal = (id) => document.getElementById(id).style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -303,9 +298,6 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
-                document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><button class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">&times;</button><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
-                
                 initializeNavbar(); 
                 bindEventListeners();
                 listenForAuthStateChanges();
@@ -317,19 +309,16 @@
 
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
-                showLoader();
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
                     await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    
                     populateNavbar(currentUserProfile);
                     initializeAdminView();
                 } else {
                     window.location.href = 'login.html';
                 }
-                hideLoader();
             });
         }
         
@@ -349,6 +338,7 @@
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
+                // Close FAB menu if clicking outside
                 if (!e.target.closest('.fab-container')) { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
                 if (!appAction) return;
                 
@@ -361,33 +351,36 @@
                     case 'navigate-order-form': window.location.href='order-form.html'; break;
                     case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
                     case 'logout': await signOut(auth); break;
-                    case 'close-modal': closeModal(appAction.dataset.modalId); break;
                     case 'open-other-options-modal': 
-                        const { id, name } = appAction.dataset; 
-                        document.getElementById('other-options-title').textContent = `Mark Attendance for ${name}`; 
-                        document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn" style="background-color: var(--color-primary); color: white;" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
-                        openModal('other-options-modal'); 
+                        e.stopPropagation();
+                        showAttendancePopup(appAction);
                         break;
                     case 'mark-attendance': 
                         await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
-                        closeModal('other-options-modal');
+                        hideAttendancePopup();
                         break;
                 }
             });
+            window.addEventListener('click', hideAttendancePopup);
         }
         
-        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
+        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();hideAttendancePopup();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
+        
+        const attendancePopup = document.getElementById('attendance-options-popup');
+        function showAttendancePopup(button) {
+            if(attendancePopup.classList.contains('show')) { hideAttendancePopup(); return; }
+            const employeeId = button.dataset.id;
+            attendancePopup.querySelectorAll('.popup-btn').forEach(btn => btn.dataset.id = employeeId);
+            const rect = button.getBoundingClientRect();
+            attendancePopup.style.top = `${rect.bottom + window.scrollY + 8}px`;
+            attendancePopup.style.right = `${window.innerWidth - rect.right}px`;
+            attendancePopup.classList.add('show');
+        }
+        function hideAttendancePopup() { attendancePopup.classList.remove('show'); }
 
         async function handleAttendanceClick(employeeId, status) {
             const rowToUpdate = document.querySelector(`.employee-row-att[data-employee-row-id="${employeeId}"]`);
-            if(rowToUpdate) {
-                rowToUpdate.style.transition = 'opacity 0.3s ease, transform 0.3s ease, height 0.3s ease 0.1s';
-                rowToUpdate.style.opacity = '0';
-                rowToUpdate.style.transform = 'translateX(-20px)';
-                rowToUpdate.style.height = '0';
-                rowToUpdate.style.padding = '0';
-                rowToUpdate.style.marginBottom = '0';
-            }
+            if(rowToUpdate) { rowToUpdate.classList.add('hidden'); }
             try {
                 await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() });
             } catch (err) { console.error(err); } 
@@ -406,15 +399,12 @@
             const attendanceCard = document.getElementById('attendance-card');
             const container = document.getElementById('attendance-tracker');
             if (employeesToTrack.length === 0) {
-                attendanceCard.style.display = 'none';
+                container.innerHTML = '<p style="text-align: center; color: var(--light-text-secondary); padding: 1rem 0;">All attendance for today has been marked!</p>';
             } else {
-                attendanceCard.style.display = 'block';
                 container.innerHTML = employeesToTrack.map(emp => `
                     <div class="employee-row-att" data-employee-row-id="${emp.id}">
                         <div class="employee-info-att">
-                            <div class="employee-avatar-att">
-                                <span class="material-symbols-outlined">person</span>
-                            </div>
+                            <div class="employee-avatar-att"><span class="material-symbols-outlined">person</span></div>
                             <span class="employee-name-att">${emp.name}</span>
                         </div>
                         <div class="actions-att">
@@ -432,9 +422,9 @@
             onSnapshot(ordersQuery, (snapshot) => {
                 const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 populateUpcomingOverdueList(orders);
-            });
+            }, (error) => { document.getElementById('upcoming-overdue-list').innerHTML = '<p>Could not load orders.</p>'; });
         }
-
+        
         const getStatusInfo = (order, today) => {if (order.status === 'completed') return null;const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null;if (!dueDate) return null;if (dueDate < today) return { text: 'Overdue', className: 'overdue' };const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24));if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' };return null;};
         
         function populateUpcomingOverdueList(orders) {
@@ -453,8 +443,7 @@
             const todayInIndia = getIndiaDateString();
             const [year, month] = todayInIndia.split('-');
             const startDate = `${year}-${month}-01`;
-            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
-            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+            const endDate = `${year}-${month}-${new Date(year, parseInt(month, 10), 0).getDate()}`;
             let totalEarned = 0, totalPaid = 0;
             const promises = employees.map(async emp => {
                 const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
