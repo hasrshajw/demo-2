@@ -84,8 +84,24 @@
         .page-title { font-family: var(--font-main); font-size: 1.75rem; font-weight: 600; color: var(--light-text-primary); }
         .welcome-message { font-size: 1rem; color: var(--light-text-secondary); }
         .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-        @media (min-width: 1024px) { .dashboard-grid { grid-template-columns: 2fr 1fr; } }
-        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
+        @media (min-width: 1024px) { 
+            .dashboard-grid { 
+                grid-template-columns: 2fr 1fr;
+                grid-template-areas: "critical financial" "recent actions";
+                align-items: start;
+            }
+            #orders-card { grid-area: critical; }
+            #recent-orders-card { grid-area: recent; }
+            #financial-summary-card { grid-area: financial; }
+            #quick-actions-card { grid-area: actions; }
+        }
+        @media (max-width: 1023px) {
+            .dashboard-grid { display: flex; flex-direction: column; }
+            #orders-card { order: 1; }
+            #quick-actions-card { order: 2; } /* MOBILE REORDER */
+            #recent-orders-card { order: 3; } /* MOBILE REORDER */
+            #financial-summary-card { order: 4; }
+        }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
@@ -184,36 +200,32 @@
                         </div>
                     </div>
                     <div class="dashboard-grid">
-                        <div class="main-column">
-                            <div id="orders-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 50%;"></div></div>
-                                <div id="upcoming-overdue-list" class="upcoming-cards-container">
-                                    <div class="skeleton" style="height: 52px;"></div><div class="skeleton" style="height: 52px;"></div>
-                                </div>
-                            </div>
-                             <div id="recent-orders-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 55%;"></div></div>
-                                <div id="recent-orders-list">
-                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
-                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
-                                    <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
-                                </div>
+                        <div id="orders-card" class="card">
+                            <div class="card-header"><div class="skeleton" style="height: 24px; width: 50%;"></div></div>
+                            <div id="upcoming-overdue-list" class="upcoming-cards-container">
+                                <div class="skeleton" style="height: 52px;"></div><div class="skeleton" style="height: 52px;"></div>
                             </div>
                         </div>
-                        <div class="sidebar-column">
-                            <div id="financial-summary-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 60%;"></div></div>
-                                <div class="global-summary-grid">
-                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
-                                    <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
-                                </div>
+                         <div id="recent-orders-card" class="card">
+                            <div class="card-header"><div class="skeleton" style="height: 24px; width: 55%;"></div></div>
+                            <div id="recent-orders-list">
+                                <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
                             </div>
-                             <div id="quick-actions-card" class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 45%;"></div></div>
-                                <div class="quick-actions-container">
-                                    <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
-                                    <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
-                                </div>
+                        </div>
+                        <div id="financial-summary-card" class="card">
+                            <div class="card-header"><div class="skeleton" style="height: 24px; width: 60%;"></div></div>
+                            <div class="global-summary-grid">
+                                <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                            </div>
+                        </div>
+                         <div id="quick-actions-card" class="card">
+                            <div class="card-header"><div class="skeleton" style="height: 24px; width: 45%;"></div></div>
+                            <div class="quick-actions-container">
+                                <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
+                                <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
                             </div>
                         </div>
                     </div>
@@ -227,7 +239,7 @@
             <span class="material-symbols-outlined">add_shopping_cart</span>
         </button>
     </div>
-
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -311,7 +323,7 @@
         }
         function populateRecentOrdersList(orders) {
             const container = document.getElementById('recent-orders-list');
-            const recentOrders = orders.slice(0, 5); // Get the 5 most recent
+            const recentOrders = orders.slice(0, 5);
             document.querySelector('#recent-orders-card .card-header').innerHTML = `<h2 class="card-title">Recently Added Orders</h2>`;
             if (recentOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); padding: 12px 4px;">No recent orders to display.</p>'; } 
             else { container.innerHTML = recentOrders.map(order => `<div class="recent-order-row">
