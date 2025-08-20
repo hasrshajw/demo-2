@@ -6,8 +6,8 @@
     <title>PayrollPro - Admin Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         /* --- MERGED & COMPLETE CSS --- */
@@ -27,12 +27,8 @@
         html { scroll-behavior: smooth; }
         
         body {
-            font-family: var(--font-main);
-            line-height: 1.6;
-            background-color: var(--color-background);
-            color: var(--light-text-secondary);
-            padding-top: 72px; /* Reserved space for fixed navbar */
-            -webkit-font-smoothing: antialiased;
+            font-family: var(--font-main); line-height: 1.6; background-color: var(--color-background); color: var(--light-text-secondary);
+            padding-top: 72px; -webkit-font-smoothing: antialiased;
         }
 
         /* --- NAVBAR STYLES (UNCHANGED) --- */
@@ -74,91 +70,87 @@
         .profile-dropdown-container { position: relative; }
         .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
         .logout-popup.show { display: block; }
-        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
+        .logout-button { background-color: #dc2626; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
 
-        /* --- UPDATED DASHBOARD & CARD STYLES --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
-        main { padding-top: 24px; padding-bottom: 48px; }
+        /* --- ADVANCED DASHBOARD & CARD STYLES --- */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+        main { padding-top: 32px; padding-bottom: 48px; }
+        .dashboard-header { margin-bottom: 24px; }
+        .dashboard-header h1 { font-size: 1.75rem; font-family: var(--font-alt); color: var(--light-text-primary); }
+        .dashboard-header p { font-size: 1rem; color: var(--light-text-secondary); }
         #dashboard-layout { display: grid; grid-template-columns: 1fr; gap: 24px; }
         @media (min-width: 992px) { #dashboard-layout { grid-template-columns: 2fr 1fr; } }
-        #main-content, #sidebar-content { display: flex; flex-direction: column; gap: 24px; }
-        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
-        .card-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        .card .title { color: var(--light-text-primary); font-size: 1.25rem; font-weight: 600; }
-        .btn { padding: 10px 18px; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; border: 1px solid transparent; }
-        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
-        .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 1rem; }
-        .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
-        .link-tile:hover svg { transform: translateX(3px); }
-
-        /* SKELETON LOADER STYLES */
+        .dashboard-main, .dashboard-sidebar { display: flex; flex-direction: column; gap: 24px; }
+        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .card-title { font-family: var(--font-alt); color: var(--light-text-primary); font-size: 1.125rem; font-weight: 600; }
+        .btn { padding: 8px 16px; border-radius: var(--radius-md); font-weight: 500; font-size: 0.875rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+        
+        /* --- SKELETON LOADER STYLES --- */
         @keyframes pulse { 50% { opacity: .6; } }
         .skeleton { background-color: var(--light-bg-tertiary); border-radius: var(--radius-md); animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         .skeleton-row { display: flex; align-items: center; gap: 16px; padding: 12px; }
-        .skeleton-row:not(:last-child) { margin-bottom: 8px; }
         .skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
         .skeleton-text { height: 20px; flex-grow: 1; }
-        .skeleton-button { height: 38px; width: 90px; } .skeleton-button.small { width: 40px; border-radius: 50%;}
-        .skeleton-order-card { height: 60px; }
+        .skeleton-button { height: 36px; width: 80px; } .skeleton-button.small { width: 36px; border-radius: 50%; }
+        .skeleton-order-card { height: 60px; border-radius: var(--radius-md); }
         .skeleton-stat { display: flex; flex-direction: column; gap: 8px; }
         .skeleton-stat .skeleton-text:first-child { height: 28px; width: 60%; }
         .skeleton-stat .skeleton-text:last-child { height: 16px; width: 80%; }
         
-        /* ADVANCED ATTENDANCE UI */
-        #attendance-tracker { display: flex; flex-direction: column; gap: 8px; }
-        .employee-row-att { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: var(--radius-md); transition: all 0.3s var(--ease-cubic); overflow: hidden; height: 68px; }
+        /* --- ADVANCED ATTENDANCE UI --- */
+        .employee-row-att { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: var(--radius-md); transition: background-color 0.2s, opacity 0.3s, transform 0.3s, height 0.3s 0.1s, padding 0.3s 0.1s, margin 0.3s 0.1s; overflow: hidden; height: 68px; }
+        .employee-row-att:not(:last-child) { margin-bottom: 8px; }
         .employee-row-att:hover { background-color: var(--light-bg-tertiary); }
-        .employee-row-att.hidden { opacity: 0; transform: translateX(-20px); height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: -8px; border: none; }
+        .employee-row-att.hidden { opacity: 0; transform: translateX(-20px); height: 0; padding: 0; margin: 0; }
         .employee-info-att { flex-grow: 1; display: flex; align-items: center; gap: 12px; }
         .employee-avatar-att { width: 40px; height: 40px; border-radius: 50%; background-color: var(--light-border); display: flex; align-items: center; justify-content: center; color: var(--light-text-secondary); flex-shrink: 0; }
         .employee-name-att { font-weight: 500; color: var(--light-text-primary); }
         .actions-att { display: flex; align-items: center; gap: 8px; }
-        .btn-present { background-color: var(--color-success); color: white; padding: 8px 16px; font-size: 0.85rem; border-radius: var(--radius-md); }
-        .btn-more { background-color: transparent; color: var(--light-text-secondary); border: 1px solid var(--light-border); padding: 8px; border-radius: 50%; line-height: 1; }
+        .btn-present { background-color: var(--color-success); color: white; }
+        .btn-more { background-color: transparent; color: var(--light-text-secondary); border: 1px solid var(--light-border); width: 36px; height: 36px; padding: 0; border-radius: 50%; line-height: 1; }
         .btn-more:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
-        
-        /* UPDATED "MORE" POPUP MENU */
-        #attendance-options-popup { display: none; position: absolute; background-color: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 8px; z-index: 100; width: 180px; animation: modalOpen 0.2s var(--ease-cubic); }
-        #attendance-options-popup.show { display: block; }
-        .popup-title { font-size: 0.75rem; font-weight: 600; color: var(--light-text-secondary); padding: 4px 8px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .popup-option { width: 100%; background: none; border: none; padding: 8px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 8px; text-align: left; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s; }
-        .popup-option:hover { background-color: var(--light-bg-tertiary); }
-        .popup-option.danger { color: var(--color-danger); } .popup-option.warning { color: var(--color-warning); } .popup-option.secondary { color: var(--light-text-primary); }
-        .popup-option .material-symbols-outlined { font-size: 1.1rem; }
-        
+        #attendance-tracker { max-height: 350px; overflow-y: auto; padding-right: 8px; }
+
+        /* --- MORE OPTIONS POPOVER --- */
+        #more-options-popover { display: none; position: absolute; background-color: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 8px; z-index: 1002; width: 160px; border: 1px solid var(--light-border); }
+        .popover-option { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: var(--radius-sm); cursor: pointer; font-weight: 500; color: var(--light-text-primary); transition: background-color 0.15s; text-decoration: none; border: none; width: 100%; text-align: left; background: none; font-size: 0.9rem; }
+        .popover-option:hover { background-color: var(--light-bg-tertiary); }
+        .popover-option.danger { color: var(--color-danger); }
+        .popover-option .material-symbols-outlined { font-size: 20px; }
+
         /* OTHER COMPONENTS (Orders, Summary, FAB, etc.) */
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
-        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; }
+        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
+        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .upcoming-order-card .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
         .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
         .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
         .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 500px) { .global-summary-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
         .global-stat { display: flex; flex-direction: column; gap: 4px; }
         .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); }
         .global-stat .value.danger-text { color: var(--color-danger); }
-        .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; }
+        .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
         .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        .fab-button .material-symbols-outlined { font-size: 32px; transition: transform 0.3s ease; }
+        .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; transition: transform 0.3s ease; }
+        .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
         .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
-        .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
+        .fab-menu { position: absolute; bottom: 75px; right: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
         .fab-menu.show { visibility: visible; opacity: 1; }
-        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; cursor: pointer; }
+        .fab-item { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; opacity: 0; transform: translateY(20px); transition: all 0.2s ease; }
         .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
         .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; }
         .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
-        .fab-item .label { padding: 6px 12px; border-radius: 999px; background: var(--light-bg-primary); font-size: 14px; box-shadow: var(--shadow-md); font-weight: 500; color: var(--light-text-primary); }
-        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-md); font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        .fab-item .action-button:hover { transform: scale(1.1); }
+        .fab-item .label { padding: 8px 16px; border-radius: var(--radius-md); background: var(--color-surface); color: var(--light-text-primary); font-size: 1rem; font-weight: 500; box-shadow: var(--shadow-md); white-space: nowrap; }
+        .fab-item .action-button { width: 56px; height: 56px; border-radius: 50%; background: var(--color-surface); border: none; color: var(--color-primary); box-shadow: var(--shadow-md); font-size: 24px; display: flex; align-items: center; justify-content: center; }
         #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
         .spinner { width: 48px; height: 48px; border: 5px solid var(--light-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } }
     </style>
 </head>
 
@@ -216,86 +208,84 @@
     </div>
     <div id="menuOverlay"></div>
 
-    <main>
-        <div class="container" id="main-container">
-            <div id="dashboard-layout">
-                <div id="main-content">
-                    <div id="attendance-card" class="card">
-                        <div class="card-content"><h2 class="title">Today's Attendance</h2></div>
-                        <div id="attendance-tracker">
-                            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
-                            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
-                            <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
-                        </div>
-                    </div>
-                    <div id="orders-card" class="card">
-                        <div class="card-content"><h2 class="title">Critical Orders</h2></div>
-                        <div id="upcoming-overdue-list" class="upcoming-cards-container">
-                            <div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div>
-                        </div>
-                    </div>
+    <div id="app-container" class="app-container">
+        <main>
+            <div class="container" id="main-container">
+                <div class="dashboard-header">
+                    <h1 id="welcome-heading">Welcome back!</h1>
+                    <p id="current-date"></p>
                 </div>
-                <div id="sidebar-content">
-                    <div id="global-summary-card" class="card">
-                        <div class="card-content"><h2 class="title">Month in Review</h2></div>
-                        <div class="global-summary-grid">
-                            <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
-                            <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
-                            <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                <div id="dashboard-layout">
+                    <div class="dashboard-main">
+                        <div id="attendance-card" class="card">
+                            <div class="card-header"><h2 class="card-title">Today's Attendance</h2></div>
+                            <div id="attendance-tracker">
+                                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
+                                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
+                                <div class="skeleton-row"><div class="skeleton skeleton-avatar"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-button"></div><div class="skeleton skeleton-button small"></div></div>
+                            </div>
+                        </div>
+                        <div id="orders-card" class="card">
+                            <div class="card-header"><h2 class="card-title">Critical Orders</h2></div>
+                            <div id="upcoming-overdue-list" class="upcoming-cards-container">
+                                <div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div><div class="skeleton skeleton-order-card"></div>
+                            </div>
                         </div>
                     </div>
-                    <div id="home-actions-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                        <a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
-                        <a href="admin-employees.html" class="link-tile"><span>Manage Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
+                    <div class="dashboard-sidebar">
+                        <div id="actions-card" class="card">
+                            <div class="card-header"><h2 class="card-title">Quick Actions</h2></div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><path d="M17 17V7H7"/></svg></a>
+                                <a href="admin-employees.html" class="link-tile"><span>Manage Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><path d="M17 17V7H7"/></svg></a>
+                            </div>
+                        </div>
+                        <div id="global-summary-card" class="card">
+                            <div class="card-header"><h2 class="card-title">Month in Review</h2></div>
+                            <div class="global-summary-grid">
+                                <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                                <div class="skeleton-stat"><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
     
     <div class="fab-container" id="fabContainer">
         <div class="fab-menu" id="fabMenu">
-            <div class="fab-item" data-app-action="navigate-order-form"><span class="label">New Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div>
-            <div class="fab-item" data-app-action="navigate-add-payment"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></div>
+            <a href="order-form.html" class="fab-item"><span class="label">New Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></a>
+            <a href="admin-add-payment.html" class="fab-item"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></a>
         </div>
         <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
     </div>
     
-    <div id="attendance-options-popup"></div>
     <div id="loader"><div class="spinner"></div></div>
+    <div id="more-options-popover"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         
-        const firebaseConfig = {
-            apiKey: "__API_KEY__",
-            authDomain: "__AUTH_DOMAIN__",
-            projectId: "__PROJECT_ID__",
-            storageBucket: "__STORAGE_BUCKET__",
-            messagingSenderId: "__MESSAGING_SENDER_ID__",
-            appId: "__APP_ID__",
-            measurementId: "__MEASUREMENT_ID__"
-        };
+        const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" };
         
         let db, auth, currentUserProfile;
 
+        const showLoader = () => document.getElementById('loader').style.display = 'flex';
+        const hideLoader = () => document.getElementById('loader').style.display = 'none';
         const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());
 
         document.addEventListener('DOMContentLoaded', () => {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                
-                initializeNavbar(); 
-                bindEventListeners();
-                listenForAuthStateChanges();
-            } catch (error) {
-                console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<h2>Error initializing application.</h2>`;
-            }
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            initializeNavbar(); 
+            bindEventListeners();
+            listenForAuthStateChanges();
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         });
 
         function listenForAuthStateChanges() {
@@ -303,22 +293,17 @@
                 if (user && user.email === "__ADMIN_EMAIL__") {
                     const userRef = doc(db, "users", user.uid);
                     const userDoc = await getDoc(userRef);
-                    if (!userDoc.exists()) {
-                         await setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true });
-                    }
-                    currentUserProfile = { id: user.uid, ...userDoc.data(), ...user };
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data(), ...user };
                     populateNavbar(currentUserProfile);
+                    document.getElementById('welcome-heading').textContent = `Welcome back, ${currentUserProfile.displayName.split(' ')[0]}!`;
                     initializeAdminView();
-                } else {
-                    window.location.href = 'login.html';
-                }
+                } else { window.location.href = 'login.html'; }
             });
         }
         
-        function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
+        function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,...'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
 
         function initializeAdminView() {
-            document.getElementById('loader')?.style.display == 'none'; // Hide full-screen loader
             listenForOrders();
             getDocs(collection(db, "employees")).then(snapshot => {
                 const employees = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -328,13 +313,28 @@
         }
         
         function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
+        
+        function showMoreOptionsPopover(targetButton) {
+            const popover = document.getElementById('more-options-popover');
+            const { id, name } = targetButton.dataset;
+            popover.innerHTML = `
+                <button class="popover-option danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent"><span class="material-symbols-outlined">person_off</span>Absent</button>
+                <button class="popover-option" data-app-action="mark-attendance" data-id="${id}" data-status="half-day"><span class="material-symbols-outlined">star_half</span>Half Day</button>
+                <button class="popover-option" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday"><span class="material-symbols-outlined">beach_access</span>Paid Holiday</button>`;
+            
+            const rect = targetButton.getBoundingClientRect();
+            popover.style.display = 'block';
+            popover.style.top = `${rect.bottom + window.scrollY + 8}px`;
+            popover.style.left = `${rect.left + window.scrollX - popover.offsetWidth + rect.width}px`;
+        }
+        
+        function hideMoreOptionsPopover() { document.getElementById('more-options-popover').style.display = 'none'; }
 
         function bindEventListeners() {
-            const attendancePopup = document.getElementById('attendance-options-popup');
             document.body.addEventListener('click', async (e) => {
-                const appAction = e.target.closest('[data-app-action]');
+                if (!e.target.closest('#more-options-popover') && !e.target.closest('[data-app-action="open-other-options-modal"]')) { hideMoreOptionsPopover(); }
                 if (!e.target.closest('.fab-container')) { document.getElementById('fabMenu').classList.remove('show'); document.getElementById('fabButton').classList.remove('open'); }
-                if (!e.target.closest('[data-app-action="open-other-options-modal"]') && !e.target.closest('#attendance-options-popup')) { attendancePopup.classList.remove('show'); }
+                const appAction = e.target.closest('[data-app-action]');
                 if (!appAction) return;
                 
                 const action = appAction.dataset.appAction;
@@ -343,39 +343,24 @@
 
                 switch (action) {
                     case 'toggle-fab': toggleFabMenu(); break;
-                    case 'navigate-order-form': window.location.href='order-form.html'; break;
-                    case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
                     case 'logout': await signOut(auth); break;
-                    case 'open-other-options-modal': 
-                        e.stopPropagation();
-                        const { id, name } = appAction.dataset;
-                        const buttonRect = appAction.getBoundingClientRect();
-                        attendancePopup.innerHTML = `<div class="popup-title">${name}</div><button class="popup-option danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent"><span class="material-symbols-outlined">person_off</span>Absent</button><button class="popup-option warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day"><span class="material-symbols-outlined">person_check</span>Half Day</button><button class="popup-option secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday"><span class="material-symbols-outlined">beach_access</span>Paid Holiday</button>`;
-                        attendancePopup.style.top = `${buttonRect.bottom + 8}px`;
-                        attendancePopup.style.left = `${buttonRect.right - 180}px`;
-                        attendancePopup.classList.add('show');
-                        break;
-                    case 'mark-attendance': 
-                        await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); 
-                        attendancePopup.classList.remove('show');
-                        break;
+                    case 'open-other-options-modal': showMoreOptionsPopover(appAction); break;
+                    case 'mark-attendance': await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); hideMoreOptionsPopover(); break;
                 }
             });
         }
         
-        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
+        function initializeNavbar() {const mobileMenu=document.getElementById("mobileMenu"),mobileMenuButton=document.getElementById("mobileMenuButton"),mobileMenuClose=document.getElementById("mobileMenuClose"),menuOverlay=document.getElementById("menuOverlay"),desktopProfileTrigger=document.getElementById("desktopProfileTrigger"),logoutPopup=document.getElementById("logoutPopup");function e(){mobileMenu.classList.contains("active")&&(mobileMenu.classList.remove("active"),menuOverlay.classList.remove("active"),document.body.style.overflow="")}mobileMenuButton.addEventListener("click",()=>{mobileMenu.classList.add("active"),menuOverlay.classList.add("active"),document.body.style.overflow="hidden"}),mobileMenuClose.addEventListener("click",e),menuOverlay.addEventListener("click",e),desktopProfileTrigger&&logoutPopup&&(desktopProfileTrigger.addEventListener("click",e=>{e.stopPropagation();const t=desktopProfileTrigger.getAttribute("aria-expanded")==="true";logoutPopup.classList.toggle("show"),desktopProfileTrigger.setAttribute("aria-expanded",!t)}),window.addEventListener("click",e=>{desktopProfileTrigger.contains(e.target)||logoutPopup.contains(e.target)||logoutPopup.classList.contains("show")&&(logoutPopup.classList.remove("show"),desktopProfileTrigger.setAttribute("aria-expanded","false"))})),document.addEventListener("keydown",t=>{t.key==="Escape"&&(e(),logoutPopup&&logoutPopup.classList.contains("show")&&(logoutPopup.classList.remove("show"),desktopProfileTrigger.setAttribute("aria-expanded","false")))}),window.addEventListener("resize",()=>{window.innerWidth>768&&e()});}
 
         async function handleAttendanceClick(employeeId, status) {
             const rowToUpdate = document.querySelector(`.employee-row-att[data-employee-row-id="${employeeId}"]`);
-            if (rowToUpdate) { rowToUpdate.classList.add('hidden'); }
-            try { await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); } 
-            catch (err) { console.error(err); } 
+            if (rowToUpdate) rowToUpdate.classList.add('hidden');
+            try { await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); } catch (err) { console.error(err); } 
         }
 
         async function refreshAttendanceTracker(employees) {
             const today = getIndiaDateString();
-            const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
-            const attendanceDocs = await Promise.all(attendancePromises);
+            const attendanceDocs = await Promise.all(employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today))));
             const attendedTodayIds = new Set(attendanceDocs.filter(docSnap => docSnap.exists()).map(docSnap => docSnap.ref.parent.parent.id));
             const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
             renderAttendanceTracker(employeesToTrack);
@@ -396,9 +381,7 @@
                         </div>
                         <div class="actions-att">
                             <button class="btn btn-present" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
-                            <button class="btn-more" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}">
-                                <span class="material-symbols-outlined">more_vert</span>
-                            </button>
+                            <button class="btn-more" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}"><span class="material-symbols-outlined">more_vert</span></button>
                         </div>
                     </div>`).join('');
             }
@@ -406,7 +389,8 @@
         
         function listenForOrders() {
             onSnapshot(query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc')), (snapshot) => {
-                populateUpcomingOverdueList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+                const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                populateUpcomingOverdueList(orders);
             });
         }
 
@@ -428,17 +412,17 @@
             const todayInIndia = getIndiaDateString();
             const [year, month] = todayInIndia.split('-');
             const startDate = `${year}-${month}-01`;
-            const endDate = `${year}-${month}-${new Date(year, month, 0).getDate()}`;
+            const lastDay = new Date(year, parseInt(month, 10), 0).getDate();
+            const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
             let totalEarned = 0, totalPaid = 0;
-            const promises = employees.map(async emp => {
+            await Promise.all(employees.map(async emp => {
                 const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
                 let p=0,h=0,ph=0;
                 attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
                 totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0);
                 paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
-            });
-            await Promise.all(promises);
-            container.innerHTML = `<div class="card-content"><h2 class="title">Month in Review</h2></div><div class="global-summary-grid"><div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div></div>`;
+            }));
+            container.querySelector('.global-summary-grid').innerHTML = `<div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>`;
         }
     </script>
 </body>
