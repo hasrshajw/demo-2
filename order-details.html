@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayrollPro - Order Details</title>
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +11,7 @@
     <style>
         /* --- MERGED & COMPLETE CSS --- */
         :root {
-            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; --font-icon: "Material Symbols Outlined";
+            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; --ease-cubic: cubic-bezier(.4, 0, .2, 1);
             --color-primary: #047857; --color-primary-hover: #059669; --color-primary-text: #ffffff;
             --color-danger: #dc2626; --color-danger-hover: #b91c1c; --color-danger-text: #ffffff;
             --color-reopen: #6d28d9; --color-reopen-hover: #5b21b6; --color-reopen-text: #ffffff;
@@ -25,16 +24,21 @@
             --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
-            --ease: cubic-bezier(.4, 0, .2, 1); --sticky-footer-height: 92px;
+            --sticky-footer-height: 92px;
         }
-        *, :after, :before { box-sizing: border-box; }
-        html { -webkit-font-smoothing: antialiased; }
-        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-top: 72px; padding-bottom: var(--sticky-footer-height); font-size: 16px; }
+        * { box-sizing: border-box; }
+        html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding: 72px 0 var(--sticky-footer-height) 0; font-size: 16px; }
         h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
-        
-        /* --- NAVBAR STYLES --- */
+
+        /* --- SKELETON LOADER --- */
+        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 100% { left: 150%; } }
+
+        /* --- NAVBAR (UNCHANGED) --- */
         .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
@@ -73,28 +77,22 @@
         .profile-dropdown-container { position: relative; }
         .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
         .logout-popup.show { display: block; }
-        .logout-button { background-color: var(--color-danger); color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
-        .logout-button:hover { background-color: var(--color-danger-hover); }
-
-        /* --- SKELETON LOADER --- */
-        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
-        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
-        @keyframes shimmer { 100% { left: 150%; } }
-
-        /* --- ANIMATIONS --- */
+        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
+        .logout-button:hover { background-color: #c82333; }
+        
+        /* --- ANIMATIONS & CORE COMPONENTS --- */
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
-        .screen.active { display: block; animation: fadeIn 0.4s var(--ease) forwards; }
-
-        /* --- REDESIGNED CORE COMPONENTS --- */
+        .screen.active { display: block; }
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
         .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn .material-symbols-outlined { font-size: 1.25rem; }
-        .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); } .btn-primary:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-        .btn-secondary { background-color: var(--light-bg-primary); color: var(--light-text-secondary); border-color: var(--light-border); box-shadow: var(--shadow-sm); } .btn-secondary:hover:not(:disabled) { border-color: var(--light-border-hover); color: var(--light-text-primary); background-color: var(--light-bg-tertiary); }
-        .btn-danger { background-color: var(--color-danger); color: var(--color-danger-text); } .btn-danger:hover:not(:disabled) { background-color: var(--color-danger-hover); }
-        .btn-success { background-color: var(--color-primary); color: var(--color-primary-text); } .btn-success:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-        .btn-reopen { background-color: var(--color-reopen); color: var(--color-reopen-text); } .btn-reopen:hover:not(:disabled) { background-color: var(--color-reopen-hover); }
+        .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); }
+        .btn-secondary { background-color: var(--light-bg-primary); color: var(--light-text-secondary); border-color: var(--light-border); box-shadow: var(--shadow-sm); }
+        .btn-danger { background-color: var(--color-danger); color: var(--color-danger-text); }
+        .btn-success { background-color: var(--color-primary); color: var(--color-primary-text); }
+        .btn-reopen { background-color: var(--color-reopen); color: var(--color-reopen-text); }
         .icon-btn { display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); transition: all 0.2s ease; flex-shrink: 0; }
         .icon-btn:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
         .icon-btn .material-symbols-outlined { font-size: 1.5rem; }
@@ -105,7 +103,7 @@
         .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
         .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
 
-        /* --- REDESIGNED LAYOUT STRUCTURE --- */
+        /* --- UPDATED LAYOUT STRUCTURE --- */
         .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .page-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
         .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
@@ -174,12 +172,9 @@
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem; color: var(--light-text-secondary); }
         .input-field { width: 100%; padding: 0.875rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
         .input-field:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px var(--color-focus-ring); }
-
         .desktop-view { display: none; }
         @media (min-width: 900px) {
-            .mobile-view { display: none; }
-            .desktop-view { display: flex; }
-            body { padding-bottom: 0; }
+            .mobile-view { display: none; } .desktop-view { display: flex; } body { padding-bottom: 0; }
             .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; }
             .details-header { background: none; border: none; padding:  1.5rem 0 1.5rem 0; align-items: flex-start; }
             .details-header__title h1 { font-size: 1.875rem; }
@@ -198,11 +193,11 @@
         <div class="header-container">
             <nav class="nav">
                 <div class="nav-left">
-                    <a id="nav-dashboard-link" href="#"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
-                    <div class="nav-links">
-                        <a class="nav-link" id="nav-link-home" href="#">Home</a>
-                        <a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a>
-                        <a class="nav-link" id="nav-link-secondary" href="#"></a>
+                    <a href="admin-dashboard.html" id="nav-logo-link">
+                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
+                    </a>
+                    <div class="nav-links" id="nav-links">
+                        <!-- Links will be injected here -->
                     </div>
                 </div>
                 <div class="nav-right">
@@ -229,11 +224,14 @@
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section" id="mobile-menu-links">
-                <!-- Links will be injected by JS -->
+                <!-- Links will be injected here -->
             </div>
         </div>
         <div class="mobile-menu-bottom">
-            <div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div>
+            <div class="profile-container">
+                <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
+                <div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div>
+            </div>
             <button class="logout-button" data-app-action="logout">Logout</button>
         </div>
     </div>
@@ -265,19 +263,20 @@
             </div>
         </div>
 
-        <!-- PAGE STRUCTURE -->
-        <main id="order-details-screen" class="screen active">
-            <!-- SKELETON LOADER -->
-            <div id="skeleton-loader">
-                <header class="details-header"><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div><div class="details-header__title"><div class="skeleton" style="height: 28px; width: 60%; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div></header>
-                <div class="page-grid"><div class="grid-main"><div class="skeleton" style="height: 120px; width: 100%;"></div><div class="skeleton" style="height: 400px; width: 100%;"></div></div><div class="grid-sidebar desktop-view"><div class="skeleton" style="height: 200px; width: 100%;"></div><div class="skeleton" style="height: 300px; width: 100%;"></div></div></div>
+        <!-- SKELETON LOADER -->
+        <main id="skeleton-loader">
+            <header class="details-header"><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div><div class="details-header__title"><div class="skeleton" style="height: 28px; width: 60%;"></div></div><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div></header>
+            <div class="page-grid">
+                <div class="grid-main"><div class="key-metrics-card"><div class="skeleton" style="height: 60px;"></div><div class="skeleton" style="height: 60px;"></div><div class="skeleton" style="height: 60px;"></div></div><div class="mobile-view"><div class="skeleton" style="width: 100%; height: 300px;"></div></div><div class="desktop-view" style="flex-direction: column; gap: 1.5rem;"><div class="skeleton" style="height: 200px;"></div><div class="skeleton" style="height: 200px;"></div></div></div>
+                <div class="grid-sidebar desktop-view" style="gap: 1.5rem;"><div class="skeleton" style="height: 250px;"></div><div class="skeleton" style="height: 250px;"></div></div>
             </div>
-            <!-- REAL CONTENT (Initially hidden) -->
-            <div id="real-content" style="display: none;"></div>
         </main>
+        
+        <!-- MAIN CONTENT (Initially Hidden) -->
+        <main id="order-details-screen" class="screen" style="display: none;"></main>
+        <footer id="sticky-footer" class="sticky-action-bar" style="display:none;"></footer>
     </div>
-    <footer id="sticky-footer" class="sticky-action-bar" style="display:none;"></footer>
-
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -289,147 +288,194 @@
             projectId: "__PROJECT_ID__",
             storageBucket: "__STORAGE_BUCKET__",
             messagingSenderId: "__MESSAGING_SENDER_ID__",
-            appId: "__APP_ID__",
+            appId: "__APP_ID__"
         };
         
         let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
         let currentAction = {};
 
-        const messageModal = document.getElementById('message-modal');
-        const messageText = document.getElementById('message-text');
-        const confirmationModal = document.getElementById('confirmation-modal');
-        const modalMessage = document.getElementById('modal-message');
-        const confirmActionBtn = document.getElementById('confirm-action-btn');
-        const paymentModal = document.getElementById('payment-modal');
-        const paymentForm = document.getElementById('payment-form');
-        const paymentModalTitle = document.getElementById('payment-modal-title');
-        const editTotalModal = document.getElementById('edit-total-modal');
-        const editTotalForm = document.getElementById('edit-total-form');
-
-        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
+        // --- CORE UI & HELPER FUNCTIONS ---
+        const showMessageModal = (message) => { document.getElementById('message-text').textContent = message; document.getElementById('message-modal').style.display = 'flex'; };
         const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
-        const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
-        async function performConfirmedAction() { hideConfirmationModal(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } }
+        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { document.getElementById('modal-message').textContent = message; const btn = document.getElementById('confirm-action-btn'); btn.className = 'btn ' + confirmClass; btn.textContent = confirmText; currentAction.callback = callback; document.getElementById('confirmation-modal').style.display = 'flex'; };
+        const hideConfirmationModal = () => { document.getElementById('confirmation-modal').style.display = 'none'; };
+        async function performConfirmedAction() { hideConfirmationModal(); await currentAction.callback(); }
         async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
 
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
-            const today = new Date(); today.setHours(0,0,0,0);
-            const statusInfo = getStatusInfo(order, today);
+            const isCompleted = order.status === 'completed';
             
-            const contentContainer = document.getElementById('real-content');
-            contentContainer.innerHTML = `
+            const mainContent = `
                 <header class="details-header">
-                    <button class="icon-btn" data-app-action="navigate-back"><span class="material-symbols-outlined">arrow_back</span></button>
-                    <div class="details-header__title"><h1>${order.name}</h1><div class="status-tag ${statusInfo.className}">${statusInfo.text}</div></div>
-                    <div class="actions-menu-container">
-                        <button class="icon-btn" data-app-action="toggle-actions-menu"><span class="material-symbols-outlined">more_vert</span></button>
-                        <div id="actions-dropdown" class="actions-dropdown"></div>
+                    <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
+                    <div class="details-header__title">
+                        <h1 id="detail-customer-name">${order.name}</h1>
+                        <div id="detail-status-tag" class="status-tag"></div>
                     </div>
+                    ${isAdmin ? `<div class="actions-menu-container">
+                        <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
+                        <div id="actions-dropdown" class="actions-dropdown">
+                            <button id="menu-edit-btn" ${isCompleted ? 'disabled' : ''}><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
+                            <hr><button id="menu-edit-total-btn"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
+                            <button id="menu-delete-btn" style="color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
+                        </div>
+                    </div>` : ''}
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
-                        ${isAdmin ? `<div id="key-metrics-card" class="key-metrics-card"></div>` : ''}
+                        <div id="key-metrics-card" class="key-metrics-card"></div>
                         <div class="mobile-view">
-                            <div class="tabs"><nav class="tabs__nav"></nav><div id="tab-details" class="tabs__content-pane active"></div><div id="tab-payments" class="tabs__content-pane"></div><div id="tab-history" class="tabs__content-pane"></div></div>
+                            <div class="tabs">
+                                <nav class="tabs__nav"><button class="tabs__button active" data-tab="details">Details</button>${isAdmin ? '<button class="tabs__button" data-tab="payments">Financial Log</button>' : ''}<button class="tabs__button" data-tab="history">History</button></nav>
+                                <div id="tab-details" class="tabs__content-pane active"></div>
+                                ${isAdmin ? '<div id="tab-payments" class="tabs__content-pane"></div>' : ''}
+                                <div id="tab-history" class="tabs__content-pane"></div>
+                            </div>
                         </div>
-                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;"><div id="desktop-details-content"></div><div id="desktop-windows-content"></div></div>
+                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;" id="desktop-details-content"></div>
                     </div>
-                    <div class="grid-sidebar desktop-view"><div id="desktop-payments-content"></div><div id="desktop-history-content"></div></div>
-                </div>`;
-            
-            const stickyFooter = document.getElementById('sticky-footer');
-            stickyFooter.style.display = 'flex';
-            if (order.status === 'completed') { stickyFooter.innerHTML = `<button class="btn btn-reopen" data-app-action="complete-order"><span class="material-symbols-outlined">refresh</span>Reopen Order</button>`; } 
-            else { stickyFooter.innerHTML = `${isAdmin ? '<button data-app-action="add-payment" class="btn btn-secondary">Add Payment</button>' : ''}<button data-app-action="complete-order" class="btn btn-success"><span class="material-symbols-outlined">check_circle</span>Mark as Complete</button>`; }
+                `;
+            document.getElementById('order-details-screen').innerHTML = mainContent;
 
-            document.querySelector('#actions-dropdown').innerHTML = `
-                <button data-app-action="edit-order"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
-                ${isAdmin ? `<hr><button data-app-action="edit-total"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button><button data-app-action="delete-order" style="color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>` : ''}
-            `;
-            if (order.status === 'completed') document.querySelector('[data-app-action="edit-order"]').disabled = true;
-
-            const detailsContent = generateDetailsHtml(order);
-            const paymentsContent = generatePaymentsHtml(isAdmin);
-            const historyContent = generateHistoryHtml();
-            const windowsContent = generateWindowsHtml(order);
-
-            document.querySelector('.tabs__nav').innerHTML = `<button class="tabs__button active" data-tab="details">Details</button>${isAdmin ? '<button class="tabs__button" data-tab="payments">Financial Log</button>' : ''}<button class="tabs__button" data-tab="history">History</button>`;
-            document.querySelector('#tab-details').innerHTML = detailsContent + windowsContent;
-            document.querySelector('#tab-payments').innerHTML = paymentsContent;
-            document.querySelector('#tab-history').innerHTML = historyContent;
-            document.querySelector('#desktop-details-content').innerHTML = detailsContent;
-            document.querySelector('#desktop-windows-content').innerHTML = windowsContent;
-            document.querySelector('#desktop-payments-content').innerHTML = paymentsContent;
-            document.querySelector('#desktop-history-content').innerHTML = historyContent;
-            
-            document.getElementById('skeleton-loader').style.display = 'none';
-            contentContainer.style.display = 'block';
-        }
-
-        function generateDetailsHtml(order) {
-            return `
-            <section class="content-section">
-                <h3>Customer & Order Info</h3>
-                <dl class="info-grid">
+            const detailsContent = `
+                <section class="content-section"><h3>Customer & Order Info</h3><dl class="info-grid">
                     <div class="info-grid-item"><dt>Address</dt><dd>${order.address || 'N/A'}</dd></div>
                     <div class="info-grid-item"><dt>Mobile</dt><dd>${order.mobileNumber || 'N/A'}</dd></div>
                     <div class="info-grid-item"><dt>Placed On</dt><dd>${order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div>
                     <div class="info-grid-item"><dt>Due Date</dt><dd>${order.dueDate || 'N/A'}</dd></div>
                     <div class="info-grid-item"><dt>Created By</dt><dd>${order.createdBy || 'N/A'}</dd></div>
                 </dl>
-                ${order.status === 'completed' ? `<div style="margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd>${order.completedAt?.toDate ? new Date(order.completedAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div><div class="info-grid-item"><dt>Completed By</dt><dd>${order.completedBy || 'N/A'}</dd></div></dl></div>` : ''}
-                <div class="action-links">
-                    ${(order.latitude && order.longitude) ? `<a href="#" class="action-link-item" data-app-action="get-directions"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>` : ''}
-                    <a href="#" class="action-link-item" data-app-action="view-quote"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                    <a href="#" class="action-link-item" data-app-action="view-bill"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                </div>
-            </section>`;
+                ${isCompleted ? `<div style="margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd>${order.completedAt?.toDate ? new Date(order.completedAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div><div class="info-grid-item"><dt>Completed By</dt><dd>${order.completedBy || 'N/A'}</dd></div></dl></div>` : ''}
+                <div class="action-links"><a href="#" class="action-link-item detail-get-directions-btn" style="display:${(order.latitude && order.longitude) ? 'flex' : 'none'};"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a></div></section>
+                <section class="content-section"><h3>Windows (${(JSON.parse(order.windows || '[]')).length})</h3><div class="detail-windows-list">${(JSON.parse(order.windows || '[]')).map((win, i) => `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'}:</strong> H: ${win.height} mm, W: ${win.width} mm <small>${win.hasGlass ? `Glass: ${win.glassName || 'Specified'}` : 'No Glass'}</small></div></div>`).join('') || '<p>No window details.</p>'}</div></section>`;
+            
+            document.getElementById('tab-details').innerHTML = detailsContent;
+            document.getElementById('desktop-details-content').innerHTML = detailsContent;
+
+            const footer = document.getElementById('sticky-footer');
+            footer.innerHTML = `${isAdmin ? `<button data-app-action="add-payment" class="btn btn-secondary">Add Payment</button>` : ''}<button id="detail-complete-btn" class="btn"></button>`;
+            footer.style.display = 'flex';
         }
-        function generateWindowsHtml(order) { let windowsToDisplay = []; try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {} const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>'; return `<section class="content-section"><h3>Windows (${windowsToDisplay.length})</h3><div class="detail-windows-list">${windowsHtml}</div></section>`;}
-        function generatePaymentsHtml(isAdmin) { return isAdmin ? `<section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section>` : ''; }
-        function generateHistoryHtml() { return `<section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section>`; }
-        
-        // --- ALL OTHER FUNCTIONS ---
-        function renderFinancialLog(logItems, container) { container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => { if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; } const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`; return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; }).join(''); }
-        function renderHistory(historyItems, container) { container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => { const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, value] of Object.entries(entry.details)) { if (typeof value === 'object' && value !== null) { detailsHtml += `<li><strong>${key}:</strong><ul>`; for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } detailsHtml += '</ul></li>'; } else { detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; } } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join(''); }
+        function renderFinancialsAndHistory(payments, history) {
+            const isAdmin = currentUserProfile?.role === 'admin';
+            if (isAdmin) {
+                const financialLogItems = [];
+                history.forEach(entry => { if ((entry.action.includes('Payment') || entry.action.includes('Total')) && entry.action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); }});
+                const paymentItems = payments.map(p => ({...p, type: 'payment', paymentType: p.type, date: new Date(p.date)}));
+                financialLogItems.push(...paymentItems);
+                financialLogItems.sort((a,b) => (b.timestamp?.toDate()||0) - (a.timestamp?.toDate()||0));
+
+                const financialLogHTML = financialLogItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : financialLogItems.map(item => {
+                    if (item.type === 'adjustment') return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`;
+                    return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${item.notes ? `<span class="notes">${item.notes}</span>` : ''}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span><div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div></div></li>`;
+                }).join('');
+                if (document.getElementById('tab-payments')) document.getElementById('tab-payments').innerHTML = `<section class="content-section"><h3>Financial Log</h3><ul class="financial-log">${financialLogHTML}</ul></section>`;
+                document.querySelector('.grid-sidebar .desktop-view').innerHTML = `<section class="content-section"><h3>Financial Log</h3><ul class="financial-log">${financialLogHTML}</ul></section>` + document.querySelector('.grid-sidebar .desktop-view').innerHTML;
+                updateMetrics(payments);
+            }
+            
+            const operationalHistory = history.filter(h => !(h.action.includes('Payment') || h.action.includes('Total')));
+            const historyHTML = operationalHistory.length === 0 ? '<li>No history found.</li>' : operationalHistory.map(entry => { const ts = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, val] of Object.entries(entry.details)) { detailsHtml += `<li><strong>${key}:</strong> ${typeof val === 'object' ? JSON.stringify(val) : val}</li>`; } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${ts} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join('');
+            if (document.getElementById('tab-history')) document.getElementById('tab-history').innerHTML = `<section class="content-section"><h3>Order History</h3><ul class="history-list">${historyHTML}</ul></section>`;
+            document.querySelector('.grid-sidebar .desktop-view').innerHTML += `<section class="content-section"><h3>Order History</h3><ul class="history-list">${historyHTML}</ul></section>`;
+        }
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.getElementById('metric-due-date').textContent = currentOrder.dueDate || 'N/A'; document.getElementById('metric-final-total').textContent = formatCurrency(finalTotal); document.getElementById('metric-pending-amount').textContent = formatCurrency(pendingAmount); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
-        function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
-        function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { showMessageModal("Could not save payment."); } }
-        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
-        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
-        function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
-        function openEditTotalModal() { editTotalForm.querySelector('#final-total-input').value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; editTotalForm.querySelector('#final-total-input').focus(); }
-        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(editTotalForm.querySelector('#final-total-input').value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } }
-        async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); } }
-        async function loadAndDisplayOrder(orderId) { const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); } }
-        function bindEventListeners() { document.body.addEventListener('click', (e) => { const actionTarget = e.target.closest('[data-app-action]'); if (!actionTarget) return; const action = actionTarget.dataset.appAction; switch (action) { case 'navigate-back': window.location.href = 'view-orders.html'; break; case 'toggle-actions-menu': e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); break; case 'edit-order': window.location.href = `order-form.html?id=${currentOrderId}`; break; case 'edit-total': openEditTotalModal(); break; case 'delete-order': handleDeleteOrder(); break; case 'complete-order': handleCompleteOrder(); break; case 'add-payment': openPaymentModal(); break; case 'close-payment-modal': paymentModal.style.display = 'none'; break; case 'close-total-modal': editTotalModal.style.display = 'none'; break; case 'edit-payment': openPaymentModalForEdit(actionTarget.dataset.id); break; case 'delete-payment': handleDeletePayment(actionTarget.dataset.id, parseFloat(actionTarget.dataset.amount)); break; case 'get-directions': e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); break; case 'view-quote': e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; break; case 'view-bill': e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; break; case 'logout': signOut(auth); break; } }); window.addEventListener('click', () => { document.getElementById('actions-dropdown')?.classList.remove('show'); }); document.getElementById('message-ok-btn').addEventListener('click', () => messageModal.style.display = 'none'); document.getElementById('cancel-action-btn').addEventListener('click', hideConfirmationModal); document.getElementById('confirm-action-btn').addEventListener('click', performConfirmedAction); paymentForm.addEventListener('submit', handlePaymentFormSubmit); editTotalForm.addEventListener('submit', handleFinalTotalUpdate); }
         
-        // --- APP INITIALIZATION ---
-        (async () => {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
-                        currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                        currentUserName = currentUserProfile.displayName || "User";
-                        initializeNavbar();
-                        const urlParams = new URLSearchParams(window.location.search);
-                        currentOrderId = urlParams.get('id');
-                        if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } 
-                        else { showMessageModal("No order specified."); }
-                    } else { window.location.href = 'login.html'; }
-                });
-            } catch(e) { console.error(e); }
-        })();
+        async function loadAndDisplayOrder(orderId) {
+            const orderRef = doc(db, 'upvc_orders', orderId);
+            const orderSnap = await getDoc(orderRef);
+            if (orderSnap.exists()) {
+                const orderData = { id: orderSnap.id, ...orderSnap.data() };
+                renderOrderDetails(orderData);
+                
+                const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc'));
+                const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
+                const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
+                const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                const history = historySnap.docs.map(doc => doc.data());
+                renderFinancialsAndHistory(payments, history);
+                
+                document.getElementById('skeleton-loader').style.display = 'none';
+                document.getElementById('order-details-screen').classList.add('active');
+            } else {
+                showMessageModal("Order not found.");
+            }
+        }
+        
+        function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
+        
+        // (Other helper functions remain unchanged)
+        function renderAppShellModals() { document.getElementById('confirmation-modal').querySelector('#cancel-action-btn').addEventListener('click', hideConfirmationModal); document.getElementById('confirmation-modal').querySelector('#confirm-action-btn').addEventListener('click', performConfirmedAction); document.getElementById('message-modal').querySelector('#message-ok-btn').addEventListener('click', () => document.getElementById('message-modal').style.display = 'none'); }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = e.target.querySelector('#payment-id').value; const data = { amount: parseFloat(e.target.querySelector('#payment-amount').value), date: e.target.querySelector('#payment-date').value, type: e.target.querySelector('#payment-type').value, notes: e.target.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data, { merge: true }); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } document.getElementById('payment-modal').style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Could not save payment."); } }
+        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const p = paymentDoc.data(); document.getElementById('payment-modal-title').textContent = "Edit Payment"; const form = document.getElementById('payment-form'); form.querySelector('#payment-id').value = paymentId; form.querySelector('#payment-amount').value = p.amount; form.querySelector('#payment-date').value = p.date; form.querySelector('#payment-type').value = p.type; form.querySelector('#payment-notes').value = p.notes || ''; document.getElementById('payment-modal').style.display = 'flex'; } }
+        async function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadAndDisplayOrder(currentOrderId); }); }
+        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(document.getElementById('final-total-input').value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { document.getElementById('edit-total-modal').style.display = 'none'; return; } try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); document.getElementById('edit-total-modal').style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } }
+        
+        function bindEventListeners() {
+            document.body.addEventListener('click', (e) => {
+                const target = e.target.closest('[data-app-action]');
+                if (!target) { if(document.getElementById('actions-dropdown')?.classList.contains('show')) document.getElementById('actions-dropdown').classList.remove('show'); return; };
+                e.preventDefault();
+                const action = target.dataset.appAction;
+                switch (action) {
+                    case 'add-payment': document.getElementById('payment-form').reset(); document.getElementById('payment-id').value = ''; document.getElementById('payment-modal-title').textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; document.getElementById('payment-modal').style.display = 'flex'; break;
+                    case 'edit-payment': openPaymentModalForEdit(target.dataset.id); break;
+                    case 'delete-payment': handleDeletePayment(target.dataset.id, parseFloat(target.dataset.amount)); break;
+                    case 'close-payment-modal': document.getElementById('payment-modal').style.display = 'none'; break;
+                    case 'close-total-modal': document.getElementById('edit-total-modal').style.display = 'none'; break;
+                }
+            });
+            document.addEventListener('click', e => {
+                if (e.target.closest('#new-back-btn')) window.location.href = 'view-orders.html';
+                if (e.target.closest('#actions-menu-btn')) { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); }
+                if (e.target.closest('#menu-edit-btn')) window.location.href = `order-form.html?id=${currentOrderId}`;
+                if (e.target.closest('#menu-edit-total-btn')) { document.getElementById('final-total-input').value = currentOrder.finalTotal || 0; document.getElementById('edit-total-modal').style.display = 'flex'; }
+                if (e.target.closest('#menu-delete-btn')) { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
+                if (e.target.closest('#detail-complete-btn')) handleCompleteOrder();
+                if (e.target.closest('.tabs__button')) { document.querySelectorAll('.tabs__button').forEach(b => b.classList.remove('active')); document.querySelectorAll('.tabs__content-pane').forEach(p => p.classList.remove('active')); e.target.classList.add('active'); document.getElementById(`tab-${e.target.dataset.tab}`).classList.add('active'); }
+                if (e.target.closest('.detail-get-directions-btn')) window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank');
+                if (e.target.closest('.detail-view-quote-btn')) window.location.href = `quote.html?id=${currentOrderId}`;
+                if (e.target.closest('.detail-view-bill-btn')) window.location.href = `bill.html?id=${currentOrderId}`;
+            });
+            document.getElementById('payment-form').addEventListener('submit', handlePaymentFormSubmit);
+            document.getElementById('edit-total-form').addEventListener('submit', handleFinalTotalUpdate);
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
+                currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                currentUserName = currentUserProfile.displayName || "User";
+                
+                // Populate Navbar Links based on role
+                const isAdmin = currentUserProfile.role === 'admin';
+                const navLinksContainer = document.getElementById('nav-links');
+                const mobileLinksContainer = document.getElementById('mobile-menu-links');
+                document.getElementById('nav-logo-link').href = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
+
+                const links = isAdmin
+                    ? [{href: 'admin-dashboard.html', text: 'Home'}, {href: 'view-orders.html', text: 'All Orders'}, {href: 'admin-employees.html', text: 'Manage Employees'}]
+                    : [{href: 'employee-dashboard.html', text: 'Home'}, {href: 'view-orders.html', text: 'All Orders'}, {href: 'my-attendance.html', text: 'My Attendance'}];
+                
+                navLinksContainer.innerHTML = links.map(l => `<a class="nav-link" href="${l.href}">${l.text}</a>`).join('');
+                mobileLinksContainer.innerHTML = links.map(l => `<a href="${l.href}" class="mobile-nav-link"><span>${l.text}</span></a>`).join('');
+
+                // Continue with page-specific logic
+                const urlParams = new URLSearchParams(window.location.search);
+                currentOrderId = urlParams.get('id');
+                if (currentOrderId) {
+                    await loadAndDisplayOrder(currentOrderId);
+                } else {
+                    showMessageModal("No order specified.");
+                }
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
     </script>
 </body>
 </html>
