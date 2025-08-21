@@ -19,7 +19,9 @@
         [data-theme="light"] {
             --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-secondary: #475569; --color-background: #f8fafc;
             --color-surface: #ffffff; --color-text-primary: #1f2937; --color-text-secondary: #64748b; --color-border: #e5e7eb;
-            --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
+            --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b;
+            --color-success-bg: #f0fdf4;
+            --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
@@ -28,7 +30,7 @@
             font-family: var(--font-alt);
             background-color: var(--color-background); color: var(--color-text-primary); line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            padding-top: 72px; /* Reserved space for fixed navbar */
+            padding-top: 72px;
         }
         
         /* --- NAVBAR STYLES (UNCHANGED) --- */
@@ -100,9 +102,10 @@
         .stat-card-label { font-size: 0.85rem; color: var(--color-text-secondary); font-family: var(--font-alt); }
         .danger-text { color: var(--color-danger); }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-        .nav-button { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
-        .nav-button:hover { background-color: var(--color-border); color: var(--color-text-primary); }
-        .month-year-display { font-size: 1.1rem; font-weight: 600; text-align: center; flex-grow: 1; }
+        .calendar-nav-btn { width: 40px; height: 40px; background: none; border: none; padding: 0; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
+        .calendar-nav-btn:hover { background-color: var(--color-border); color: var(--color-text-primary); }
+        .calendar-nav-btn .material-symbols-outlined { font-size: 28px; }
+        .month-year-display { font-size: 1.25rem; font-weight: 600; text-align: center; flex-grow: 1; font-family: var(--font-main); }
         .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem; }
         .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; }
         .day { display: flex; align-items: center; justify-content: center; height: 38px; width: 38px; margin: auto; border-radius: 50%; transition: background-color 0.2s, color 0.2s; font-size: 0.9rem; }
@@ -112,7 +115,7 @@
         .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
         .legend-color { width: 12px; height: 12px; border-radius: 50%; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 1023px) { .detail-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1023px) { .detail-grid { grid-template-columns: 1fr; } .main-column { order: 2; } .sidebar-column { order: 1; } }
         @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 16px; padding-bottom: 24px; } h1 { font-size: 1.5rem; } .card { padding: 16px; } .stat-card-value { font-size: 2rem; } }
     </style>
 </head>
@@ -183,7 +186,7 @@
                         </div>
                         <div class="main-column">
                             <div class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 180px;"></div></div>
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 120px;"></div></div>
                                 <div class="calendar-header">
                                     <div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div>
                                     <div class="skeleton" style="height: 22px; width: 150px; border-radius: var(--radius-sm);"></div>
@@ -224,7 +227,7 @@
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
         const formatDate = (date) => { const d = new Date(date); const year = d.getFullYear(); const month = String(d.getMonth() + 1).padStart(2, '0'); const day = String(d.getDate()).padStart(2, '0'); return `${year}-${month}-${day}`; };
-        const getInitials = (name) => { if(!name) return ''; const parts = name.split(' '); let initials = parts[0] ? parts[0][0] : ''; if (parts.length > 1) initials += parts[parts.length - 1][0]; return initials.toUpperCase(); };
+        const getInitials = (name) => { const parts = name.split(' '); let initials = parts[0] ? parts[0][0] : ''; if (parts.length > 1) initials += parts[parts.length - 1][0]; return initials.toUpperCase(); };
 
         document.addEventListener('DOMContentLoaded', () => {
             try {
@@ -310,7 +313,7 @@
         }
 
         function renderCalendar(attendanceData) { const monthYearEl = document.getElementById('month-year'); const daysGridEl = document.getElementById('days-grid'); const weekdaysEl = document.getElementById('weekdays'); if(!monthYearEl || !daysGridEl || !weekdaysEl) return; monthYearEl.textContent = currentCalendarDate.toLocaleString('default', { month: 'long', year: 'numeric' }); daysGridEl.innerHTML = ''; weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join(''); const month = currentCalendarDate.getMonth(); const year = currentCalendarDate.getFullYear(); const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate(); const prevLastDay = new Date(year, month, 0).getDate(); const lastDayIndex = new Date(year, month, lastDay).getDay(); const nextDays = 7 - lastDayIndex - 1; const todayString = formatDate(new Date()); const attendanceMap = new Map(attendanceData.map(item => [item.date, item.status])); let daysHTML = ''; for (let x = firstDayIndex; x > 0; x--) { daysHTML += `<div class="day prev-month">${prevLastDay - x + 1}</div>`; } for (let i = 1; i <= lastDay; i++) { const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; const status = attendanceMap.get(dayStr); let classes = 'day'; if (dayStr === todayString) classes += ' today'; if (status) classes += ` ${status}`; daysHTML += `<div class="${classes}">${i}</div>`; } for (let j = 1; j <= nextDays; j++) { daysHTML += `<div class="day next-month">${j}</div>`; } daysGridEl.innerHTML = daysHTML; }
-        function renderFinancialSummaries(employee, allAttendance, allPayments) { if (!Array.isArray(allAttendance) || !Array.isArray(allPayments)) return; const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth(); const startOfMonth = new Date(year, month, 1); const endOfMonth = new Date(year, month + 1, 0); const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth)); const overall = calculateFinancials(employee, allAttendance, allPayments); const monthly = calculateFinancials(employee, monthlyAttendance, []); const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : ''; const overallSummaryEl = document.getElementById('overall-summary'); const monthlySummaryEl = document.getElementById('monthly-summary'); if (overallSummaryEl) { overallSummaryEl.innerHTML = `<div class="stat-icon"><span class="material-symbols-outlined">account_balance_wallet</span></div><div class="stat-info"><div class="stat-card-label">Overall Amount Due</div><div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div></div>`; } if (monthlySummaryEl) { monthlySummaryEl.innerHTML = `<div class="stat-icon"><span class="material-symbols-outlined">calendar_month</span></div><div class="stat-info"><div class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Earnings</div><div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div></div>`; } document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000)); }
+        function renderFinancialSummaries(employee, allAttendance, allPayments) { if (!Array.isArray(allAttendance) || !Array.isArray(allPayments)) return; const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth(); const startOfMonth = new Date(year, month, 1); const endOfMonth = new Date(year, month + 1, 0); const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth)); const overall = calculateFinancials(employee, allAttendance, allPayments); const monthly = calculateFinancials(employee, monthlyAttendance, []); const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : ''; const overallSummaryEl = document.getElementById('overall-summary'); const monthlySummaryEl = document.getElementById('monthly-summary'); if (overallSummaryEl) { overallSummaryEl.innerHTML = `<div class="stat-card-label">Overall Amount Due</div><div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div>`; } if (monthlySummaryEl) { monthlySummaryEl.innerHTML = `<div class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Earnings</div><div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div>`; } document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000)); }
         function calculateFinancials(employee, attendance, payments) { if (!employee || !Array.isArray(attendance) || !Array.isArray(payments)) { return { totalEarned: 0, dueAmount: 0 }; } let p=0,h=0,ph=0; attendance.forEach(a=>{if(a?.status==='present')p++;else if(a?.status==='half-day')h++;else if(a?.status==='paid-holiday')ph++;}); const earned=(p+(h*0.5)+ph)*(employee.dailySalary||0); const paid=payments.reduce((s,p)=>s+(p?.amount||0),0); return {totalEarned:earned, dueAmount:earned-paid}; }
         function animateValue(obj, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); obj.innerHTML = Math.abs(progress * (end - start) + start).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); if (progress < 1) window.requestAnimationFrame(step); else { obj.innerHTML = Math.abs(end).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); } }; window.requestAnimationFrame(step); }
         
@@ -323,11 +326,11 @@
                 switch (action) {
                     case 'calendar-prev':
                         currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
-                        await showMyAttendanceView(currentUserProfile.employeeId, false);
+                        rerenderDynamicContent(); // Optimized: No need to fetch data again
                         break;
                     case 'calendar-next':
                         currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
-                        await showMyAttendanceView(currentUserProfile.employeeId, false);
+                        rerenderDynamicContent(); // Optimized: No need to fetch data again
                         break;
                     case 'logout': await signOut(auth); break;
                 }
