@@ -36,16 +36,16 @@
         /* --- GLOBAL RESETS & BASE STYLES --- */
         *, :after, :before { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-bottom: var(--sticky-footer-height); font-size: 16px; padding-top: 72px; }
+        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-top: 72px; padding-bottom: var(--sticky-footer-height); font-size: 16px; }
         h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
 
         /* --- NAVBAR STYLES --- */
-        .header {position: fixed; top: 0; width: 100%; z-index: 50;background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
+        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) { .header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; } }
+        @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
         .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
         .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
@@ -81,32 +81,14 @@
         .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc2626; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
-        .logout-button:hover { background-color: #c82333; }
-
+        .logout-button:hover { background-color: #b91c1c; }
+        
         /* --- SKELETON LOADER --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
         @keyframes shimmer { 100% { left: 150%; } }
-        
-        /* --- PAGE-SPECIFIC STYLES (UNCHANGED) --- */
-        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } } @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } } @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } } @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
-        .screen.active { display: block; animation: fadeUp 0.4s var(--ease) forwards; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
-        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); } .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-sm); } .btn:disabled { opacity: 0.6; cursor: not-allowed; } .btn:focus-visible { outline: 3px solid var(--color-focus-ring); outline-offset: 2px; }
-        .btn .material-symbols-outlined { font-size: 1.25rem; }
-        .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); } .btn-primary:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-        .btn-secondary { background-color: var(--light-bg-primary); color: var(--light-text-secondary); border-color: var(--light-border); box-shadow: var(--shadow-sm); } .btn-secondary:hover:not(:disabled) { border-color: var(--light-border-hover); color: var(--light-text-primary); background-color: var(--light-bg-tertiary); }
-        .btn-danger { background-color: var(--color-danger); color: var(--color-danger-text); } .btn-danger:hover:not(:disabled) { background-color: var(--color-danger-hover); }
-        .btn-success { background-color: var(--color-primary); color: var(--color-primary-text); } .btn-success:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-        .btn-reopen { background-color: var(--color-reopen); color: var(--color-reopen-text); } .btn-reopen:hover:not(:disabled) { background-color: var(--color-reopen-hover); }
-        .icon-btn { display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); transition: all 0.2s ease; flex-shrink: 0; }
-        .icon-btn:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); } .icon-btn .material-symbols-outlined { font-size: 1.5rem; }
-        .status-tag { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
-        .status-tag::before { content: ""; display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
-        .status-tag.pending { background-color: var(--status-pending-bg); color: var(--status-pending-text); } .status-tag.pending::before { background-color: var(--status-pending-text); }
-        .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); } .status-tag.completed::before { background-color: var(--status-completed-text); }
-        .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
-        .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
+
+        /* --- REDESIGNED PAGE STYLES (UNCHANGED) --- */
         .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .page-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
         .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
@@ -176,7 +158,18 @@
         .input-field { width: 100%; padding: 0.875rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
         .input-field:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px var(--color-focus-ring); }
         .desktop-view { display: none; }
-        @media (min-width: 900px) { .mobile-view { display: none; } .desktop-view { display: flex; } body { padding-bottom: 0; } .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; } .details-header { background: none; border: none; padding:  1.5rem 0 1.5rem 0; align-items: flex-start; } .details-header__title h1 { font-size: 1.875rem; } .sticky-action-bar { display: none; } .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); margin: 0; } .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; } .info-grid { grid-template-columns: 120px 1fr; } .info-grid-item { display: grid; flex-direction: row; grid-template-columns: subgrid; grid-column: span 2; } .info-grid dt { text-align: left; font-size: 0.9375rem; margin-bottom: 0; } .action-links { margin-top: 2rem; } }
+        @media (min-width: 900px) {
+            .mobile-view { display: none; } .desktop-view { display: flex; } body { padding-bottom: 0; }
+            .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; }
+            .details-header { background: none; border: none; padding:  1.5rem 0 1.5rem 0; align-items: flex-start; }
+            .details-header__title h1 { font-size: 1.875rem; } .sticky-action-bar { display: none; }
+            .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); margin: 0; }
+            .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+            .info-grid { grid-template-columns: 120px 1fr; }
+            .info-grid-item { display: grid; flex-direction: row; grid-template-columns: subgrid; grid-column: span 2; }
+            .info-grid dt { text-align: left; font-size: 0.9375rem; margin-bottom: 0; }
+            .action-links { margin-top: 2rem; }
+        }
     </style>
 </head>
 <body>
@@ -185,11 +178,7 @@
             <nav class="nav">
                 <div class="nav-left">
                     <a href="#" id="dashboard-link-logo"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
-                    <div class="nav-links">
-                        <a class="nav-link" id="nav-link-home" href="#">Home</a>
-                        <a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a>
-                        <a class="nav-link" id="nav-link-secondary" href="#"></a>
-                    </div>
+                    <div class="nav-links" id="desktop-nav-links"></div>
                 </div>
                 <div class="nav-right">
                     <div class="desktop-profile">
@@ -214,7 +203,7 @@
     <div id="mobileMenu" role="dialog" aria-modal="true">
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
-            <div class="mobile-menu-section" id="mobile-menu-links"></div>
+            <div class="mobile-menu-section" id="mobile-nav-links"></div>
         </div>
         <div class="mobile-menu-bottom">
             <div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div>
@@ -224,95 +213,70 @@
     <div id="menuOverlay"></div>
 
     <div class="page-container">
-        <!-- MODALS & OVERLAYS -->
+        <!-- MODALS (UNCHANGED) -->
         <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
         <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px; margin: 0 auto;">OK</button></div></div></div>
-        <div id="payment-modal" class="modal">
-            <div class="modal-content">
-                <h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3>
-                <form id="payment-form">
-                    <input type="hidden" id="payment-id">
-                    <div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div>
-                    <div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div>
-                    <div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div>
-                    <div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Payment</button></div>
-                </form>
-            </div>
-        </div>
-        <div id="edit-total-modal" class="modal">
-            <div class="modal-content">
-                <h3>Edit Final Amount</h3>
-                <form id="edit-total-form" style="margin-top: 1.5rem;">
-                    <div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" step="0.01" required class="input-field"></div>
-                    <div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Amount</button></div>
-                </form>
-            </div>
-        </div>
+        <div id="payment-modal" class="modal"><div class="modal-content"><h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div><div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div><div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div><div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Payment</button></div></form></div></div>
+        <div id="edit-total-modal" class="modal"><div class="modal-content"><h3>Edit Final Amount</h3><form id="edit-total-form" style="margin-top: 1.5rem;"><div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" step="0.01" required class="input-field"></div><div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Amount</button></div></form></div></div>
 
-        <!-- PAGE STRUCTURE -->
-        <main id="order-details-screen" class="screen active">
-            <!-- SKELETON LOADER START -->
-            <header class="details-header">
-                <button class="icon-btn skeleton" style="width: 40px; height: 40px;"></button>
-                <div class="details-header__title"><div class="skeleton" style="height: 30px; width: 60%; border-radius: var(--radius-sm);"></div></div>
-                <button class="icon-btn skeleton" style="width: 40px; height: 40px;"></button>
-            </header>
+        <!-- SKELETON LOADER START -->
+        <main id="skeleton-loader">
+            <header class="details-header"><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div><div class="details-header__title"><div class="skeleton" style="height: 28px; width: 40%;"></div><div class="skeleton" style="height: 22px; width: 100px;"></div></div><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div></header>
             <div class="page-grid">
                 <div class="grid-main">
-                    <div class="key-metrics-card skeleton" style="height: 70px;"></div>
-                    <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                        <div class="skeleton" style="height: 400px;"></div>
-                        <div class="skeleton" style="height: 200px;"></div>
-                    </div>
+                    <div class="key-metrics-card"><div class="skeleton" style="height: 70px;"></div><div class="skeleton" style="height: 70px;"></div><div class="skeleton" style="height: 70px;"></div></div>
+                    <div class="tabs mobile-view"><nav class="tabs__nav"><div class="skeleton" style="height: 51px; width: 100px; border-radius: 0;"></div><div class="skeleton" style="height: 51px; width: 120px; border-radius: 0;"></div><div class="skeleton" style="height: 51px; width: 90px; border-radius: 0;"></div></nav><div class="tabs__content-pane active"><div class="skeleton" style="height: 400px; width: 100%;"></div></div></div>
+                    <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;"><div class="skeleton" style="height: 400px;"></div><div class="skeleton" style="height: 200px;"></div></div>
                 </div>
-                <div class="grid-sidebar desktop-view">
-                    <div class="skeleton" style="height: 250px;"></div>
-                    <div class="skeleton" style="height: 300px;"></div>
-                </div>
+                <div class="grid-sidebar desktop-view"><div class="skeleton" style="height: 200px;"></div><div class="skeleton" style="height: 300px;"></div></div>
             </div>
-             <!-- SKELETON LOADER END -->
         </main>
+        <!-- SKELETON LOADER END -->
+        
+        <main id="order-details-screen" class="screen" style="display: none;"></main>
     </div>
-    <footer class="sticky-action-bar">
-        <button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
-        <button id="detail-complete-btn" class="btn btn-success"></button>
-    </footer>
+    <footer id="sticky-action-bar" class="sticky-action-bar" style="display: none;"></footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "__API_KEY__",
-            authDomain: "__AUTH_DOMAIN__",
-            projectId: "__PROJECT_ID__",
-            storageBucket: "__STORAGE_BUCKET__",
-            messagingSenderId: "__MESSAGING_SENDER_ID__",
-            appId: "__APP_ID__",
-            measurementId: "__MEASUREMENT_ID__"
-        };
         
         let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
         let currentAction = {};
 
-        const showMessageModal = (message) => { document.getElementById('message-text').textContent = message; document.getElementById('message-modal').style.display = 'flex'; };
+        const mainScreen = document.getElementById('order-details-screen');
+        const skeletonLoader = document.getElementById('skeleton-loader');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const confirmActionBtn = document.getElementById('confirm-action-btn');
+        const cancelActionBtn = document.getElementById('cancel-action-btn');
+        const messageModal = document.getElementById('message-modal');
+        const messageText = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
+        const paymentModal = document.getElementById('payment-modal');
+        const paymentForm = document.getElementById('payment-form');
+        const paymentModalTitle = document.getElementById('payment-modal-title');
+        const editTotalModal = document.getElementById('edit-total-modal');
+        const editTotalForm = document.getElementById('edit-total-form');
+        const finalTotalInput = document.getElementById('final-total-input');
+        
+        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
         const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { document.getElementById('modal-message').textContent = message; const btn = document.getElementById('confirm-action-btn'); btn.className = 'btn ' + confirmClass; btn.textContent = confirmText; currentAction.callback = callback; document.getElementById('confirmation-modal').style.display = 'flex'; };
-        const hideConfirmationModal = () => { document.getElementById('confirmation-modal').style.display = 'none'; };
-        async function performConfirmedAction() { hideConfirmationModal(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } }
+        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
+        const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
+        async function performConfirmedAction() { hideConfirmationModal(); await currentAction.callback(); }
         async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
 
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
-            const mainScreen = document.getElementById('order-details-screen');
             mainScreen.innerHTML = `
                 <header class="details-header">
                     <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
                     <div class="details-header__title">
                         <h1 id="detail-customer-name">${order.name}</h1>
-                        <div id="detail-status-tag"></div>
+                        <div id="detail-status-tag" class="status-tag"></div>
                     </div>
                     <div class="actions-menu-container">
                         <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
@@ -326,66 +290,62 @@
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
-                        <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
-                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
-                        </div>
+                        <div id="key-metrics-card" class="key-metrics-card" style="display:none;"></div>
                         <div class="mobile-view">
                             <div class="tabs">
-                                <nav class="tabs__nav">
-                                    <button class="tabs__button active" data-tab="details">Details</button>
-                                    <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
-                                    <button class="tabs__button" data-tab="history">History</button>
-                                </nav>
-                                <div id="tab-details" class="tabs__content-pane active">
-                                    <section class="content-section"><h3>Customer & Order Info</h3><dl class="info-grid"><div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div><div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div><div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div><div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div><div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div></dl><div class="completed-info-block" style="display:none; margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl></div><div class="action-links"><a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a></div></section>
-                                    <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
-                                </div>
-                                <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
-                                <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
+                                <nav class="tabs__nav"><button class="tabs__button active" data-tab="details">Details</button><button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button><button class="tabs__button" data-tab="history">History</button></nav>
+                                <div id="tab-details" class="tabs__content-pane active"></div>
+                                <div id="tab-payments" class="tabs__content-pane"></div>
+                                <div id="tab-history" class="tabs__content-pane"></div>
                             </div>
                         </div>
-                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                            <section class="content-section"><h3>Customer & Order Info</h3><dl class="info-grid"><div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div><div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div><div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div><div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div><div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div></dl><div class="completed-info-block" style="display:none; margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl></div><div class="action-links"><a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a></div></section>
-                            <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
-                        </div>
+                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;" id="desktop-details-content"></div>
                     </div>
-                    <div class="grid-sidebar desktop-view">
-                        <section class="content-section" data-section="payment-management" style="display: none;"><div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border);"><h3>Financial Log</h3><button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: 0.5rem 1rem; font-size: 0.875rem;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button></div><ul class="financial-log"></ul></section>
-                        <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"><li>Loading...</li></ul></section>
-                    </div>
+                    <div class="grid-sidebar desktop-view" id="desktop-sidebar-content"></div>
                 </div>`;
+
+            const detailContentHTML = `
+                <section class="content-section"><h3>Customer & Order Info</h3><dl class="info-grid"><div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div><div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div><div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div><div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div><div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div></dl><div class="completed-info-block" style="display:none; margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl></div><div class="action-links"><a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a><a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a></div></section>
+                <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>`;
             
-            const statusTag = document.getElementById('detail-status-tag');
+            document.getElementById('tab-details').innerHTML = detailContentHTML;
+            document.getElementById('desktop-details-content').innerHTML = detailContentHTML;
+
+            const paymentsContentHTML = `<section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section>`;
+            document.getElementById('tab-payments').innerHTML = paymentsContentHTML;
+            document.getElementById('desktop-sidebar-content').innerHTML = paymentsContentHTML + `<section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"><li>Loading...</li></ul></section>`;
+
+            const historyContentHTML = `<section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section>`;
+            document.getElementById('tab-history').innerHTML = historyContentHTML;
+            
+            const stickyActionBar = document.getElementById('sticky-action-bar');
+            stickyActionBar.style.display = 'flex';
+            stickyActionBar.innerHTML = `<button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button><button id="detail-complete-btn" class="btn btn-success"></button>`;
+
             const today = new Date(); today.setHours(0,0,0,0);
             const statusInfo = getStatusInfo(order, today);
-            statusTag.className = 'status-tag ' + statusInfo.className;
-            statusTag.textContent = statusInfo.text;
+            document.getElementById('detail-status-tag').className = 'status-tag ' + statusInfo.className;
+            document.getElementById('detail-status-tag').textContent = statusInfo.text;
             document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
             document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
             document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
             document.querySelectorAll('.detail-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
             document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
-            document.querySelectorAll('.completed-info-block').forEach(block => { block.style.display = order.status === 'completed' ? 'block' : 'none'; if (order.status === 'completed') { block.querySelector('.detail-completed-date').textContent = order.completedAt?.toDate ? new Date(order.completedAt.toDate()).toLocaleDateString() : 'N/A'; block.querySelector('.detail-completed-by').textContent = order.completedBy || 'N/A'; }});
-            let windowsToDisplay = []; try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
+            document.querySelectorAll('.completed-info-block').forEach(block => {
+                block.style.display = order.status === 'completed' ? 'block' : 'none';
+                if (order.status === 'completed') {
+                    block.querySelector('.detail-completed-date').textContent = order.completedAt?.toDate ? new Date(order.completedAt.toDate()).toLocaleDateString() : 'N/A';
+                    block.querySelector('.detail-completed-by').textContent = order.completedBy || 'N/A';
+                }
+            });
+            let windowsToDisplay = [];
+            try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
+            
             const completeBtn = document.getElementById('detail-complete-btn');
-            if (isAdmin) {
-                document.getElementById('key-metrics-card').style.display = 'grid';
-                document.querySelector('.tabs__button[data-tab="payments"]').style.display = 'flex';
-                document.getElementById('menu-delete-btn').style.display = 'flex';
-                document.getElementById('menu-edit-total-btn').style.display = 'flex';
-                document.getElementById('menu-divider').style.display = 'block';
-                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
-                document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
-                completeBtn.style.display = 'inline-flex';
-            } else {
-                 completeBtn.style.display = 'none';
-            }
             if (order.status === 'completed') {
                 completeBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
                 completeBtn.className = 'btn btn-reopen';
@@ -395,110 +355,69 @@
                 completeBtn.className = 'btn btn-success';
                 document.getElementById('menu-edit-btn').disabled = false;
             }
+            if (isAdmin) {
+                document.getElementById('key-metrics-card').style.display = 'grid';
+                document.querySelector('.tabs__button[data-tab="payments"]').style.display = 'flex';
+                document.getElementById('menu-delete-btn').style.display = 'flex';
+                document.getElementById('menu-edit-total-btn').style.display = 'flex';
+                document.getElementById('menu-divider').style.display = 'block';
+                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
+                document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
+            }
         }
+        
         function renderFinancialLog(logItems, container) { container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => { if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; } const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`; return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.type} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; }).join(''); }
         function renderHistory(historyItems, container) { container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => { const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, value] of Object.entries(entry.details)) { if (typeof value === 'object' && value !== null) { detailsHtml += `<li><strong>${key}:</strong><ul>`; for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } detailsHtml += '</ul></li>'; } else { detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; } } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join(''); }
-        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
+        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.getElementById('metric-due-date').textContent = currentOrder.dueDate || 'N/A'; document.getElementById('metric-final-total').textContent = formatCurrency(finalTotal); document.getElementById('metric-pending-amount').textContent = formatCurrency(pendingAmount); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
+        
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = document.getElementById('payment-id').value; const data = { amount: parseFloat(document.getElementById('payment-amount').value), date: document.getElementById('payment-date').value, type: document.getElementById('payment-type').value, notes: document.getElementById('payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } document.getElementById('payment-modal').style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { showMessageModal("Could not save payment."); } }
-        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); document.getElementById('payment-modal-title').textContent = "Edit Payment"; const form = document.getElementById('payment-form'); form.querySelector('#payment-id').value = paymentId; form.querySelector('#payment-amount').value = payment.amount; form.querySelector('#payment-date').value = payment.date; form.querySelector('#payment-type').value = payment.type; form.querySelector('#payment-notes').value = payment.notes || ''; document.getElementById('payment-modal').style.display = 'flex'; } }
-        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
-        function openPaymentModal() { const form = document.getElementById('payment-form'); form.reset(); form.querySelector('#payment-id').value = ''; document.getElementById('payment-modal-title').textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; document.getElementById('payment-modal').style.display = 'flex'; }
-        function openEditTotalModal() { document.getElementById('final-total-input').value = currentOrder.finalTotal || 0; document.getElementById('edit-total-modal').style.display = 'flex'; document.getElementById('final-total-input').focus(); }
-        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(document.getElementById('final-total-input').value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { document.getElementById('edit-total-modal').style.display = 'none'; return; } try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); document.getElementById('edit-total-modal').style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } }
-        async function loadFinancialAndHistoryData() {
-            const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc'));
-            const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
-            const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
-            const financialLogItems = []; const operationalHistoryItems = [];
-            historySnap.docs.forEach(doc => {
-                const entry = doc.data(); const action = entry.action || '';
-                if (action.includes('Payment') || action.includes('Total')) {
-                    if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); }
-                } else { operationalHistoryItems.push(entry); }
-            });
-            const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) }));
-            const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data());
-            if (currentUserProfile?.role === 'admin') {
-                financialLogItems.push(...payments);
-                financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - a.date; });
-            }
-            document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list));
-            if (currentUserProfile?.role === 'admin') {
-                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log));
-                updateMetrics(paymentsForMetrics);
-            }
-        }
         
-        async function initializeFirebase() { 
-            const app = initializeApp(firebaseConfig); 
-            db = getFirestore(app); 
-            auth = getAuth(app); 
-            onAuthStateChanged(auth, async (user) => { 
-                if (user) { 
-                    const userDoc = await getDoc(doc(db, "users", user.uid)); 
-                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } 
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() }; 
-                    currentUserName = currentUserProfile.displayName || "User"; 
-                    const urlParams = new URLSearchParams(window.location.search); 
-                    currentOrderId = urlParams.get('id'); 
-                    if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } 
-                    else { showMessageModal("No order specified."); } 
-                } else { window.location.href = 'login.html'; } 
-            }); 
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { showMessageModal("Could not save payment."); } }
+        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
+        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
+        function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
+        function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
+        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } }
+        
+        async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - a.date; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); } }
+        async function initializeApp() { const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } skeletonLoader.style.display = 'none'; mainScreen.style.display = 'block'; } else { window.location.href = 'login.html'; } }); }
+        async function loadAndDisplayOrder(orderId) { const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); } }
+        
+        function bindEventListeners() {
+            document.body.addEventListener('click', (e) => {
+                const target = e.target;
+                const appAction = target.closest('[data-app-action]');
+                if (!appAction) { if (document.getElementById('actions-dropdown').classList.contains('show')) document.getElementById('actions-dropdown').classList.remove('show'); return; }
+                e.preventDefault();
+                const action = appAction.dataset.appAction;
+                switch(action) {
+                    case 'logout': signOut(auth); break;
+                    case 'toggle-menu': document.getElementById('actions-dropdown').classList.toggle('show'); break;
+                    case 'edit-order': window.location.href = `order-form.html?id=${currentOrderId}`; break;
+                    case 'edit-total': openEditTotalModal(); break;
+                    case 'delete-order': handleDeleteOrder(); break;
+                    case 'complete-order': handleCompleteOrder(); break;
+                    case 'close-payment-modal': paymentModal.style.display = 'none'; break;
+                    case 'close-total-modal': editTotalModal.style.display = 'none'; break;
+                    case 'add-payment': openPaymentModal(); break;
+                    case 'edit-payment': openPaymentModalForEdit(appAction.dataset.id); break;
+                    case 'delete-payment': handleDeletePayment(appAction.dataset.id, parseFloat(appAction.dataset.amount)); break;
+                    case 'navigate-back': window.location.href = 'view-orders.html'; break;
+                    case 'get-directions': window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); break;
+                    case 'view-quote': window.location.href = `quote.html?id=${currentOrderId}`; break;
+                    case 'view-bill': window.location.href = `bill.html?id=${currentOrderId}`; break;
+                }
+            });
+            messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
+            cancelActionBtn.addEventListener('click', hideConfirmationModal);
+            confirmActionBtn.addEventListener('click', performConfirmedAction);
+            paymentForm.addEventListener('submit', handlePaymentFormSubmit);
+            editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
         }
 
-        async function loadAndDisplayOrder(orderId) { 
-            const orderRef = doc(db, 'upvc_orders', orderId); 
-            const orderSnap = await getDoc(orderRef); 
-            if (orderSnap.exists()) { 
-                renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); 
-                await loadFinancialAndHistoryData(); 
-            } else { showMessageModal("Order not found."); } 
-        }
-        
-        // --- BIND EVENT LISTENERS to BODY ---
-        document.body.addEventListener('click', (e) => {
-            const target = e.target.closest('[data-app-action]');
-            if (!target) {
-                if (document.getElementById('actions-dropdown')?.classList.contains('show')) {
-                    document.getElementById('actions-dropdown').classList.remove('show');
-                }
-                return;
-            }
-            e.preventDefault();
-            const action = target.dataset.appAction;
-            
-            switch (action) {
-                case 'add-payment': openPaymentModal(); break;
-                case 'close-payment-modal': document.getElementById('payment-modal').style.display = 'none'; break;
-                case 'close-total-modal': document.getElementById('edit-total-modal').style.display = 'none'; break;
-                case 'edit-payment': openPaymentModalForEdit(target.dataset.id); break;
-                case 'delete-payment': handleDeletePayment(target.dataset.id, parseFloat(target.dataset.amount)); break;
-            }
-        });
-        
-        document.getElementById('new-back-btn').addEventListener('click', () => window.location.href = 'view-orders.html');
-        document.getElementById('actions-menu-btn').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); });
-        document.getElementById('menu-edit-btn').addEventListener('click', () => window.location.href = `order-form.html?id=${currentOrderId}`);
-        document.getElementById('menu-edit-total-btn').addEventListener('click', openEditTotalModal);
-        document.getElementById('menu-delete-btn').addEventListener('click', handleDeleteOrder);
-        document.getElementById('detail-complete-btn').addEventListener('click', handleCompleteOrder);
-        document.querySelector('.tabs__nav')?.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; document.querySelectorAll('.tabs__button').forEach(btn => btn.classList.remove('active')); document.querySelectorAll('.tabs__content-pane').forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); });
-        document.getElementById('message-ok-btn').addEventListener('click', () => document.getElementById('message-modal').style.display = 'none');
-        document.getElementById('cancel-action-btn').addEventListener('click', hideConfirmationModal);
-        document.getElementById('confirm-action-btn').addEventListener('click', performConfirmedAction);
-        document.getElementById('payment-form').addEventListener('submit', handlePaymentFormSubmit);
-        document.getElementById('edit-total-form').addEventListener('submit', handleFinalTotalUpdate);
-        document.body.addEventListener('click', (e) => {
-            const directionsBtn = e.target.closest('.detail-get-directions-btn'); if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
-            const quoteBtn = e.target.closest('.detail-view-quote-btn'); if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
-            const billBtn = e.target.closest('.detail-view-bill-btn'); if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
-        });
-        
-        initializeFirebase();
+        initializeApp();
     </script>
 </body>
 </html>
