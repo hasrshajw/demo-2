@@ -104,7 +104,7 @@
         .logout-button:hover { background-color: #c82333; }
 
         /* --- SKELETON LOADER --- */
-        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
+        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
         @keyframes shimmer { 100% { left: 150%; } }
         
@@ -289,24 +289,34 @@
 
         <!-- PAGE STRUCTURE -->
         <main id="order-details-screen" class="screen active">
-            <!-- SKELETON LOADER -->
+            <!-- ADVANCED SKELETON LOADER -->
             <div id="skeleton-loader">
-                <header class="details-header">
-                    <div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div>
-                    <div class="details-header__title" style="gap: 1rem;">
-                        <div class="skeleton" style="height: 28px; width: 200px; border-radius: var(--radius-sm);"></div>
-                        <div class="skeleton" style="height: 22px; width: 100px; border-radius: 999px;"></div>
+                <header class="details-header" style="background: transparent; border: none;">
+                    <div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;"></div>
+                    <div class="details-header__title">
+                        <div class="skeleton" style="height: 28px; width: 60%; max-width: 220px; border-radius: var(--radius-sm);"></div>
+                        <div class="skeleton" style="height: 24px; width: 100px; border-radius: 999px;"></div>
                     </div>
-                    <div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div>
+                    <div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;"></div>
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
-                        <div class="skeleton" style="height: 80px; width: 100%;"></div>
-                        <div class="skeleton" style="height: 400px; width: 100%;"></div>
+                        <div class="key-metrics-card" style="background: transparent; border: none; border-radius: 0;">
+                            <div class="metric-item" style="background: transparent;"><div class="skeleton" style="height: 12px; width: 60%; margin: 0 auto 0.5rem; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 20px; width: 80%; margin: 0 auto; border-radius: var(--radius-sm);"></div></div>
+                            <div class="metric-item" style="background: transparent;"><div class="skeleton" style="height: 12px; width: 60%; margin: 0 auto 0.5rem; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 20px; width: 80%; margin: 0 auto; border-radius: var(--radius-sm);"></div></div>
+                            <div class="metric-item" style="background: transparent;"><div class="skeleton" style="height: 12px; width: 60%; margin: 0 auto 0.5rem; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 20px; width: 80%; margin: 0 auto; border-radius: var(--radius-sm);"></div></div>
+                        </div>
+                        <div class="mobile-view">
+                             <div class="skeleton" style="height: 400px; width: 100%; border-radius: var(--radius-lg);"></div>
+                        </div>
+                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
+                            <div class="skeleton" style="height: 350px; width: 100%; border-radius: var(--radius-lg);"></div>
+                            <div class="skeleton" style="height: 200px; width: 100%; border-radius: var(--radius-lg);"></div>
+                        </div>
                     </div>
                     <div class="grid-sidebar desktop-view">
-                         <div class="skeleton" style="height: 250px; width: 100%;"></div>
-                         <div class="skeleton" style="height: 300px; width: 100%;"></div>
+                         <div class="skeleton" style="height: 250px; width: 100%; border-radius: var(--radius-lg);"></div>
+                         <div class="skeleton" style="height: 300px; width: 100%; border-radius: var(--radius-lg);"></div>
                     </div>
                 </div>
             </div>
@@ -441,7 +451,7 @@
         let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
         let currentAction = {};
 
-        // --- CORE UI & HELPER FUNCTIONS ---
+        // --- CORE UI & HELPER FUNCTIONS (UNCHANGED) ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
@@ -450,7 +460,6 @@
         const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
         async function performConfirmedAction() { hideConfirmationModal(); showLoading(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } finally { hideLoading(); } }
         async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
-
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
@@ -503,27 +512,34 @@
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
-        function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
+        function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId, false); }); }
         async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); }}
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
         function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
-        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
-        
+        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId, false); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
         async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); }}
         
+        // --- NAVBAR FUNCTIONS (UNCHANGED) ---
         function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
         function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
         
-        async function loadAndDisplayOrder(orderId) { 
+        // --- APP INITIALIZATION ---
+        async function loadAndDisplayOrder(orderId, showSkeleton = true) { 
+            if (showSkeleton) {
+                skeletonLoader.style.display = 'block';
+                realContent.style.display = 'none';
+            }
             const orderRef = doc(db, 'upvc_orders', orderId); 
             const orderSnap = await getDoc(orderRef); 
             if (orderSnap.exists()) { 
                 renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); 
                 await loadFinancialAndHistoryData();
-                skeletonLoader.style.display = 'none';
-                realContent.style.display = 'block';
+                if (showSkeleton) {
+                    skeletonLoader.style.display = 'none';
+                    realContent.style.display = 'block';
+                }
             } else { 
                 showMessageModal("Order not found."); 
                 skeletonLoader.innerHTML = '<h2 style="text-align:center; padding: 2rem;">Order Not Found</h2>';
@@ -564,7 +580,7 @@
             }); 
         }
         
-        // --- EVENT LISTENERS ---
+        // --- EVENT LISTENERS (UNCHANGED) ---
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
         actionsMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); actionsDropdown.classList.toggle('show'); });
         window.addEventListener('click', () => { if (actionsDropdown.classList.contains('show')) actionsDropdown.classList.remove('show'); });
@@ -600,7 +616,6 @@
             if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
         });
         
-        // --- INITIALIZE APP ---
         initializeFirebase();
 
     </script>
