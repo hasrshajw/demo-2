@@ -70,7 +70,7 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-
+        
         /* --- SKELETON LOADER --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
@@ -178,15 +178,21 @@
         <main>
             <div class="container" id="main-container">
                 <div id="employees-view" class="view active">
-                    <a href="admin-dashboard.html" class="breadcrumb"><div class="skeleton" style="width: 150px; height: 20px;"></div></a>
+                    <a href="admin-dashboard.html" class="breadcrumb" data-app-action="navigate-back">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                        <span>Back to Dashboard</span>
+                    </a>
                     <div class="page-header">
-                        <div class="skeleton" style="width: 250px; height: 36px; border-radius: var(--radius-sm);"></div>
-                        <div class="skeleton" style="width: 150px; height: 44px;"></div>
+                        <h1>Manage Employees</h1>
+                        <button class="btn btn-primary" data-app-action="open-manual-add-modal">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 11a1 1 0 100-2h-1v-1a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1z" /></svg>
+                            <span>Add Employee</span>
+                        </button>
                     </div>
                     <div id="employee-list-container">
-                        <div class="employee-card"><div class="skeleton" style="width: 48px; height: 48px; border-radius: 50%;"></div><div class="employee-info"><div class="skeleton" style="height: 22px; width: 60%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 80%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
-                        <div class="employee-card"><div class="skeleton" style="width: 48px; height: 48px; border-radius: 50%;"></div><div class="employee-info"><div class="skeleton" style="height: 22px; width: 50%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 70%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
-                        <div class="employee-card"><div class="skeleton" style="width: 48px; height: 48px; border-radius: 50%;"></div><div class="employee-info"><div class="skeleton" style="height: 22px; width: 70%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 90%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
+                        <a href="#" class="employee-card skeleton"><div class="employee-icon"></div><div class="employee-info"><div style="height: 22px; width: 60%; border-radius: var(--radius-sm);"></div><div style="height: 16px; width: 80%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="employee-arrow" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></a>
+                        <a href="#" class="employee-card skeleton"><div class="employee-icon"></div><div class="employee-info"><div style="height: 22px; width: 50%; border-radius: var(--radius-sm);"></div><div style="height: 16px; width: 70%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="employee-arrow" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></a>
+                        <a href="#" class="employee-card skeleton"><div class="employee-icon"></div><div class="employee-info"><div style="height: 22px; width: 70%; border-radius: var(--radius-sm);"></div><div style="height: 16px; width: 90%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="employee-arrow" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></a>
                     </div>
                 </div>
             </div>
@@ -227,9 +233,7 @@
                 initializeNavbar();
                 bindEventListeners();
                 listenForAuthStateChanges();
-            } catch (error) {
-                console.error("Initialization Failed:", error);
-            }
+            } catch (error) { console.error("Initialization Failed:", error); }
         });
 
         function listenForAuthStateChanges() {
@@ -249,15 +253,9 @@
         function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
         
         async function showEmployeesView() {
-            const view = document.getElementById('employees-view');
-            
             try {
                 const employeesSnap = await getDocs(collection(db, "employees"));
                 const employees = employeesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-                // Replace skeleton header with real header
-                view.querySelector('.breadcrumb').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg><span>Back to Dashboard</span>`;
-                view.querySelector('.page-header').innerHTML = `<h1>Manage Employees</h1><button class="btn btn-primary" data-app-action="open-manual-add-modal"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 11a1 1 0 100-2h-1v-1a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1z" /></svg><span>Add Employee</span></button>`;
                 
                 if (employees.length > 0) {
                     await renderEmployeeSummaries(employees);
@@ -329,6 +327,9 @@
                 }
                 showToast("Employee added successfully!", "success");
                 closeModal('manual-employee-modal');
+                // Re-render view with skeleton to show loading state
+                const view = document.getElementById('employees-view');
+                view.querySelector('#employee-list-container').innerHTML = `<div class="employee-card skeleton"><div class="employee-icon"></div><div class="employee-info"><div style="height: 22px; width: 60%; border-radius: var(--radius-sm);"></div><div style="height: 16px; width: 80%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="employee-arrow" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>`;
                 await showEmployeesView();
             } catch(err) { showToast("Error: Could not save employee.", "error"); }
         }
