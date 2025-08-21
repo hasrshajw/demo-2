@@ -72,7 +72,7 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-
+        
         /* --- SKELETON LOADER --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
@@ -85,18 +85,19 @@
         h2 { font-size: 1.125rem; font-family: var(--font-main); color: var(--color-text-primary); margin:0; }
         main { padding-top: 24px; padding-bottom: 48px; }
         .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-        .icon-sm { width: 16px; height: 16px; }
         .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; }
         .page-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
         .employee-avatar { width: 56px; height: 56px; border-radius: 50%; background-color: var(--color-primary-light); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--color-primary-dark); font-size: 1.25rem; font-family: var(--font-main); }
         .employee-name { font-family: var(--font-main); font-size: 1.75rem; font-weight: 600; color: var(--color-text-primary); line-height: 1.2; }
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-        @media (min-width: 1024px) { .detail-grid { grid-template-columns: 2fr 1fr; } .main-column { order: 2; } .sidebar-column { order: 1; } }
+        @media (min-width: 1024px) { .detail-grid { grid-template-columns: 2fr 1fr; } .main-column { order: 1; } .sidebar-column { order: 2; } }
         .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
         .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;}
-        .stat-card { text-align: left; padding: 20px; }
-        .stat-card-value { font-size: 2.25rem; font-weight: 700; line-height: 1.2; font-family: var(--font-alt); color: var(--color-text-primary); }
-        .stat-card-label { font-size: 0.85rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
+        .stat-card { display: flex; align-items: center; gap: 1rem; padding: 20px; }
+        .stat-icon { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-primary); background-color: var(--color-primary-light); }
+        .stat-info { flex-grow: 1; }
+        .stat-card-value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; font-family: var(--font-alt); color: var(--color-text-primary); }
+        .stat-card-label { font-size: 0.85rem; color: var(--color-text-secondary); font-family: var(--font-alt); }
         .danger-text { color: var(--color-danger); }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
         .nav-button { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
@@ -177,11 +178,19 @@
                     </div>
                     <div class="detail-grid">
                         <div class="sidebar-column">
-                             <div class="card stat-card"><div class="skeleton" style="height: 18px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 40px; width: 50%;"></div></div>
-                             <div class="card stat-card"><div class="skeleton" style="height: 18px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 40px; width: 50%;"></div></div>
+                             <div class="card stat-card"><div class="stat-info"><div class="skeleton" style="height: 18px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 40px; width: 50%;"></div></div></div>
+                             <div class="card stat-card"><div class="stat-info"><div class="skeleton" style="height: 18px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 40px; width: 50%;"></div></div></div>
                         </div>
                         <div class="main-column">
-                            <div class="card"><div class="card-header"><div class="skeleton" style="height: 24px; width: 120px;"></div></div><div class="calendar-header"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 22px; width: 150px; border-radius: var(--radius-sm);"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div><div class="skeleton" style="width: 100%; height: 250px;"></div></div>
+                            <div class="card">
+                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 120px;"></div></div>
+                                <div class="calendar-header">
+                                    <div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div>
+                                    <div class="skeleton" style="height: 22px; width: 150px; border-radius: var(--radius-sm);"></div>
+                                    <div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div>
+                                </div>
+                                <div class="skeleton" style="width: 100%; height: 250px;"></div>
+                            </div>
                         </div>
                     </div>
                     <!-- SKELETON LOADER END -->
