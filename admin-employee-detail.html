@@ -11,16 +11,10 @@
     <style>
         /* --- MERGED & COMPLETE CSS --- */
         :root {
-            --font-main: "IBM Plex Sans", sans-serif;
-            --font-alt: 'Inter', sans-serif;
-            --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
             --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-focus-ring: 0 0 0 3px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-
         [data-theme="light"] {
             --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-secondary: #475569;
             --color-background: #f8fafc; --color-surface: #ffffff; --color-text-primary: #1f2937; --color-text-secondary: #64748b;
@@ -28,39 +22,19 @@
             --color-success-bg: #f0fdf4; --color-danger-bg: #fef2f2; --color-warning-bg: #fffbeb;
             --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
         }
-
-        [data-theme="dark"] {
-            --color-primary: #818cf8; --color-primary-light: rgba(129, 140, 248, 0.16); --color-primary-dark: #a7affb; --color-secondary: #94a3b8;
-            --color-background: #0f172a; --color-surface: #1e293b; --color-text-primary: #f1f5f9; --color-text-secondary: #94a3b8;
-            --color-border: #334155; --color-success: #4ade80; --color-danger: #f87171; --color-warning: #facc15;
-            --color-success-bg: rgba(74, 222, 128, 0.1); --color-danger-bg: rgba(248, 113, 113, 0.1); --color-warning-bg: rgba(250, 204, 21, 0.1);
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; }
 
         body {
-            font-family: var(--font-alt); /* Using alt font for consistency with dashboard */
-            background-color: var(--color-background);
-            color: var(--color-text-primary);
-            line-height: 1.5;
-            transition: background-color 0.3s var(--ease-cubic), color 0.3s var(--ease-cubic);
-            -webkit-font-smoothing: antialiased;
-            padding-top: 72px; /* Space for the new fixed navbar */
+            font-family: var(--font-alt); background-color: var(--color-background); color: var(--color-text-primary);
+            line-height: 1.5; -webkit-font-smoothing: antialiased; padding-top: 72px;
         }
 
-        /* --- NAVBAR STYLES --- */
-        .header {
-            position: fixed; top: 0; width: 100%; z-index: 50;
-            background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);
-        }
-        [data-theme="dark"] .header { background-color: hsla(222, 47%, 11%, 0.8); }
+        /* --- NAVBAR STYLES (UNCHANGED) --- */
+        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) {
-            .header-container { padding-left: 16px; padding-right: 16px; width: 100%; }
-            .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }
-        }
+        @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
         .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
         .nav-left { display: flex; align-items: center; gap: 1.5rem; }
         .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
@@ -98,41 +72,36 @@
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
         
-        /* --- PAGE-SPECIFIC STYLES --- */
+        /* --- SKELETON LOADER --- */
+        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 100% { left: 150%; } }
+
+        /* --- UPDATED PAGE UI/UX --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; }
-        h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-        h2 { font-size: 1.25rem; color: var(--color-text-primary); margin-bottom: 1.5rem; }
+        h1 { font-size: 1.75rem; color: var(--color-text-primary); }
+        h2 { font-size: 1.125rem; font-family: var(--font-main); color: var(--color-text-primary); margin:0; }
+        main { padding-top: 24px; padding-bottom: 48px; }
         .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-        .icon-sm { width: 16px; height: 16px; } .icon-md { width: 20px; height: 20px; } .icon-lg { width: 24px; height: 24px; }
-        .app-container { display: block; }
-        main { padding-top: 24px; padding-bottom: 48px; } /* Removed top padding, body handles it */
+        .icon-sm { width: 16px; height: 16px; }
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-md); }
+        .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-sm); }
         .btn-danger { background-color: var(--color-danger); color: white; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
         .btn-icon { background: none; border: none; padding: 10px; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-icon:hover { color: var(--color-text-primary); background-color: var(--color-border); }
-        .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-        .section-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-secondary); font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-background); transition: all 0.2s; color: var(--color-text-primary); }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); box-shadow: var(--shadow-focus-ring) var(--color-primary-light); }
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px); }
-        .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 500px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
-        .modal-content .modal-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
-        .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--color-text-secondary); background: transparent; border: none; cursor: pointer; transition: color 0.2s; }
-        .close-btn:hover { color: var(--color-text-primary); }
-        #edit-options-modal-content { display: flex; flex-direction: column; gap: 1rem; }
-        .alert-danger { background-color: var(--color-danger-bg); border-left: 4px solid var(--color-danger); padding: 12px 16px; border-radius: var(--radius-md); margin-bottom: 1rem; color: var(--color-danger); font-size: 0.9rem; }
-        #detail-view-header { display: flex; gap: 1rem; margin-bottom: 1rem; }
-        .detail-view-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
-        .stat-card { text-align: center; padding: 20px; }
-        .stat-card-value { font-size: 2.5rem; font-weight: 700; line-height: 1.2; }
-        .stat-card-label { font-size: 0.9rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
-        .delete-section { margin-top: 2rem; padding: 24px; border: 1px solid var(--color-danger); background-color: var(--color-danger-bg); border-radius: var(--radius-lg); }
-        hr.section-divider { border: none; height: 1px; background-color: var(--color-border); margin: 48px 0; }
+        .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .breadcrumb { font-size: 0.9rem; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .breadcrumb:hover { color: var(--color-text-primary); }
+        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 1024px) { .detail-grid { grid-template-columns: 2fr 1fr; } }
+        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;}
+        .stat-card { text-align: left; padding: 20px; }
+        .stat-card-value { font-size: 2.25rem; font-weight: 700; line-height: 1.2; font-family: var(--font-alt); }
+        .stat-card-label { font-size: 0.85rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
         .nav-button { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
         .nav-button:hover { background-color: var(--color-border); color: var(--color-text-primary); }
@@ -156,18 +125,24 @@
         .payment-details { flex-grow: 1; }
         .payment-actions { display: flex; gap: 8px; }
         .payment-history-actions { text-align: center; margin-top: 1.5rem; }
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .spinner { width: 48px; height: 48px; border: 5px solid var(--color-primary-light); border-bottom-color: var(--color-primary); border-radius: 50%; animation: rotation 1s linear infinite; }
-        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: var(--radius-md); color: white; font-weight: 500; box-shadow: var(--shadow-lg); transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1001; }
-        #toast.show { bottom: 30px; }
-        #toast.success { background-color: var(--color-primary); }
-        #toast.error { background-color: var(--color-danger); }
+        .delete-section { margin-top: 2rem; padding: 24px; border: 1px solid var(--color-danger); background-color: var(--color-danger-bg); border-radius: var(--radius-lg); }
+        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center;}
+        .modal-content { background-color: var(--color-surface); margin: 1rem; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 500px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-header h2 { margin: 0; }
+        .close-btn { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .close-btn:hover { color: var(--color-text-primary); background-color: var(--color-border); }
+        .form-group { position: relative; margin-bottom: 1.5rem; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-background); color: var(--color-text-primary); font-size: 1rem; }
+        .form-group label { position: absolute; top: 12px; left: 12px; color: var(--color-text-secondary); pointer-events: none; transition: all 0.2s var(--ease-cubic); background-color: var(--color-surface); padding: 0 4px; }
+        .form-group input:focus + label, .form-group input:not(:placeholder-shown) + label, .form-group select:focus + label, .form-group select:valid + label { top: -10px; font-size: 0.8rem; color: var(--color-primary); }
+        .modal-content .modal-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
+        #edit-options-modal-content { display: flex; flex-direction: column; gap: 1rem; }
+        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: var(--radius-md); color: white; font-weight: 500; box-shadow: var(--shadow-lg); transition: bottom 0.5s; z-index: 1001; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes count-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .stat-card-value span { animation: count-up 0.5s var(--ease-cubic); }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; } .card { padding: 16px; } .modal-content { padding: 24px; } .detail-view-grid { grid-template-columns: 1fr; } .stat-card { padding: 16px; } .stat-card-value { font-size: 2rem; } .stat-card-label { font-size: 0.75rem; } }
+        @media (max-width: 1023px) { .detail-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; } .card { padding: 16px; } .stat-card-value { font-size: 2rem; } }
     </style>
 </head>
 
@@ -176,9 +151,7 @@
         <div class="header-container">
             <nav class="nav">
                 <div class="nav-left">
-                    <a href="admin-dashboard.html">
-                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
-                    </a>
+                    <a href="admin-dashboard.html"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
                     <div class="nav-links">
                         <a class="nav-link" href="admin-dashboard.html">Home</a>
                         <a class="nav-link" href="view-orders.html">All Orders</a>
@@ -195,16 +168,10 @@
                                     <span class="profile-email" id="desktop-profile-email"></span>
                                 </div>
                             </div>
-                            <div class="logout-popup" id="logoutPopup">
-                                <button class="logout-button" data-app-action="logout">Logout</button>
-                            </div>
+                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 </div>
             </nav>
             <div class="divider"></div>
@@ -212,34 +179,18 @@
     </header>
 
     <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">
-            <svg viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section">
-                <a href="admin-dashboard.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                     <span>Home</span>
-                </a>
-                <a href="view-orders.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                     <span>All Orders</span>
-                </a>
-                <a href="admin-employees.html" class="mobile-nav-link">
-                     <svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                     <span>Manage Employees</span>
-                </a>
+                <a href="admin-dashboard.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
+                <a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
+                <a href="admin-employees.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span>Manage Employees</span></a>
             </div>
         </div>
         <div class="mobile-menu-bottom">
             <div class="profile-container">
                 <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
-                <div class="profile-info">
-                    <span class="profile-name" id="mobile-profile-name">Loading...</span>
-                    <span class="profile-email" id="mobile-profile-email"></span>
-                </div>
+                <div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div>
             </div>
             <button class="logout-button" data-app-action="logout">Logout</button>
         </div>
@@ -250,16 +201,29 @@
         <main>
             <div class="container" id="main-container">
                 <div id="detail-view" class="view active">
-                    <!-- Content will be injected here by showDetailView() -->
+                    <!-- SKELETON LOADER START -->
+                    <a href="admin-employees.html" class="breadcrumb"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg><span>Back to Employees</span></a>
+                    <div class="page-header">
+                        <div class="skeleton" style="height: 36px; width: 250px; border-radius: var(--radius-sm);"></div>
+                        <div class="skeleton" style="height: 44px; width: 100px;"></div>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="main-column">
+                            <div class="card"><div class="card-header"><div class="skeleton" style="height: 24px; width: 120px;"></div><div class="skeleton" style="height: 40px; width: 140px;"></div></div><div class="calendar-header"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 22px; width: 150px; border-radius: var(--radius-sm);"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div><div class="skeleton" style="width: 100%; height: 250px;"></div></div>
+                            <div class="card"><div class="card-header"><div class="skeleton" style="height: 24px; width: 180px;"></div><div class="skeleton" style="height: 40px; width: 150px;"></div></div><div class="skeleton" style="width: 100%; height: 100px;"></div></div>
+                        </div>
+                        <div class="sidebar-column">
+                            <div class="card stat-card"><div class="skeleton" style="height: 18px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 40px; width: 50%; margin-bottom: 4px;"></div><div class="skeleton" style="height: 18px; width: 80%;"></div></div>
+                            <div class="card stat-card"><div class="skeleton" style="height: 18px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 40px; width: 50%; margin-bottom: 4px;"></div><div class="skeleton" style="height: 18px; width: 80%;"></div></div>
+                        </div>
+                    </div>
+                    <!-- SKELETON LOADER END -->
                 </div>
             </div>
         </main>
     </div>
     
     <div id="toast"></div>
-    <div id="loader"><div class="spinner"></div></div>
-
-    <!-- Modals used on this page -->
     <div id="edit-options-modal" class="modal"></div>
     <div id="employee-modal" class="modal"></div>
     <div id="link-user-modal" class="modal"></div>
@@ -289,8 +253,6 @@
         let currentCalendarDate = new Date();
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
         const showToast = (message, type = 'success') => { const t = document.getElementById('toast'); t.textContent = message; t.className = `show ${type}`; setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); }
         const openModal = (id) => document.getElementById(id).style.display = 'block';
         const closeModal = (id) => document.getElementById(id).style.display = 'none';
@@ -307,107 +269,34 @@
                 auth = getAuth(app);
                 
                 renderAppShellModals();
-                initializeNavbar(); // Initialize the new navbar
+                initializeNavbar();
                 bindEventListeners();
                 listenForAuthStateChanges();
-
             } catch (error) {
                 console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<div style="padding: 2rem; text-align: center;"><h2>Error: ${error.message}</h2><p>Redirecting to employee list...</p></div>`;
+                document.body.innerHTML = `<div style="padding: 2rem; text-align: center;"><h2>Error: ${error.message}</h2><p>Redirecting...</p></div>`;
                 setTimeout(() => window.location.href = 'admin-employees.html', 3000);
             }
         });
 
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
-                showLoader();
                 if (user) {
                     if (user.email !== ADMIN_EMAIL) { window.location.href = 'employee-dashboard.html'; return; }
-                    
                     const userRef = doc(db, "users", user.uid);
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    
-                    populateNavbar(currentUserProfile); // Populate the new navbar
+                    populateNavbar(currentUserProfile);
                     await showDetailView(); 
-                    
-                } else {
-                    window.location.href = 'login.html';
-                }
+                } else { window.location.href = 'login.html'; }
             });
         }
         
-        // --- NAVBAR FUNCTIONS ---
-        function populateNavbar(user) {
-            if (!user) return;
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
-        }
-        
-        function initializeNavbar() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenuClose = document.getElementById('mobileMenuClose');
-            const menuOverlay = document.getElementById('menuOverlay');
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
-            const logoutPopup = document.getElementById('logoutPopup');
-
-            function closeMobileMenu() {
-                if (mobileMenu.classList.contains('active')) {
-                     mobileMenu.classList.remove('active');
-                     menuOverlay.classList.remove('active');
-                     document.body.style.overflow = '';
-                }
-            }
-            
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
-                menuOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            mobileMenuClose.addEventListener('click', closeMobileMenu);
-            menuOverlay.addEventListener('click', closeMobileMenu);
-
-            if (desktopProfileTrigger && logoutPopup) {
-                desktopProfileTrigger.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';
-                    logoutPopup.classList.toggle('show');
-                    desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);
-                });
-
-                window.addEventListener('click', (event) => {
-                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {
-                        if (logoutPopup.classList.contains('show')) {
-                            logoutPopup.classList.remove('show');
-                            desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                        }
-                    }
-                });
-            }
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeMobileMenu();
-                    if (logoutPopup && logoutPopup.classList.contains('show')) {
-                        logoutPopup.classList.remove('show');
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false');
-                    }
-                }
-            });
-            window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
-        }
-        // --- END NAVBAR FUNCTIONS ---
+        function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
+        function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
 
         async function showDetailView(resetDate = true) {
             if (resetDate) currentCalendarDate = new Date();
-            showLoader();
             try {
                 const empDoc = await getDoc(doc(db, "employees", currentEmployeeIdForDetail));
                 if (!empDoc.exists()) throw new Error("Employee not found");
@@ -417,52 +306,49 @@
                 const allPayments = allPaySnap.docs.map(d => ({id: d.id, ...d.data()}));
                 
                 document.getElementById('detail-view').innerHTML = `
-                    <div id="detail-view-header"> <button data-app-action="navigate-employees" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>Back to Employees</button> <button data-app-action="open-edit-options" data-id="${employee.id}" data-name="${employee.name}" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>Edit</button> </div>
-                    <h1>${employee.name}</h1>
-                    <div class="detail-view-grid">
-                        <div class="detail-main-content">
-                            <div class="card"> <div class="section-header"><h2>Attendance</h2> <button data-app-action="open-modal" data-modal-id="missed-attendance-modal" data-form-id="missed-attendance-form" class="btn btn-primary">Add Missed</button> </div> <div class="calendar-header"> <button data-app-action="calendar-prev" class="nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button> <h3 id="month-year" class="month-year-display"></h3> <button data-app-action="calendar-next" class="nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button> </div> <div id="weekdays" class="weekdays-grid"></div> <div id="days-grid" class="days-grid"></div> <div class="calendar-legend"> <div class="legend-item"><span class="legend-color" style="background:var(--color-success)"></span>Present</div> <div class="legend-item"><span class="legend-color" style="background:var(--color-danger)"></span>Absent</div> <div class="legend-item"><span class="legend-color" style="background:var(--gradient-half-day)"></span>Half Day</div> <div class="legend-item"><span class="legend-color" style="background:var(--color-warning)"></span>Paid Holiday</div> </div> </div>
-                            <div class="card"> <div class="section-header"><h2>Payment History</h2> <button data-app-action="open-modal" data-modal-id="payment-modal" data-form-id="payment-form" class="btn btn-primary">Add Payment</button> </div> <div id="payment-list"></div> </div>
+                    <a href="admin-employees.html" class="breadcrumb" data-app-action="navigate-employees"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg><span>Back to Employees</span></a>
+                    <div class="page-header"> <h1>${employee.name}</h1> <button data-app-action="open-edit-options" data-id="${employee.id}" data-name="${employee.name}" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg><span>Manage</span></button> </div>
+                    <div class="detail-grid">
+                        <div class="main-column">
+                            <div class="card"> <div class="card-header"><h2>Attendance</h2> <button data-app-action="open-modal" data-modal-id="missed-attendance-modal" data-form-id="missed-attendance-form" class="btn btn-secondary">Add Missed</button> </div> <div class="calendar-header"> <button data-app-action="calendar-prev" class="nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button> <h3 id="month-year" class="month-year-display"></h3> <button data-app-action="calendar-next" class="nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button> </div> <div id="weekdays" class="weekdays-grid"></div> <div id="days-grid" class="days-grid"></div> <div class="calendar-legend"> <div class="legend-item"><span class="legend-color" style="background:var(--color-success)"></span>Present</div> <div class="legend-item"><span class="legend-color" style="background:var(--color-danger)"></span>Absent</div> <div class="legend-item"><span class="legend-color" style="background:var(--gradient-half-day)"></span>Half Day</div> <div class="legend-item"><span class="legend-color" style="background:var(--color-warning)"></span>Paid Holiday</div> </div> </div>
+                            <div class="card"> <div class="card-header"><h2>Payment History</h2> <button data-app-action="open-modal" data-modal-id="payment-modal" data-form-id="payment-form" class="btn btn-secondary">Add Payment</button> </div> <div id="payment-list"></div> </div>
                         </div>
-                        <div class="detail-sidebar"> <div class="card stat-card" id="overall-summary"></div> <div class="card stat-card" id="monthly-summary"></div> </div>
-                    </div>
-                    <hr class="section-divider">
-                    <div class="delete-section"> <h2>Danger Zone</h2> <p style="color: var(--color-text-secondary); margin-bottom: 1rem;">Permanently remove this employee and all their associated data.</p> <button class="btn btn-danger" data-app-action="open-delete-modal" data-id="${employee.id}" data-name="${employee.name}">Delete Employee</button> </div>`;
-                
+                        <div class="sidebar-column"> 
+                            <div class="card stat-card" id="overall-summary"></div> 
+                            <div class="card stat-card" id="monthly-summary"></div> 
+                            <div class="delete-section"> <h2>Danger Zone</h2> <p style="color: var(--color-text-secondary); margin-bottom: 1rem;">Permanently remove this employee and all their associated data.</p> <button class="btn btn-danger" data-app-action="open-delete-modal" data-id="${employee.id}" data-name="${employee.name}">Delete Employee</button> </div>
+                        </div>
+                    </div>`;
                 document.getElementById('missed-attendance-form').addEventListener('submit', handleMissedAttendanceSubmit);
                 renderCalendar(allAttendance);
                 renderFinancialSummaries(employee, allAttendance, allPayments);
                 renderPaymentList(allPayments, employee);
-                
             } catch (error) {
                 console.error("Error loading details:", error);
                 showToast(`Error: ${error.message}`, "error");
                 document.getElementById('detail-view').innerHTML = `<h2>Error loading details.</h2>`;
-            } finally {
-                hideLoader();
             }
         }
         
-        // --- ALL OTHER PAGE-SPECIFIC FUNCTIONS ---
-        // (All original functions from your script are maintained here)
+        // (All other original functions from your script are maintained here)
         function renderCalendar(attendanceData) { const monthYearEl = document.getElementById('month-year'); const daysGridEl = document.getElementById('days-grid'); const weekdaysEl = document.getElementById('weekdays'); if(!monthYearEl || !daysGridEl || !weekdaysEl) return; monthYearEl.textContent = currentCalendarDate.toLocaleString('default', { month: 'long', year: 'numeric' }); daysGridEl.innerHTML = ''; weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join(''); const month = currentCalendarDate.getMonth(); const year = currentCalendarDate.getFullYear(); const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate(); const prevLastDay = new Date(year, month, 0).getDate(); const lastDayIndex = new Date(year, month, lastDay).getDay(); const nextDays = 7 - lastDayIndex - 1; const todayString = formatDate(new Date()); const attendanceMap = new Map(attendanceData.map(item => [item.date, item.status])); let daysHTML = ''; for (let x = firstDayIndex; x > 0; x--) { daysHTML += `<div class="day prev-month">${prevLastDay - x + 1}</div>`; } for (let i = 1; i <= lastDay; i++) { const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; const status = attendanceMap.get(dayStr); let classes = 'day'; if (dayStr === todayString) classes += ' today'; if (status) classes += ` ${status}`; daysHTML += `<div class="${classes}">${i}</div>`; } for (let j = 1; j <= nextDays; j++) { daysHTML += `<div class="day next-month">${j}</div>`; } daysGridEl.innerHTML = daysHTML; }
         function renderFinancialSummaries(employee, allAttendance, allPayments) { if (!Array.isArray(allAttendance) || !Array.isArray(allPayments)) return; const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth(); const startOfMonth = new Date(year, month, 1); const endOfMonth = new Date(year, month + 1, 0); const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth)); const overall = calculateFinancials(employee, allAttendance, allPayments); const monthly = calculateFinancials(employee, monthlyAttendance, []); const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : 'success-text'; const overallSummaryEl = document.getElementById('overall-summary'); const monthlySummaryEl = document.getElementById('monthly-summary'); if (overallSummaryEl) { overallSummaryEl.innerHTML = `<h3 class="stat-card-label">Overall Summary</h3><div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div><div class="stat-card-label">Total Amount Due</div>`; } if (monthlySummaryEl) { monthlySummaryEl.innerHTML = `<h3 class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Summary</h3><div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div><div class="stat-card-label">Earned This Month</div>`; } document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000)); }
         function calculateFinancials(employee, attendance, payments) { if (!employee || !Array.isArray(attendance) || !Array.isArray(payments)) { return { totalEarned: 0, dueAmount: 0 }; } let p=0,h=0,ph=0; attendance.forEach(a=>{if(a?.status==='present')p++;else if(a?.status==='half-day')h++;else if(a?.status==='paid-holiday')ph++;}); const earned=(p+(h*0.5)+ph)*(employee.dailySalary||0); const paid=payments.reduce((s,p)=>s+(p?.amount||0),0); return {totalEarned:earned, dueAmount:earned-paid}; }
-        function renderPaymentList(allPayments, employee) { const container = document.getElementById('payment-list'); if (!container || !Array.isArray(allPayments) || !employee) return; if (allPayments.length === 0) { container.innerHTML = '<p style="padding: 1rem 0; color: var(--color-text-secondary); text-align: center;">No payments recorded.</p>'; return; } allPayments.sort((a, b) => new Date(b?.date) - new Date(a?.date)); const recentPayments = allPayments.slice(0, 3); container.innerHTML = `<ul>${recentPayments.map(p => `<li><div class="payment-details"><span>${p.date}<br><small style="color:var(--color-text-secondary)">${p.note || p.paymentMode}</small></span><strong>₹${p.amount.toFixed(2)}</strong></div><div class="payment-actions"><button class="btn-icon" title="Edit Payment" data-app-action="open-edit-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg></button><button class="btn-icon" title="Delete Payment" data-app-action="open-delete-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button></div></li>`).join('')}</ul>`; if (allPayments.length > 3) { container.innerHTML += `<div class="payment-history-actions"><button class="btn btn-secondary" data-app-action="navigate-payment-history" data-employee-id="${employee.id}" data-employee-name="${employee.name}">View Full History</button></div>`; } }
+        function renderPaymentList(allPayments, employee) { const container = document.getElementById('payment-list'); if (!container || !Array.isArray(allPayments) || !employee) return; if (allPayments.length === 0) { container.innerHTML = '<p style="padding: 1rem 0; color: var(--color-text-secondary); text-align: center;">No payments recorded.</p>'; return; } allPayments.sort((a, b) => new Date(b?.date) - new Date(a?.date)); const recentPayments = allPayments.slice(0, 3); container.innerHTML = `<ul>${recentPayments.map(p => `<li><div class="payment-details"><span>${p.date}<br><small style="color:var(--color-text-secondary)">${p.note || p.paymentMode}</small></span><strong>₹${p.amount.toFixed(2)}</strong></div><div class="payment-actions"><button class="btn-icon" title="Edit Payment" data-app-action="open-edit-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg></button><button class="btn-icon" title="Delete Payment" data-app-action="open-delete-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button></div></li>`).join('')}</ul>`; if (allPayments.length > 3) { container.innerHTML += `<div class="payment-history-actions"><button class="btn btn-secondary" data-app-action="navigate-payment-history" data-employee-id="${employee.id}">View Full History</button></div>`; } }
         function animateValue(obj, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); obj.innerHTML = Math.abs(progress * (end - start) + start).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); if (progress < 1) window.requestAnimationFrame(step); else { obj.innerHTML = Math.abs(end).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); } }; window.requestAnimationFrame(step); }
-        function renderAppShellModals() { document.getElementById('edit-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="edit-options-modal">×</span><h2 id="edit-options-title"></h2><div id="edit-options-modal-content"></div></div>`; document.getElementById('employee-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="employee-modal">×</span><h2 id="employee-modal-title">Edit Employee</h2><form id="employee-form"><input type="hidden" id="employee-id"><div class="form-group"><label for="full-name">Full Name</label><input type="text" id="full-name" required></div><div class="form-group"><label for="daily-salary">Daily Salary</label><input type="number" id="daily-salary" required min="0" step="0.01"></div><button type="submit" class="btn btn-primary" style="width:100%">Save Changes</button></form></div>`; document.getElementById('payment-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="payment-modal">×</span><h2 id="payment-modal-title">Add Payment</h2><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-group"><label for="payment-amount">Amount</label><input type="number" id="payment-amount" required></div><div class="form-group"><label for="payment-date">Date</label><input type="date" id="payment-date" required></div><div class="form-group"><label for="payment-note">Note (Optional)</label><input type="text" id="payment-note"></div><div class="form-group"><label for="payment-mode">Mode</label><select id="payment-mode"><option>Cash</option><option>Online</option></select></div><button type="submit" class="btn btn-primary" style="width:100%">Save Payment</button></form></div>`; document.getElementById('missed-attendance-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="missed-attendance-modal">×</span><h2>Add Missed Attendance</h2><form id="missed-attendance-form"><div class="form-group"><label for="missed-attendance-date">Select Date</label><input type="date" id="missed-attendance-date" required></div><div class="form-group"><label for="missed-attendance-status">Status</label><select id="missed-attendance-status" required><option value="">-- Select --</option><option value="present">Present</option><option value="absent">Absent</option><option value="half-day">Half Day</option><option value="paid-holiday">Paid Holiday</option></select></div><button type="submit" class="btn btn-primary" style="width:100%">Save Attendance</button></form></div>`; document.getElementById('delete-employee-modal').innerHTML = `<div class="modal-content"> <span class="close-btn" data-app-action="close-modal" data-modal-id="delete-employee-modal">×</span> <h2 id="delete-modal-title">Delete Employee</h2> <p>You are about to delete <strong id="delete-employee-name"></strong>.</p> <div class="alert-danger"> <strong>Warning:</strong> This action is permanent and cannot be undone. All associated data will be erased. </div> <div class="form-group" style="margin-top: 1.5rem;"> <label for="delete-confirm-name">To confirm, please type the employee's full name:</label> <input type="text" id="delete-confirm-name" autocomplete="off"> </div> <button id="confirm-delete-btn" class="btn btn-danger" style="width:100%" disabled>Confirm Deletion</button> </div>`; document.getElementById('delete-payment-modal').innerHTML = `<div class="modal-content"> <span class="close-btn" data-app-action="close-modal" data-modal-id="delete-payment-modal">×</span> <h2>Delete Payment</h2> <p>Are you sure you want to permanently delete this payment record? This action cannot be undone.</p> <div class="modal-actions"> <button class="btn btn-secondary" data-app-action="close-modal" data-modal-id="delete-payment-modal">Cancel</button> <button id="confirm-delete-payment-btn" class="btn btn-danger">Confirm Deletion</button> </div> </div>`; document.getElementById('link-user-modal').innerHTML = `<div class="modal-content"></div>`; }
-        async function handleMissedAttendanceSubmit(e) { e.preventDefault(); showLoader(); try { const date = document.getElementById('missed-attendance-date').value; const status = document.getElementById('missed-attendance-status').value; if (!date || !status) throw new Error("Date and status are required."); await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/attendance`, date), { status, date }); showToast("Missed attendance added.", "success"); closeModal('missed-attendance-modal'); await showDetailView(false); } catch(err) { console.error("Error adding missed attendance:", err); showToast(`Error: ${err.message}`, "error"); } finally { hideLoader(); } }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoader(); const paymentId = document.getElementById('payment-id').value; const data = { amount: parseFloat(document.getElementById('payment-amount').value), date: document.getElementById('payment-date').value, note: document.getElementById('payment-note').value, paymentMode: document.getElementById('payment-mode').value }; try { if (!data.amount || !data.date) throw new Error("Amount and Date are required."); if (paymentId) { await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/payments`, paymentId), data); showToast("Payment updated!", "success"); } else { await addDoc(collection(db, `employees/${currentEmployeeIdForDetail}/payments`), data); showToast("Payment added!", "success"); } closeModal('payment-modal'); await showDetailView(false); } catch(err) { console.error("Error saving payment:", err); showToast(`Error: ${err.message}`, "error"); } finally { hideLoader(); } }
-        async function openEmployeeModalForEdit(employeeId) { showLoader(); try { const empDoc = await getDoc(doc(db, "employees", employeeId)); if (!empDoc.exists()) throw new Error("Employee not found."); const employee = empDoc.data(); document.getElementById('employee-modal-title').textContent = 'Edit Employee'; document.getElementById('employee-id').value = employeeId; document.getElementById('full-name').value = employee.name; document.getElementById('daily-salary').value = employee.dailySalary; openModal('employee-modal'); } catch (error) { console.error("Error preparing edit form:", error); showToast(error.message, 'error'); } finally { hideLoader(); } }
-        async function handleEmployeeFormSubmit(e) { e.preventDefault(); showLoader(); try { const id = document.getElementById('employee-id').value; const data = { name: document.getElementById('full-name').value, dailySalary: parseFloat(document.getElementById('daily-salary').value) }; await setDoc(doc(db, "employees", id), data, { merge: true }); await showDetailView(false); showToast("Employee saved!", "success"); closeModal('employee-modal'); } catch(err) { console.error("Error saving employee:", err); showToast("Error: Could not save employee.", "error"); } finally { hideLoader(); } }
+        function renderAppShellModals() { document.getElementById('edit-options-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2 id="edit-options-title"></h2><button class="close-btn" data-app-action="close-modal" data-modal-id="edit-options-modal">×</button></div><div id="edit-options-modal-content"></div></div>`; document.getElementById('employee-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Edit Employee</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="employee-modal">×</button></div><form id="employee-form"><input type="hidden" id="employee-id"><div class="form-group"><input type="text" id="full-name" required placeholder=" "><label for="full-name">Full Name</label></div><div class="form-group"><input type="number" id="daily-salary" required min="0" step="0.01" placeholder=" "><label for="daily-salary">Daily Salary</label></div><button type="submit" class="btn btn-primary" style="width:100%">Save Changes</button></form></div>`; document.getElementById('payment-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2 id="payment-modal-title">Add Payment</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="payment-modal">×</button></div><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-group"><input type="number" id="payment-amount" required placeholder=" "><label for="payment-amount">Amount</label></div><div class="form-group"><input type="date" id="payment-date" required><label for="payment-date">Date</label></div><div class="form-group"><input type="text" id="payment-note" placeholder=" "><label for="payment-note">Note (Optional)</label></div><div class="form-group"><select id="payment-mode" required><option value="Cash">Cash</option><option value="Online">Online</option></select><label for="payment-mode">Mode</label></div><button type="submit" class="btn btn-primary" style="width:100%">Save Payment</button></form></div>`; document.getElementById('missed-attendance-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Add Missed Attendance</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="missed-attendance-modal">×</button></div><form id="missed-attendance-form"><div class="form-group"><input type="date" id="missed-attendance-date" required><label for="missed-attendance-date">Select Date</label></div><div class="form-group"><select id="missed-attendance-status" required><option value="" disabled selected hidden></option><option value="present">Present</option><option value="absent">Absent</option><option value="half-day">Half Day</option><option value="paid-holiday">Paid Holiday</option></select><label for="missed-attendance-status">Status</label></div><button type="submit" class="btn btn-primary" style="width:100%">Save Attendance</button></form></div>`; document.getElementById('delete-employee-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2 id="delete-modal-title">Delete Employee</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="delete-employee-modal">×</button></div><p>You are about to delete <strong id="delete-employee-name"></strong>.</p><p style="color:var(--color-danger); font-weight: 500;">Warning: This action is permanent and cannot be undone.</p><div class="form-group" style="margin-top: 1.5rem;"><input type="text" id="delete-confirm-name" autocomplete="off" placeholder=" "><label for="delete-confirm-name">To confirm, type the name</label></div><button id="confirm-delete-btn" class="btn btn-danger" style="width:100%" disabled>Confirm Deletion</button></div>`; document.getElementById('delete-payment-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Delete Payment</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="delete-payment-modal">×</button></div><p>Are you sure you want to permanently delete this payment record?</p><div class="modal-actions"><button class="btn btn-secondary" data-app-action="close-modal" data-modal-id="delete-payment-modal">Cancel</button><button id="confirm-delete-payment-btn" class="btn btn-danger">Confirm Deletion</button></div></div>`; document.getElementById('link-user-modal').innerHTML = `<div class="modal-content"></div>`; }
+        async function handleMissedAttendanceSubmit(e) { e.preventDefault(); try { const date = document.getElementById('missed-attendance-date').value; const status = document.getElementById('missed-attendance-status').value; if (!date || !status) throw new Error("Date and status are required."); await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/attendance`, date), { status, date }); showToast("Missed attendance added.", "success"); closeModal('missed-attendance-modal'); await showDetailView(false); } catch(err) { showToast(`Error: ${err.message}`, "error"); } }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = document.getElementById('payment-id').value; const data = { amount: parseFloat(document.getElementById('payment-amount').value), date: document.getElementById('payment-date').value, note: document.getElementById('payment-note').value, paymentMode: document.getElementById('payment-mode').value }; try { if (!data.amount || !data.date) throw new Error("Amount and Date are required."); if (paymentId) { await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/payments`, paymentId), data); showToast("Payment updated!", "success"); } else { await addDoc(collection(db, `employees/${currentEmployeeIdForDetail}/payments`), data); showToast("Payment added!", "success"); } closeModal('payment-modal'); await showDetailView(false); } catch(err) { showToast(`Error: ${err.message}`, "error"); } }
+        async function openEmployeeModalForEdit(employeeId) { try { const empDoc = await getDoc(doc(db, "employees", employeeId)); if (!empDoc.exists()) throw new Error("Employee not found."); const employee = empDoc.data(); document.getElementById('employee-id').value = employeeId; document.getElementById('full-name').value = employee.name; document.getElementById('daily-salary').value = employee.dailySalary; openModal('employee-modal'); } catch (error) { showToast(error.message, 'error'); } }
+        async function handleEmployeeFormSubmit(e) { e.preventDefault(); try { const id = document.getElementById('employee-id').value; const data = { name: document.getElementById('full-name').value, dailySalary: parseFloat(document.getElementById('daily-salary').value) }; await setDoc(doc(db, "employees", id), data, { merge: true }); await showDetailView(false); showToast("Employee saved!", "success"); closeModal('employee-modal'); } catch(err) { showToast("Error: Could not save employee.", "error"); } }
         async function openDeleteModal(employeeId, employeeName) { const modal = document.getElementById('delete-employee-modal'); const confirmInput = document.getElementById('delete-confirm-name'); const confirmBtn = document.getElementById('confirm-delete-btn'); document.getElementById('delete-employee-name').textContent = employeeName; modal.dataset.employeeId = employeeId; modal.dataset.employeeName = employeeName; confirmInput.value = ''; confirmBtn.disabled = true; confirmInput.oninput = () => { confirmBtn.disabled = confirmInput.value.trim() !== employeeName; }; openModal('delete-employee-modal'); }
-        async function handleDeleteEmployee() { const modal = document.getElementById('delete-employee-modal'); const { employeeId, employeeName } = modal.dataset; if (!employeeId) return; showLoader(); try { const batch = writeBatch(db); const empDoc = await getDoc(doc(db, "employees", employeeId)); const userUID = empDoc.data().userUID; if (userUID) { batch.update(doc(db, "users", userUID), {status: 'denied', role: null, employeeId: null}); } const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); attSnap.forEach(d => batch.delete(d.ref)); paySnap.forEach(d => batch.delete(d.ref)); batch.delete(doc(db, "employees", employeeId)); await batch.commit(); closeModal('delete-employee-modal'); showToast(`${employeeName} has been permanently deleted.`, 'success'); setTimeout(() => window.location.href = 'admin-employees.html', 1500); } catch(err) { console.error("Error deleting employee:", err); showToast("Could not delete employee.", "error"); } finally { hideLoader(); } }
-        async function openPaymentModalForEdit(paymentId, employeeId) { showLoader(); try { const paymentDoc = await getDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); if (!paymentDoc.exists()) throw new Error("Payment record not found."); const payment = paymentDoc.data(); document.getElementById('payment-modal-title').textContent = 'Edit Payment'; document.getElementById('payment-id').value = paymentId; document.getElementById('payment-amount').value = payment.amount; document.getElementById('payment-date').value = payment.date; document.getElementById('payment-note').value = payment.note || ''; document.getElementById('payment-mode').value = payment.paymentMode || 'Cash'; openModal('payment-modal'); } catch(err) { console.error("Error opening payment for edit:", err); showToast(err.message, 'error'); } finally { hideLoader(); } }
-        async function handleDeletePayment() { const modal = document.getElementById('delete-payment-modal'); const { paymentId, employeeId } = modal.dataset; if (!paymentId || !employeeId) return; showLoader(); try { await deleteDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); closeModal('delete-payment-modal'); showToast("Payment deleted successfully.", "success"); await showDetailView(false); } catch(err) { console.error("Error deleting payment:", err); showToast("Could not delete payment.", "error"); } finally { hideLoader(); } }
-        async function handleOpenEditOptions(employeeId, employeeName) { const empDoc = await getDoc(doc(db, "employees", employeeId)); const employee = empDoc.data(); const title = document.getElementById('edit-options-title'); const content = document.getElementById('edit-options-modal-content'); title.textContent = `Manage ${employeeName}`; let buttonsHtml = `<button class="btn btn-secondary" data-app-action="open-name-salary-modal" data-id="${employeeId}">Edit Name/Salary</button>`; if (employee.userUID) { buttonsHtml += `<button class="btn btn-danger" data-app-action="unlink-user" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}">Unlink Google Account</button>`; } else { buttonsHtml += `<button class="btn btn-primary" data-app-action="open-link-user-from-profile" data-employee-id="${employeeId}" data-employee-name="${employeeName}">Link Google Account</button>`; } content.innerHTML = buttonsHtml; openModal('edit-options-modal'); }
-        async function handleUnlinkUser(employeeId, userUID, employeeName) { if (!confirm(`Are you sure you want to unlink the Google account from ${employeeName}? Their access will be revoked.`)) return; showLoader(); try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: null }); if (userUID) { batch.update(doc(db, "users", userUID), { status: 'denied', employeeId: null }); } await batch.commit(); showToast("Account unlinked successfully.", "success"); closeModal('edit-options-modal'); await showDetailView(false); } catch(err) { console.error("Failed to unlink account:", err); showToast("Failed to unlink account.", "error"); } finally { hideLoader(); } }
-        async function handleOpenLinkUserFromProfile(employeeId, employeeName) { const modal = document.getElementById('link-user-modal'); showLoader(); const q = query(collection(db, "users"), where("status", "in", ["pending", "denied"])); try { const usersSnap = await getDocs(q); const availableUsers = usersSnap.docs.map(d => ({ id: d.id, ...d.data() })); const userOptions = availableUsers.map(user => `<option value="${user.id}">${user.displayName} (${user.email})</option>`).join(''); modal.innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="link-user-modal">×</span><h2>Link Account for <strong>${employeeName}</strong></h2><form id="link-user-form"><input type="hidden" id="link-employee-id" value="${employeeId}"><div class="form-group"><label for="link-user-select">Select Available User</label><select id="link-user-select" required><option value="">-- Select a User --</option>${userOptions}</select></div><button type="submit" class="btn btn-primary" style="width:100%">Confirm & Link Account</button></form></div>`; document.getElementById('link-user-form').addEventListener('submit', handleLinkUserFormSubmit); openModal('link-user-modal'); } catch (err) { console.error(err); showToast("Could not load users.", "error"); } finally { hideLoader(); } }
-        async function handleLinkUserFormSubmit(e) { e.preventDefault(); const employeeId = document.getElementById('link-employee-id').value; const userUID = document.getElementById('link-user-select').value; if (!employeeId || !userUID) { showToast("Please select a user to link.", "error"); return; } showLoader(); try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: userUID }); batch.update(doc(db, "users", userUID), { status: 'approved', role: 'employee', employeeId: employeeId }); await batch.commit(); showToast("Account linked successfully!", "success"); closeModal('link-user-modal'); closeModal('edit-options-modal'); await showDetailView(false); } catch (err) { console.error("Error linking account:", err); showToast("Failed to link account.", "error"); } finally { hideLoader(); } }
+        async function handleDeleteEmployee() { const modal = document.getElementById('delete-employee-modal'); const { employeeId, employeeName } = modal.dataset; if (!employeeId) return; try { const batch = writeBatch(db); const empDoc = await getDoc(doc(db, "employees", employeeId)); const userUID = empDoc.data().userUID; if (userUID) { batch.update(doc(db, "users", userUID), {status: 'denied', role: null, employeeId: null}); } const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); attSnap.forEach(d => batch.delete(d.ref)); paySnap.forEach(d => batch.delete(d.ref)); batch.delete(doc(db, "employees", employeeId)); await batch.commit(); closeModal('delete-employee-modal'); showToast(`${employeeName} has been permanently deleted.`, 'success'); setTimeout(() => window.location.href = 'admin-employees.html', 1500); } catch(err) { showToast("Could not delete employee.", "error"); } }
+        async function openPaymentModalForEdit(paymentId, employeeId) { try { const paymentDoc = await getDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); if (!paymentDoc.exists()) throw new Error("Payment record not found."); const payment = paymentDoc.data(); document.getElementById('payment-modal-title').textContent = 'Edit Payment'; document.getElementById('payment-id').value = paymentId; document.getElementById('payment-amount').value = payment.amount; document.getElementById('payment-date').value = payment.date; document.getElementById('payment-note').value = payment.note || ''; document.getElementById('payment-mode').value = payment.paymentMode || 'Cash'; openModal('payment-modal'); } catch(err) { showToast(err.message, 'error'); } }
+        async function handleDeletePayment() { const modal = document.getElementById('delete-payment-modal'); const { paymentId, employeeId } = modal.dataset; if (!paymentId || !employeeId) return; try { await deleteDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); closeModal('delete-payment-modal'); showToast("Payment deleted successfully.", "success"); await showDetailView(false); } catch(err) { showToast("Could not delete payment.", "error"); } }
+        async function handleOpenEditOptions(employeeId, employeeName) { const empDoc = await getDoc(doc(db, "employees", employeeId)); const employee = empDoc.data(); const title = document.getElementById('edit-options-title'); const content = document.getElementById('edit-options-modal-content'); title.textContent = `Manage ${employeeName}`; let buttonsHtml = `<button class="btn btn-secondary" data-app-action="open-name-salary-modal" data-id="${employeeId}" style="justify-content:flex-start;width:100%;">Edit Name/Salary</button>`; if (employee.userUID) { buttonsHtml += `<button class="btn btn-danger" data-app-action="unlink-user" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}" style="justify-content:flex-start;width:100%;">Unlink Google Account</button>`; } else { buttonsHtml += `<button class="btn btn-primary" data-app-action="open-link-user-from-profile" data-employee-id="${employeeId}" style="justify-content:flex-start;width:100%;">Link Google Account</button>`; } content.innerHTML = buttonsHtml; openModal('edit-options-modal'); }
+        async function handleUnlinkUser(employeeId, userUID, employeeName) { if (!confirm(`Are you sure you want to unlink the Google account from ${employeeName}? Their access will be revoked.`)) return; try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: null }); if (userUID) { batch.update(doc(db, "users", userUID), { status: 'denied', employeeId: null }); } await batch.commit(); showToast("Account unlinked successfully.", "success"); closeModal('edit-options-modal'); await showDetailView(false); } catch(err) { showToast("Failed to unlink account.", "error"); } }
+        async function handleOpenLinkUserFromProfile(employeeId, employeeName) { const modal = document.getElementById('link-user-modal'); const q = query(collection(db, "users"), where("status", "in", ["pending", "denied"])); try { const usersSnap = await getDocs(q); const availableUsers = usersSnap.docs.map(d => ({ id: d.id, ...d.data() })); const userOptions = availableUsers.map(user => `<option value="${user.id}">${user.displayName} (${user.email})</option>`).join(''); modal.innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Link Account for <strong>${employeeName}</strong></h2><button class="close-btn" data-app-action="close-modal" data-modal-id="link-user-modal">×</button></div><form id="link-user-form"><input type="hidden" id="link-employee-id" value="${employeeId}"><div class="form-group"><select id="link-user-select" required><option value="" disabled selected hidden></option>${userOptions}</select><label for="link-user-select">Select Available User</label></div><button type="submit" class="btn btn-primary" style="width:100%">Confirm & Link Account</button></form></div>`; document.getElementById('link-user-form').addEventListener('submit', handleLinkUserFormSubmit); openModal('link-user-modal'); } catch (err) { showToast("Could not load users.", "error"); } }
+        async function handleLinkUserFormSubmit(e) { e.preventDefault(); const employeeId = document.getElementById('link-employee-id').value; const userUID = document.getElementById('link-user-select').value; if (!employeeId || !userUID) { showToast("Please select a user to link.", "error"); return; } try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: userUID }); batch.update(doc(db, "users", userUID), { status: 'approved', role: 'employee', employeeId: employeeId }); await batch.commit(); showToast("Account linked successfully!", "success"); closeModal('link-user-modal'); closeModal('edit-options-modal'); await showDetailView(false); } catch (err) { showToast("Failed to link account.", "error"); } }
         
         function bindEventListeners() {
              document.body.addEventListener('click', async (e) => {
