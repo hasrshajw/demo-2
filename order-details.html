@@ -13,7 +13,6 @@
         /* --- CORE STYLES & REDESIGNED VARIABLES --- */
         :root {
             --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-            --font-alt: 'Inter', sans-serif;
             --ease-cubic: cubic-bezier(.4, 0, .2, 1);
             --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -82,7 +81,7 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc2626; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-
+        
         /* --- SKELETON LOADER --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
@@ -161,7 +160,6 @@
         @media (min-width: 900px) { .mobile-view { display: none; } .desktop-view { display: flex; } body { padding-bottom: 0; } .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; } .details-header { background: none; border: none; padding:  1.5rem 0 1.5rem 0; align-items: flex-start; } .details-header__title h1 { font-size: 1.875rem; } .sticky-action-bar { display: none; } .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); margin: 0; } .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; } .info-grid { grid-template-columns: 120px 1fr; } .info-grid-item { display: grid; flex-direction: row; grid-template-columns: subgrid; grid-column: span 2; } .info-grid dt { text-align: left; font-size: 0.9375rem; margin-bottom: 0; } .action-links { margin-top: 2rem; } }
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
-        @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
     </style>
 </head>
 <body>
@@ -215,77 +213,62 @@
     <div id="menuOverlay"></div>
 
     <div class="page-container">
-        <!-- MODALS & OVERLAYS -->
         <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
         <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px; margin: 0 auto;">OK</button></div></div></div>
-        <div id="payment-modal" class="modal">
-            <div class="modal-content">
-                <h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3>
-                <form id="payment-form">
-                    <input type="hidden" id="payment-id">
-                    <div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div>
-                    <div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div>
-                    <div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div>
-                    <div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Payment</button></div>
-                </form>
-            </div>
-        </div>
-        <div id="edit-total-modal" class="modal">
-            <div class="modal-content">
-                <h3>Edit Final Amount</h3>
-                <form id="edit-total-form" style="margin-top: 1.5rem;">
-                    <div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" step="0.01" required class="input-field"></div>
-                    <div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Amount</button></div>
-                </form>
-            </div>
-        </div>
+        <div id="payment-modal" class="modal"><div class="modal-content"><h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div><div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div><div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div><div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Payment</button></div></form></div></div>
+        <div id="edit-total-modal" class="modal"><div class="modal-content"><h3>Edit Final Amount</h3><form id="edit-total-form" style="margin-top: 1.5rem;"><div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" step="0.01" required class="input-field"></div><div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Amount</button></div></form></div></div>
 
         <main id="order-details-screen" class="screen active">
-            <!-- SKELETON LOADER START -->
             <div id="skeleton-loader">
-                <header class="details-header">
-                    <div class="icon-btn skeleton" style="width: 40px; height: 40px;"></div>
-                    <div class="details-header__title"><div class="skeleton" style="height: 28px; width: 60%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 24px; width: 100px; border-radius: 999px;"></div></div>
-                    <div class="icon-btn skeleton" style="width: 40px; height: 40px;"></div>
-                </header>
-                <div class="page-grid">
-                    <div class="grid-main">
-                        <div class="key-metrics-card skeleton" style="height: 80px;"></div>
-                        <div class="mobile-view">
-                            <div class="tabs"><nav class="tabs__nav"><div class="skeleton" style="width: 80px; height: 51px; border-radius: 0;"></div><div class="skeleton" style="width: 120px; height: 51px; border-radius: 0;"></div><div class="skeleton" style="width: 80px; height: 51px; border-radius: 0;"></div></nav></div>
-                        </div>
-                        <div class="content-section skeleton" style="height: 400px;"></div>
-                    </div>
-                    <div class="grid-sidebar desktop-view">
-                        <div class="content-section skeleton" style="height: 250px;"></div>
-                        <div class="content-section skeleton" style="height: 200px;"></div>
-                    </div>
-                </div>
+                <header class="details-header"><div class="icon-btn skeleton" style="width: 40px; height: 40px;"></div><div class="details-header__title"><div class="skeleton" style="height: 28px; width: 60%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 24px; width: 100px; border-radius: 999px;"></div></div><div class="icon-btn skeleton" style="width: 40px; height: 40px;"></div></header>
+                <div class="page-grid"><div class="grid-main"><div class="key-metrics-card skeleton" style="height: 80px;"></div><div class="mobile-view"><div class="tabs"><nav class="tabs__nav"><div class="skeleton" style="width: 80px; height: 51px; border-radius: 0;"></div><div class="skeleton" style="width: 120px; height: 51px; border-radius: 0;"></div><div class="skeleton" style="width: 80px; height: 51px; border-radius: 0;"></div></nav></div></div><div class="content-section skeleton" style="height: 400px;"></div></div><div class="grid-sidebar desktop-view"><div class="content-section skeleton" style="height: 250px;"></div><div class="content-section skeleton" style="height: 200px;"></div></div></div>
             </div>
-            <!-- SKELETON LOADER END -->
+            <div id="order-content" style="display: none;"></div>
+        </main>
+        <footer class="sticky-action-bar"><button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button><button id="detail-complete-btn" class="btn btn-success"></button></footer>
+    </div>
 
-            <div id="order-content" style="display: none;">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
+        let currentAction = {};
+
+        const showMessageModal = (message) => { document.getElementById('message-text').textContent = message; document.getElementById('message-modal').style.display = 'flex'; };
+        const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { document.getElementById('modal-message').textContent = message; const btn = document.getElementById('confirm-action-btn'); btn.className = 'btn ' + confirmClass; btn.textContent = confirmText; currentAction.callback = callback; document.getElementById('confirmation-modal').style.display = 'flex'; };
+        const hideConfirmationModal = () => { document.getElementById('confirmation-modal').style.display = 'none'; };
+        async function performConfirmedAction() { hideConfirmationModal(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } }
+        async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
+
+        function renderOrderDetails(order) {
+            currentOrder = order;
+            const isAdmin = currentUserProfile?.role === 'admin';
+            const contentContainer = document.getElementById('order-content');
+            contentContainer.innerHTML = `
                 <header class="details-header">
                     <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
                     <div class="details-header__title">
-                        <h1 id="detail-customer-name"></h1>
+                        <h1 id="detail-customer-name">${order.name}</h1>
                         <div id="detail-status-tag" class="status-tag"></div>
                     </div>
                     <div class="actions-menu-container">
                         <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
                         <div id="actions-dropdown" class="actions-dropdown">
-                            <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
+                            <button data-app-action="edit-order"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
                             <hr id="menu-divider" style="display:none;">
-                            <button id="menu-edit-total-btn" style="display:none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
-                            <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
+                            <button id="menu-edit-total-btn" style="display:none;" data-app-action="edit-total"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
+                            <button id="menu-delete-btn" style="display: none; color: var(--color-danger);" data-app-action="delete-order"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
                         </div>
                     </div>
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
                         <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
-                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
+                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date"></div></div>
+                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total"></div></div>
                             <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
                         </div>
                         <div class="mobile-view">
@@ -306,56 +289,14 @@
                             </div>
                             <ul class="financial-log"></ul>
                         </section>
-                        <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"><li>Loading...</li></ul></section>
+                        <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section>
                     </div>
-                </div>
-            </div>
-        </main>
-        <footer class="sticky-action-bar"><button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button><button id="detail-complete-btn" class="btn btn-success"></button></footer>
-    </div>
+                </div>`;
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // --- DOM ELEMENTS ---
-        const skeletonLoader = document.getElementById('skeleton-loader');
-        const orderContent = document.getElementById('order-content');
-        const confirmationModal = document.getElementById('confirmation-modal');
-        const modalMessage = document.getElementById('modal-message');
-        const confirmActionBtn = document.getElementById('confirm-action-btn');
-        const cancelActionBtn = document.getElementById('cancel-action-btn');
-        const messageModal = document.getElementById('message-modal');
-        const messageText = document.getElementById('message-text');
-        const messageOkBtn = document.getElementById('message-ok-btn');
-        const paymentModal = document.getElementById('payment-modal');
-        const paymentForm = document.getElementById('payment-form');
-        const paymentModalTitle = document.getElementById('payment-modal-title');
-        const editTotalModal = document.getElementById('edit-total-modal');
-        const editTotalForm = document.getElementById('edit-total-form');
-        const finalTotalInput = document.getElementById('final-total-input');
-        
-        let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
-        let currentAction = {};
-
-        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
-        const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
-        const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
-        async function performConfirmedAction() { hideConfirmationModal(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } }
-        async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
-
-        function renderOrderDetails(order) {
-            currentOrder = order;
-            const isAdmin = currentUserProfile?.role === 'admin';
-            document.querySelectorAll('#detail-customer-name').forEach(el => el.textContent = order.name);
             const today = new Date(); today.setHours(0,0,0,0);
             const statusInfo = getStatusInfo(order, today);
-            document.querySelectorAll('#detail-status-tag').forEach(el => {
-                el.className = 'status-tag ' + statusInfo.className;
-                el.textContent = statusInfo.text;
-            });
+            document.getElementById('detail-status-tag').className = 'status-tag ' + statusInfo.className;
+            document.getElementById('detail-status-tag').textContent = statusInfo.text;
             const detailsHtml = `
                 <section class="content-section">
                     <h3>Customer & Order Info</h3>
@@ -374,109 +315,78 @@
                     </div>
                 </section>
                 <section class="content-section"><h3>Windows (${(JSON.parse(order.windows || '[]')).length})</h3><div class="detail-windows-list">${(JSON.parse(order.windows || '[]')).map((win, i) => `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${win.itemType ? win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1) : 'Window'}:</strong> H: ${win.height} mm, W: ${win.width} mm ${win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'}</div></div>`).join('') || '<p>No window details available.</p>'}</div></section>`;
-            
             document.getElementById('tab-details').innerHTML = detailsHtml;
             document.getElementById('desktop-details-content').innerHTML = detailsHtml;
 
-            const actionsMenuBtn = document.getElementById('actions-menu-btn');
-            const menuEditBtn = document.getElementById('menu-edit-btn');
-            const menuEditTotalBtn = document.getElementById('menu-edit-total-btn');
-            const menuDeleteBtn = document.getElementById('menu-delete-btn');
-            const menuDivider = document.getElementById('menu-divider');
             const detailCompleteBtn = document.getElementById('detail-complete-btn');
-
-            if (isAdmin) {
-                document.getElementById('key-metrics-card').style.display = 'grid';
-                document.querySelector('.tabs__button[data-tab="payments"]').style.display = 'flex';
-                menuDeleteBtn.style.display = 'flex';
-                menuEditTotalBtn.style.display = 'flex';
-                menuDivider.style.display = 'block';
-                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
-                document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
-            }
-
-            if (order.status === 'completed') {
-                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
-                detailCompleteBtn.className = 'btn btn-reopen';
-                menuEditBtn.disabled = true;
-            } else {
-                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
-                detailCompleteBtn.className = 'btn btn-success';
-                menuEditBtn.disabled = false;
-            }
+            const menuEditBtn = document.getElementById('menu-edit-btn');
+            if (isAdmin) { document.getElementById('key-metrics-card').style.display = 'grid'; document.querySelector('.tabs__button[data-tab="payments"]').style.display = 'flex'; document.getElementById('menu-delete-btn').style.display = 'flex'; document.getElementById('menu-edit-total-btn').style.display = 'flex'; document.getElementById('menu-divider').style.display = 'block'; document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex'); document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block'); }
+            if (order.status === 'completed') { detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order'; detailCompleteBtn.className = 'btn btn-reopen'; menuEditBtn.disabled = true; } 
+            else { detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete'; detailCompleteBtn.className = 'btn btn-success'; menuEditBtn.disabled = false; }
         }
         function renderFinancialLog(logItems, container) { container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => { if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; } const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`; return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.type} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; }).join(''); }
         function renderHistory(historyItems, container) { container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => { const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, value] of Object.entries(entry.details)) { if (typeof value === 'object' && value !== null) { detailsHtml += `<li><strong>${key}:</strong><ul>`; for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } detailsHtml += '</ul></li>'; } else { detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; } } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join(''); }
-        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
+        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.getElementById('metric-due-date').textContent = currentOrder.dueDate || 'N/A'; document.getElementById('metric-final-total').textContent = formatCurrency(finalTotal); document.getElementById('metric-pending-amount').textContent = formatCurrency(pendingAmount); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
         
-        function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
-        function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { showMessageModal("Could not save payment."); } }
-        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
-        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
-        function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
-        function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
-        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } }
-        
+        async function loadAndDisplayOrder(orderId) { try { const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); document.getElementById('skeleton-loader').style.display = 'none'; document.getElementById('order-content').style.display = 'block'; } else { showMessageModal("Order not found."); } } catch (error) { showMessageModal("Error loading order."); } }
         async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => (b.timestamp?.toDate() || 0) - (a.timestamp?.toDate() || 0)); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); } }
-        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
-        async function loadAndDisplayOrder(orderId) { try { const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); skeletonLoader.style.display = 'none'; orderContent.style.display = 'block'; } else { showMessageModal("Order not found."); } } catch (error) { showMessageModal("Error loading order."); } }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeNavbar(); // This function now exists
-            initializeFirebase(); // Your original init function
-            bindEventListeners();
-        });
-
         function bindEventListeners() {
-             const actionsMenuBtn = document.getElementById('actions-menu-btn');
-             const actionsDropdown = document.getElementById('actions-dropdown');
-             const newBackBtn = document.getElementById('new-back-btn');
-             const menuEditBtn = document.getElementById('menu-edit-btn');
-             const menuEditTotalBtn = document.getElementById('menu-edit-total-btn');
-             const menuDeleteBtn = document.getElementById('menu-delete-btn');
-             const detailCompleteBtn = document.getElementById('detail-complete-btn');
-             const tabsContainer = document.querySelector('.tabs');
-             const messageOkBtn = document.getElementById('message-ok-btn');
-             const cancelActionBtn = document.getElementById('cancel-action-btn');
-             const confirmActionBtn = document.getElementById('confirm-action-btn');
-             const paymentForm = document.getElementById('payment-form');
-             const editTotalForm = document.getElementById('edit-total-form');
-             
-             newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
-             actionsMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); actionsDropdown.classList.toggle('show'); });
-             window.addEventListener('click', () => { if (actionsDropdown.classList.contains('show')) actionsDropdown.classList.remove('show'); });
-             menuEditBtn.addEventListener('click', () => window.location.href = `order-form.html?id=${currentOrderId}`);
-             menuEditTotalBtn.addEventListener('click', openEditTotalModal);
-             menuDeleteBtn.addEventListener('click', handleDeleteOrder);
-             detailCompleteBtn.addEventListener('click', handleCompleteOrder);
-             if (tabsContainer) { tabsContainer.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; document.querySelectorAll('.tabs__button').forEach(btn => btn.classList.remove('active')); document.querySelectorAll('.tabs__content-pane').forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); }); }
-             messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
-             cancelActionBtn.addEventListener('click', hideConfirmationModal);
-             confirmActionBtn.addEventListener('click', performConfirmedAction);
-             document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => paymentModal.style.display = 'none');
-             document.querySelector('[data-app-action="close-total-modal"]').addEventListener('click', () => editTotalModal.style.display = 'none');
-             paymentForm.addEventListener('submit', handlePaymentFormSubmit);
-             editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
-             document.body.addEventListener('click', (e) => {
-                 const target = e.target.closest('[data-app-action]');
-                 if (target) {
-                     e.preventDefault();
-                     switch(target.dataset.appAction) {
-                         case 'add-payment': openPaymentModal(); break;
-                         case 'edit-payment': openPaymentModalForEdit(target.dataset.id); break;
-                         case 'delete-payment': handleDeletePayment(target.dataset.id, parseFloat(target.dataset.amount)); break;
-                     }
-                 }
-                 const directionsBtn = e.target.closest('.detail-get-directions-btn');
-                 if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
-                 const quoteBtn = e.target.closest('.detail-view-quote-btn');
-                 if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
-                 const billBtn = e.target.closest('.detail-view-bill-btn');
-                 if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
-             });
+            document.body.addEventListener('click', async (e) => {
+                const target = e.target.closest('[data-app-action]');
+                if (!target) return;
+                e.preventDefault();
+                const action = target.dataset.appAction;
+                switch(action) {
+                    case 'logout': await signOut(auth); break;
+                    case 'add-payment': openPaymentModal(); break;
+                    case 'edit-payment': openPaymentModalForEdit(target.dataset.id); break;
+                    case 'delete-payment': handleDeletePayment(target.dataset.id, parseFloat(target.dataset.amount)); break;
+                    case 'close-payment-modal': paymentModal.style.display = 'none'; break;
+                    case 'close-total-modal': editTotalModal.style.display = 'none'; break;
+                    case 'edit-order': window.location.href = `order-form.html?id=${currentOrderId}`; break;
+                    case 'edit-total': openEditTotalModal(); break;
+                    case 'delete-order': handleDeleteOrder(); break;
+                    case 'complete-order': handleCompleteOrder(); break;
+                }
+            });
+
+            document.getElementById('new-back-btn').addEventListener('click', () => window.location.href = 'view-orders.html');
+            document.getElementById('actions-menu-btn').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); });
+            window.addEventListener('click', () => { if (document.getElementById('actions-dropdown').classList.contains('show')) document.getElementById('actions-dropdown').classList.remove('show'); });
+            document.getElementById('detail-complete-btn').addEventListener('click', handleCompleteOrder);
+            document.querySelector('.tabs')?.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; document.querySelectorAll('.tabs__button').forEach(btn => btn.classList.remove('active')); document.querySelectorAll('.tabs__content-pane').forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); });
+            document.getElementById('message-ok-btn').addEventListener('click', () => messageModal.style.display = 'none');
+            document.getElementById('cancel-action-btn').addEventListener('click', hideConfirmationModal);
+            document.getElementById('confirm-action-btn').addEventListener('click', performConfirmedAction);
+            document.getElementById('payment-form').addEventListener('submit', handlePaymentFormSubmit);
+            document.getElementById('edit-total-form').addEventListener('submit', handleFinalTotalUpdate);
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" };
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            initializeNavbar();
+            bindEventListeners();
+            
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                    currentUserName = currentUserProfile.displayName || "User";
+                    populateNavbar(user, currentUserProfile);
+                    const urlParams = new URLSearchParams(window.location.search);
+                    currentOrderId = urlParams.get('id');
+                    if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } 
+                    else { showMessageModal("No order specified."); }
+                } else { window.location.href = 'login.html'; }
+            });
+        });
     </script>
 </body>
 </html>
