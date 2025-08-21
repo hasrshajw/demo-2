@@ -48,27 +48,10 @@
         @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
         .screen.active { display: block; animation: fadeUp 0.4s var(--ease) forwards; }
 
-        /* --- [NEW] ADVANCED SKELETON LOADER --- */
-        .skeleton {
-            position: relative;
-            overflow: hidden;
-            background-color: #e2e8f0;
-            border-radius: var(--radius-sm);
-        }
-        .skeleton::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 150%;
-            height: 100%;
-            background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-20deg);
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer {
-            100% { left: 150%; }
-        }
+        /* --- ADVANCED SKELETON LOADER --- */
+        .skeleton { position: relative; overflow: hidden; background-color: var(--light-bg-tertiary); border-radius: var(--radius-sm); }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 100% { left: 150%; } }
 
         /* --- REDESIGNED CORE COMPONENTS --- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
@@ -226,87 +209,14 @@
                 </form>
             </div>
         </div>
-        
-        <!-- [NEW] SKELETON LOADER -->
-        <div id="skeleton-loader">
-            <header class="details-header">
-                <button class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
-                <div class="details-header__title">
-                    <div class="skeleton" style="height: 28px; width: 220px; border-radius: var(--radius-md);"></div>
-                    <div class="skeleton" style="height: 24px; width: 100px; border-radius: 999px; margin-left: 0.5rem;"></div>
-                </div>
-                <button class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
-            </header>
-            <div class="page-grid">
-                <div class="grid-main">
-                    <div class="key-metrics-card">
-                        <div class="metric-item"><div class="metric-item__label">Due Date</div><div class="skeleton" style="height: 20px; width: 80px; margin: 0 auto;"></div></div>
-                        <div class="metric-item"><div class="metric-item__label">Final Total</div><div class="skeleton" style="height: 20px; width: 100px; margin: 0 auto;"></div></div>
-                        <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div class="skeleton" style="height: 20px; width: 90px; margin: 0 auto;"></div></div>
-                    </div>
-                    <div class="mobile-view">
-                        <div class="tabs" style="margin-top: 1rem;">
-                            <nav class="tabs__nav">
-                                <button class="tabs__button active">Details</button><button class="tabs__button">Financial Log</button><button class="tabs__button">History</button>
-                            </nav>
-                            <div class="tabs__content-pane active">
-                                <section class="content-section">
-                                    <h3>Customer & Order Info</h3>
-                                    <dl class="info-grid">
-                                        <div class="info-grid-item"><dt>Address</dt><dd><div class="skeleton" style="height: 16px; width: 80%;"></div></dd></div>
-                                        <div class="info-grid-item"><dt>Mobile</dt><dd><div class="skeleton" style="height: 16px; width: 50%;"></div></dd></div>
-                                        <div class="info-grid-item"><dt>Placed On</dt><dd><div class="skeleton" style="height: 16px; width: 40%;"></div></dd></div>
-                                        <div class="info-grid-item"><dt>Due Date</dt><dd><div class="skeleton" style="height: 16px; width: 40%;"></div></dd></div>
-                                    </dl>
-                                </section>
-                                <section class="content-section">
-                                    <h3>Windows</h3>
-                                    <div class="skeleton detail-window-item" style="height: 60px; width: 100%;"></div>
-                                    <div class="skeleton detail-window-item" style="height: 60px; width: 100%; opacity: 0.7;"></div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                        <section class="content-section">
-                            <h3>Customer & Order Info</h3>
-                            <dl class="info-grid">
-                                <div class="info-grid-item"><dt>Address</dt><dd><div class="skeleton" style="height: 18px; width: 70%;"></div></dd></div>
-                                <div class="info-grid-item"><dt>Mobile</dt><dd><div class="skeleton" style="height: 18px; width: 40%;"></div></dd></div>
-                                <div class="info-grid-item"><dt>Placed On</dt><dd><div class="skeleton" style="height: 18px; width: 35%;"></div></dd></div>
-                                <div class="info-grid-item"><dt>Due Date</dt><dd><div class="skeleton" style="height: 18px; width: 35%;"></div></dd></div>
-                            </dl>
-                        </section>
-                        <section class="content-section">
-                            <h3>Windows</h3>
-                            <div class="skeleton detail-window-item" style="height: 60px; width: 100%;"></div>
-                            <div class="skeleton detail-window-item" style="height: 60px; width: 100%; opacity: 0.7;"></div>
-                        </section>
-                    </div>
-                </div>
-                <div class="grid-sidebar desktop-view">
-                    <section class="content-section">
-                        <h3>Financial Log</h3>
-                        <div class="skeleton" style="height: 50px; width: 100%; margin-bottom: 0.5rem;"></div>
-                        <div class="skeleton" style="height: 50px; width: 100%; opacity: 0.7;"></div>
-                    </section>
-                    <section class="content-section">
-                        <h3>Order History</h3>
-                        <div class="skeleton" style="height: 40px; width: 100%; margin-bottom: 0.5rem;"></div>
-                        <div class="skeleton" style="height: 40px; width: 100%; margin-bottom: 0.5rem; opacity: 0.8;"></div>
-                        <div class="skeleton" style="height: 40px; width: 100%; opacity: 0.6;"></div>
-                    </section>
-                </div>
-            </div>
-        </div>
 
-        <!-- [UPDATED] PAGE STRUCTURE is now hidden by default -->
-        <main id="order-details-screen" class="screen active" style="display: none;">
+        <!-- PAGE STRUCTURE -->
+        <main id="order-details-screen" class="screen active">
             <header class="details-header">
                 <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
                 <div class="details-header__title">
-                    <h1 id="detail-customer-name"></h1>
-                    <div id="detail-status-tag" class="status-tag"></div>
+                    <h1 id="detail-customer-name"><div class="skeleton" style="width: 250px; height: 28px; border-radius: var(--radius-sm);"></div></h1>
+                    <div id="detail-status-tag"><div class="skeleton" style="width: 100px; height: 24px; border-radius: 999px;"></div></div>
                 </div>
                 <div class="actions-menu-container">
                     <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
@@ -320,81 +230,85 @@
             </header>
             <div class="page-grid">
                 <div class="grid-main">
-                    <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
-                        <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                        <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
-                        <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
+                    <div id="key-metrics-card" class="key-metrics-card">
+                        <div class="metric-item"><div class="metric-item__label"><div class="skeleton" style="width: 60px; height: 10px; margin: 0 auto;"></div></div><div class="metric-item__value"><div class="skeleton" style="width: 80px; height: 20px; margin: 4px auto 0;"></div></div></div>
+                        <div class="metric-item"><div class="metric-item__label"><div class="skeleton" style="width: 70px; height: 10px; margin: 0 auto;"></div></div><div class="metric-item__value"><div class="skeleton" style="width: 100px; height: 20px; margin: 4px auto 0;"></div></div></div>
+                        <div class="metric-item"><div class="metric-item__label"><div class="skeleton" style="width: 90px; height: 10px; margin: 0 auto;"></div></div><div class="metric-item__value"><div class="skeleton" style="width: 90px; height: 20px; margin: 4px auto 0;"></div></div></div>
                     </div>
                     
                     <div class="mobile-view">
                         <div class="tabs">
                             <nav class="tabs__nav">
                                 <button class="tabs__button active" data-tab="details">Details</button>
-                                <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
+                                <button class="tabs__button" data-tab="payments">Financial Log</button>
                                 <button class="tabs__button" data-tab="history">History</button>
                             </nav>
                             <div id="tab-details" class="tabs__content-pane active">
                                 <section class="content-section">
                                     <h3>Customer & Order Info</h3>
                                     <dl class="info-grid">
-                                        <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
-                                        <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
-                                        <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
-                                        <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
-                                        <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
+                                        <div class="info-grid-item"><dt><div class="skeleton" style="width: 50px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 180px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                        <div class="info-grid-item"><dt><div class="skeleton" style="width: 40px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 120px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                        <div class="info-grid-item"><dt><div class="skeleton" style="width: 60px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 100px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                        <div class="info-grid-item"><dt><div class="skeleton" style="width: 55px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 100px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                        <div class="info-grid-item"><dt><div class="skeleton" style="width: 70px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 150px; height: 18px; margin-top: 4px;"></div></dd></div>
                                     </dl>
-                                    <div class="completed-info-block" style="display:none; margin-top: 1rem;">
-                                        <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
-                                    </div>
-                                    <div class="action-links">
-                                        <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                        <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                        <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                    </div>
+                                    <div class="action-links" style="margin-top: 1rem;"><div class="skeleton" style="width: 100%; height: 150px;"></div></div>
                                 </section>
-                                <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
+                                <section class="content-section"><h3>Windows</h3><div class="detail-windows-list">
+                                    <div class="detail-window-item"><div class="skeleton" style="width: 2.25rem; height: 2.25rem; border-radius: 50%; flex-shrink: 0;"></div><div style="flex-grow: 1;"><div class="skeleton" style="width: 80%; height: 16px;"></div><div class="skeleton" style="width: 60%; height: 12px; margin-top: 8px;"></div></div></div>
+                                    <div class="detail-window-item"><div class="skeleton" style="width: 2.25rem; height: 2.25rem; border-radius: 50%; flex-shrink: 0;"></div><div style="flex-grow: 1;"><div class="skeleton" style="width: 70%; height: 16px;"></div><div class="skeleton" style="width: 50%; height: 12px; margin-top: 8px;"></div></div></div>
+                                </div></section>
                             </div>
-                            <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
-                            <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
+                            <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log">
+                                <li class="log-item"><div class="log-item__info"><div class="skeleton" style="width: 100px; height: 18px;"></div><div class="skeleton" style="width: 150px; height: 14px; margin-top: 8px;"></div></div><div class="skeleton" style="width: 60px; height: 16px;"></div></li>
+                                <li class="log-item"><div class="log-item__info"><div class="skeleton" style="width: 90px; height: 18px;"></div><div class="skeleton" style="width: 120px; height: 14px; margin-top: 8px;"></div></div><div class="skeleton" style="width: 60px; height: 16px;"></div></li>
+                            </ul></section></div>
+                            <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list">
+                                <li class="history-item"><div class="history-item-info"><div class="skeleton" style="width: 180px; height: 14px; margin-bottom: 8px;"></div><div class="skeleton" style="width: 120px; height: 18px;"></div></div></li>
+                                <li class="history-item"><div class="history-item-info"><div class="skeleton" style="width: 170px; height: 14px; margin-bottom: 8px;"></div><div class="skeleton" style="width: 140px; height: 18px;"></div></div></li>
+                            </ul></section></div>
                         </div>
                     </div>
 
                     <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
                         <section class="content-section">
                             <h3>Customer & Order Info</h3>
-                            <dl class="info-grid">
-                                <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
-                                <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
-                                <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
-                                <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
-                                <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
+                             <dl class="info-grid">
+                                <div class="info-grid-item"><dt><div class="skeleton" style="width: 50px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 180px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                <div class="info-grid-item"><dt><div class="skeleton" style="width: 40px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 120px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                <div class="info-grid-item"><dt><div class="skeleton" style="width: 60px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 100px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                <div class="info-grid-item"><dt><div class="skeleton" style="width: 55px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 100px; height: 18px; margin-top: 4px;"></div></dd></div>
+                                <div class="info-grid-item"><dt><div class="skeleton" style="width: 70px; height: 12px;"></div></dt><dd><div class="skeleton" style="width: 150px; height: 18px; margin-top: 4px;"></div></dd></div>
                             </dl>
-                            <div class="completed-info-block" style="display:none; margin-top: 1rem;">
-                                <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
-                            </div>
-                            <div class="action-links">
-                               <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                               <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                               <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                            </div>
+                            <div class="action-links" style="margin-top: 1rem;"><div class="skeleton" style="width: 100%; height: 150px;"></div></div>
                         </section>
-                        <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
+                        <section class="content-section"><h3>Windows</h3><div class="detail-windows-list">
+                            <div class="detail-window-item"><div class="skeleton" style="width: 2.25rem; height: 2.25rem; border-radius: 50%; flex-shrink: 0;"></div><div style="flex-grow: 1;"><div class="skeleton" style="width: 80%; height: 16px;"></div><div class="skeleton" style="width: 60%; height: 12px; margin-top: 8px;"></div></div></div>
+                            <div class="detail-window-item"><div class="skeleton" style="width: 2.25rem; height: 2.25rem; border-radius: 50%; flex-shrink: 0;"></div><div style="flex-grow: 1;"><div class="skeleton" style="width: 70%; height: 16px;"></div><div class="skeleton" style="width: 50%; height: 12px; margin-top: 8px;"></div></div></div>
+                        </div></section>
                     </div>
                 </div>
                 <div class="grid-sidebar desktop-view">
-                    <section class="content-section" data-section="payment-management" style="display: none;">
+                    <section class="content-section" data-section="payment-management">
                         <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border);">
                             <h3>Financial Log</h3>
                             <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: 0.5rem 1rem; font-size: 0.875rem;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button>
                         </div>
-                        <ul class="financial-log"></ul>
+                        <ul class="financial-log">
+                            <li class="log-item"><div class="log-item__info"><div class="skeleton" style="width: 100px; height: 18px;"></div><div class="skeleton" style="width: 150px; height: 14px; margin-top: 8px;"></div></div><div class="skeleton" style="width: 60px; height: 16px;"></div></li>
+                            <li class="log-item"><div class="log-item__info"><div class="skeleton" style="width: 90px; height: 18px;"></div><div class="skeleton" style="width: 120px; height: 14px; margin-top: 8px;"></div></div><div class="skeleton" style="width: 60px; height: 16px;"></div></li>
+                        </ul>
                     </section>
-                    <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"><li>Loading...</li></ul></section>
+                    <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list">
+                        <li class="history-item"><div class="history-item-info"><div class="skeleton" style="width: 180px; height: 14px; margin-bottom: 8px;"></div><div class="skeleton" style="width: 120px; height: 18px;"></div></div></li>
+                        <li class="history-item"><div class="history-item-info"><div class="skeleton" style="width: 170px; height: 14px; margin-bottom: 8px;"></div><div class="skeleton" style="width: 140px; height: 18px;"></div></div></li>
+                    </ul></section>
                 </div>
             </div>
         </main>
     </div>
-    <footer class="sticky-action-bar" style="display: none;">
+    <footer class="sticky-action-bar">
         <button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
         <button id="detail-complete-btn" class="btn btn-success"></button>
     </footer>
@@ -405,9 +319,7 @@
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // --- DOM ELEMENTS ---
-        const skeletonLoader = document.getElementById('skeleton-loader');
         const mainScreen = document.getElementById('order-details-screen');
-        const footerBar = document.querySelector('.sticky-action-bar');
         const loadingOverlay = document.getElementById('loading-overlay');
         const newBackBtn = document.getElementById('new-back-btn');
         const actionsMenuBtn = document.getElementById('actions-menu-btn');
@@ -441,14 +353,6 @@
         // --- CORE UI & HELPER FUNCTIONS ---
         const showLoading = () => loadingOverlay.style.display = 'flex';
         const hideLoading = () => loadingOverlay.style.display = 'none';
-        
-        // [NEW] Function to transition from skeleton to content
-        const showPageContent = () => {
-            if (skeletonLoader) skeletonLoader.style.display = 'none';
-            if (mainScreen) mainScreen.style.display = 'block';
-            if (footerBar) footerBar.style.display = 'flex';
-        }
-
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
         const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
@@ -466,11 +370,16 @@
                 el.className = 'status-tag ' + statusInfo.className;
                 el.textContent = statusInfo.text;
             });
-            document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
-            document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
-            document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
-            document.querySelectorAll('.detail-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
-            document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
+            
+            const infoGridHtml = `
+                <div class="info-grid-item"><dt>Address</dt><dd>${order.address || 'N/A'}</dd></div>
+                <div class="info-grid-item"><dt>Mobile</dt><dd>${order.mobileNumber || 'N/A'}</dd></div>
+                <div class="info-grid-item"><dt>Placed On</dt><dd>${order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div>
+                <div class="info-grid-item"><dt>Due Date</dt><dd>${order.dueDate || 'N/A'}</dd></div>
+                <div class="info-grid-item"><dt>Created By</dt><dd>${order.createdBy || 'N/A'}</dd></div>
+            `;
+            document.querySelectorAll('.info-grid').forEach(el => el.innerHTML = infoGridHtml);
+
             document.querySelectorAll('.completed-info-block').forEach(block => {
                 block.style.display = order.status === 'completed' ? 'block' : 'none';
                 if (order.status === 'completed') {
@@ -483,7 +392,14 @@
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
-            document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
+            
+            const actionLinksHtml = `
+                ${(order.latitude && order.longitude) ? `<a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>` : ''}
+                <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+            `;
+            document.querySelectorAll('.action-links').forEach(el => el.innerHTML = actionLinksHtml);
+            
             if (isAdmin) {
                 document.getElementById('key-metrics-card').style.display = 'grid';
                 paymentsTabButton.style.display = 'flex';
@@ -518,36 +434,7 @@
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
         
-        async function handlePaymentFormSubmit(e) {
-            e.preventDefault();
-            showLoading();
-            const paymentId = paymentForm.querySelector('#payment-id').value;
-            const data = {
-                amount: parseFloat(paymentForm.querySelector('#payment-amount').value),
-                date: paymentForm.querySelector('#payment-date').value,
-                type: paymentForm.querySelector('#payment-type').value,
-                notes: paymentForm.querySelector('#payment-notes').value.trim(),
-                timestamp: serverTimestamp()
-            };
-            try {
-                const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`);
-                if (paymentId) {
-                    await setDoc(doc(paymentsRef, paymentId), data, { merge: true }); // Use setDoc with merge for updates
-                    await logHistory("Payment Edited");
-                } else {
-                    await addDoc(paymentsRef, data);
-                    await logHistory("Payment Added");
-                }
-                paymentModal.style.display = 'none';
-                await loadFinancialAndHistoryData();
-            } catch (error) {
-                console.error("Error saving payment:", error);
-                showMessageModal("Could not save payment.");
-            } finally {
-                hideLoading();
-            }
-        }
-        
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
         function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
@@ -558,58 +445,17 @@
             const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc'));
             const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
             const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
-            
-            const financialLogItems = [];
-            const operationalHistoryItems = [];
-            
-            historySnap.docs.forEach(doc => {
-                const entry = doc.data();
-                const action = entry.action || '';
-                if (action.includes('Payment') || action.includes('Total')) {
-                    if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') {
-                        financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
-                    }
-                } else {
-                    operationalHistoryItems.push(entry);
-                }
-            });
-            
+            const financialLogItems = []; const operationalHistoryItems = [];
+            historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } });
             const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) }));
             const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data());
-
-            if (currentUserProfile?.role === 'admin') {
-                financialLogItems.push(...payments);
-                financialLogItems.sort((a, b) => {
-                    const dateA = a.timestamp?.toDate();
-                    const dateB = b.timestamp?.toDate();
-                    if (!dateA && !dateB) return b.date - a.date;
-                    if (!dateA) return 1;
-                    if (!dateB) return -1;
-                    return dateB - dateA;
-                });
-            }
-
+            if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); }
             document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list));
-            if (currentUserProfile?.role === 'admin') {
-                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log));
-                updateMetrics(paymentsForMetrics);
-            }
+            if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); }
         }
         
-        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showPageContent(); showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
-        
-        // [UPDATED] Function to load data and then reveal the content
-        async function loadAndDisplayOrder(orderId) { 
-            const orderRef = doc(db, 'upvc_orders', orderId); 
-            const orderSnap = await getDoc(orderRef); 
-            if (orderSnap.exists()) { 
-                renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); 
-                await loadFinancialAndHistoryData(); 
-            } else { 
-                showMessageModal("Order not found."); 
-            } 
-            showPageContent(); // Reveal content after everything is ready
-        }
+        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); } } else { window.location.href = 'login.html'; } }); }
+        async function loadAndDisplayOrder(orderId) { const orderRef = doc(db, 'upvc_orders', orderId); const orderSnap = await getDoc(orderRef); if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); } }
         
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
         actionsMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); actionsDropdown.classList.toggle('show'); });
