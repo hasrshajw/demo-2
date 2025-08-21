@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         /* --- MERGED & COMPLETE CSS --- */
         :root {
@@ -16,7 +17,7 @@
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         [data-theme="light"] {
-            --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-secondary: #475569; --color-background: #f8fafc;
+            --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3; --color-background: #f8fafc;
             --color-surface: #ffffff; --color-text-primary: #1f2937; --color-text-secondary: #64748b; --color-border: #e5e7eb;
             --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; --gradient-half-day: linear-gradient(135deg, var(--color-success) 49.5%, var(--color-danger) 50.5%);
         }
@@ -24,10 +25,8 @@
         html, body { height: 100%; }
         
         body {
-            font-family: var(--font-alt);
-            background-color: var(--color-background); color: var(--color-text-primary); line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            padding-top: 72px;
+            font-family: var(--font-alt); background-color: var(--color-background); color: var(--color-text-primary);
+            line-height: 1.5; -webkit-font-smoothing: antialiased; padding-top: 72px;
         }
         
         /* --- NAVBAR STYLES (UNCHANGED) --- */
@@ -71,12 +70,12 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-        
+
         /* --- SKELETON LOADER --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
         @keyframes shimmer { 100% { left: 150%; } }
-
+        
         /* --- UPDATED PAGE UI/UX --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         h1, h2 { font-weight: 600; letter-spacing: -0.025em; }
@@ -88,18 +87,20 @@
         .page-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
         .employee-header { display: flex; align-items: center; gap: 1rem; }
         .employee-avatar { width: 56px; height: 56px; border-radius: 50%; background-color: var(--color-primary-light); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--color-primary-dark); font-size: 1.25rem; font-family: var(--font-main); }
+        .employee-name { font-family: var(--font-main); font-size: 1.75rem; font-weight: 600; color: var(--color-text-primary); line-height: 1.2; }
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-        @media (min-width: 1024px) { .detail-grid { grid-template-columns: 1fr 2fr; } }
+        @media (min-width: 1024px) { .detail-grid { grid-template-columns: 2fr 1fr; } }
         .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
-        .card-header { margin-bottom: 1rem;}
+        .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;}
         .stat-card { text-align: left; padding: 20px; }
         .stat-card-value { font-size: 2.25rem; font-weight: 700; line-height: 1.2; font-family: var(--font-alt); color: var(--color-text-primary); }
         .stat-card-label { font-size: 0.85rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
         .danger-text { color: var(--color-danger); }
         .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-        .nav-button { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
-        .nav-button:hover { background-color: var(--color-border); color: var(--color-text-primary); }
-        .month-year-display { font-size: 1.1rem; font-weight: 600; text-align: center; flex-grow: 1; }
+        .calendar-nav-btn { width: 40px; height: 40px; background: none; border: none; padding: 0; border-radius: 50%; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
+        .calendar-nav-btn:hover { background-color: var(--color-border); color: var(--color-text-primary); }
+        .calendar-nav-btn .material-symbols-outlined { font-size: 28px; }
+        .month-year-display { font-size: 1.25rem; font-weight: 600; text-align: center; flex-grow: 1; font-family: var(--font-main); }
         .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; text-align: center; font-size: 0.8rem; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem; }
         .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; }
         .day { display: flex; align-items: center; justify-content: center; height: 38px; width: 38px; margin: auto; border-radius: 50%; transition: background-color 0.2s, color 0.2s; font-size: 0.9rem; }
@@ -110,7 +111,7 @@
         .legend-color { width: 12px; height: 12px; border-radius: 50%; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @media (max-width: 1023px) { .detail-grid { grid-template-columns: 1fr; } .main-column { order: 2; } .sidebar-column { order: 1; } }
-        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 16px; padding-bottom: 24px; } h1 { font-size: 1.5rem; } .card { padding: 16px; } .stat-card-value { font-size: 2rem; } }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 16px; padding-bottom: 24px; } .card { padding: 16px; } .employee-name { font-size: 1.5rem; } .stat-card-value { font-size: 2rem; } }
     </style>
 </head>
 
@@ -170,7 +171,7 @@
                     <div class="page-header">
                         <div class="employee-header">
                             <div class="skeleton" style="width: 56px; height: 56px; border-radius: 50%;"></div>
-                            <div class="skeleton" style="height: 36px; width: 200px; border-radius: var(--radius-sm);"></div>
+                            <div><div class="skeleton" style="height: 36px; width: 200px; border-radius: var(--radius-sm);"></div></div>
                         </div>
                     </div>
                     <div class="detail-grid">
@@ -179,15 +180,7 @@
                              <div class="card stat-card"><div class="skeleton" style="height: 18px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 40px; width: 50%;"></div></div>
                         </div>
                         <div class="main-column">
-                            <div class="card">
-                                <div class="card-header"><div class="skeleton" style="height: 24px; width: 120px;"></div></div>
-                                <div class="calendar-header">
-                                    <div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div>
-                                    <div class="skeleton" style="height: 22px; width: 150px; border-radius: var(--radius-sm);"></div>
-                                    <div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div>
-                                </div>
-                                <div class="skeleton" style="width: 100%; height: 250px;"></div>
-                            </div>
+                            <div class="card"><div class="card-header"><div class="skeleton" style="height: 24px; width: 180px;"></div></div><div class="calendar-header"><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div><div class="skeleton" style="height: 24px; width: 150px; border-radius: var(--radius-sm);"></div><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div></div><div class="skeleton" style="width: 100%; height: 250px;"></div></div>
                         </div>
                     </div>
                     <!-- SKELETON LOADER END -->
@@ -214,6 +207,9 @@
         let db, auth;
         let currentUserAuth = null;
         let currentUserProfile = null;
+        let currentEmployee = null;
+        let allAttendance = [];
+        let allPayments = [];
         let currentCalendarDate = new Date();
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
@@ -237,16 +233,14 @@
                 if (user) {
                     currentUserAuth = user;
                     if (user.email === ADMIN_EMAIL) { window.location.href = 'admin-dashboard.html'; return; }
-                    
                     const userRef = doc(db, "users", user.uid);
                     const userDoc = await getDoc(userRef);
                     if (!userDoc.exists() || !userDoc.data().status) { window.location.href = 'login.html'; return; }
-
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
 
                     switch (currentUserProfile.status) {
                         case 'approved':
-                            if (!currentUserProfile.employeeId) { document.getElementById('main-container').innerHTML = `<h2>Error: Your account is not linked to an employee record.</h2>`; return; }
+                            if (!currentUserProfile.employeeId) { document.getElementById('main-container').innerHTML = `<h2>Error: Account not linked to an employee profile.</h2>`; return; }
                             populateNavbar(currentUserAuth);
                             await showMyAttendanceView(currentUserProfile.employeeId, true);
                             break;
@@ -261,25 +255,27 @@
         function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
 
         async function showMyAttendanceView(employeeId, initialLoad = false) {
-            if (initialLoad) currentCalendarDate = new Date();
+            if(initialLoad) currentCalendarDate = new Date();
             const view = document.getElementById('attendance-view');
             try {
-                const empDoc = await getDoc(doc(db, "employees", employeeId));
-                if (!empDoc.exists()) throw new Error("Employee not found");
-                const employee = { id: empDoc.id, ...empDoc.data() };
-                const [allAttSnap, allPaySnap] = await Promise.all([ getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`)) ]);
-                const allAttendance = allAttSnap.docs.map(d => d.data());
-                const allPayments = allPaySnap.docs.map(d => ({id: d.id, ...d.data()}));
+                if (initialLoad) {
+                    const empDoc = await getDoc(doc(db, "employees", employeeId));
+                    if (!empDoc.exists()) throw new Error("Employee profile not found.");
+                    currentEmployee = { id: empDoc.id, ...empDoc.data() };
+                    const [allAttSnap, allPaySnap] = await Promise.all([ getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`)) ]);
+                    allAttendance = allAttSnap.docs.map(d => d.data());
+                    allPayments = allPaySnap.docs.map(d => ({id: d.id, ...d.data()}));
+                }
                 
                 view.innerHTML = `
                     <div class="page-header">
                         <div class="employee-header">
-                            <div class="employee-avatar">${getInitials(employee.name)}</div>
+                            <div class="employee-avatar">${getInitials(currentEmployee.name)}</div>
                             <div><h1 class="employee-name">My Attendance</h1></div>
                         </div>
                     </div>
                     <div class="detail-grid">
-                        <div class="sidebar-column">
+                         <div class="sidebar-column">
                             <div class="card stat-card" id="overall-summary"></div> 
                             <div class="card stat-card" id="monthly-summary"></div> 
                         </div>
@@ -292,11 +288,18 @@
                             </div>
                         </div>
                     </div>`;
-                renderCalendar(allAttendance);
-                renderFinancialSummaries(employee, allAttendance, allPayments);
-            } catch (error) { view.innerHTML = `<h2>Error loading attendance. Please try again.</h2>`; }
+                
+                rerenderDynamicContent();
+            } catch (error) {
+                view.innerHTML = `<h2>Error loading attendance. Please try again.</h2>`;
+            }
         }
         
+        function rerenderDynamicContent() {
+            renderCalendar(allAttendance);
+            renderFinancialSummaries(currentEmployee, allAttendance, allPayments);
+        }
+
         function renderCalendar(attendanceData) { const monthYearEl = document.getElementById('month-year'); const daysGridEl = document.getElementById('days-grid'); const weekdaysEl = document.getElementById('weekdays'); if(!monthYearEl || !daysGridEl || !weekdaysEl) return; monthYearEl.textContent = currentCalendarDate.toLocaleString('default', { month: 'long', year: 'numeric' }); daysGridEl.innerHTML = ''; weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join(''); const month = currentCalendarDate.getMonth(); const year = currentCalendarDate.getFullYear(); const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate(); const prevLastDay = new Date(year, month, 0).getDate(); const lastDayIndex = new Date(year, month, lastDay).getDay(); const nextDays = 7 - lastDayIndex - 1; const todayString = formatDate(new Date()); const attendanceMap = new Map(attendanceData.map(item => [item.date, item.status])); let daysHTML = ''; for (let x = firstDayIndex; x > 0; x--) { daysHTML += `<div class="day prev-month">${prevLastDay - x + 1}</div>`; } for (let i = 1; i <= lastDay; i++) { const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; const status = attendanceMap.get(dayStr); let classes = 'day'; if (dayStr === todayString) classes += ' today'; if (status) classes += ` ${status}`; daysHTML += `<div class="${classes}">${i}</div>`; } for (let j = 1; j <= nextDays; j++) { daysHTML += `<div class="day next-month">${j}</div>`; } daysGridEl.innerHTML = daysHTML; }
         function renderFinancialSummaries(employee, allAttendance, allPayments) { if (!Array.isArray(allAttendance) || !Array.isArray(allPayments)) return; const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth(); const startOfMonth = new Date(year, month, 1); const endOfMonth = new Date(year, month + 1, 0); const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth)); const overall = calculateFinancials(employee, allAttendance, allPayments); const monthly = calculateFinancials(employee, monthlyAttendance, []); const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : ''; const overallSummaryEl = document.getElementById('overall-summary'); const monthlySummaryEl = document.getElementById('monthly-summary'); if (overallSummaryEl) { overallSummaryEl.innerHTML = `<div class="stat-card-label">Overall Amount Due</div><div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div>`; } if (monthlySummaryEl) { monthlySummaryEl.innerHTML = `<div class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Earnings</div><div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div>`; } document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000)); }
         function calculateFinancials(employee, attendance, payments) { if (!employee || !Array.isArray(attendance) || !Array.isArray(payments)) { return { totalEarned: 0, dueAmount: 0 }; } let p=0,h=0,ph=0; attendance.forEach(a=>{if(a?.status==='present')p++;else if(a?.status==='half-day')h++;else if(a?.status==='paid-holiday')ph++;}); const earned=(p+(h*0.5)+ph)*(employee.dailySalary||0); const paid=payments.reduce((s,p)=>s+(p?.amount||0),0); return {totalEarned:earned, dueAmount:earned-paid}; }
@@ -311,11 +314,11 @@
                 switch (action) {
                     case 'calendar-prev':
                         currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
-                        await showMyAttendanceView(currentUserProfile.employeeId, false);
+                        rerenderDynamicContent();
                         break;
                     case 'calendar-next':
                         currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
-                        await showMyAttendanceView(currentUserProfile.employeeId, false);
+                        rerenderDynamicContent();
                         break;
                     case 'logout': await signOut(auth); break;
                 }
