@@ -31,7 +31,6 @@
             --sticky-footer-height: 92px; --navbar-height: 72px;
         }
 
-        /* --- GLOBAL RESETS & BASE STYLES --- */
         *, :after, :before { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-bottom: var(--sticky-footer-height); font-size: 16px; padding-top: var(--navbar-height); }
@@ -80,8 +79,8 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
-        
-        /* --- ADVANCED SKELETON LOADER --- */
+
+        /* --- SKELETON LOADER --- */
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
         .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
         @keyframes shimmer { 100% { left: 150%; } }
@@ -120,7 +119,7 @@
         .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
         .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
 
-        /* --- REDESIGNED LAYOUT STRUCTURE (UNCHANGED) --- */
+        /* --- REDESIGNED LAYOUT STRUCTURE --- */
         .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .page-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
         .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
@@ -247,10 +246,7 @@
             <div class="mobile-menu-section">
                 <a href="#" id="mobile-nav-home" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
                 <a href="view-orders.html" id="mobile-nav-orders" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
-                <a href="#" id="mobile-nav-secondary" class="mobile-nav-link">
-                    <div class="mobile-nav-icon"></div>
-                    <span></span>
-                </a>
+                <a href="#" id="mobile-nav-secondary" class="mobile-nav-link"><span class="mobile-nav-icon"></span><span></span></a>
             </div>
         </div>
         <div class="mobile-menu-bottom">
@@ -281,7 +277,7 @@
                 <header class="details-header"><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div><div class="details-header__title" style="gap: 1rem;"><div class="skeleton" style="height: 28px; width: 200px; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 22px; width: 100px; border-radius: 999px;"></div></div><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div></header>
                 <div class="page-grid"><div class="grid-main"><div class="skeleton" style="height: 80px; width: 100%;"></div><div class="skeleton" style="height: 400px; width: 100%;"></div></div><div class="grid-sidebar desktop-view"><div class="skeleton" style="height: 250px; width: 100%;"></div><div class="skeleton" style="height: 300px; width: 100%;"></div></div></div>
             </div>
-            <!-- REAL CONTENT -->
+            <!-- REAL CONTENT (Initially hidden) -->
             <div id="real-content" style="display: none; animation: fadeIn 0.5s var(--ease);"></div>
         </main>
     </div>
@@ -326,7 +322,7 @@
                         <h1>${order.name}</h1>
                         <div id="detail-status-tag" class="status-tag"></div>
                     </div>
-                    ${isAdmin ? `<div class="actions-menu-container"><button class="icon-btn" data-app-action="toggle-actions-menu"><span class="material-symbols-outlined">more_vert</span></button><div id="actions-dropdown" class="actions-dropdown"><button data-app-action="edit-order"><span class="icon material-symbols-outlined">edit</span>Edit Order</button><hr id="menu-divider"><button data-app-action="edit-total"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button><button data-app-action="delete-order" style="color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button></div></div>` : ''}
+                    ${isAdmin ? `<div class="actions-menu-container"><button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button><div id="actions-dropdown" class="actions-dropdown"><button data-app-action="edit-order"><span class="icon material-symbols-outlined">edit</span>Edit Order</button><hr id="menu-divider"><button data-app-action="edit-total"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button><button data-app-action="delete-order" style="color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button></div></div>` : ''}
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
@@ -364,12 +360,16 @@
                 completeBtn.className = 'btn btn-success';
                 if(isAdmin) realContent.querySelector('[data-app-action="edit-order"]').disabled = false;
             }
-            if (!isAdmin) { document.getElementById('sticky-action-bar').style.display = 'none'; }
+            if (!isAdmin) {
+                document.getElementById('sticky-action-bar').style.display = 'none';
+            }
         }
+
         function generateDetailsPaneHTML(order) {
             let windowsToDisplay = [];
             try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
+            
             return `
                 <section class="content-section">
                     <h3>Customer & Order Info</h3>
@@ -389,19 +389,20 @@
             `;
         }
         
-        function renderFinancialLog(logItems, container) { container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => { if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; } const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`; return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.type} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; }).join('');}
+        function renderFinancialLog(logItems, container) { container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => { if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; } const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`; return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; }).join('');}
         function renderHistory(historyItems, container) { container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => { const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, value] of Object.entries(entry.details)) { if (typeof value === 'object' && value !== null) { detailsHtml += `<li><strong>${key}:</strong><ul>`; for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } detailsHtml += '</ul></li>'; } else { detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; } } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join(''); }
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data, {merge: true}); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data, {merge: true}); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { showMessageModal("Could not save payment."); } }
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModal.querySelector('#payment-modal-title').textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
         function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModal.querySelector('#payment-modal-title').textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { editTotalModal.querySelector('#final-total-input').value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; editTotalModal.querySelector('#final-total-input').focus(); }
         async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(editTotalForm.querySelector('#final-total-input').value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); }
         async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); }}
+        
         function setupNavbar(user) {
             const isAdmin = user?.role === 'admin';
             const homeLink = isAdmin ? "admin-dashboard.html" : "employee-dashboard.html";
@@ -431,6 +432,7 @@
             document.getElementById('mobile-profile-name').textContent = user.displayName || 'User';
             document.getElementById('mobile-profile-email').textContent = user.email || '';
         }
+
         async function loadAndDisplayOrder(orderId) { 
             const orderRef = doc(db, 'upvc_orders', orderId); 
             const orderSnap = await getDoc(orderRef); 
@@ -473,7 +475,8 @@
         // --- EVENT LISTENERS ---
         document.body.addEventListener('click', async (e) => {
             const appActionTarget = e.target.closest('[data-app-action]');
-            if (appActionTarget) { e.preventDefault();
+            if (appActionTarget) {
+                e.preventDefault();
                 const action = appActionTarget.dataset.appAction;
                 switch (action) {
                     case 'logout': await signOut(auth); break;
@@ -483,7 +486,6 @@
                     case 'close-payment-modal': paymentModal.style.display = 'none'; break;
                     case 'close-total-modal': editTotalModal.style.display = 'none'; break;
                     case 'navigate-back': window.history.back(); break;
-                    case 'toggle-actions-menu': e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); break;
                     case 'edit-order': window.location.href = `order-form.html?id=${currentOrderId}`; break;
                     case 'edit-total': openEditTotalModal(); break;
                     case 'delete-order': handleDeleteOrder(); break;
@@ -495,9 +497,12 @@
             if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
             const billBtn = e.target.closest('.detail-view-bill-btn');
             if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
-        });
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.actions-menu-container')) { const dropdown = document.getElementById('actions-dropdown'); if (dropdown) { dropdown.classList.remove('show'); }}
+
+            const menuBtn = e.target.closest('#actions-menu-btn');
+            const dropdown = document.getElementById('actions-dropdown');
+            if (menuBtn) { e.stopPropagation(); dropdown.classList.toggle('show'); }
+            else if (dropdown && !e.target.closest('#actions-dropdown')) { dropdown.classList.remove('show'); }
+
             const tabBtn = e.target.closest('.tabs__button');
             if (tabBtn) {
                 document.querySelectorAll('.tabs__button').forEach(btn => btn.classList.remove('active'));
