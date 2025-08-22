@@ -254,7 +254,7 @@
         </div>
     </header>
     <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24" 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section" id="mobile-nav-links"></div>
         </div>
@@ -304,8 +304,15 @@
                                     <dl class="info-grid" style="gap: 1.25rem;">
                                         <div class="info-grid-item" style="border:0; padding:0;"><div class="skeleton skeleton-text-dt"></div><div class="skeleton skeleton-text-dd" style="width: 80%;"></div></div>
                                         <div class="info-grid-item" style="border:0; padding:0;"><div class="skeleton skeleton-text-dt"></div><div class="skeleton skeleton-text-dd" style="width: 60%;"></div></div>
-                                        <div class="info-grid-item" style="border:0; padding:0;"><div class="skeleton skeleton-text-dt"></div><div class="skeleton skeleton-text-dd" style="width: 50%;"></div></div>
                                     </dl>
+                                    <div class="action-links" style="margin-top: 2rem;">
+                                        <div class="skeleton" style="width: 100%; height: 50px; border-radius: var(--radius-md); margin-bottom: 1px;"></div>
+                                        <div class="skeleton" style="width: 100%; height: 50px; border-radius: var(--radius-md);"></div>
+                                    </div>
+                                </section>
+                                <section class="content-section" style="padding: 1.5rem;">
+                                     <div class="skeleton skeleton-text" style="width: 120px; height: 1.25em; margin-bottom: 1.5rem;"></div>
+                                     <div class="skeleton" style="width: 100%; height: 70px; border-radius: var(--radius-md);"></div>
                                 </section>
                             </div>
                         </div>
@@ -345,7 +352,7 @@
         <!-- PAGE STRUCTURE (Initially Hidden) -->
         <main id="order-details-screen" style="display: none;">
             <header class="details-header">
-                <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
+                <button class="icon-btn" data-app-action="navigate-back"><span class="material-symbols-outlined">arrow_back</span></button>
                 <div class="details-header__title">
                     <h1 id="detail-customer-name"></h1>
                     <div id="detail-status-tag" class="status-tag"></div>
@@ -389,9 +396,9 @@
                                         <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
                                     </div>
                                     <div class="action-links">
-                                        <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                        <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                        <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item" data-app-action="get-directions"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item" data-app-action="view-quote"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item" data-app-action="view-bill"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                     </div>
                                 </section>
                                 <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
@@ -415,9 +422,9 @@
                                 <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
                             </div>
                             <div class="action-links">
-                               <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                               <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                               <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                               <a href="#" class="action-link-item" data-app-action="get-directions"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                               <a href="#" class="action-link-item" data-app-action="view-quote"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                               <a href="#" class="action-link-item" data-app-action="view-bill"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                             </div>
                         </section>
                         <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
@@ -518,8 +525,9 @@
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
-            document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
+            document.querySelectorAll('[data-app-action="get-directions"]').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
             
+            // --- ROLE-BASED UI LOGIC ---
             const keyMetricsCard = document.getElementById('key-metrics-card');
             const paymentsTab = document.querySelector('.tabs__button[data-tab="payments"]');
             const actionsMenu = document.getElementById('actions-menu-btn');
@@ -540,14 +548,16 @@
                 paymentManagementSections.forEach(sec => sec.style.display = 'none');
             }
 
+            const detailCompleteBtn = document.getElementById('detail-complete-btn');
+            const menuEditBtn = document.getElementById('menu-edit-btn');
             if (order.status === 'completed') {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
                 detailCompleteBtn.className = 'btn btn-reopen';
-                document.getElementById('menu-edit-btn').disabled = true;
+                if (menuEditBtn) menuEditBtn.disabled = true;
             } else {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
                 detailCompleteBtn.className = 'btn btn-success';
-                document.getElementById('menu-edit-btn').disabled = false;
+                if (menuEditBtn) menuEditBtn.disabled = false;
             }
         }
         function renderFinancialLog(logItems, container) { container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => { if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; } const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`; return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; }).join(''); }
@@ -626,8 +636,7 @@
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
-                if (appAction) { 
-                    e.preventDefault();
+                if (appAction) {
                     const action = appAction.dataset.appAction;
                     switch (action) {
                         case 'logout': await signOut(auth); break;
@@ -638,12 +647,16 @@
                         case 'close-total-modal': editTotalModal.style.display = 'none'; break;
                     }
                 }
-                if (e.target.closest('#new-back-btn')) window.location.href = 'view-orders.html';
-                if (e.target.closest('#actions-menu-btn')) { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); }
-                if (e.target.closest('#menu-edit-btn')) window.location.href = `order-form.html?id=${currentOrderId}`;
+                const newBackBtn = e.target.closest('#new-back-btn');
+                if (newBackBtn) { window.location.href = 'view-orders.html'; }
+                const actionsMenuBtn = e.target.closest('#actions-menu-btn');
+                if (actionsMenuBtn) { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); }
+                const menuEditBtn = e.target.closest('#menu-edit-btn');
+                if (menuEditBtn) { window.location.href = `order-form.html?id=${currentOrderId}`; }
                 if (e.target.closest('#menu-edit-total-btn')) openEditTotalModal();
                 if (e.target.closest('#menu-delete-btn')) handleDeleteOrder();
                 if (e.target.closest('#detail-complete-btn')) handleCompleteOrder();
+                
                 const clickedTab = e.target.closest('.tabs__button');
                 if (clickedTab) {
                     const parentTabs = clickedTab.closest('.tabs');
