@@ -61,19 +61,24 @@
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
 
-        /* --- ROLE-BASED VISIBILITY (THE CRITICAL FIX) --- */
-        /* By default, hide elements meant only for a specific role */
-        .admin-only, .employee-only { display: none !important; }
+        /* --- ROLE-BASED VISIBILITY (THE DEFINITIVE FIX) --- */
+        /* By default, hide elements meant only for admins */
+        .admin-only { display: none !important; }
 
         /* When the body has the 'is-admin' class, show admin-only elements */
-        body.is-admin .admin-only { display: block !important; }
-        body.is-admin .admin-only-flex { display: flex !important; }
-        body.is-admin .admin-only-grid { display: grid !important; }
-        body.is-admin .admin-only-inline-flex { display: inline-flex !important; }
-        
-        /* When the body has the 'is-employee' class, show employee-only elements */
-        body.is-employee .employee-only { display: block !important; }
-        body.is-employee .employee-only-flex { display: flex !important; }
+        body.is-admin .admin-only { 
+            display: block !important; /* Default for sections, divs, etc. */
+        }
+        body.is-admin .admin-only-flex { 
+            display: flex !important; 
+        }
+        body.is-admin .admin-only-grid { 
+            display: grid !important; 
+        }
+        body.is-admin .admin-only-inline-flex { 
+            display: inline-flex !important; 
+        }
+        /* --- END OF FIX --- */
 
         /* --- NAVBAR STYLES --- */
         .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
@@ -565,7 +570,6 @@
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() }; 
                     currentUserName = currentUserProfile.displayName || "User"; 
                     
-                    // The main control logic
                     const isAdmin = currentUserProfile.role === 'admin';
                     document.body.classList.add(isAdmin ? 'is-admin' : 'is-employee');
                     
