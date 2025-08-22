@@ -61,7 +61,7 @@
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
 
-        /* --- NAVBAR STYLES --- */
+        /* --- NAVBAR STYLES (UNCHANGED)--- */
         .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
         .header-container { width: 90%; margin-left: auto; margin-right: auto; }
         @media (min-width: 48rem) { .header-container { width: 80%; } }
@@ -104,58 +104,50 @@
         .logout-button:hover { background-color: #c82333; }
 
         /* --- ADVANCED SKELETON LOADER --- */
-        .skeleton-wrapper {
+        .skeleton-placeholder {
             position: relative;
             overflow: hidden;
-        }
-        .skeleton {
-            background-color: #e2e8f0;
+            background-color: #e5e7eb; /* A subtle, neutral grey */
             border-radius: var(--radius-sm);
         }
-        .skeleton-wrapper::after {
+        .skeleton-placeholder::after {
             content: '';
             position: absolute;
             top: 0;
             left: -150%;
             width: 150%;
             height: 100%;
-            background-image: linear-gradient(90deg, transparent 0, rgba(255,255,255,0.4) 50%, transparent 100%);
-            transform: skewX(-20deg);
-            animation: shimmer 1.8s infinite cubic-bezier(0.4, 0, 0.6, 1);
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+            animation: skeleton-shimmer 1.8s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
         }
-        @keyframes shimmer { 100% { left: 150%; } }
-        
-        .skel-circle {
-            border-radius: 50%;
-            flex-shrink: 0;
+        @keyframes skeleton-shimmer {
+            100% { left: 150%; }
         }
-        .skel-title {
-            height: 1.5rem; /* Matches h1 size */
-            width: 60%;
-            margin-bottom: 0.25rem;
+        .sk-text { height: 1em; margin-bottom: 0.5em; }
+        .sk-text:last-child { margin-bottom: 0; }
+        .sk-text.w-full { width: 100%; } .sk-text.w-3\/4 { width: 75%; }
+        .sk-text.w-1\/2 { width: 50%; } .sk-text.w-1\/3 { width: 33.33%; }
+        .sk-text.w-1\/4 { width: 25%; }
+        .sk-title { height: 1.25rem; margin-bottom: 1.5rem; }
+        .sk-icon-circle { width: 40px; height: 40px; border-radius: 50%; }
+
+        /* Skeleton structure specific styles */
+        #skeleton-loader .details-header__title { flex-grow: 1; }
+        #skeleton-loader .metric-item { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #skeleton-loader .info-grid { gap: 0; }
+        #skeleton-loader .info-grid-item { padding: 0.875rem 0; border-bottom: 1px solid var(--light-bg-secondary); }
+        #skeleton-loader .action-links { margin-top: 1.5rem; }
+        #skeleton-loader .action-link-item,
+        #skeleton-loader .detail-window-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-bg-secondary);
         }
-        .skel-h3 {
-            height: 1.25rem; /* Matches h3 size */
-            width: 40%;
-        }
-        .skel-tag {
-            height: 1.5rem;
-            width: 100px;
-            border-radius: 9999px;
-        }
-        .skel-text {
-            height: 1em;
-            width: 90%;
-            margin-top: 0.25rem;
-        }
-        .skel-text-sm {
-            height: 0.8em;
-            width: 40%;
-        }
-        .skel-metric-label { height: 0.7rem; width: 70%; margin: 0 auto 0.5rem auto; }
-        .skel-metric-value { height: 1rem; width: 50%; margin: 0 auto; }
-        .skel-tab { height: 2.5rem; width: 100px; border-radius: 0; }
-        
+        #skeleton-loader .log-item { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0; }
+        #skeleton-loader .history-item { padding: 1.25rem 0; }
+
         /* --- ANIMATIONS --- */
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
@@ -280,7 +272,6 @@
     </style>
 </head>
 <body>
-    <!-- Navbar, Mobile Menu, and Modals (unchanged) -->
     <header class="header">
         <div class="header-container">
             <nav class="nav">
@@ -311,6 +302,7 @@
             <div class="divider"></div>
         </div>
     </header>
+
     <div id="mobileMenu" role="dialog" aria-modal="true">
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
@@ -326,7 +318,9 @@
         </div>
     </div>
     <div id="menuOverlay"></div>
+
     <div class="page-container">
+        <!-- MODALS & OVERLAYS (No changes) -->
         <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
         <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px; margin: 0 auto;">OK</button></div></div></div>
         <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
@@ -335,96 +329,76 @@
 
         <!-- PAGE STRUCTURE -->
         <main id="order-details-screen" class="screen active">
-            <!-- ===== ADVANCED SKELETON LOADER ===== -->
-            <div id="skeleton-loader" class="skeleton-wrapper">
+            <!-- SKELETON LOADER (UPDATED) -->
+            <div id="skeleton-loader">
                 <header class="details-header">
-                    <div class="skeleton skel-circle" style="width: 40px; height: 40px;"></div>
+                    <div class="skeleton-placeholder sk-icon-circle"></div>
                     <div class="details-header__title">
-                        <div class="skeleton skel-title" style="height: 1.75rem; width: 200px; margin: 0;"></div>
-                        <div class="skeleton skel-tag"></div>
+                        <div class="skeleton-placeholder" style="height: 1.75rem; width: 200px; border-radius: var(--radius-sm);"></div>
+                        <div class="skeleton-placeholder" style="height: 1.25rem; width: 100px; border-radius: 999px; margin-left: 0.75rem;"></div>
                     </div>
-                    <div class="skeleton skel-circle" style="width: 40px; height: 40px;"></div>
+                    <div class="skeleton-placeholder sk-icon-circle"></div>
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
+                        <!-- Key Metrics Skeleton -->
                         <div class="key-metrics-card">
-                            <div class="metric-item"><div class="skeleton skel-metric-label"></div><div class="skeleton skel-metric-value"></div></div>
-                            <div class="metric-item"><div class="skeleton skel-metric-label"></div><div class="skeleton skel-metric-value"></div></div>
-                            <div class="metric-item"><div class="skeleton skel-metric-label"></div><div class="skeleton skel-metric-value"></div></div>
+                            <div class="metric-item"><div class="skeleton-placeholder sk-text w-1/2" style="height: 0.7rem; margin-bottom: 0.5rem;"></div><div class="skeleton-placeholder sk-text w-3/4" style="height: 1.1rem;"></div></div>
+                            <div class="metric-item"><div class="skeleton-placeholder sk-text w-1/2" style="height: 0.7rem; margin-bottom: 0.5rem;"></div><div class="skeleton-placeholder sk-text w-3/4" style="height: 1.1rem;"></div></div>
+                            <div class="metric-item"><div class="skeleton-placeholder sk-text w-1/2" style="height: 0.7rem; margin-bottom: 0.5rem;"></div><div class="skeleton-placeholder sk-text w-3/4" style="height: 1.1rem;"></div></div>
                         </div>
 
-                        <!-- Mobile Skeleton -->
+                        <!-- Mobile View Skeleton -->
                         <div class="mobile-view">
                             <div class="tabs">
-                                <nav class="tabs__nav">
-                                    <div class="skeleton skel-tab"></div>
-                                    <div class="skeleton skel-tab" style="opacity: 0.6;"></div>
-                                    <div class="skeleton skel-tab" style="opacity: 0.6;"></div>
-                                </nav>
+                                <div class="tabs__nav" style="background-color: transparent;"><div class="tabs__button" style="width: 80px; height: 48px;"></div><div class="tabs__button" style="width: 120px; height: 48px;"></div><div class="tabs__button" style="width: 80px; height: 48px;"></div></div>
                                 <div class="tabs__content-pane active">
-                                    <div class="content-section">
-                                        <div class="skeleton skel-h3" style="margin-bottom: 1.5rem; width: 220px;"></div>
-                                        <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                            <div class="info-grid-item" style="border:0; padding:0;"><div class="skeleton skel-text-sm"></div><div class="skeleton skel-text"></div></div>
-                                            <div class="info-grid-item" style="border:0; padding:0;"><div class="skeleton skel-text-sm"></div><div class="skeleton skel-text" style="width: 50%;"></div></div>
-                                            <div class="info-grid-item" style="border:0; padding:0;"><div class="skeleton skel-text-sm"></div><div class="skeleton skel-text" style="width: 60%;"></div></div>
+                                    <section class="content-section" style="background-color: transparent; border: none; padding: 0;">
+                                        <div class="skeleton-placeholder sk-title w-1/2"></div>
+                                        <div class="info-grid">
+                                            <div class="info-grid-item"><div class="skeleton-placeholder sk-text" style="height: 0.7rem; width: 25%; margin-bottom: 0.25rem;"></div><div class="skeleton-placeholder sk-text w-full"></div></div>
+                                            <div class="info-grid-item"><div class="skeleton-placeholder sk-text" style="height: 0.7rem; width: 33%; margin-bottom: 0.25rem;"></div><div class="skeleton-placeholder sk-text w-1/2"></div></div>
+                                            <div class="info-grid-item"><div class="skeleton-placeholder sk-text" style="height: 0.7rem; width: 25%; margin-bottom: 0.25rem;"></div><div class="skeleton-placeholder sk-text w-3/4"></div></div>
                                         </div>
-                                    </div>
-                                    <div class="content-section">
-                                        <div class="skeleton skel-h3" style="margin-bottom: 1.5rem; width: 150px;"></div>
-                                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                                            <div class="detail-window-item" style="background: none; border: none; padding: 0;"><div class="skeleton skel-circle" style="width: 36px; height: 36px;"></div><div style="flex-grow: 1;"><div class="skeleton skel-text" style="width: 95%;"></div><div class="skeleton skel-text-sm" style="width: 70%;"></div></div></div>
-                                            <div class="detail-window-item" style="background: none; border: none; padding: 0;"><div class="skeleton skel-circle" style="width: 36px; height: 36px;"></div><div style="flex-grow: 1;"><div class="skeleton skel-text" style="width: 90%;"></div><div class="skeleton skel-text-sm" style="width: 60%;"></div></div></div>
+                                        <div class="action-links" style="background-color: transparent; border: none;">
+                                            <div class="action-link-item"><div class="skeleton-placeholder sk-icon-circle" style="width: 24px; height: 24px;"></div><div class="skeleton-placeholder sk-text w-1/3"></div></div>
+                                            <div class="action-link-item"><div class="skeleton-placeholder sk-icon-circle" style="width: 24px; height: 24px;"></div><div class="skeleton-placeholder sk-text w-1/3"></div></div>
                                         </div>
-                                    </div>
+                                    </section>
+                                    <section class="content-section" style="background-color: transparent; border: none; padding: 0;">
+                                        <div class="skeleton-placeholder sk-title w-1/3"></div>
+                                        <div class="detail-window-item" style="background: transparent; border: none; padding-left: 0; padding-right: 0;"><div class="skeleton-placeholder item-number" style="border-radius: 50%;"></div><div style="flex-grow: 1;"><div class="skeleton-placeholder sk-text w-full"></div><div class="skeleton-placeholder sk-text w-3/4" style="height: 0.8rem;"></div></div></div>
+                                        <div class="detail-window-item" style="background: transparent; border: none; padding-left: 0; padding-right: 0;"><div class="skeleton-placeholder item-number" style="border-radius: 50%;"></div><div style="flex-grow: 1;"><div class="skeleton-placeholder sk-text w-full"></div><div class="skeleton-placeholder sk-text w-1/2" style="height: 0.8rem;"></div></div></div>
+                                    </section>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Desktop Skeleton -->
+                        <!-- Desktop View Skeleton -->
                         <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                            <div class="content-section" style="padding: 1.5rem;">
-                                <div class="skeleton skel-h3" style="margin-bottom: 1.5rem; width: 250px;"></div>
-                                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                                    <div style="display: flex; gap: 1rem; align-items: center;"><div class="skeleton skel-text-sm" style="width: 100px;"></div><div class="skeleton skel-text" style="margin: 0; flex-grow: 1;"></div></div>
-                                    <div style="display: flex; gap: 1rem; align-items: center;"><div class="skeleton skel-text-sm" style="width: 100px;"></div><div class="skeleton skel-text" style="margin: 0; width: 150px;"></div></div>
-                                    <div style="display: flex; gap: 1rem; align-items: center;"><div class="skeleton skel-text-sm" style="width: 100px;"></div><div class="skeleton skel-text" style="margin: 0; width: 150px;"></div></div>
-                                </div>
-                            </div>
-                            <div class="content-section" style="padding: 1.5rem;">
-                                <div class="skeleton skel-h3" style="margin-bottom: 1.5rem; width: 180px;"></div>
-                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                                    <div class="detail-window-item" style="background: none; border: none; padding: 0;"><div class="skeleton skel-circle" style="width: 36px; height: 36px;"></div><div style="flex-grow: 1;"><div class="skeleton skel-text" style="width: 95%;"></div><div class="skeleton skel-text-sm" style="width: 70%;"></div></div></div>
-                                    <div class="detail-window-item" style="background: none; border: none; padding: 0;"><div class="skeleton skel-circle" style="width: 36px; height: 36px;"></div><div style="flex-grow: 1;"><div class="skeleton skel-text" style="width: 90%;"></div><div class="skeleton skel-text-sm" style="width: 60%;"></div></div></div>
-                                    <div class="detail-window-item" style="background: none; border: none; padding: 0;"><div class="skeleton skel-circle" style="width: 36px; height: 36px;"></div><div style="flex-grow: 1;"><div class="skeleton skel-text" style="width: 92%;"></div><div class="skeleton skel-text-sm" style="width: 65%;"></div></div></div>
-                                </div>
-                            </div>
+                            <section class="content-section"><div class="skeleton-placeholder sk-title w-1/2"></div><div class="skeleton-placeholder sk-text w-full"></div><div class="skeleton-placeholder sk-text w-3/4"></div><div class="skeleton-placeholder sk-text w-full" style="margin-top: 1rem;"></div><div class="skeleton-placeholder sk-text w-1/2"></div></section>
+                            <section class="content-section"><div class="skeleton-placeholder sk-title w-1/3"></div><div class="skeleton-placeholder sk-text w-full"></div><div class="skeleton-placeholder sk-text w-3/4"></div></section>
                         </div>
                     </div>
 
+                    <!-- Sidebar Skeleton -->
                     <div class="grid-sidebar desktop-view">
-                        <div class="content-section" style="padding: 1.5rem;">
-                            <div class="skeleton skel-h3" style="margin-bottom: 1.5rem; width: 150px;"></div>
-                            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                                <div style="display: flex; justify-content: space-between;"><div style="flex-grow: 1; margin-right: 1rem;"><div class="skeleton skel-text" style="width: 50%;"></div><div class="skeleton skel-text-sm" style="width: 70%;"></div></div><div class="skeleton skel-text-sm" style="width: 80px;"></div></div>
-                                <div style="display: flex; justify-content: space-between;"><div style="flex-grow: 1; margin-right: 1rem;"><div class="skeleton skel-text" style="width: 60%;"></div><div class="skeleton skel-text-sm" style="width: 50%;"></div></div><div class="skeleton skel-text-sm" style="width: 80px;"></div></div>
-                            </div>
-                        </div>
-                         <div class="content-section" style="padding: 1.5rem;">
-                            <div class="skeleton skel-h3" style="margin-bottom: 1.5rem; width: 180px;"></div>
-                            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                                <div><div class="skeleton skel-text-sm" style="width: 80%;"></div><div class="skeleton skel-text" style="width: 60%;"></div></div>
-                                <div><div class="skeleton skel-text-sm" style="width: 75%;"></div><div class="skeleton skel-text" style="width: 50%;"></div></div>
-                                <div><div class="skeleton skel-text-sm" style="width: 90%;"></div><div class="skeleton skel-text" style="width: 65%;"></div></div>
-                            </div>
-                        </div>
+                         <section class="content-section">
+                            <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.5rem;"><div class="skeleton-placeholder sk-title" style="width: 150px; margin-bottom: 0;"></div><div class="skeleton-placeholder" style="width: 80px; height: 32px; border-radius: var(--radius-md);"></div></div>
+                            <div class="log-item"><div style="flex-grow: 1; margin-right: 1rem;"><div class="skeleton-placeholder sk-text w-full"></div><div class="skeleton-placeholder sk-text w-3/4" style="height: 0.8rem;"></div></div><div class="skeleton-placeholder sk-text w-1/4"></div></div>
+                            <div class="log-item"><div style="flex-grow: 1; margin-right: 1rem;"><div class="skeleton-placeholder sk-text w-1/2"></div><div class="skeleton-placeholder sk-text w-1/2" style="height: 0.8rem;"></div></div><div class="skeleton-placeholder sk-text w-1/4"></div></div>
+                         </section>
+                         <section class="content-section">
+                            <div class="skeleton-placeholder sk-title" style="width: 150px;"></div>
+                            <div class="history-item"><div class="skeleton-placeholder sk-text w-1/2" style="height: 0.8rem;"></div><div class="skeleton-placeholder sk-text w-3/4"></div></div>
+                            <div class="history-item"><div class="skeleton-placeholder sk-text w-1/3" style="height: 0.8rem;"></div><div class="skeleton-placeholder sk-text w-1/2"></div></div>
+                         </section>
                     </div>
                 </div>
             </div>
 
             <!-- REAL CONTENT (Initially hidden) -->
             <div id="real-content" style="display: none; animation: fadeIn 0.5s var(--ease);">
-                <!-- The real content remains completely unchanged -->
                 <header class="details-header">
                     <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
                     <div class="details-header__title">
@@ -515,7 +489,6 @@
         <button id="detail-complete-btn" class="btn btn-success"></button>
     </footer>
 
-    <!-- The entire script tag remains unchanged -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
