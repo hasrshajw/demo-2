@@ -308,13 +308,11 @@
                                     </dl>
                                     <div class="action-links" style="margin-top: 2rem;">
                                         <div class="skeleton" style="width: 100%; height: 50px; border-radius: var(--radius-md); margin-bottom: 1px;"></div>
-                                        <div class="skeleton" style="width: 100%; height: 50px; border-radius: var(--radius-md); margin-bottom: 1px;"></div>
                                         <div class="skeleton" style="width: 100%; height: 50px; border-radius: var(--radius-md);"></div>
                                     </div>
                                 </section>
                                 <section class="content-section">
                                      <div class="skeleton skeleton-text" style="width: 120px; height: 1.25em; margin-bottom: 1.5rem;"></div>
-                                     <div class="skeleton" style="width: 100%; height: 70px; border-radius: var(--radius-md); margin-bottom: 0.5rem;"></div>
                                      <div class="skeleton" style="width: 100%; height: 70px; border-radius: var(--radius-md);"></div>
                                 </section>
                             </div>
@@ -327,12 +325,10 @@
                              <dl class="info-grid" style="gap: 1.5rem;">
                                 <div class="info-grid-item" style="border:0; padding:0; display: contents;"><div class="skeleton skeleton-text-dd" style="width: 80px; grid-column: 1;"></div><div class="skeleton skeleton-text-dd" style="width: 70%; grid-column: 2;"></div></div>
                                 <div class="info-grid-item" style="border:0; padding:0; display: contents;"><div class="skeleton skeleton-text-dd" style="width: 60px; grid-column: 1;"></div><div class="skeleton skeleton-text-dd" style="width: 50%; grid-column: 2;"></div></div>
-                                <div class="info-grid-item" style="border:0; padding:0; display: contents;"><div class="skeleton skeleton-text-dd" style="width: 70px; grid-column: 1;"></div><div class="skeleton skeleton-text-dd" style="width: 40%; grid-column: 2;"></div></div>
-                            </dl>
+                             </dl>
                         </section>
                         <section class="content-section" style="padding: 1.5rem; background: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg);">
                              <div class="skeleton skeleton-text" style="width: 150px; height: 1.25em; margin-bottom: 1.5rem;"></div>
-                             <div class="skeleton" style="width: 100%; height: 60px; border-radius: var(--radius-md); margin-bottom: 0.75rem;"></div>
                              <div class="skeleton" style="width: 100%; height: 60px; border-radius: var(--radius-md);"></div>
                         </section>
                     </div>
@@ -341,11 +337,9 @@
                     <section id="skeleton-desktop-payments" class="content-section" style="padding: 1.5rem; background: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg);">
                         <div class="skeleton" style="width: 180px; height: 1.25em; margin-bottom: 1.5rem;"></div>
                         <div class="skeleton" style="width: 100%; height: 50px; margin-bottom: 1rem;"></div>
-                        <div class="skeleton" style="width: 100%; height: 50px; margin-bottom: 1rem;"></div>
                     </section>
                     <section class="content-section" style="padding: 1.5rem; background: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg);">
                         <div class="skeleton" style="width: 150px; height: 1.25em; margin-bottom: 1.5rem;"></div>
-                        <div class="skeleton" style="width: 100%; height: 40px; margin-bottom: 1rem;"></div>
                         <div class="skeleton" style="width: 100%; height: 40px; margin-bottom: 1rem;"></div>
                     </section>
                 </div>
@@ -534,7 +528,6 @@
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
             
-            // --- ROLE-BASED UI LOGIC ---
             const keyMetricsCard = document.getElementById('key-metrics-card');
             const paymentsTab = document.querySelector('.tabs__button[data-tab="payments"]');
             const menuDeleteBtn = document.getElementById('menu-delete-btn');
@@ -542,7 +535,6 @@
             const menuDivider = document.getElementById('menu-divider');
             const addPaymentButtons = document.querySelectorAll('[data-app-action="add-payment"]');
             const paymentManagementSections = document.querySelectorAll('[data-section="payment-management"]');
-
             if (isAdmin) {
                 keyMetricsCard.style.display = 'grid';
                 paymentsTab.style.display = 'flex';
@@ -579,7 +571,7 @@
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId, false); }); }
         
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data, { merge: true }); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
         function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
@@ -606,51 +598,88 @@
             updateMetrics(paymentsForMetrics);
         }
         
-        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); initializeNavbar(); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; populateNavbar(currentUserProfile); renderNavbarLinks(currentUserProfile.role); const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId, true); } else { showMessageModal("No order specified."); skeletonLoader.style.display = 'none'; } } else { window.location.href = 'login.html'; } }); }
+        async function initializeFirebase() { 
+            const app = initializeApp(firebaseConfig); 
+            db = getFirestore(app); auth = getAuth(app); 
+            initializeNavbar(); 
+            onAuthStateChanged(auth, async (user) => { 
+                if (user) { 
+                    const userDoc = await getDoc(doc(db, "users", user.uid)); 
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } 
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data() }; 
+                    currentUserName = currentUserProfile.displayName || "User"; 
+                    populateNavbar(currentUserProfile); 
+                    renderNavbarLinks(currentUserProfile.role); 
+                    const urlParams = new URLSearchParams(window.location.search); 
+                    currentOrderId = urlParams.get('id'); 
+                    if (currentOrderId) { await loadAndDisplayOrder(currentOrderId, true); } 
+                    else { showMessageModal("No order specified."); skeletonLoader.style.display = 'none'; } 
+                } else { window.location.href = 'login.html'; } 
+            }); 
+        }
         
-        async function loadAndDisplayOrder(orderId, showSkeleton = true) {
-            if (!showSkeleton) showLoading();
+        async function loadAndDisplayOrder(orderId, isInitialLoad = false) {
+            if (!isInitialLoad) showLoading();
             const orderRef = doc(db, 'upvc_orders', orderId);
             const orderSnap = await getDoc(orderRef);
-            if (orderSnap.exists()) { renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); await loadFinancialAndHistoryData(); } else { showMessageModal("Order not found."); }
-            if (showSkeleton) { skeletonLoader.style.display = 'none'; mainScreen.style.display = 'block'; } else { hideLoading(); }
+            if (orderSnap.exists()) { 
+                renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); 
+                await loadFinancialAndHistoryData(); 
+            } else { 
+                showMessageModal("Order not found."); 
+            }
+            if (isInitialLoad) { 
+                skeletonLoader.style.display = 'none'; 
+                mainScreen.style.display = 'block'; 
+            } else { 
+                hideLoading(); 
+            }
         }
         
         // --- EVENT LISTENERS ---
-        document.body.addEventListener('click', (e) => {
-            const newBackBtn = e.target.closest('#new-back-btn');
-            if (newBackBtn) { e.preventDefault(); window.location.href = 'view-orders.html'; }
-
-            const actionsMenuBtn = e.target.closest('#actions-menu-btn');
-            if (actionsMenuBtn) { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); }
-            
-            const menuEditBtn = e.target.closest('#menu-edit-btn');
-            if (menuEditBtn) { e.preventDefault(); window.location.href = `order-form.html?id=${currentOrderId}`; }
-        });
-        
-        window.addEventListener('click', () => { const dropdown = document.getElementById('actions-dropdown'); if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show'); });
-        
-        messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
-        cancelActionBtn.addEventListener('click', hideConfirmationModal);
-        confirmActionBtn.addEventListener('click', performConfirmedAction);
-        paymentForm.addEventListener('submit', handlePaymentFormSubmit);
-        editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
-        
-        document.body.addEventListener('click', (e) => {
-            const clickedTab = e.target.closest('.tabs__button');
-            if (clickedTab) { e.preventDefault(); const parentTabs = clickedTab.closest('.tabs'); if (parentTabs) { const allTabButtons = parentTabs.querySelectorAll('.tabs__button'); const allContentPanes = parentTabs.querySelectorAll('.tabs__content-pane'); allTabButtons.forEach(btn => btn.classList.remove('active')); allContentPanes.forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); const contentPane = document.getElementById(`tab-${clickedTab.dataset.tab}`); if (contentPane) contentPane.classList.add('active'); } }
-            const appAction = e.target.closest('[data-app-action]');
-            if (appAction) { const action = appAction.dataset.appAction; switch (action) { case 'logout': signOut(auth); break; case 'add-payment': openPaymentModal(); break; case 'edit-payment': openPaymentModalForEdit(appAction.dataset.id); break; case 'delete-payment': handleDeletePayment(appAction.dataset.id, parseFloat(appAction.dataset.amount)); break; case 'close-payment-modal': paymentModal.style.display = 'none'; break; case 'close-total-modal': editTotalModal.style.display = 'none'; } }
-            const directionsBtn = e.target.closest('.detail-get-directions-btn');
-            if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
-            const quoteBtn = e.target.closest('.detail-view-quote-btn');
-            if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
-            const billBtn = e.target.closest('.detail-view-bill-btn');
-            if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
-        });
-
-        const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        if (detailCompleteBtn) { detailCompleteBtn.addEventListener('click', handleCompleteOrder); }
+        function bindEventListeners() {
+            document.body.addEventListener('click', (e) => {
+                const target = e.target;
+                const appAction = target.closest('[data-app-action]');
+                if (appAction) {
+                    const action = appAction.dataset.appAction;
+                    if(action !== 'logout') e.preventDefault();
+                    switch (action) {
+                        case 'logout': signOut(auth); break;
+                        case 'add-payment': openPaymentModal(); break;
+                        case 'edit-payment': openPaymentModalForEdit(appAction.dataset.id); break;
+                        case 'delete-payment': handleDeletePayment(appAction.dataset.id, parseFloat(appAction.dataset.amount)); break;
+                        case 'close-payment-modal': paymentModal.style.display = 'none'; break;
+                        case 'close-total-modal': editTotalModal.style.display = 'none'; break;
+                    }
+                }
+                const newBackBtn = target.closest('#new-back-btn');
+                if (newBackBtn) { e.preventDefault(); window.location.href = 'view-orders.html'; }
+                const actionsMenuBtn = target.closest('#actions-menu-btn');
+                if (actionsMenuBtn) { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); }
+                const menuEditBtn = target.closest('#menu-edit-btn');
+                if (menuEditBtn) { e.preventDefault(); window.location.href = `order-form.html?id=${currentOrderId}`; }
+                const menuEditTotalBtn = target.closest('#menu-edit-total-btn');
+                if(menuEditTotalBtn) { e.preventDefault(); openEditTotalModal(); }
+                const menuDeleteBtn = target.closest('#menu-delete-btn');
+                if(menuDeleteBtn) { e.preventDefault(); handleDeleteOrder(); }
+                const clickedTab = target.closest('.tabs__button');
+                if (clickedTab) { e.preventDefault(); const parentTabs = clickedTab.closest('.tabs'); if (parentTabs) { const allTabButtons = parentTabs.querySelectorAll('.tabs__button'); const allContentPanes = parentTabs.querySelectorAll('.tabs__content-pane'); allTabButtons.forEach(btn => btn.classList.remove('active')); allContentPanes.forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); const contentPane = document.getElementById(`tab-${clickedTab.dataset.tab}`); if (contentPane) contentPane.classList.add('active'); } }
+                const directionsBtn = target.closest('.detail-get-directions-btn');
+                if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
+                const quoteBtn = target.closest('.detail-view-quote-btn');
+                if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
+                const billBtn = target.closest('.detail-view-bill-btn');
+                if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
+            });
+            window.addEventListener('click', () => { const dropdown = document.getElementById('actions-dropdown'); if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show'); });
+            messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
+            cancelActionBtn.addEventListener('click', hideConfirmationModal);
+            confirmActionBtn.addEventListener('click', performConfirmedAction);
+            paymentForm.addEventListener('submit', handlePaymentFormSubmit);
+            editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
+            document.getElementById('detail-complete-btn').addEventListener('click', handleCompleteOrder);
+        }
         
         initializeFirebase();
     </script>
