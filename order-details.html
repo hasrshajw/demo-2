@@ -13,19 +13,29 @@
     <style>
         /* --- UNIFIED CORE STYLES & VARIABLES --- */
         :root {
+            /* Fonts */
             --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
             --font-alt: 'Inter', sans-serif;
+            --font-icon: "Material Symbols Outlined";
+            
+            /* Colors (Order Details Theme) */
             --color-primary: #047857; --color-primary-hover: #059669; --color-primary-text: #ffffff;
             --color-danger: #dc2626; --color-danger-hover: #b91c1c; --color-danger-text: #ffffff;
             --color-reopen: #6d28d9; --color-reopen-hover: #5b21b6; --color-reopen-text: #ffffff;
             --color-focus-ring: rgba(4, 120, 87, 0.3);
+            
+            /* Layout & Backgrounds */
             --light-bg-primary: #ffffff; --light-bg-secondary: #f8f9fa; --light-bg-tertiary: #f1f5f9;
             --light-text-primary: #111827; --light-text-secondary: #4b5563; --light-text-muted: #6b7280;
             --light-border: #e5e7eb; --light-border-hover: #d1d5db;
+            
+            /* Status Tags */
             --status-pending-bg: #eef2ff; --status-pending-text: #4338ca;
             --status-completed-bg: #dcfce7; --status-completed-text: #166534;
             --status-overdue-bg: #fee2e2; --status-overdue-text: #b91c1c;
             --status-upcoming-bg: #fefce8; --status-upcoming-text: #a16207;
+
+            /* Sizing & Effects */
             --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
@@ -38,7 +48,15 @@
         /* --- GLOBAL RESETS & BASE STYLES --- */
         *, :after, :before { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-bottom: var(--sticky-footer-height); font-size: 16px; padding-top: var(--navbar-height); }
+        body { 
+            font-family: var(--font-main); 
+            background-color: var(--light-bg-secondary); 
+            color: var(--light-text-secondary); 
+            margin: 0; 
+            padding-bottom: var(--sticky-footer-height); 
+            font-size: 16px; 
+            padding-top: var(--navbar-height); /* Reserved space for fixed navbar */
+        }
         h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
@@ -69,7 +87,7 @@
         .mobile-nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500; color: #012726; background-color: #f8f9fa; transition: background-color 0.15s; }
         .mobile-nav-link:hover { background-color: #e9ecef; }
         .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
-        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--light-border); display: flex; flex-direction: column; gap: 16px; }
+        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
         .divider { height: 1px; background-color: var(--light-border); }
         @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
         .desktop-profile { display: none; }
@@ -97,7 +115,7 @@
         @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
         .screen.active { display: block; animation: fadeUp 0.4s var(--ease) forwards; }
 
-        /* --- REDESIGNED CORE COMPONENTS --- */
+        /* --- REDESIGNED CORE COMPONENTS (UNCHANGED) --- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
         .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-sm); }
@@ -123,8 +141,8 @@
         .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); } .status-tag.completed::before { background-color: var(--status-completed-text); }
         .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
         .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
-        
-        /* --- REDESIGNED LAYOUT STRUCTURE --- */
+
+        /* --- REDESIGNED LAYOUT STRUCTURE (UNCHANGED) --- */
         .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .page-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
         .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
@@ -218,11 +236,11 @@
         <div class="header-container">
             <nav class="nav">
                 <div class="nav-left">
-                    <a href="admin-dashboard.html" id="nav-home-link"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
+                    <a href="employee-dashboard.html"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
                     <div class="nav-links">
-                        <a class="nav-link" href="admin-dashboard.html" id="nav-home-link-desktop">Home</a>
+                        <a class="nav-link" href="employee-dashboard.html">Home</a>
                         <a class="nav-link" href="view-orders.html">All Orders</a>
-                        <a class="nav-link" href="admin-employees.html" id="nav-employee-link-desktop">Manage Employees</a>
+                        <a class="nav-link" href="my-attendance.html">My Attendance</a>
                     </div>
                 </div>
                 <div class="nav-right">
@@ -249,9 +267,9 @@
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section">
-                <a href="admin-dashboard.html" class="mobile-nav-link" id="nav-home-link-mobile"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
+                <a href="employee-dashboard.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
                 <a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
-                <a href="admin-employees.html" class="mobile-nav-link" id="nav-employee-link-mobile"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg><span id="nav-employee-text-mobile">Manage Employees</span></a>
+                <a href="my-attendance.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>My Attendance</span></a>
             </div>
         </div>
         <div class="mobile-menu-bottom">
@@ -492,6 +510,7 @@
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
         async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
+        
         async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); }}
         
         function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
@@ -529,21 +548,6 @@
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() }; 
                     currentUserName = currentUserProfile.displayName || "User"; 
                     
-                    // --- DYNAMIC NAVBAR SETUP ---
-                    const isAdmin = currentUserProfile.role === 'admin';
-                    document.getElementById('nav-home-link').href = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
-                    document.getElementById('nav-home-link-desktop').href = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
-                    document.getElementById('nav-home-link-mobile').href = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
-                    
-                    const employeeLinkDesktop = document.getElementById('nav-employee-link-desktop');
-                    const employeeLinkMobile = document.getElementById('nav-employee-link-mobile');
-                    const employeeTextMobile = document.getElementById('nav-employee-text-mobile');
-                    
-                    employeeLinkDesktop.href = isAdmin ? 'admin-employees.html' : 'my-attendance.html';
-                    employeeLinkDesktop.textContent = isAdmin ? 'Manage Employees' : 'My Attendance';
-                    employeeLinkMobile.href = isAdmin ? 'admin-employees.html' : 'my-attendance.html';
-                    employeeTextMobile.textContent = isAdmin ? 'Manage Employees' : 'My Attendance';
-
                     populateNavbar(user);
                     
                     const urlParams = new URLSearchParams(window.location.search); 
@@ -596,6 +600,7 @@
             if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
         });
         
+        // --- INITIALIZE APP ---
         initializeFirebase();
 
     </script>
