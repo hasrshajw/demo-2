@@ -36,10 +36,52 @@
         /* --- GLOBAL RESETS & BASE STYLES --- */
         *, :after, :before { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-bottom: var(--sticky-footer-height); font-size: 16px; }
+        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-top: 72px; padding-bottom: var(--sticky-footer-height); font-size: 16px; }
         h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
+
+        /* --- NAVBAR STYLES --- */
+        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
+        .header-container { width: 90%; margin-left: auto; margin-right: auto; }
+        @media (min-width: 48rem) { .header-container { width: 80%; } }
+        @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
+        .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
+        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
+        .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
+        .nav-links { display: none; align-items: center; gap: 1rem; }
+        @media (min-width: 48rem) { .nav-links { display: flex; } }
+        .nav-link { padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #012726; transition: color 0.15s, background-color 0.15s; text-decoration: none; border-radius: 0.375rem; }
+        @media (hover: hover) { .nav-link:hover { color: #fff; background-color: #012726; } }
+        .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .menu-button { display: flex; padding: 0.375rem; border: 1px solid #012726; border-radius: 0.375rem; color: #012726; background-color: transparent; cursor: pointer; }
+        @media (min-width: 48rem) { .menu-button { display: none; } }
+        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; }
+        #mobileMenu.active { transform: translateX(0); }
+        #menuOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        #menuOverlay.active { display: block; }
+        .mobile-menu-close { padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease; align-self: flex-end; margin-bottom: 24px; cursor: pointer; }
+        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
+        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
+        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
+        .mobile-nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500; color: #012726; background-color: #f8f9fa; transition: background-color 0.15s; }
+        .mobile-nav-link:hover { background-color: #e9ecef; }
+        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
+        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
+        .divider { height: 1px; background-color: #e9ecef; }
+        @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
+        .desktop-profile { display: none; }
+        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
+        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
+        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
+        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
+        .profile-name { font-weight: 500; color: #012726; }
+        .profile-email { font-size: 0.85rem; color: #6c757d; }
+        .profile-dropdown-container { position: relative; }
+        .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
+        .logout-popup.show { display: block; }
+        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
+        .logout-button:hover { background-color: #c82333; }
 
         /* --- ANIMATIONS --- */
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
@@ -178,8 +220,51 @@
     </style>
 </head>
 <body>
+    <!-- DYNAMIC NAVBAR -->
+    <header class="header">
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-left">
+                    <a href="#"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a>
+                    <div class="nav-links" id="desktop-nav-links">
+                        <!-- Links will be populated by JS -->
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="desktop-profile">
+                         <div class="profile-dropdown-container">
+                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
+                                <div class="profile-info">
+                                    <span class="profile-name" id="desktop-profile-name">Loading...</span>
+                                    <span class="profile-email" id="desktop-profile-email"></span>
+                                </div>
+                            </div>
+                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
+                         </div>
+                    </div>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                </div>
+            </nav>
+            <div class="divider"></div>
+        </div>
+    </header>
+    <div id="mobileMenu" role="dialog" aria-modal="true">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-section" id="mobile-nav-links">
+                <!-- Mobile links will be populated by JS -->
+            </div>
+        </div>
+        <div class="mobile-menu-bottom">
+            <div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div>
+            <button class="logout-button" data-app-action="logout">Logout</button>
+        </div>
+    </div>
+    <div id="menuOverlay"></div>
+    
     <div class="page-container">
-        <!-- MODALS & OVERLAYS (No changes) -->
+        <!-- MODALS & OVERLAYS (Unchanged) -->
         <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
         <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px; margin: 0 auto;">OK</button></div></div></div>
         <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
@@ -205,10 +290,10 @@
             </div>
         </div>
 
-        <!-- PAGE STRUCTURE -->
+        <!-- PAGE STRUCTURE (Unchanged) -->
         <main id="order-details-screen" class="screen active">
             <header class="details-header">
-                <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
+                 <a href="view-orders.html" class="icon-btn" aria-label="Back to All Orders"><span class="material-symbols-outlined">arrow_back</span></a>
                 <div class="details-header__title">
                     <h1 id="detail-customer-name"></h1>
                     <div id="detail-status-tag" class="status-tag"></div>
@@ -306,52 +391,64 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- GLOBAL VARIABLES & STATE ---
+        // --- DOM ELEMENTS ---
+        const mainScreen = document.getElementById('order-details-screen');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const actionsMenuBtn = document.getElementById('actions-menu-btn');
+        const actionsDropdown = document.getElementById('actions-dropdown');
+        const menuEditBtn = document.getElementById('menu-edit-btn');
+        const menuEditTotalBtn = document.getElementById('menu-edit-total-btn');
+        const menuDeleteBtn = document.getElementById('menu-delete-btn');
+        const menuDivider = document.getElementById('menu-divider');
+        const detailCompleteBtn = document.getElementById('detail-complete-btn');
+        const tabsContainer = document.querySelector('.tabs');
+        const tabButtons = document.querySelectorAll('.tabs__button');
+        const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
+        const contentPanes = document.querySelectorAll('.tabs__content-pane');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const confirmActionBtn = document.getElementById('confirm-action-btn');
+        const cancelActionBtn = document.getElementById('cancel-action-btn');
+        const messageModal = document.getElementById('message-modal');
+        const messageText = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
+        const paymentModal = document.getElementById('payment-modal');
+        const paymentForm = document.getElementById('payment-form');
+        const paymentModalTitle = document.getElementById('payment-modal-title');
+        const editTotalModal = document.getElementById('edit-total-modal');
+        const editTotalForm = document.getElementById('edit-total-form');
+        const finalTotalInput = document.getElementById('final-total-input');
+        
         let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
         let currentAction = {};
 
-        // --- CORE UI & HELPER FUNCTIONS ---
-        const showLoading = () => document.getElementById('loading-overlay').style.display = 'flex';
-        const hideLoading = () => document.getElementById('loading-overlay').style.display = 'none';
-        const showMessageModal = (message) => { 
-            document.getElementById('message-text').textContent = message; 
-            document.getElementById('message-modal').style.display = 'flex'; 
-        };
-        const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        const showConfirmationModal = (message, confirmClass, confirmText, callback) => {
-            const modal = document.getElementById('confirmation-modal');
-            modal.querySelector('#modal-message').textContent = message;
-            const confirmBtn = modal.querySelector('#confirm-action-btn');
-            confirmBtn.className = 'btn ' + confirmClass;
-            confirmBtn.textContent = confirmText;
-            currentAction.callback = callback;
-            modal.style.display = 'flex';
-        };
-        const hideConfirmationModal = () => { document.getElementById('confirmation-modal').style.display = 'none'; };
-        async function performConfirmedAction() { 
-            hideConfirmationModal(); 
-            showLoading(); 
-            try { 
-                await currentAction.callback(); 
-            } catch (error) { 
-                showMessageModal(`Action failed.`); 
-                console.error(error); 
-            } finally { 
-                hideLoading(); 
-            } 
-        }
-        async function logHistory(action, details = {}) { 
-            try { 
-                await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); 
-            } catch (error) { 
-                console.error("Error logging history:", error); 
-            } 
+        // --- NAVBAR FUNCTIONS ---
+        function populateNavbar(user) { if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; const name = user.role === 'admin' ? user.displayName || 'Admin' : user.displayName || 'Employee'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = name; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = name; document.getElementById('mobile-profile-email').textContent = user.email || ''; }
+        function initializeNavbar() { const mobileMenu = document.getElementById('mobileMenu'); const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenuClose = document.getElementById('mobileMenuClose'); const menuOverlay = document.getElementById('menuOverlay'); const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); const logoutPopup = document.getElementById('logoutPopup'); function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } } mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }); mobileMenuClose.addEventListener('click', closeMobileMenu); menuOverlay.addEventListener('click', closeMobileMenu); if (desktopProfileTrigger && logoutPopup) { desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); }); window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); } document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } }); window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
+        function renderNavbarLinks(role) {
+            const isAdmin = role === 'admin';
+            const desktopLinksContainer = document.getElementById('desktop-nav-links');
+            const mobileLinksContainer = document.getElementById('mobile-nav-links');
+            document.querySelector('.nav-left a').href = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
+            const icons = { Home: `<svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>`, 'All Orders': `<svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>`, 'Manage Employees': `<svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>`, 'My Attendance': `<svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>` };
+            const links = isAdmin ? [ { href: 'admin-dashboard.html', text: 'Home' }, { href: 'view-orders.html', text: 'All Orders' }, { href: 'admin-employees.html', text: 'Manage Employees' } ] : [ { href: 'employee-dashboard.html', text: 'Home' }, { href: 'view-orders.html', text: 'All Orders' }, { href: 'my-attendance.html', text: 'My Attendance' } ];
+            desktopLinksContainer.innerHTML = links.map(link => `<a class="nav-link" href="${link.href}">${link.text}</a>`).join('');
+            mobileLinksContainer.innerHTML = links.map(link => `<a href="${link.href}" class="mobile-nav-link">${icons[link.text]}<span>${link.text}</span></a>`).join('');
         }
 
-        // --- DATA RENDERING FUNCTIONS ---
+        // --- CORE UI & HELPER FUNCTIONS ---
+        const showLoading = () => loadingOverlay.style.display = 'flex';
+        const hideLoading = () => loadingOverlay.style.display = 'none';
+        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
+        const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
+        const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
+        async function performConfirmedAction() { hideConfirmationModal(); showLoading(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } finally { hideLoading(); } }
+        async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
+
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
@@ -382,22 +479,21 @@
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
             if (isAdmin) {
                 document.getElementById('key-metrics-card').style.display = 'grid';
-                document.querySelector('.tabs__button[data-tab="payments"]').style.display = 'flex';
-                document.getElementById('menu-delete-btn').style.display = 'flex';
-                document.getElementById('menu-edit-total-btn').style.display = 'flex';
-                document.getElementById('menu-divider').style.display = 'block';
+                paymentsTabButton.style.display = 'flex';
+                menuDeleteBtn.style.display = 'flex';
+                menuEditTotalBtn.style.display = 'flex';
+                menuDivider.style.display = 'block';
                 document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
                 document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
             }
-            const completeBtn = document.getElementById('detail-complete-btn');
             if (order.status === 'completed') {
-                completeBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
-                completeBtn.className = 'btn btn-reopen';
-                document.getElementById('menu-edit-btn').disabled = true;
+                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
+                detailCompleteBtn.className = 'btn btn-reopen';
+                menuEditBtn.disabled = true;
             } else {
-                completeBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
-                completeBtn.className = 'btn btn-success';
-                document.getElementById('menu-edit-btn').disabled = false;
+                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
+                detailCompleteBtn.className = 'btn btn-success';
+                menuEditBtn.disabled = false;
             }
         }
         function renderFinancialLog(logItems, container) {
@@ -412,86 +508,97 @@
         function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
         
-        // --- EVENT HANDLER FUNCTIONS ---
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) {
-            e.preventDefault();
-            showLoading();
-            const paymentForm = document.getElementById('payment-form');
-            const paymentId = paymentForm.querySelector('#payment-id').value;
-            const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() };
-            try {
-                const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`);
-                if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } 
-                else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); }
-                document.getElementById('payment-modal').style.display = 'none';
-                await loadFinancialAndHistoryData();
-            } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } 
-            finally { hideLoading(); }
-        }
-        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); const paymentModal = document.getElementById('payment-modal'); const paymentForm = document.getElementById('payment-form'); paymentModal.querySelector('#payment-modal-title').textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
-        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
-        function openPaymentModal() { const paymentModal = document.getElementById('payment-modal'); const paymentForm = document.getElementById('payment-form'); paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModal.querySelector('#payment-modal-title').textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
-        function openEditTotalModal() { const editModal = document.getElementById('edit-total-modal'); editModal.querySelector('#final-total-input').value = currentOrder.finalTotal || 0; editModal.style.display = 'flex'; editModal.querySelector('#final-total-input').focus(); }
-        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(document.getElementById('final-total-input').value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { document.getElementById('edit-total-modal').style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); document.getElementById('edit-total-modal').style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
         
-        // --- DATA LOADING FUNCTIONS ---
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); } }
+        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
+        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
+        function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
+        function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
+        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
+        
         async function loadFinancialAndHistoryData() {
             const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc'));
             const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc'));
             const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]);
-            const financialLogItems = [];
-            const operationalHistoryItems = historySnap.docs.map(doc => doc.data()).filter(entry => {
-                const action = entry.action || '';
-                if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') {
-                    financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
-                    return false;
-                }
-                return !action.includes('Payment') && !action.includes('Total');
+            
+            const financialLogItems = [], operationalHistoryItems = [];
+            
+            historySnap.docs.forEach(doc => {
+                const entry = doc.data(); const action = entry.action || '';
+                if (action.includes('Payment') || action.includes('Total')) {
+                    if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() });
+                } else { operationalHistoryItems.push(entry); }
             });
+            
             const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) }));
+            const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data());
+
             if (currentUserProfile?.role === 'admin') {
                 financialLogItems.push(...payments);
                 financialLogItems.sort((a, b) => (b.timestamp?.toDate() || b.date) - (a.timestamp?.toDate() || a.date));
-                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log));
-                updateMetrics(paymentsSnap.docs.map(d => d.data()));
             }
+
             document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list));
+            if (currentUserProfile?.role === 'admin') {
+                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log));
+                updateMetrics(paymentsForMetrics);
+            }
         }
         
-        // --- INITIALIZATION ---
-        function bindEventListeners() {
-            const newBackBtn = document.getElementById('new-back-btn');
-            const actionsMenuBtn = document.getElementById('actions-menu-btn');
-            const actionsDropdown = document.getElementById('actions-dropdown');
-            const menuEditBtn = document.getElementById('menu-edit-btn');
-            const menuEditTotalBtn = document.getElementById('menu-edit-total-btn');
-            const menuDeleteBtn = document.getElementById('menu-delete-btn');
-            const detailCompleteBtn = document.getElementById('detail-complete-btn');
-            const tabsContainer = document.querySelector('.tabs');
-            const tabButtons = document.querySelectorAll('.tabs__button');
-            const contentPanes = document.querySelectorAll('.tabs__content-pane');
-            const messageOkBtn = document.getElementById('message-ok-btn');
-            const cancelActionBtn = document.getElementById('cancel-action-btn');
-            const confirmActionBtn = document.getElementById('confirm-action-btn');
-            const paymentForm = document.getElementById('payment-form');
-            const editTotalForm = document.getElementById('edit-total-form');
+        async function initializeFirebase() {
+            const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" };
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            initializeNavbar();
+            bindEventListeners();
 
-            newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; }
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                    currentUserName = currentUserProfile.displayName || "User";
+                    
+                    populateNavbar(currentUserProfile);
+                    renderNavbarLinks(currentUserProfile.role);
+                    
+                    const urlParams = new URLSearchParams(window.location.search);
+                    currentOrderId = urlParams.get('id');
+                    if (currentOrderId) {
+                        showLoading();
+                        await loadAndDisplayOrder(currentOrderId);
+                    } else {
+                        showMessageModal("No order specified.");
+                    }
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        async function loadAndDisplayOrder(orderId) {
+            const orderRef = doc(db, 'upvc_orders', orderId);
+            const orderSnap = await getDoc(orderRef);
+            if (orderSnap.exists()) {
+                renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() });
+                await loadFinancialAndHistoryData();
+            } else {
+                showMessageModal("Order not found.");
+            }
+            hideLoading();
+        }
+
+        function bindEventListeners() {
             actionsMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); actionsDropdown.classList.toggle('show'); });
             window.addEventListener('click', () => { if (actionsDropdown.classList.contains('show')) actionsDropdown.classList.remove('show'); });
             menuEditBtn.addEventListener('click', () => window.location.href = `order-form.html?id=${currentOrderId}`);
             menuEditTotalBtn.addEventListener('click', openEditTotalModal);
             menuDeleteBtn.addEventListener('click', handleDeleteOrder);
             detailCompleteBtn.addEventListener('click', handleCompleteOrder);
-            messageOkBtn.addEventListener('click', () => document.getElementById('message-modal').style.display = 'none');
-            cancelActionBtn.addEventListener('click', hideConfirmationModal);
-            confirmActionBtn.addEventListener('click', performConfirmedAction);
-            paymentForm.addEventListener('submit', handlePaymentFormSubmit);
-            editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
-
-            // FIXED: Mobile tab functionality
+            
             if (tabsContainer) {
                 tabsContainer.addEventListener('click', (e) => {
                     const clickedTab = e.target.closest('.tabs__button');
@@ -499,21 +606,32 @@
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     contentPanes.forEach(pane => pane.classList.remove('active'));
                     clickedTab.classList.add('active');
-                    const activePane = document.getElementById(`tab-${clickedTab.dataset.tab}`);
-                    if(activePane) activePane.classList.add('active');
+                    const targetPane = document.getElementById(`tab-${clickedTab.dataset.tab}`);
+                    if (targetPane) {
+                        targetPane.classList.add('active');
+                    }
                 });
             }
-            
-            // Event delegation for dynamically added content or shared actions
-            document.body.addEventListener('click', (e) => {
-                const target = e.target.closest('[data-app-action]');
-                if (target) {
-                    const action = target.dataset.appAction;
-                    if (action === 'add-payment') openPaymentModal();
-                    if (action === 'edit-payment') openPaymentModalForEdit(target.dataset.id);
-                    if (action === 'delete-payment') handleDeletePayment(target.dataset.id, parseFloat(target.dataset.amount));
-                    if (action === 'close-payment-modal') document.getElementById('payment-modal').style.display = 'none';
-                    if (action === 'close-total-modal') document.getElementById('edit-total-modal').style.display = 'none';
+
+            messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
+            cancelActionBtn.addEventListener('click', hideConfirmationModal);
+            confirmActionBtn.addEventListener('click', performConfirmedAction);
+            paymentForm.addEventListener('submit', handlePaymentFormSubmit);
+            editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
+
+            document.body.addEventListener('click', async (e) => {
+                const appAction = e.target.closest('[data-app-action]');
+                if (appAction) {
+                    e.preventDefault();
+                    const action = appAction.dataset.appAction;
+                    switch (action) {
+                        case 'logout': await signOut(auth); break;
+                        case 'add-payment': openPaymentModal(); break;
+                        case 'edit-payment': openPaymentModalForEdit(appAction.dataset.id); break;
+                        case 'delete-payment': handleDeletePayment(appAction.dataset.id, parseFloat(appAction.dataset.amount)); break;
+                        case 'close-payment-modal': paymentModal.style.display = 'none'; break;
+                        case 'close-total-modal': editTotalModal.style.display = 'none'; break;
+                    }
                 }
                 const directionsBtn = e.target.closest('.detail-get-directions-btn');
                 if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
@@ -523,44 +641,8 @@
                 if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
             });
         }
-
-        async function initializeFirebase() { 
-            const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; 
-            const app = initializeApp(firebaseConfig); 
-            db = getFirestore(app); 
-            auth = getAuth(app); 
-            onAuthStateChanged(auth, async (user) => { 
-                if (user) { 
-                    const userDoc = await getDoc(doc(db, "users", user.uid)); 
-                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } 
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() }; 
-                    currentUserName = currentUserProfile.displayName || "User"; 
-                    const urlParams = new URLSearchParams(window.location.search); 
-                    currentOrderId = urlParams.get('id'); 
-                    if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } 
-                    else { showMessageModal("No order specified."); } 
-                } else { window.location.href = 'login.html'; } 
-            }); 
-        }
         
-        async function loadAndDisplayOrder(orderId) { 
-            showLoading(); 
-            const orderRef = doc(db, 'upvc_orders', orderId); 
-            const orderSnap = await getDoc(orderRef); 
-            if (orderSnap.exists()) { 
-                renderOrderDetails({ id: orderSnap.id, ...orderSnap.data() }); 
-                await loadFinancialAndHistoryData(); 
-            } else { 
-                showMessageModal("Order not found."); 
-            } 
-            hideLoading(); 
-        }
-        
-        // --- SCRIPT EXECUTION START ---
-        document.addEventListener('DOMContentLoaded', () => {
-            bindEventListeners();
-            initializeFirebase();
-        });
+        initializeFirebase();
     </script>
 </body>
 </html>
