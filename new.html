@@ -400,7 +400,7 @@
                 </div>
             </div>
 
-            <!-- REAL CONTENT (Initially hidden) -->
+            <!-- REAL CONTENT (Initially hidden, using ORIGINAL structure) -->
             <div id="real-content" style="display: none; animation: fadeIn 0.5s var(--ease);">
                 <header class="details-header">
                     <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
@@ -493,6 +493,7 @@
     </footer>
 
     <script type="module">
+        // --- JAVASCRIPT IS UNCHANGED FROM ORIGINAL ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -509,13 +510,10 @@
         const menuDeleteBtn = document.getElementById('menu-delete-btn');
         const menuDivider = document.getElementById('menu-divider');
         const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        
-        // ** FIX: Scope tab selectors to the real content to avoid conflicts with the skeleton **
-        const tabsContainer = document.querySelector('#real-content .tabs');
-        const tabButtons = document.querySelectorAll('#real-content .tabs__button');
-        const paymentsTabButton = document.querySelector('#real-content .tabs__button[data-tab="payments"]');
-        const contentPanes = document.querySelectorAll('#real-content .tabs__content-pane');
-        
+        const tabsContainer = document.querySelector('.tabs');
+        const tabButtons = document.querySelectorAll('.tabs__button');
+        const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
+        const contentPanes = document.querySelectorAll('.tabs__content-pane');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
