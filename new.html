@@ -509,10 +509,13 @@
         const menuDeleteBtn = document.getElementById('menu-delete-btn');
         const menuDivider = document.getElementById('menu-divider');
         const detailCompleteBtn = document.getElementById('detail-complete-btn');
-        const tabsContainer = document.querySelector('.tabs');
-        const tabButtons = document.querySelectorAll('.tabs__button');
-        const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
-        const contentPanes = document.querySelectorAll('.tabs__content-pane');
+        
+        // ** FIX: Scope tab selectors to the real content to avoid conflicts with the skeleton **
+        const tabsContainer = document.querySelector('#real-content .tabs');
+        const tabButtons = document.querySelectorAll('#real-content .tabs__button');
+        const paymentsTabButton = document.querySelector('#real-content .tabs__button[data-tab="payments"]');
+        const contentPanes = document.querySelectorAll('#real-content .tabs__content-pane');
+        
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
