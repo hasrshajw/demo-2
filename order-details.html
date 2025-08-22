@@ -13,27 +13,50 @@
     <style>
         /* --- UNIFIED CORE STYLES & VARIABLES --- */
         :root {
-            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; --font-alt: 'Inter', sans-serif;
+            /* Fonts */
+            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+            --font-alt: 'Inter', sans-serif;
+            --font-icon: "Material Symbols Outlined";
+            
+            /* Colors (Order Details Theme) */
             --color-primary: #047857; --color-primary-hover: #059669; --color-primary-text: #ffffff;
             --color-danger: #dc2626; --color-danger-hover: #b91c1c; --color-danger-text: #ffffff;
             --color-reopen: #6d28d9; --color-reopen-hover: #5b21b6; --color-reopen-text: #ffffff;
             --color-focus-ring: rgba(4, 120, 87, 0.3);
+            
+            /* Layout & Backgrounds */
             --light-bg-primary: #ffffff; --light-bg-secondary: #f8f9fa; --light-bg-tertiary: #f1f5f9;
             --light-text-primary: #111827; --light-text-secondary: #4b5563; --light-text-muted: #6b7280;
             --light-border: #e5e7eb; --light-border-hover: #d1d5db;
+            
+            /* Status Tags */
             --status-pending-bg: #eef2ff; --status-pending-text: #4338ca;
             --status-completed-bg: #dcfce7; --status-completed-text: #166534;
             --status-overdue-bg: #fee2e2; --status-overdue-text: #b91c1c;
             --status-upcoming-bg: #fefce8; --status-upcoming-text: #a16207;
+
+            /* Sizing & Effects */
             --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
             --ease: cubic-bezier(.4, 0, .2, 1);
-            --sticky-footer-height: 92px; --navbar-height: 72px;
+            --sticky-footer-height: 92px;
+            --navbar-height: 72px;
         }
 
+        /* --- GLOBAL RESETS & BASE STYLES --- */
         *, :after, :before { box-sizing: border-box; }
         html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body { font-family: var(--font-main); background-color: var(--light-bg-secondary); color: var(--light-text-secondary); margin: 0; padding-bottom: var(--sticky-footer-height); font-size: 16px; padding-top: var(--navbar-height); }
+        body { 
+            font-family: var(--font-main); 
+            background-color: var(--light-bg-secondary); 
+            color: var(--light-text-secondary); 
+            margin: 0; 
+            padding-bottom: var(--sticky-footer-height); 
+            font-size: 16px; 
+            padding-top: var(--navbar-height); /* Reserved space for fixed navbar */
+        }
         h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
@@ -92,7 +115,7 @@
         @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
         .screen.active { display: block; animation: fadeUp 0.4s var(--ease) forwards; }
 
-        /* --- REDESIGNED CORE COMPONENTS --- */
+        /* --- REDESIGNED CORE COMPONENTS (UNCHANGED) --- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
         .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-sm); }
@@ -119,7 +142,7 @@
         .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
         .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
 
-        /* --- REDESIGNED LAYOUT STRUCTURE --- */
+        /* --- REDESIGNED LAYOUT STRUCTURE (UNCHANGED) --- */
         .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .page-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
         .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
@@ -246,7 +269,7 @@
             <div class="mobile-menu-section">
                 <a href="#" id="mobile-nav-home" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
                 <a href="view-orders.html" id="mobile-nav-orders" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
-                <a href="#" id="mobile-nav-secondary" class="mobile-nav-link"><span class="mobile-nav-icon"></span><span></span></a>
+                <a href="#" id="mobile-nav-secondary" class="mobile-nav-link"></a>
             </div>
         </div>
         <div class="mobile-menu-bottom">
@@ -277,7 +300,7 @@
                 <header class="details-header"><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div><div class="details-header__title" style="gap: 1rem;"><div class="skeleton" style="height: 28px; width: 200px; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 22px; width: 100px; border-radius: 999px;"></div></div><div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%;"></div></header>
                 <div class="page-grid"><div class="grid-main"><div class="skeleton" style="height: 80px; width: 100%;"></div><div class="skeleton" style="height: 400px; width: 100%;"></div></div><div class="grid-sidebar desktop-view"><div class="skeleton" style="height: 250px; width: 100%;"></div><div class="skeleton" style="height: 300px; width: 100%;"></div></div></div>
             </div>
-            <!-- REAL CONTENT (Initially hidden) -->
+            <!-- REAL CONTENT -->
             <div id="real-content" style="display: none; animation: fadeIn 0.5s var(--ease);"></div>
         </main>
     </div>
@@ -296,6 +319,7 @@
 
         const skeletonLoader = document.getElementById('skeleton-loader');
         const realContent = document.getElementById('real-content');
+        const loadingOverlay = document.getElementById('loading-overlay');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
@@ -306,10 +330,12 @@
         const editTotalModal = document.getElementById('edit-total-modal');
         const editTotalForm = document.getElementById('edit-total-form');
         
+        const showLoading = () => loadingOverlay.style.display = 'flex';
+        const hideLoading = () => loadingOverlay.style.display = 'none';
         const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
         const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
-        async function performConfirmedAction() { confirmationModal.style.display = 'none'; skeletonLoader.style.display = 'block'; realContent.style.display = 'none'; try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); skeletonLoader.style.display = 'none'; realContent.style.display = 'block'; } }
+        async function performConfirmedAction() { confirmationModal.style.display = 'none'; showLoading(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } finally { hideLoading(); } }
         async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
 
         function renderOrderDetails(order) {
@@ -322,7 +348,7 @@
                         <h1>${order.name}</h1>
                         <div id="detail-status-tag" class="status-tag"></div>
                     </div>
-                    ${isAdmin ? `<div class="actions-menu-container"><button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button><div id="actions-dropdown" class="actions-dropdown"><button data-app-action="edit-order"><span class="icon material-symbols-outlined">edit</span>Edit Order</button><hr id="menu-divider"><button data-app-action="edit-total"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button><button data-app-action="delete-order" style="color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button></div></div>` : ''}
+                    ${isAdmin ? `<div class="actions-menu-container"><button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button><div id="actions-dropdown" class="actions-dropdown"><button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button><hr id="menu-divider"><button id="menu-edit-total-btn"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button><button id="menu-delete-btn" style="color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button></div></div>` : ''}
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
@@ -354,11 +380,11 @@
             if (order.status === 'completed') {
                 completeBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
                 completeBtn.className = 'btn btn-reopen';
-                if(isAdmin) realContent.querySelector('[data-app-action="edit-order"]').disabled = true;
+                if(isAdmin) realContent.querySelector('#menu-edit-btn').disabled = true;
             } else {
                 completeBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
                 completeBtn.className = 'btn btn-success';
-                if(isAdmin) realContent.querySelector('[data-app-action="edit-order"]').disabled = false;
+                if(isAdmin) realContent.querySelector('#menu-edit-btn').disabled = false;
             }
             if (!isAdmin) {
                 document.getElementById('sticky-action-bar').style.display = 'none';
@@ -374,8 +400,10 @@
                 <section class="content-section">
                     <h3>Customer & Order Info</h3>
                     <dl class="info-grid">
-                        <div class="info-grid-item"><dt>Address</dt><dd>${order.address || 'N/A'}</dd></div><div class="info-grid-item"><dt>Mobile</dt><dd>${order.mobileNumber || 'N/A'}</dd></div>
-                        <div class="info-grid-item"><dt>Placed On</dt><dd>${order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div><div class="info-grid-item"><dt>Due Date</dt><dd>${order.dueDate || 'N/A'}</dd></div>
+                        <div class="info-grid-item"><dt>Address</dt><dd>${order.address || 'N/A'}</dd></div>
+                        <div class="info-grid-item"><dt>Mobile</dt><dd>${order.mobileNumber || 'N/A'}</dd></div>
+                        <div class="info-grid-item"><dt>Placed On</dt><dd>${order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div>
+                        <div class="info-grid-item"><dt>Due Date</dt><dd>${order.dueDate || 'N/A'}</dd></div>
                         <div class="info-grid-item"><dt>Created By</dt><dd>${order.createdBy || 'N/A'}</dd></div>
                     </dl>
                     ${order.status === 'completed' ? `<div class="completed-info-block" style="margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd>${order.completedAt?.toDate ? new Date(order.completedAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div><div class="info-grid-item"><dt>Completed By</dt><dd>${order.completedBy || 'N/A'}</dd></div></dl></div>` : ''}
@@ -395,12 +423,13 @@
         const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
         function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
         function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data, {merge: true}); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { showMessageModal("Could not save payment."); } }
+        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data, {merge: true}); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); }}
         async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModal.querySelector('#payment-modal-title').textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
         function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
         function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModal.querySelector('#payment-modal-title').textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
         function openEditTotalModal() { editTotalModal.querySelector('#final-total-input').value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; editTotalModal.querySelector('#final-total-input').focus(); }
-        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(editTotalForm.querySelector('#final-total-input').value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); }
+        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(editTotalForm.querySelector('#final-total-input').value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
+        
         async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); }}
         
         function setupNavbar(user) {
@@ -476,7 +505,6 @@
         document.body.addEventListener('click', async (e) => {
             const appActionTarget = e.target.closest('[data-app-action]');
             if (appActionTarget) {
-                e.preventDefault();
                 const action = appActionTarget.dataset.appAction;
                 switch (action) {
                     case 'logout': await signOut(auth); break;
@@ -486,9 +514,6 @@
                     case 'close-payment-modal': paymentModal.style.display = 'none'; break;
                     case 'close-total-modal': editTotalModal.style.display = 'none'; break;
                     case 'navigate-back': window.history.back(); break;
-                    case 'edit-order': window.location.href = `order-form.html?id=${currentOrderId}`; break;
-                    case 'edit-total': openEditTotalModal(); break;
-                    case 'delete-order': handleDeleteOrder(); break;
                 }
             }
             const directionsBtn = e.target.closest('.detail-get-directions-btn');
@@ -497,7 +522,8 @@
             if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
             const billBtn = e.target.closest('.detail-view-bill-btn');
             if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
-
+        });
+        document.addEventListener('click', (e) => {
             const menuBtn = e.target.closest('#actions-menu-btn');
             const dropdown = document.getElementById('actions-dropdown');
             if (menuBtn) { e.stopPropagation(); dropdown.classList.toggle('show'); }
@@ -512,6 +538,9 @@
             }
         });
 
+        document.getElementById('menu-edit-btn').addEventListener('click', () => window.location.href = `order-form.html?id=${currentOrderId}`);
+        document.getElementById('menu-edit-total-btn').addEventListener('click', openEditTotalModal);
+        document.getElementById('menu-delete-btn').addEventListener('click', handleDeleteOrder);
         document.getElementById('detail-complete-btn').addEventListener('click', handleCompleteOrder);
         document.getElementById('message-ok-btn').addEventListener('click', () => messageModal.style.display = 'none');
         document.getElementById('cancel-action-btn').addEventListener('click', () => confirmationModal.style.display = 'none');
