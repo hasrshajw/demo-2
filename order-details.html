@@ -254,7 +254,7 @@
                             <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 </div>
             </nav>
             <div class="divider"></div>
@@ -482,7 +482,8 @@
             
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
 
-            // --- Role-Specific UI Logic ---
+            // --- THIS IS THE CRITICAL FIX ---
+            // It explicitly shows OR hides elements based on the user's role.
             if (isAdmin) {
                 // SHOW admin elements
                 document.querySelectorAll('.metric-financial').forEach(el => el.style.display = 'block');
@@ -493,7 +494,7 @@
                 document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
                 document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
             } else {
-                // HIDE admin elements
+                // HIDE admin elements for employees
                 document.querySelectorAll('.metric-financial').forEach(el => el.style.display = 'none');
                 paymentsTabButton.style.display = 'none';
                 menuDeleteBtn.style.display = 'none';
@@ -502,8 +503,10 @@
                 document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'none');
                 document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'none');
             }
+            // --- END OF CRITICAL FIX ---
 
-            // --- Status-Dependent Buttons ---
+
+            // --- Status-Dependent Buttons (for all users) ---
             if (order.status === 'completed') {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
                 detailCompleteBtn.className = 'btn btn-reopen';
