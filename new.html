@@ -43,10 +43,6 @@
             --ease: cubic-bezier(.4, 0, .2, 1);
             --sticky-footer-height: 92px;
             --navbar-height: 72px;
-
-            /* Skeleton Specific */
-            --skeleton-bg: #e5e7eb;
-            --skeleton-highlight: rgba(255, 255, 255, 0.5);
         }
 
         /* --- GLOBAL RESETS & BASE STYLES --- */
@@ -106,42 +102,19 @@
         .logout-popup.show { display: block; }
         .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
         .logout-button:hover { background-color: #c82333; }
+
+        /* --- SKELETON LOADER --- */
+        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 100% { left: 150%; } }
         
         /* --- ANIMATIONS --- */
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
         @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
         .screen.active { display: block; animation: fadeUp 0.4s var(--ease) forwards; }
 
-        /* --- ADVANCED SKELETON LOADER --- */
-        .skeleton { position: relative; overflow: hidden; background-color: var(--skeleton-bg); }
-        .skeleton::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            transform: translateX(-100%);
-            background-image: linear-gradient(90deg, 
-                rgba(255,255,255,0) 0, 
-                var(--skeleton-highlight) 20%, 
-                var(--skeleton-highlight) 60%, 
-                rgba(255,255,255,0) 100%
-            );
-            animation: shimmer 1.5s infinite;
-        }
-        .skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; }
-        .skeleton-line { height: 1em; border-radius: var(--radius-sm); }
-        .skeleton-title { height: 1.5em; width: 60%; margin-bottom: 0.5rem; border-radius: var(--radius-sm); }
-        .skeleton-tag { height: 24px; width: 100px; border-radius: 9999px; }
-        .skeleton-card {
-            border-radius: var(--radius-lg);
-            background-color: var(--light-bg-primary);
-            border: 1px solid var(--light-border);
-            padding: 1.5rem;
-        }
-        .skeleton-info-item { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.875rem 0; border-bottom: 1px solid var(--light-border); }
-        .skeleton-info-item:last-child { border-bottom: none; }
-        .skeleton-window-item { display: flex; align-items: center; gap: 1rem; padding: 0.875rem 0; }
-        
         /* --- REDESIGNED CORE COMPONENTS (UNCHANGED) --- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
         .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -259,13 +232,55 @@
     </style>
 </head>
 <body>
-    <!-- [UNCHANGED] NAVBAR & OVERLAYS -->
-    <header class="header"><!-- ... Full navbar code is unchanged ... --><div class="header-container"><nav class="nav"><div class="nav-left"><a href="#" id="dashboard-link"><img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager"></a><div class="nav-links"><a class="nav-link" id="nav-link-home" href="#">Home</a><a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a><a class="nav-link" id="nav-link-secondary" href="#" style="display: none;"></a></div></div><div class="nav-right"><div class="desktop-profile"><div class="profile-dropdown-container"><div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false"><img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic"><div class="profile-info"><span class="profile-name" id="desktop-profile-name">Loading...</span><span class="profile-email" id="desktop-profile-email"></span></div></div><div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div></div></div><button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button></div></nav><div class="divider"></div></div></header>
-    <div id="mobileMenu" role="dialog" aria-modal="true"><button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button><div class="mobile-menu-content"><div class="mobile-menu-section" id="mobile-menu-links"></div></div><div class="mobile-menu-bottom"><div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div><button class="logout-button" data-app-action="logout">Logout</button></div></div>
+    <header class="header">
+        <div class="header-container">
+            <nav class="nav">
+                <div class="nav-left">
+                    <a href="#" id="dashboard-link">
+                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
+                    </a>
+                    <div class="nav-links">
+                        <a class="nav-link" id="nav-link-home" href="#">Home</a>
+                        <a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a>
+                        <a class="nav-link" id="nav-link-secondary" href="#" style="display: none;"></a>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="desktop-profile">
+                         <div class="profile-dropdown-container">
+                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
+                                <div class="profile-info">
+                                    <span class="profile-name" id="desktop-profile-name">Loading...</span>
+                                    <span class="profile-email" id="desktop-profile-email"></span>
+                                </div>
+                            </div>
+                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
+                         </div>
+                    </div>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                </div>
+            </nav>
+            <div class="divider"></div>
+        </div>
+    </header>
+
+    <div id="mobileMenu" role="dialog" aria-modal="true">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-section" id="mobile-menu-links">
+                <!-- Mobile links will be populated by JavaScript -->
+            </div>
+        </div>
+        <div class="mobile-menu-bottom">
+            <div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div>
+            <button class="logout-button" data-app-action="logout">Logout</button>
+        </div>
+    </div>
     <div id="menuOverlay"></div>
 
     <div class="page-container">
-        <!-- [UNCHANGED] MODALS & OVERLAYS -->
+        <!-- MODALS & OVERLAYS (No changes) -->
         <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
         <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px; margin: 0 auto;">OK</button></div></div></div>
         <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
@@ -274,78 +289,30 @@
 
         <!-- PAGE STRUCTURE -->
         <main id="order-details-screen" class="screen active">
-            <!-- [UPDATED] ADVANCED SKELETON LOADER -->
+            <!-- ========== UPDATED SKELETON LOADER ========== -->
             <div id="skeleton-loader">
                 <header class="details-header">
-                    <div class="skeleton skeleton-avatar"></div>
-                    <div class="details-header__title">
-                        <div class="skeleton" style="height: 28px; width: 220px; border-radius: var(--radius-sm);"></div>
-                        <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;"></div>
+                    <div class="details-header__title" style="gap: 1rem;">
+                        <div class="skeleton" style="height: 28px; width: 60%; max-width: 250px; border-radius: var(--radius-sm);"></div>
+                        <div class="skeleton" style="height: 24px; width: 100px; border-radius: 999px;"></div>
                     </div>
-                    <div class="skeleton skeleton-avatar"></div>
+                    <div class="skeleton" style="width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;"></div>
                 </header>
                 <div class="page-grid">
                     <div class="grid-main">
-                        <!-- Metric Cards Skeleton -->
-                        <div class="key-metrics-card">
-                            <div class="metric-item"><div class="skeleton skeleton-line" style="width: 50%; height: 0.7em; margin: 0 auto 0.5rem auto;"></div><div class="skeleton skeleton-line" style="width: 70%; margin: 0 auto;"></div></div>
-                            <div class="metric-item"><div class="skeleton skeleton-line" style="width: 50%; height: 0.7em; margin: 0 auto 0.5rem auto;"></div><div class="skeleton skeleton-line" style="width: 70%; margin: 0 auto;"></div></div>
-                            <div class="metric-item"><div class="skeleton skeleton-line" style="width: 50%; height: 0.7em; margin: 0 auto 0.5rem auto;"></div><div class="skeleton skeleton-line" style="width: 70%; margin: 0 auto;"></div></div>
-                        </div>
-
-                        <!-- Mobile View Skeleton -->
-                        <div class="mobile-view">
-                            <div class="tabs" style="margin-top:1rem;">
-                                <div class="tabs__nav">
-                                    <div class="skeleton" style="height: 20px; width: 80px; margin: 1rem; border-radius: var(--radius-sm);"></div>
-                                    <div class="skeleton" style="height: 20px; width: 100px; margin: 1rem; border-radius: var(--radius-sm); background-color: #f1f5f9;"></div>
-                                    <div class="skeleton" style="height: 20px; width: 70px; margin: 1rem; border-radius: var(--radius-sm); background-color: #f1f5f9;"></div>
-                                </div>
-                                <div class="tabs__content-pane active">
-                                    <div class="skeleton skeleton-title" style="width: 80%; height: 1.25em; margin-top: 1rem;"></div>
-                                    <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="width: 30%; height: 0.8em;"></div><div class="skeleton skeleton-line" style="width: 70%;"></div></div>
-                                    <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="width: 30%; height: 0.8em;"></div><div class="skeleton skeleton-line" style="width: 50%;"></div></div>
-                                    <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="width: 30%; height: 0.8em;"></div><div class="skeleton skeleton-line" style="width: 60%;"></div></div>
-                                    <div class="skeleton-title" style="width: 50%; height: 1.25em; margin-top: 2rem;"></div>
-                                    <div class="skeleton-window-item"><div class="skeleton skeleton-avatar"></div><div style="flex-grow:1;"><div class="skeleton skeleton-line" style="width: 90%;"></div><div class="skeleton skeleton-line" style="width: 60%; margin-top: 0.5rem; height: 0.8em;"></div></div></div>
-                                    <div class="skeleton-window-item"><div class="skeleton skeleton-avatar"></div><div style="flex-grow:1;"><div class="skeleton skeleton-line" style="width: 80%;"></div><div class="skeleton skeleton-line" style="width: 70%; margin-top: 0.5rem; height: 0.8em;"></div></div></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Desktop View Skeleton -->
-                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                           <div class="skeleton-card" style="height: 400px;">
-                               <div class="skeleton skeleton-title" style="width: 50%;"></div>
-                               <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="width: 100px; height: 1em;"></div><div class="skeleton skeleton-line" style="width: 250px;"></div></div>
-                               <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="width: 100px; height: 1em;"></div><div class="skeleton skeleton-line" style="width: 180px;"></div></div>
-                               <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="width: 100px; height: 1em;"></div><div class="skeleton skeleton-line" style="width: 220px;"></div></div>
-                               <div class="skeleton skeleton-line" style="height: 48px; margin-top: 2rem; border-radius: var(--radius-md);"></div>
-                               <div class="skeleton skeleton-line" style="height: 48px; margin-top: 0.5rem; border-radius: var(--radius-md);"></div>
-                           </div>
-                           <div class="skeleton-card" style="height: 250px;">
-                                <div class="skeleton skeleton-title" style="width: 40%;"></div>
-                                <div class="skeleton-window-item"><div class="skeleton skeleton-avatar"></div><div style="flex-grow:1;"><div class="skeleton skeleton-line" style="width: 90%;"></div><div class="skeleton skeleton-line" style="width: 60%; margin-top: 0.5rem; height: 0.8em;"></div></div></div>
-                                <div class="skeleton-window-item"><div class="skeleton skeleton-avatar"></div><div style="flex-grow:1;"><div class="skeleton skeleton-line" style="width: 80%;"></div><div class="skeleton skeleton-line" style="width: 70%; margin-top: 0.5rem; height: 0.8em;"></div></div></div>
-                           </div>
-                        </div>
+                        <div class="skeleton" style="height: 90px; border-radius: var(--radius-lg);"></div>
+                        <div class="skeleton" style="height: 450px; border-radius: var(--radius-lg);"></div>
                     </div>
                     <div class="grid-sidebar desktop-view">
-                         <div class="skeleton-card" style="height: 300px;">
-                            <div class="skeleton skeleton-title" style="width: 70%;"></div>
-                            <div class="skeleton-info-item" style="flex-direction: row; justify-content: space-between; align-items: center;"><div style="width: 60%;"><div class="skeleton skeleton-line" style="width: 70%;"></div><div class="skeleton skeleton-line" style="height: 0.8em; width: 50%; margin-top: 0.5rem;"></div></div><div class="skeleton skeleton-line" style="width: 20%;"></div></div>
-                            <div class="skeleton-info-item" style="flex-direction: row; justify-content: space-between; align-items: center;"><div style="width: 60%;"><div class="skeleton skeleton-line" style="width: 60%;"></div><div class="skeleton skeleton-line" style="height: 0.8em; width: 80%; margin-top: 0.5rem;"></div></div><div class="skeleton skeleton-line" style="width: 20%;"></div></div>
-                         </div>
-                         <div class="skeleton-card" style="height: 250px;">
-                            <div class="skeleton skeleton-title" style="width: 60%;"></div>
-                            <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="height: 0.8em; width: 80%;"></div><div class="skeleton skeleton-line" style="width: 60%;"></div></div>
-                            <div class="skeleton-info-item"><div class="skeleton skeleton-line" style="height: 0.8em; width: 70%;"></div><div class="skeleton skeleton-line" style="width: 50%;"></div></div>
-                         </div>
+                         <div class="skeleton" style="height: 280px; border-radius: var(--radius-lg);"></div>
+                         <div class="skeleton" style="height: 350px; border-radius: var(--radius-lg);"></div>
                     </div>
                 </div>
             </div>
+            <!-- ========== END UPDATED SKELETON LOADER ========== -->
 
-            <!-- [UNCHANGED] REAL CONTENT (Initially hidden) -->
+            <!-- REAL CONTENT (Initially hidden) -->
             <div id="real-content" style="display: none; animation: fadeIn 0.5s var(--ease);">
                 <header class="details-header">
                     <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
@@ -438,7 +405,7 @@
     </footer>
 
     <script type="module">
-        // [UNCHANGED] ALL JAVASCRIPT LOGIC IS IDENTICAL
+        // ALL JAVASCRIPT REMAINS EXACTLY THE SAME - NO CHANGES MADE
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -565,6 +532,7 @@
                 ? 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' 
                 : 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z';
 
+            // Update desktop links
             document.getElementById('dashboard-link').href = homeLink;
             document.getElementById('nav-link-home').href = homeLink;
             const navLinkSecondary = document.getElementById('nav-link-secondary');
@@ -572,6 +540,7 @@
             navLinkSecondary.textContent = secondaryLink.text;
             navLinkSecondary.style.display = 'flex';
 
+            // Update mobile menu links
             const mobileLinksContainer = document.getElementById('mobile-menu-links');
             mobileLinksContainer.innerHTML = `
                 <a href="${homeLink}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
@@ -586,14 +555,18 @@
             const menuOverlay = document.getElementById('menuOverlay');
             const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');
             const logoutPopup = document.getElementById('logoutPopup');
+
             function closeMobileMenu() { if (mobileMenu.classList.contains('active')) { mobileMenu.classList.remove('active'); menuOverlay.classList.remove('active'); document.body.style.overflow = ''; } }
+            
             mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); menuOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
             mobileMenuClose.addEventListener('click', closeMobileMenu);
             menuOverlay.addEventListener('click', closeMobileMenu);
+
             if (desktopProfileTrigger && logoutPopup) {
                 desktopProfileTrigger.addEventListener('click', (event) => { event.stopPropagation(); const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; logoutPopup.classList.toggle('show'); desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); });
                 window.addEventListener('click', (event) => { if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { if (logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
             }
+
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMobileMenu(); if (logoutPopup && logoutPopup.classList.contains('show')) { logoutPopup.classList.remove('show'); desktopProfileTrigger.setAttribute('aria-expanded', 'false'); } } });
             window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });
         }
