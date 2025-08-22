@@ -88,7 +88,7 @@
         @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
         @keyframes shimmer { 100% { transform: translateX(100%); } }
         .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-sm); }
-        .skeleton::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0)); animation: shimmer 1.5s infinite; }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); animation: shimmer 1.5s infinite; }
         .skeleton-text { height: 1em; }
         .skeleton-text-dt { width: 80px; height: 0.8em; margin-bottom: 0.5rem; }
         .skeleton-text-dd { height: 1.1em; }
@@ -247,14 +247,14 @@
                             <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 </div>
             </nav>
             <div class="divider"></div>
         </div>
     </header>
     <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24" 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section" id="mobile-nav-links"></div>
         </div>
@@ -298,8 +298,8 @@
                                <div id="skeleton-payments-tab" class="skeleton skeleton-text" style="width: 100px; height: 20px; margin: 1rem; background-color: #f0f3f8;"></div>
                                <div class="skeleton skeleton-text" style="width: 80px; height: 20px; margin: 1rem; background-color: #f0f3f8;"></div>
                             </nav>
-                            <div class="tabs__content-pane active">
-                                <section class="content-section">
+                            <div class="tabs__content-pane active" style="padding: 0;">
+                                <section class="content-section" style="padding: 1.5rem;">
                                     <div class="skeleton skeleton-text" style="width: 200px; height: 1.25em; margin-bottom: 1.5rem;"></div>
                                     <dl class="info-grid" style="gap: 1.25rem;">
                                         <div class="info-grid-item" style="border:0; padding:0;"><div class="skeleton skeleton-text-dt"></div><div class="skeleton skeleton-text-dd" style="width: 80%;"></div></div>
@@ -319,12 +319,20 @@
                                 <div class="info-grid-item" style="border:0; padding:0; display: contents;"><div class="skeleton skeleton-text-dd" style="width: 60px; grid-column: 1;"></div><div class="skeleton skeleton-text-dd" style="width: 50%; grid-column: 2;"></div></div>
                              </dl>
                         </section>
+                        <section class="content-section" style="padding: 1.5rem; background: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg);">
+                             <div class="skeleton skeleton-text" style="width: 150px; height: 1.25em; margin-bottom: 1.5rem;"></div>
+                             <div class="skeleton" style="width: 100%; height: 60px; border-radius: var(--radius-md);"></div>
+                        </section>
                     </div>
                 </div>
                 <div class="grid-sidebar desktop-view">
                     <section id="skeleton-desktop-payments" class="content-section" style="padding: 1.5rem; background: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg);">
                         <div class="skeleton" style="width: 180px; height: 1.25em; margin-bottom: 1.5rem;"></div>
                         <div class="skeleton" style="width: 100%; height: 50px; margin-bottom: 1rem;"></div>
+                    </section>
+                    <section class="content-section" style="padding: 1.5rem; background: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg);">
+                        <div class="skeleton" style="width: 150px; height: 1.25em; margin-bottom: 1.5rem;"></div>
+                        <div class="skeleton" style="width: 100%; height: 40px; margin-bottom: 1rem;"></div>
                     </section>
                 </div>
             </div>
@@ -335,35 +343,129 @@
         </div>
 
         <!-- PAGE STRUCTURE (Initially Hidden) -->
-        <main id="order-details-screen" style="display: none;"></main>
+        <main id="order-details-screen" style="display: none;">
+            <header class="details-header">
+                <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
+                <div class="details-header__title">
+                    <h1 id="detail-customer-name"></h1>
+                    <div id="detail-status-tag" class="status-tag"></div>
+                </div>
+                <div class="actions-menu-container">
+                    <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
+                    <div id="actions-dropdown" class="actions-dropdown">
+                        <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
+                        <hr id="menu-divider" style="display:none;">
+                        <button id="menu-edit-total-btn" style="display:none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
+                        <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
+                    </div>
+                </div>
+            </header>
+            <div class="page-grid">
+                <div class="grid-main">
+                    <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
+                        <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
+                        <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
+                        <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
+                    </div>
+                    
+                    <div class="mobile-view">
+                        <div class="tabs">
+                            <nav class="tabs__nav">
+                                <button class="tabs__button active" data-tab="details">Details</button>
+                                <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
+                                <button class="tabs__button" data-tab="history">History</button>
+                            </nav>
+                            <div id="tab-details" class="tabs__content-pane active">
+                                <section class="content-section">
+                                    <h3>Customer & Order Info</h3>
+                                    <dl class="info-grid">
+                                        <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
+                                        <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
+                                        <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                        <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
+                                        <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
+                                    </dl>
+                                    <div class="completed-info-block" style="display:none; margin-top: 1rem;">
+                                        <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
+                                    </div>
+                                    <div class="action-links">
+                                        <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                    </div>
+                                </section>
+                                <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
+                            </div>
+                            <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
+                            <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
+                        </div>
+                    </div>
+
+                    <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
+                        <section class="content-section">
+                            <h3>Customer & Order Info</h3>
+                            <dl class="info-grid">
+                                <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
+                                <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
+                                <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
+                                <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
+                            </dl>
+                            <div class="completed-info-block" style="display:none; margin-top: 1rem;">
+                                <dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl>
+                            </div>
+                            <div class="action-links">
+                               <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                               <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                               <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                            </div>
+                        </section>
+                        <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
+                    </div>
+                </div>
+                <div class="grid-sidebar desktop-view">
+                    <section class="content-section" data-section="payment-management" style="display: none;">
+                        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border);">
+                            <h3>Financial Log</h3>
+                            <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: 0.5rem 1rem; font-size: 0.875rem;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button>
+                        </div>
+                        <ul class="financial-log"></ul>
+                    </section>
+                    <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer class="sticky-action-bar">
+        <button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
+        <button id="detail-complete-btn" class="btn btn-success"></button>
     </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // --- DOM ELEMENTS ---
+        const mainScreen = document.getElementById('order-details-screen');
+        const skeletonLoader = document.getElementById('skeleton-loader');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const confirmActionBtn = document.getElementById('confirm-action-btn');
+        const cancelActionBtn = document.getElementById('cancel-action-btn');
+        const messageModal = document.getElementById('message-modal');
+        const messageText = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
+        const paymentModal = document.getElementById('payment-modal');
+        const paymentForm = document.getElementById('payment-form');
+        const paymentModalTitle = document.getElementById('payment-modal-title');
+        const editTotalModal = document.getElementById('edit-total-modal');
+        const editTotalForm = document.getElementById('edit-total-form');
+        const finalTotalInput = document.getElementById('final-total-input');
         
-        // --- FIREBASE CONFIG (MOVED TO TOP) ---
-        const firebaseConfig = {
-            apiKey: "__API_KEY__",
-            authDomain: "__AUTH_DOMAIN__",
-            projectId: "__PROJECT_ID__",
-            storageBucket: "__STORAGE_BUCKET__",
-            messagingSenderId: "__MESSAGING_SENDER_ID__",
-            appId: "__APP_ID__"
-        };
-        
-        // --- GLOBAL VARIABLES & HELPERS ---
         let db, auth, currentOrder, currentOrderId, currentUserProfile, currentUserName;
         let currentAction = {};
-        const showLoading = () => document.getElementById('loading-overlay').style.display = 'flex';
-        const hideLoading = () => document.getElementById('loading-overlay').style.display = 'none';
-        const showMessageModal = (message) => { document.getElementById('message-text').textContent = message; document.getElementById('message-modal').style.display = 'flex'; };
-        const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { document.getElementById('modal-message').textContent = message; const btn = document.getElementById('confirm-action-btn'); btn.className = 'btn ' + confirmClass; btn.textContent = confirmText; currentAction.callback = callback; document.getElementById('confirmation-modal').style.display = 'flex'; };
-        const hideConfirmationModal = () => { document.getElementById('confirmation-modal').style.display = 'none'; };
-        async function performConfirmedAction() { hideConfirmationModal(); showLoading(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } finally { hideLoading(); } }
-        async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
 
         // --- NAVBAR FUNCTIONS ---
         function populateNavbar(user) { if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; const name = user.role === 'admin' ? user.displayName || 'Admin' : user.displayName || 'Employee'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = name; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = name; document.getElementById('mobile-profile-email').textContent = user.email || ''; }
@@ -379,108 +481,65 @@
             mobileLinksContainer.innerHTML = links.map(link => `<a href="${link.href}" class="mobile-nav-link">${icons[link.text]}<span>${link.text}</span></a>`).join('');
         }
         
-        // --- DATA & RENDERING LOGIC ---
+        // --- CORE UI & HELPER FUNCTIONS ---
+        const showLoading = () => loadingOverlay.style.display = 'flex';
+        const hideLoading = () => loadingOverlay.style.display = 'none';
+        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
+        const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
+        const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
+        async function performConfirmedAction() { hideConfirmationModal(); showLoading(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } finally { hideLoading(); } }
+        async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
+
         function renderOrderDetails(order) {
-            const mainScreen = document.getElementById('order-details-screen');
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
-
-            // Main HTML structure is injected here
-            mainScreen.innerHTML = `
-                <header class="details-header">
-                    <button class="icon-btn" data-app-action="back"><span class="material-symbols-outlined">arrow_back</span></button>
-                    <div class="details-header__title">
-                        <h1 id="detail-customer-name"></h1>
-                        <div id="detail-status-tag" class="status-tag"></div>
-                    </div>
-                    <div class="actions-menu-container">
-                        <button id="actions-menu-btn" class="icon-btn" data-app-action="toggle-actions"><span class="material-symbols-outlined">more_vert</span></button>
-                        <div id="actions-dropdown" class="actions-dropdown">
-                            <button id="menu-edit-btn" data-app-action="edit-order"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
-                            <hr id="menu-divider" style="display:none;">
-                            <button id="menu-edit-total-btn" style="display:none;" data-app-action="edit-total"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
-                            <button id="menu-delete-btn" style="display: none; color: var(--color-danger);" data-app-action="delete-order"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
-                        </div>
-                    </div>
-                </header>
-                <div class="page-grid">
-                    <div class="grid-main">
-                        <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
-                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
-                        </div>
-                        <div class="mobile-view">
-                            <div class="tabs">
-                                <nav class="tabs__nav">
-                                    <button class="tabs__button active" data-tab="details">Details</button>
-                                    <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
-                                    <button class="tabs__button" data-tab="history">History</button>
-                                </nav>
-                                <div id="tab-details" class="tabs__content-pane active"></div>
-                                <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
-                                <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
-                            </div>
-                        </div>
-                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;" id="desktop-details-container"></div>
-                    </div>
-                    <div class="grid-sidebar desktop-view">
-                        <section class="content-section" data-section="payment-management" style="display: none;">
-                            <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border);">
-                                <h3>Financial Log</h3>
-                                <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: 0.5rem 1rem; font-size: 0.875rem;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button>
-                            </div>
-                            <ul class="financial-log"></ul>
-                        </section>
-                        <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section>
-                    </div>
-                </div>`;
-            
-            // Now populate the injected HTML
-            const today = new Date(); today.setHours(0,0,0,0);
-            const statusInfo = getStatusInfo(order, today);
-            mainScreen.querySelector('#detail-customer-name').textContent = order.name;
-            const statusTag = mainScreen.querySelector('#detail-status-tag');
-            statusTag.className = 'status-tag ' + statusInfo.className;
-            statusTag.textContent = statusInfo.text;
-
+            document.querySelectorAll('#detail-customer-name').forEach(el => el.textContent = order.name);
+            document.querySelectorAll('#detail-status-tag').forEach(el => {
+                const today = new Date(); today.setHours(0,0,0,0);
+                const statusInfo = getStatusInfo(order, today);
+                el.className = 'status-tag ' + statusInfo.className;
+                el.textContent = statusInfo.text;
+            });
+            document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
+            document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
+            document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
+            document.querySelectorAll('.detail-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
+            document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
+            document.querySelectorAll('.completed-info-block').forEach(block => {
+                block.style.display = order.status === 'completed' ? 'block' : 'none';
+                if (order.status === 'completed') {
+                    block.querySelector('.detail-completed-date').textContent = order.completedAt?.toDate ? new Date(order.completedAt.toDate()).toLocaleDateString() : 'N/A';
+                    block.querySelector('.detail-completed-by').textContent = order.completedBy || 'N/A';
+                }
+            });
             let windowsToDisplay = [];
             try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
-            const completedInfoHtml = order.status === 'completed' ? `<div class="completed-info-block" style="margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd>${order.completedAt?.toDate ? new Date(order.completedAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div><div class="info-grid-item"><dt>Completed By</dt><dd>${order.completedBy || 'N/A'}</dd></div></dl></div>` : '';
-
-            const detailsHtml = `
-                <section class="content-section">
-                    <h3>Customer & Order Info</h3>
-                    <dl class="info-grid">
-                        <div class="info-grid-item"><dt>Address</dt><dd>${order.address || 'N/A'}</dd></div>
-                        <div class="info-grid-item"><dt>Mobile</dt><dd>${order.mobileNumber || 'N/A'}</dd></div>
-                        <div class="info-grid-item"><dt>Placed On</dt><dd>${order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A'}</dd></div>
-                        <div class="info-grid-item"><dt>Due Date</dt><dd>${order.dueDate || 'N/A'}</dd></div>
-                        <div class="info-grid-item"><dt>Created By</dt><dd>${order.createdBy || 'N/A'}</dd></div>
-                    </dl>
-                    ${completedInfoHtml}
-                    <div class="action-links">
-                        <a href="#" class="action-link-item" data-app-action="get-directions" style="display: ${order.latitude && order.longitude ? 'flex' : 'none'};"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                        <a href="#" class="action-link-item" data-app-action="view-quote"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                        <a href="#" class="action-link-item" data-app-action="view-bill"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                    </div>
-                </section>
-                <section class="content-section"><h3>Windows (${windowsToDisplay.length})</h3>${windowsHtml}</section>`;
+            document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
+            document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
+            document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
             
-            document.getElementById('tab-details').innerHTML = detailsHtml;
-            document.getElementById('desktop-details-container').innerHTML = detailsHtml;
+            const keyMetricsCard = document.getElementById('key-metrics-card');
+            const paymentsTab = document.querySelector('.tabs__button[data-tab="payments"]');
+            const actionsMenu = document.getElementById('actions-menu-btn');
+            const addPaymentButtons = document.querySelectorAll('[data-app-action="add-payment"]');
+            const paymentManagementSections = document.querySelectorAll('[data-section="payment-management"]');
 
-            // --- ROLE-BASED UI LOGIC ---
             if (isAdmin) {
-                document.getElementById('key-metrics-card').style.display = 'grid';
-                document.querySelector('.tabs__button[data-tab="payments"]').style.display = 'flex';
-                document.getElementById('menu-delete-btn').style.display = 'flex';
-                document.getElementById('menu-edit-total-btn').style.display = 'flex';
-                document.getElementById('menu-divider').style.display = 'block';
-                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
-                document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
+                keyMetricsCard.style.display = 'grid';
+                paymentsTab.style.display = 'flex';
+                actionsMenu.style.display = 'flex';
+                addPaymentButtons.forEach(btn => btn.style.display = 'inline-flex');
+                paymentManagementSections.forEach(sec => sec.style.display = 'block');
+            } else {
+                keyMetricsCard.style.display = 'none';
+                paymentsTab.style.display = 'none';
+                actionsMenu.style.display = 'none';
+                addPaymentButtons.forEach(btn => btn.style.display = 'none');
+                paymentManagementSections.forEach(sec => sec.style.display = 'none');
             }
+
             if (order.status === 'completed') {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
                 detailCompleteBtn.className = 'btn btn-reopen';
@@ -526,12 +585,9 @@
             updateMetrics(paymentsForMetrics);
         }
         
-        async function initializeFirebase() {
+        async function initializeFirebase() { 
             const app = initializeApp(firebaseConfig); 
-            db = getFirestore(app); 
-            auth = getAuth(app); 
-            initializeNavbar(); 
-            bindEventListeners(); // BIND LISTENERS ONCE
+            db = getFirestore(app); auth = getAuth(app); 
             onAuthStateChanged(auth, async (user) => { 
                 if (user) { 
                     const userDoc = await getDoc(doc(db, "users", user.uid)); 
@@ -548,9 +604,8 @@
             }); 
         }
         
-        async function loadAndDisplayOrder(orderId) {
-            const mainScreen = document.getElementById('order-details-screen');
-            const skeletonLoader = document.getElementById('skeleton-loader');
+        async function loadAndDisplayOrder(orderId, isInitialLoad = true) {
+            if (!isInitialLoad) showLoading();
             const orderRef = doc(db, 'upvc_orders', orderId);
             const orderSnap = await getDoc(orderRef);
             if (orderSnap.exists()) { 
@@ -559,66 +614,66 @@
             } else { 
                 showMessageModal("Order not found."); 
             }
-            skeletonLoader.style.display = 'none'; 
-            mainScreen.style.display = 'block'; 
+            if (isInitialLoad) { 
+                skeletonLoader.style.display = 'none'; 
+                mainScreen.style.display = 'block'; 
+            } else { 
+                hideLoading(); 
+            }
         }
         
+        // --- EVENT LISTENERS ---
         function bindEventListeners() {
-            document.body.addEventListener('click', (e) => {
-                const appActionTarget = e.target.closest('[data-app-action]');
-                if (!appActionTarget) {
-                    const dropdown = document.getElementById('actions-dropdown');
-                    if (dropdown && dropdown.classList.contains('show')) {
-                        dropdown.classList.remove('show');
+            document.body.addEventListener('click', async (e) => {
+                const appAction = e.target.closest('[data-app-action]');
+                if (appAction) { 
+                    e.preventDefault();
+                    const action = appAction.dataset.appAction;
+                    switch (action) {
+                        case 'logout': await signOut(auth); break;
+                        case 'add-payment': openPaymentModal(); break;
+                        case 'edit-payment': openPaymentModalForEdit(appAction.dataset.id); break;
+                        case 'delete-payment': handleDeletePayment(appAction.dataset.id, parseFloat(appAction.dataset.amount)); break;
+                        case 'close-payment-modal': paymentModal.style.display = 'none'; break;
+                        case 'close-total-modal': editTotalModal.style.display = 'none'; break;
                     }
-                    return;
                 }
-                
-                const action = appActionTarget.dataset.appAction;
-                if(action !== 'logout') e.preventDefault();
-                
-                switch (action) {
-                    case 'logout': signOut(auth); break;
-                    case 'back': window.location.href = 'view-orders.html'; break;
-                    case 'toggle-actions': document.getElementById('actions-dropdown').classList.toggle('show'); e.stopPropagation(); break;
-                    case 'edit-order': window.location.href = `order-form.html?id=${currentOrderId}`; break;
-                    case 'edit-total': openEditTotalModal(); break;
-                    case 'delete-order': handleDeleteOrder(); break;
-                    case 'add-payment': openPaymentModal(); break;
-                    case 'edit-payment': openPaymentModalForEdit(appActionTarget.dataset.id); break;
-                    case 'delete-payment': handleDeletePayment(appActionTarget.dataset.id, parseFloat(appActionTarget.dataset.amount)); break;
-                    case 'close-payment-modal': paymentModal.style.display = 'none'; break;
-                    case 'close-total-modal': editTotalModal.style.display = 'none'; break;
-                    case 'get-directions': window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); break;
-                    case 'view-quote': window.location.href = `quote.html?id=${currentOrderId}`; break;
-                    case 'view-bill': window.location.href = `bill.html?id=${currentOrderId}`; break;
+                if (e.target.closest('#new-back-btn')) window.location.href = 'view-orders.html';
+                if (e.target.closest('#actions-menu-btn')) { e.stopPropagation(); document.getElementById('actions-dropdown').classList.toggle('show'); }
+                if (e.target.closest('#menu-edit-btn')) window.location.href = `order-form.html?id=${currentOrderId}`;
+                if (e.target.closest('#menu-edit-total-btn')) openEditTotalModal();
+                if (e.target.closest('#menu-delete-btn')) handleDeleteOrder();
+                if (e.target.closest('#detail-complete-btn')) handleCompleteOrder();
+                const clickedTab = e.target.closest('.tabs__button');
+                if (clickedTab) {
+                    const parentTabs = clickedTab.closest('.tabs');
+                    if (parentTabs) {
+                        const allTabButtons = parentTabs.querySelectorAll('.tabs__button');
+                        const allContentPanes = parentTabs.querySelectorAll('.tabs__content-pane');
+                        allTabButtons.forEach(btn => btn.classList.remove('active'));
+                        allContentPanes.forEach(pane => pane.classList.remove('active'));
+                        clickedTab.classList.add('active');
+                        const contentPane = document.getElementById(`tab-${clickedTab.dataset.tab}`);
+                        if (contentPane) contentPane.classList.add('active');
+                    }
                 }
+                const directionsBtn = e.target.closest('.detail-get-directions-btn');
+                if (directionsBtn) { e.preventDefault(); window.open(`https://www.google.com/maps/dir/?api=1&destination=${currentOrder.latitude},${currentOrder.longitude}`, '_blank'); }
+                const quoteBtn = e.target.closest('.detail-view-quote-btn');
+                if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
+                const billBtn = e.target.closest('.detail-view-bill-btn');
+                if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
             });
-            
+
+            window.addEventListener('click', () => { const dropdown = document.getElementById('actions-dropdown'); if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show'); });
             messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
             cancelActionBtn.addEventListener('click', hideConfirmationModal);
             confirmActionBtn.addEventListener('click', performConfirmedAction);
             paymentForm.addEventListener('submit', handlePaymentFormSubmit);
             editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
-            document.getElementById('detail-complete-btn').addEventListener('click', handleCompleteOrder);
-
-            // Tab functionality
-            document.querySelector('.mobile-view .tabs__nav').addEventListener('click', (e) => {
-                const clickedTab = e.target.closest('.tabs__button');
-                if (!clickedTab) return;
-                const parentTabs = clickedTab.closest('.tabs');
-                if (parentTabs) {
-                    const allTabButtons = parentTabs.querySelectorAll('.tabs__button');
-                    const allContentPanes = parentTabs.querySelectorAll('.tabs__content-pane');
-                    allTabButtons.forEach(btn => btn.classList.remove('active'));
-                    allContentPanes.forEach(pane => pane.classList.remove('active'));
-                    clickedTab.classList.add('active');
-                    const contentPane = document.getElementById(`tab-${clickedTab.dataset.tab}`);
-                    if (contentPane) contentPane.classList.add('active');
-                }
-            });
         }
         
+        initializeNavbar();
         initializeFirebase();
     </script>
 </body>
