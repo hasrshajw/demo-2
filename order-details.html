@@ -450,19 +450,22 @@
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = currentUserProfile?.role === 'admin';
+            
+            // --- Shared Details ---
             document.querySelectorAll('#detail-customer-name').forEach(el => el.textContent = order.name);
-            document.querySelectorAll('#detail-status-tag').forEach(el => {
-                const today = new Date(); today.setHours(0,0,0,0);
-                const statusInfo = getStatusInfo(order, today);
-                el.className = 'status-tag ' + statusInfo.className;
-                el.textContent = statusInfo.text;
-            });
             document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
             document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
             document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
-            document.querySelectorAll('.detail-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
-             document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
+            document.querySelectorAll('.detail-due-date, #metric-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
             document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
+
+            const today = new Date(); today.setHours(0,0,0,0);
+            const statusInfo = getStatusInfo(order, today);
+            document.querySelectorAll('#detail-status-tag').forEach(el => {
+                el.className = 'status-tag ' + statusInfo.className;
+                el.textContent = statusInfo.text;
+            });
+            
             document.querySelectorAll('.completed-info-block').forEach(block => {
                 block.style.display = order.status === 'completed' ? 'block' : 'none';
                 if (order.status === 'completed') {
@@ -470,14 +473,18 @@
                     block.querySelector('.detail-completed-by').textContent = order.completedBy || 'N/A';
                 }
             });
+            
             let windowsToDisplay = [];
             try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
-            document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
             
+            document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
+
+            // --- Role-Specific UI Logic ---
             if (isAdmin) {
+                // SHOW admin elements
                 document.querySelectorAll('.metric-financial').forEach(el => el.style.display = 'block');
                 paymentsTabButton.style.display = 'flex';
                 menuDeleteBtn.style.display = 'flex';
@@ -485,8 +492,18 @@
                 menuDivider.style.display = 'block';
                 document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
                 document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
+            } else {
+                // HIDE admin elements
+                document.querySelectorAll('.metric-financial').forEach(el => el.style.display = 'none');
+                paymentsTabButton.style.display = 'none';
+                menuDeleteBtn.style.display = 'none';
+                menuEditTotalBtn.style.display = 'none';
+                menuDivider.style.display = 'none';
+                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'none');
+                document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'none');
             }
 
+            // --- Status-Dependent Buttons ---
             if (order.status === 'completed') {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
                 detailCompleteBtn.className = 'btn btn-reopen';
@@ -510,7 +527,7 @@
         function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
         async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
         
-        async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); }}
+        async function loadFinancialAndHistoryData() { const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [historySnap] = await Promise.all([ getDocs(historyQuery) ]); const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (!(action.includes('Payment') || action.includes('Total'))) { operationalHistoryItems.push(entry); }}); document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const [paymentsSnap] = await Promise.all([getDocs(paymentsQuery)]); const financialLogItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); if(entry.action === 'Final Total Updated') financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); financialLogItems.push(...payments); financialLogItems.sort((a, b) => (b.timestamp?.toDate() || b.date) - (a.timestamp?.toDate() || a.date)); document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsSnap.docs.map(d => d.data())); }}
         
         function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
         function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
