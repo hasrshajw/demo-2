@@ -246,7 +246,7 @@
                             <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 </div>
             </nav>
             <div class="divider"></div>
@@ -374,7 +374,7 @@
                 </div>
             </div>
              <footer class="sticky-action-bar">
-                <div class="skeleton skeleton-btn" style="flex-grow: 1; margin-right: 1rem;"></div>
+                <div id="skeleton-add-payment-btn" class="skeleton skeleton-btn" style="flex-grow: 1; margin-right: 1rem;"></div>
                 <div class="skeleton skeleton-btn" style="flex-grow: 1;"></div>
             </footer>
         </div>
@@ -491,7 +491,6 @@
         const actionsMenuBtn = document.getElementById('actions-menu-btn');
         const actionsDropdown = document.getElementById('actions-dropdown');
         const menuEditBtn = document.getElementById('menu-edit-btn');
-        const detailCompleteBtn = document.getElementById('detail-complete-btn');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
         const confirmActionBtn = document.getElementById('confirm-action-btn');
@@ -573,6 +572,7 @@
             const skeletonMetrics = document.getElementById('skeleton-key-metrics-card');
             const skeletonPaymentsTab = document.getElementById('skeleton-payments-tab');
             const skeletonDesktopPayments = document.getElementById('skeleton-desktop-payments');
+            const skeletonAddPaymentBtn = document.getElementById('skeleton-add-payment-btn');
 
             if (isAdmin) {
                 keyMetricsCard.style.display = 'grid';
@@ -585,6 +585,7 @@
                 if(skeletonMetrics) skeletonMetrics.style.display = 'grid';
                 if(skeletonPaymentsTab) skeletonPaymentsTab.style.display = 'block';
                 if(skeletonDesktopPayments) skeletonDesktopPayments.style.display = 'block';
+                if(skeletonAddPaymentBtn) skeletonAddPaymentBtn.style.display = 'flex';
             } else {
                 keyMetricsCard.style.display = 'none';
                 paymentsTab.style.display = 'none';
@@ -596,6 +597,7 @@
                 if(skeletonMetrics) skeletonMetrics.style.display = 'none';
                 if(skeletonPaymentsTab) skeletonPaymentsTab.style.display = 'none';
                 if(skeletonDesktopPayments) skeletonDesktopPayments.style.display = 'none';
+                if(skeletonAddPaymentBtn) skeletonAddPaymentBtn.style.display = 'none';
             }
 
             if (order.status === 'completed') {
@@ -643,7 +645,7 @@
             updateMetrics(paymentsForMetrics);
         }
         
-        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); initializeNavbar(); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; populateNavbar(currentUserProfile); renderNavbarLinks(currentUserProfile.role); const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId); } else { showMessageModal("No order specified."); skeletonLoader.style.display = 'none'; } } else { window.location.href = 'login.html'; } }); }
+        async function initializeFirebase() { const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); initializeNavbar(); onAuthStateChanged(auth, async (user) => { if (user) { const userDoc = await getDoc(doc(db, "users", user.uid)); if (!userDoc.exists() || userDoc.data().status !== 'approved') { window.location.href = 'login.html'; return; } currentUserProfile = { id: userDoc.id, ...userDoc.data() }; currentUserName = currentUserProfile.displayName || "User"; populateNavbar(currentUserProfile); renderNavbarLinks(currentUserProfile.role); const urlParams = new URLSearchParams(window.location.search); currentOrderId = urlParams.get('id'); if (currentOrderId) { await loadAndDisplayOrder(currentOrderId, true); } else { showMessageModal("No order specified."); skeletonLoader.style.display = 'none'; } } else { window.location.href = 'login.html'; } }); }
         
         async function loadAndDisplayOrder(orderId, showSkeleton = true) {
             if (!showSkeleton) showLoading();
@@ -665,7 +667,6 @@
         editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
         
         document.body.addEventListener('click', async (e) => {
-             // CORRECTED: Mobile Tab Functionality using Event Delegation
             const clickedTab = e.target.closest('.tabs__button');
             if (clickedTab) {
                 e.preventDefault();
@@ -681,7 +682,6 @@
                 }
             }
             
-            // Other app actions
             const appAction = e.target.closest('[data-app-action]');
             if (appAction) { const action = appAction.dataset.appAction; switch (action) { case 'logout': await signOut(auth); break; case 'add-payment': openPaymentModal(); break; case 'edit-payment': openPaymentModalForEdit(appAction.dataset.id); break; case 'delete-payment': handleDeletePayment(appAction.dataset.id, parseFloat(appAction.dataset.amount)); break; case 'close-payment-modal': paymentModal.style.display = 'none'; break; case 'close-total-modal': editTotalModal.style.display = 'none'; break; } }
             const directionsBtn = e.target.closest('.detail-get-directions-btn');
