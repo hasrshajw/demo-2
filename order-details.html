@@ -55,11 +55,25 @@
             margin: 0; 
             padding-bottom: var(--sticky-footer-height); 
             font-size: 16px; 
-            padding-top: var(--navbar-height); /* Reserved space for fixed navbar */
+            padding-top: var(--navbar-height);
         }
         h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
         h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
+
+        /* --- ROLE-BASED VISIBILITY (THE CRITICAL FIX) --- */
+        /* By default, hide elements meant only for a specific role */
+        .admin-only, .employee-only { display: none !important; }
+
+        /* When the body has the 'is-admin' class, show admin-only elements */
+        body.is-admin .admin-only { display: block !important; }
+        body.is-admin .admin-only-flex { display: flex !important; }
+        body.is-admin .admin-only-grid { display: grid !important; }
+        body.is-admin .admin-only-inline-flex { display: inline-flex !important; }
+        
+        /* When the body has the 'is-employee' class, show employee-only elements */
+        body.is-employee .employee-only { display: block !important; }
+        body.is-employee .employee-only-flex { display: flex !important; }
 
         /* --- NAVBAR STYLES --- */
         .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
@@ -254,7 +268,7 @@
                             <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
                          </div>
                     </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                 </div>
             </nav>
             <div class="divider"></div>
@@ -319,9 +333,9 @@
                         <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
                         <div id="actions-dropdown" class="actions-dropdown">
                             <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
-                            <hr id="menu-divider" style="display:none;">
-                            <button id="menu-edit-total-btn" style="display:none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
-                            <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
+                            <hr class="admin-only">
+                            <button id="menu-edit-total-btn" class="admin-only-flex"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
+                            <button id="menu-delete-btn" class="admin-only-flex" style="color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
                         </div>
                     </div>
                 </header>
@@ -329,15 +343,15 @@
                     <div class="grid-main">
                         <div id="key-metrics-card" class="key-metrics-card">
                             <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                            <div class="metric-item metric-financial" style="display: none;"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
-                            <div class="metric-item metric-financial" style="display: none;"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
+                            <div class="metric-item admin-only"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
+                            <div class="metric-item admin-only"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
                         </div>
                         
                         <div class="mobile-view">
                             <div class="tabs">
                                 <nav class="tabs__nav">
                                     <button class="tabs__button active" data-tab="details">Details</button>
-                                    <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
+                                    <button class="tabs__button admin-only-flex" data-tab="payments">Financial Log</button>
                                     <button class="tabs__button" data-tab="history">History</button>
                                 </nav>
                                 <div id="tab-details" class="tabs__content-pane active">
@@ -357,8 +371,8 @@
                                     </section>
                                     <section class="content-section"><h3>Windows (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
                                 </div>
-                                <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
-                                <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
+                                <div id="tab-payments" class="tabs__content-pane admin-only"><section class="content-section"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
+                                <div id="tab-history" class="tabs__content-pane"><section class="content-section"><h3>Order History</h3><ul class="history-list"></ul></section></div>
                             </div>
                         </div>
 
@@ -381,10 +395,10 @@
                         </div>
                     </div>
                     <div class="grid-sidebar desktop-view">
-                        <section class="content-section" data-section="payment-management" style="display: none;">
+                        <section class="content-section admin-only" data-section="payment-management">
                             <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border);">
                                 <h3>Financial Log</h3>
-                                <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: 0.5rem 1rem; font-size: 0.875rem;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button>
+                                <button data-app-action="add-payment" class="btn btn-primary admin-only-inline-flex" style="padding: 0.5rem 1rem; font-size: 0.875rem;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button>
                             </div>
                             <ul class="financial-log"></ul>
                         </section>
@@ -395,7 +409,7 @@
         </main>
     </div>
     <footer class="sticky-action-bar">
-        <button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
+        <button data-app-action="add-payment" class="btn btn-secondary admin-only-inline-flex">Add Payment</button>
         <button id="detail-complete-btn" class="btn btn-success"></button>
     </footer>
 
@@ -412,13 +426,9 @@
         const actionsMenuBtn = document.getElementById('actions-menu-btn');
         const actionsDropdown = document.getElementById('actions-dropdown');
         const menuEditBtn = document.getElementById('menu-edit-btn');
-        const menuEditTotalBtn = document.getElementById('menu-edit-total-btn');
-        const menuDeleteBtn = document.getElementById('menu-delete-btn');
-        const menuDivider = document.getElementById('menu-divider');
         const detailCompleteBtn = document.getElementById('detail-complete-btn');
         const tabsContainer = document.querySelector('.tabs');
         const tabButtons = document.querySelectorAll('.tabs__button');
-        const paymentsTabButton = document.querySelector('.tabs__button[data-tab="payments"]');
         const contentPanes = document.querySelectorAll('.tabs__content-pane');
         const confirmationModal = document.getElementById('confirmation-modal');
         const modalMessage = document.getElementById('modal-message');
@@ -449,8 +459,6 @@
 
         function renderOrderDetails(order) {
             currentOrder = order;
-            const isAdmin = currentUserProfile?.role === 'admin';
-            
             // --- Shared Details ---
             document.querySelectorAll('#detail-customer-name').forEach(el => el.textContent = order.name);
             document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
@@ -458,14 +466,12 @@
             document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
             document.querySelectorAll('.detail-due-date, #metric-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
             document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
-
             const today = new Date(); today.setHours(0,0,0,0);
             const statusInfo = getStatusInfo(order, today);
             document.querySelectorAll('#detail-status-tag').forEach(el => {
                 el.className = 'status-tag ' + statusInfo.className;
                 el.textContent = statusInfo.text;
             });
-            
             document.querySelectorAll('.completed-info-block').forEach(block => {
                 block.style.display = order.status === 'completed' ? 'block' : 'none';
                 if (order.status === 'completed') {
@@ -473,39 +479,12 @@
                     block.querySelector('.detail-completed-by').textContent = order.completedBy || 'N/A';
                 }
             });
-            
             let windowsToDisplay = [];
             try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { const glassInfo = win.hasGlass ? `<small>Glass: ${win.glassName || 'Not specified'}</small>` : '<small>No Glass</small>'; const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName}:</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo}</div></div>`; }).join('') : '<p>No window details available.</p>';
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
-            
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
-
-            // --- THIS IS THE CRITICAL FIX ---
-            // It explicitly shows OR hides elements based on the user's role.
-            if (isAdmin) {
-                // SHOW admin elements
-                document.querySelectorAll('.metric-financial').forEach(el => el.style.display = 'block');
-                paymentsTabButton.style.display = 'flex';
-                menuDeleteBtn.style.display = 'flex';
-                menuEditTotalBtn.style.display = 'flex';
-                menuDivider.style.display = 'block';
-                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'inline-flex');
-                document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'block');
-            } else {
-                // HIDE admin elements for employees
-                document.querySelectorAll('.metric-financial').forEach(el => el.style.display = 'none');
-                paymentsTabButton.style.display = 'none';
-                menuDeleteBtn.style.display = 'none';
-                menuEditTotalBtn.style.display = 'none';
-                menuDivider.style.display = 'none';
-                document.querySelectorAll('[data-app-action="add-payment"]').forEach(btn => btn.style.display = 'none');
-                document.querySelectorAll('[data-section="payment-management"]').forEach(sec => sec.style.display = 'none');
-            }
-            // --- END OF CRITICAL FIX ---
-
-
             // --- Status-Dependent Buttons (for all users) ---
             if (order.status === 'completed') {
                 detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">refresh</span>Reopen Order';
@@ -534,9 +513,7 @@
         
         function populateNavbar(user) {if (!user) return; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Employee'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
         function initializeNavbar() {const mobileMenu = document.getElementById('mobileMenu');const mobileMenuButton = document.getElementById('mobileMenuButton');const mobileMenuClose = document.getElementById('mobileMenuClose');const menuOverlay = document.getElementById('menuOverlay');const desktopProfileTrigger = document.getElementById('desktopProfileTrigger');const logoutPopup = document.getElementById('logoutPopup');function closeMobileMenu() {if (mobileMenu.classList.contains('active')) {mobileMenu.classList.remove('active');menuOverlay.classList.remove('active');document.body.style.overflow = '';}} mobileMenuButton.addEventListener('click', () => {mobileMenu.classList.add('active');menuOverlay.classList.add('active');document.body.style.overflow = 'hidden';});mobileMenuClose.addEventListener('click', closeMobileMenu);menuOverlay.addEventListener('click', closeMobileMenu);if (desktopProfileTrigger && logoutPopup) {desktopProfileTrigger.addEventListener('click', (event) => {event.stopPropagation();const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true';logoutPopup.classList.toggle('show');desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded);});window.addEventListener('click', (event) => {if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) {if (logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});} document.addEventListener('keydown', (e) => {if (e.key === 'Escape') {closeMobileMenu();if (logoutPopup && logoutPopup.classList.contains('show')) {logoutPopup.classList.remove('show');desktopProfileTrigger.setAttribute('aria-expanded', 'false');}}});window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMobileMenu(); });}
-        function renderDynamicNavbarContent(userProfile) {
-            const isAdmin = userProfile && userProfile.role === 'admin';
-            
+        function renderDynamicNavbarContent(isAdmin) {
             const homeLink = { href: isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html', text: 'Home' };
             const ordersLink = { href: 'view-orders.html', text: 'All Orders' };
             const thirdLink = isAdmin 
@@ -588,7 +565,11 @@
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() }; 
                     currentUserName = currentUserProfile.displayName || "User"; 
                     
-                    renderDynamicNavbarContent(currentUserProfile);
+                    // The main control logic
+                    const isAdmin = currentUserProfile.role === 'admin';
+                    document.body.classList.add(isAdmin ? 'is-admin' : 'is-employee');
+                    
+                    renderDynamicNavbarContent(isAdmin);
                     populateNavbar(user);
                     
                     const urlParams = new URLSearchParams(window.location.search); 
@@ -609,9 +590,9 @@
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
         actionsMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); actionsDropdown.classList.toggle('show'); });
         window.addEventListener('click', () => { if (actionsDropdown.classList.contains('show')) actionsDropdown.classList.remove('show'); });
-        menuEditBtn.addEventListener('click', () => window.location.href = `order-form.html?id=${currentOrderId}`);
-        menuEditTotalBtn.addEventListener('click', openEditTotalModal);
-        menuDeleteBtn.addEventListener('click', handleDeleteOrder);
+        document.getElementById('menu-edit-btn').addEventListener('click', () => window.location.href = `order-form.html?id=${currentOrderId}`);
+        document.getElementById('menu-edit-total-btn').addEventListener('click', openEditTotalModal);
+        document.getElementById('menu-delete-btn').addEventListener('click', handleDeleteOrder);
         detailCompleteBtn.addEventListener('click', handleCompleteOrder);
         tabsContainer.addEventListener('click', (e) => { const clickedTab = e.target.closest('.tabs__button'); if (!clickedTab) return; tabButtons.forEach(btn => btn.classList.remove('active')); contentPanes.forEach(pane => pane.classList.remove('active')); clickedTab.classList.add('active'); document.getElementById(`tab-${clickedTab.dataset.tab}`).classList.add('active'); });
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
