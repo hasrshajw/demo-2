@@ -1,647 +1,243 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Schedule Template Editor</title>
-
-<!-- FIREBASE SDKs -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
-<!-- FONTS -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-
-<style>
-    :root {
-        --primary-color: #012726;
-        --primary-hover: #024443;
-        --primary-light: #e6f6f6;
-        --danger-color: #d32f2f;
-        --danger-hover: #b71c1c;
-        --danger-light: #fde8e8;
-        --warning-color: #f59e0b;
-        --success-color: #2e7d32;
-        --border-color: #e5e7eb;
-        --background-color: #f8fafc;
-        --text-primary: #1f2937;
-        --text-secondary: #6b7280;
-        --surface-color: #ffffff;
-        --radius-md: 8px;
-        --radius-lg: 16px;
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        --ease: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
-    html {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: var(--background-color);
-        margin: 0;
-        padding: 88px 20px 20px 20px; /* Add padding for fixed header */
-        color: var(--text-primary);
-    }
-    .hidden { display: none !important; }
-
-    /* App Header */
-    #app-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        background-color: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid var(--border-color);
-        padding: 12px 20px;
-    }
-    .header-content {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    #user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; }
-    #user-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: var(--border-color); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--text-secondary); }
-    #user-email { font-weight: 600; color: var(--text-primary); }
-    #logout-button {
-        background-color: transparent;
-        color: var(--text-secondary);
-        border: 1px solid var(--border-color);
-        padding: 8px 16px;
-        border-radius: var(--radius-md);
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 14px;
-        transition: all 0.2s var(--ease);
-    }
-    #logout-button:hover { background-color: var(--danger-light); color: var(--danger-hover); border-color: var(--danger-hover); }
-
-    /* Main Layout */
-    .master-container {
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-    .page-title {
-        font-size: 2rem;
-        font-weight: 700;
-        margin: 0 0 24px 0;
-    }
-    
-    /* Schedule Block as a Card */
-    .schedule-block {
-        background: var(--surface-color);
-        padding: 24px;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-md);
-        margin-bottom: 32px;
-    }
-    
-    .schedule-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px; }
-    .schedule-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin: 0;
-        flex-grow: 1;
-        border: none;
-        padding: 4px 8px;
-        margin: -4px -8px; /* Offset padding */
-        border-radius: var(--radius-md);
-        font-family: 'Noto Sans Telugu', sans-serif;
-        color: var(--text-primary);
-    }
-    .schedule-title:focus { outline: 2px solid var(--primary-color); background-color: var(--primary-light); }
-    
-    .status-indicator {
-        font-size: 12px;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 999px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: all 0.3s var(--ease);
-    }
-    .status-indicator::before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: currentColor;
-    }
-    .status-indicator[data-status="synced"] { color: var(--success-color); background-color: #eaf5ea; }
-    .status-indicator[data-status="syncing"] { color: var(--warning-color); background-color: #fffbeb; }
-    .status-indicator[data-status="error"] { color: var(--danger-color); background-color: var(--danger-light); }
-    
-    /* Toolbar */
-    .toolbar { display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap; gap: 8px;}
-    .toolbar-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--border-color); background-color: var(--surface-color); border-radius: var(--radius-md); transition: all 0.2s var(--ease); }
-    .toolbar-btn:hover:not(:disabled) { background-color: #f9fafb; border-color: #d1d5db; color: var(--text-primary); }
-    .toolbar-btn:disabled { cursor: not-allowed; opacity: 0.5; }
-    .toolbar-btn .material-symbols-outlined { font-size: 20px; }
-    .delete-btn { margin-left: auto; }
-    .delete-btn:hover:not(:disabled) { background-color: var(--danger-light); color: var(--danger-color); border-color: var(--danger-color); }
-
-    /* ========================================================= */
-    /* === TABLE STYLES - PRESERVED AS PER INSTRUCTION === */
-    /* ========================================================= */
-    table { width: 100%; border-collapse: collapse; border: 2px solid #4B0082; font-family: 'Noto Sans Telugu', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.25px; }
-    th, td { border: 1px solid #333; padding: 0 8px; text-align: left; vertical-align: middle; position: relative; height: 36px; }
-    [contenteditable="true"]:focus { background-color: #fffbe5; }
-    .row-handle { position: absolute; left: -30px; top: 0; width: 30px; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #aaa; user-select: none; }
-    .row-handle-icon { opacity: 0; transition: opacity 0.2s; font-size: 18px; }
-    tr:hover .row-handle-icon { opacity: 1; }
-    td.cell-selected, th.cell-selected { outline: 2px solid var(--primary-color) !important; outline-offset: -2px; background-color: var(--primary-light); }
-    .cell-content-wrapper { display: flex; align-items: center; gap: 8px; height: 100%; }
-    .cell-icon { height: 70%; max-height: 24px; object-fit: contain; flex-shrink: 0; }
-    .header-row .cell-icon { filter: brightness(0) invert(1); }
-    .header-content-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; height: 100%; }
-    .header-row td { font-size: 14px; color: #ffffff; height: 42px; }
-    /* ========================================================= */
-    /* === END OF PRESERVED TABLE STYLES === */
-    /* ========================================================= */
-    
-    /* Context Menu */
-    .context-menu { position: fixed; display: none; background: var(--surface-color); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); z-index: 1001; padding: 6px; min-width: 220px; border: 1px solid var(--border-color); }
-    .context-menu-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; font-size: 14px; border-radius: 6px; }
-    .context-menu-item:hover { background: #f9fafb; }
-    .context-menu-item.disabled { color: #9ca3af; cursor: not-allowed; background: var(--surface-color); }
-    .context-menu-item.delete { color: var(--danger-color); }
-    .context-menu-item.delete:hover { background-color: var(--danger-light); }
-    .context-menu-item.active { background-color: var(--primary-light); color: var(--primary-color); font-weight: 600; }
-    .context-menu-item .material-symbols-outlined { font-size: 20px; color: var(--text-secondary); }
-    .context-menu-item.delete .material-symbols-outlined { color: var(--danger-color); }
-    .context-menu hr { border: none; height: 1px; background-color: var(--border-color); margin: 6px 0; }
-
-    /* Add Button Footer */
-    #add-schedule-footer { max-width: 1100px; margin: 0 auto; }
-    .add-button { width: 100%; padding: 16px; font-size: 16px; font-weight: 600; color: var(--primary-color); background-color: var(--primary-light); border: 2px dashed #b3e0e0; border-radius: var(--radius-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s var(--ease); }
-    .add-button:hover { background-color: var(--primary-color); border-color: var(--primary-hover); color: white; }
-    .add-button .material-symbols-outlined { font-size: 22px; }
-
-    /* ===================================================================== */
-    /* === NEW: MOBILE RESPONSIVE STYLES (Inspired by Quote Example) === */
-    /* ===================================================================== */
-    @media (max-width: 768px) {
-        body {
-            padding: 72px 0 0 0; /* Adjust for smaller header, remove side/bottom padding */
-            background-color: var(--surface-color); /* Make body background white for edge-to-edge card feel */
-        }
-        #app-header {
-            padding: 12px 16px;
-        }
-        #user-info #user-email {
-            max-width: 120px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        /* Hide "Welcome," text on small screens */
-        #user-info span:not(#user-email) {
-            display: none;
-        }
-
-        .master-container {
-            max-width: 100%;
-            margin: 0;
-        }
-        .page-title {
-            font-size: 1.5rem;
-            padding: 16px 16px 0 16px;
-            margin-bottom: 16px;
-        }
-        .schedule-block {
-            border-radius: 0;
-            box-shadow: none;
-            padding: 16px;
-            margin-bottom: 0;
-            border-bottom: 8px solid var(--background-color); /* Separator for multiple cards */
-        }
-        .schedule-title {
-            font-size: 1.25rem;
-        }
-        .toolbar {
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-        }
-        #add-schedule-footer {
-            padding: 16px;
-        }
-        .add-button {
-            padding: 14px;
-            font-size: 15px;
-        }
-    }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayrollPro - Quote</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        /* --- EXACT, COMPLETE CSS FROM YOUR EXAMPLE --- */
+        :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--font-icon:"Material Symbols Outlined";--light-bg-primary:#fff;--light-bg-secondary:#f7f9fc;--light-bg-tertiary:#f1f3f6;--light-text-primary:#012726;--light-text-secondary:#52616b;--light-text-muted:#9ca3af;--light-border:#e5e7eb;--light-border-hover:#d1d5db;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--color-accent:#33c375;--color-accent-hover:#2cac66;--color-accent-text:#012726;--color-danger:#ef4444;--color-danger-hover:#dc2626;--color-danger-text:#fff;--color-warning:#f59e0b;--color-warning-hover:#d97706;--color-warning-text:#fff;--color-reopen:#6f42c1;--color-reopen-hover:#5a3d9a;--color-reopen-text:#fff;--status-pending-bg:#eef2ff;--status-pending-text:#4338ca;--status-completed-bg:#f0fdf4;--status-completed-text:#166534;--status-overdue-bg:#fef2f2;--status-overdue-text:#be123c;--status-overdue-border:#fecaca;--status-upcoming-bg:#fffbeb;--status-upcoming-text:#b45309;--status-upcoming-border:#fde68a;--color-focus-ring:rgba(51,195,117,.35);--radius-sm:0.25rem;--radius-md:0.5rem;--radius-lg:1rem;--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04);--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--shadow-lg:0 10px 20px -3px rgba(0,0,0,.07),0 4px 8px -4px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1)}*,:after,:before{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:var(--light-text-secondary);margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:1rem;padding-top:1rem}h1,h2,h3{font-weight:600;color:var(--light-text-primary);margin:0}h1{font-size:1.875rem;line-height:2.25rem}h2{font-size:1.5rem;line-height:2rem}h3{font-size:1.25rem;line-height:1.75rem}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.screen{display:none}.screen.active{display:block;animation:fadeIn .5s var(--ease) forwards}button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer;-webkit-user-select:none;user-select:none}button:hover:not(:disabled),.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:var(--shadow-md)}button:focus-visible,.btn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}.btn-primary{background-color:var(--color-primary);color:var(--color-primary-text)}.btn-primary:hover:not(:disabled){background-color:var(--color-primary-hover)}.btn-secondary{background-color:var(--light-bg-primary);color:var(--light-text-secondary);border-color:var(--light-border);box-shadow:var(--shadow-sm)}.btn-secondary:hover:not(:disabled){background-color:var(--light-bg-tertiary);border-color:var(--light-border-hover);color:var(--light-text-primary)}.input-group{position:relative}.input-field{width:100%;background-color:var(--light-bg-primary);border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:1rem;padding:1rem;color:var(--light-text-primary);transition:all .2s;outline:none}.input-label{position:absolute;top:1rem;left:1rem;color:var(--light-text-secondary);pointer-events:none;transition:all .2s var(--ease);background-color:var(--light-bg-primary);padding:0 .25rem}
+        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label {top: -0.625rem; font-size: 0.75rem; color: var(--color-primary);}
+        .input-field:focus{border-color:var(--color-primary);box-shadow:0 0 0 3px var(--color-focus-ring)}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);align-items:center;justify-content:center;animation:fadeIn .3s var(--ease)}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:420px;text-align:center;animation:popIn .3s var(--ease)}.modal-message{font-size:1.125rem;font-weight:500;margin-bottom:1.5rem;color:var(--light-text-primary)}.modal-buttons{display:flex;justify-content:center;gap:1rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid var(--light-bg-tertiary);border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}#quote-screen{background:#e9e9e9;padding:20px;font-size:14px}#quote-screen .quote-controls{display:flex;justify-content:center;align-items:center;gap:1rem;margin-bottom:20px}#quote-screen .btn{width:auto}#quote-screen .invoice-box{max-width:794px;margin:auto;background:#fff;border-radius:6px;color:#2d3748;display:flex;flex-direction:column;padding:30px}#quote-screen .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #e2e8f0;padding-bottom:20px}#quote-screen .logo-img{max-width:160px;height:auto}#quote-screen .invoice-details{text-align:right;font-size:13px;line-height:1.5;color:#718096}#quote-screen .invoice-details strong{color:#2d3748}#quote-screen .bill-to{margin-top:25px}#quote-screen .bill-to h3{font-weight:600;font-size:16px;margin-bottom:8px}#quote-screen .bill-to p{font-size:13px;color:#718096;margin:3px 0;line-height:1.6}#quote-screen table{width:100%;margin-top:25px;border-collapse:collapse;font-size:13px}#quote-screen table th{background-color:#535456;color:#fff;font-weight:600;padding:12px 8px;text-align:left;border-bottom:none}#quote-screen table td{padding:10px 8px;border-bottom:1px solid #e2e8f0;color:#718096}#quote-screen table td:nth-child(2){color:#2d3748;font-weight:500}#quote-screen tbody tr:nth-child(even){background-color:#f8f8f7}#quote-screen tbody tr:nth-child(odd){background-color:#fff}#quote-screen table td:not(:first-child):not(:nth-child(2)),#quote-screen table th:not(:first-child):not(:nth-child(2)){text-align:right}#quote-screen .invoice-summary{margin-top:auto;padding-top:20px;display:flex;justify-content:flex-end}#quote-screen .invoice-summary table{width:40%;font-size:14px;margin-top:0}#quote-screen .invoice-summary table td{border-bottom:1px solid #e2e8f0;padding:8px;background-color:#fff!important}#quote-screen .invoice-summary table tr:last-child{font-weight:700;font-size:18px;color:#2d3748}#quote-screen .invoice-summary table tr:last-child td{background-color:#f7fafc!important;border-bottom:none;padding:12px 8px}#quote-screen .terms{margin-top:20px;padding-top:20px;border-top:1px solid #e2e8f0;font-size:11px;color:#888;line-height:1.5}#quote-screen .terms strong{color:#718096;font-weight:600;font-size:12px}#quote-screen .terms ol{padding-left:15px;margin-top:8px}#quote-screen .terms ol li{margin-bottom:8px}#quote-screen .footer{margin-top:auto;padding-top:20px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#718096}#quote-screen .signature p{margin-top:0;font-weight:600;color:#2d3748}@media (max-width:640px){#quote-screen{padding:0;background-color:#fff}#quote-screen .quote-controls{margin:15px}#quote-screen .invoice-box{padding:15px;min-height:unset;border-radius:0;box-shadow:none}#quote-screen .header{padding-bottom:10px}#quote-screen .logo-img{max-width:100px}#quote-screen .bill-to h3,#quote-screen .invoice-details,#quote-screen .invoice-summary table tr:last-child,#quote-screen table{font-size:10px}#quote-screen .bill-to h3{font-size:12px}#quote-screen table td,#quote-screen table th{padding:5px 4px}#quote-screen .invoice-summary{margin-top:15px;padding-top:15px}#quote-screen .invoice-summary table{width:80%}#quote-screen .invoice-summary table tr:last-child{font-size:12px}#quote-screen .terms{font-size:8px;margin-top:15px;padding-top:15px}#quote-screen .terms li,#quote-screen .terms strong{font-size:8px}#quote-screen .terms ol li{margin-bottom:4px}#quote-screen .footer{font-size:8px;flex-direction:column;align-items:flex-start;gap:8px;margin-top:15px;padding-top:15px}}@media print{@page{size:A4;margin:0}body{background:#fff!important;padding:0!important;margin:0!important}body>*:not(.app-container),.navbar,.fab-container{display:none!important}.app-container{margin:0!important;padding:0!important;max-width:100%!important;width:100%!important}.app-container>*:not(#quote-screen){display:none!important}#quote-screen{display:block!important;padding:0!important;background:#fff!important}#quote-screen .quote-controls{display:none!important}#quote-screen .invoice-box{box-shadow:none!important;border:none!important;border-radius:0!important;margin:0!important;padding:10mm!important;max-width:100%!important;width:100%!important;min-height:initial!important}#quote-screen table th{background-color:#535456!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}#quote-screen tbody tr:nth-child(even){background-color:#f8f8f7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+    </style>
 </head>
 <body>
 
-<div id="app-container" class="hidden">
-    <header id="app-header">
-        <div class="header-content">
-            <div id="user-info">
-                <div id="user-avatar"></div>
-                <span>Welcome, <span id="user-email"></span></span>
+    <div class="app-container">
+        <div id="quote-screen" class="screen active">
+            <div id="quote-screen-printable">
+                <!-- Content will be injected by JavaScript -->
             </div>
-            <button id="logout-button">Logout</button>
         </div>
-    </header>
-
-    <div class="master-container">
-        <h1 class="page-title">Schedule Template Editor</h1>
-        <div id="schedules-wrapper"></div>
     </div>
     
-    <div id="add-schedule-footer">
-        <button id="addNewScheduleBtn" class="add-button">
-             <span class="material-symbols-outlined">add</span>
-            Add New Schedule Template
-        </button>
-    </div>
-</div>
-
-<template id="schedule-template">
-    <div class="schedule-block">
-        <div class="schedule-header">
-            <h2 class="schedule-title" contenteditable="true"></h2>
-            <div class="status-indicator"></div>
+    <div id="price-modal" class="modal">
+        <div class="modal-content" style="max-width: 480px; text-align: left;">
+             <form id="price-form">
+                <h3 style="margin-bottom: 2rem;">Enter Pricing Details</h3>
+                <div class="input-group" style="margin-bottom: 1.5rem;">
+                    <input type="number" id="price-per-sft" class="input-field" min="0" step="0.01" placeholder=" " required>
+                    <label for="price-per-sft" class="input-label">Price per SFT (₹)</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="transport-charges" class="input-field" min="0" step="1" placeholder=" " value="0" required>
+                    <label for="transport-charges" class="input-label">Transport Charges (₹)</label>
+                </div>
+                <div class="modal-buttons" style="margin-top: 2rem; justify-content: flex-end;">
+                    <button type="button" id="price-cancel-btn" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Generate Quote</button>
+                </div>
+            </form>
         </div>
-        <div class="toolbar">
-            <button class="toolbar-btn undo-btn" disabled><span class="material-symbols-outlined">undo</span> Undo</button>
-            <button class="toolbar-btn redo-btn" disabled><span class="material-symbols-outlined">redo</span> Redo</button>
-            <button class="toolbar-btn reset-btn"><span class="material-symbols-outlined">restart_alt</span> Reset</button>
-            <button class="toolbar-btn delete-btn"><span class="material-symbols-outlined">delete</span> Delete Template</button>
-        </div>
-        <table>
-            <colgroup><col style="width: 60%;"><col style="width: 20%;"><col style="width: 20%;"></colgroup>
-            <tbody class="schedule-table-body"></tbody>
-        </table>
     </div>
-</template>
+    <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn-primary" style="min-width: 120px;">OK</button></div></div>
+    <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
 
-<div id="rowContextMenu" class="context-menu"></div>
-<div id="cellContextMenu" class="context-menu"></div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<script>
-(function() {
-    'use strict';
-    const firebaseConfig = {
-      apiKey: "AIzaSyDLK5f4C-nfG6fz0ajqqay1q9TTN6rxgmQ",
-      authDomain: "schedule-harsha.firebaseapp.com",
-      projectId: "schedule-harsha",
-      storageBucket: "schedule-harsha.firebasestorage.app",
-      messagingSenderId: "965478014820",
-      appId: "1:965478014820:web:1c36c5d890a27e599aa471"
-    };
+        // --- DOM ELEMENTS & APP STATE ---
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const messageModal = document.getElementById('message-modal');
+        const messageText = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
+        const priceModal = document.getElementById('price-modal');
+        const priceForm = document.getElementById('price-form');
+        const pricePerSftInput = document.getElementById('price-per-sft');
+        const transportChargesInput = document.getElementById('transport-charges');
+        const priceCancelBtn = document.getElementById('price-cancel-btn');
+        const quoteScreenPrintable = document.getElementById('quote-screen-printable');
+        let db, auth;
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const templatesCollection = db.collection("templates");
-    
-    const ADMIN_EMAIL = 'harshavardhanjw@gmail.com';
-    let currentUser = null;
-    let isAdmin = false;
+        // --- UI & HELPER FUNCTIONS ---
+        const showLoading = () => loadingOverlay.style.display = 'flex';
+        const hideLoading = () => loadingOverlay.style.display = 'none';
+        const showMessageModal = (message) => { messageText.textContent = message; messageModal.style.display = 'flex'; };
 
-    // --- PRESERVED JAVASCRIPT LOGIC (UNCHANGED) ---
-    const DEFAULT_TABLE_HTML = `<tr class="no-actions"><th style="background-color: rgb(240, 248, 255);"><span class="row-handle"></span>బైబిలు అధ్యాయం, ప్రసంగి 11-12</th><th style="background-color: rgb(240, 248, 255);">తేదీ:</th><th style="background-color: rgb(240, 248, 255);"></th></tr><tr class="no-actions"><td><div class="cell-content-wrapper"><span class="row-handle"></span><img src="https://via.placeholder.com/40/8A2BE2/FFFFFF?text=♫" class="cell-icon"><span>పాట: 155</span></div></td><td style="text-align: right;">చైర్మన్</td><td></td></tr><tr class="no-actions"><td><span class="row-handle"></span>ఆరంభ మాటలు (1 నిమి.)</td><td style="text-align: right;">ప్రార్థన:</td><td></td></tr><tr class="header-row no-actions" data-section="treasures"><td colspan="3" style="background-color: rgb(70, 132, 153);"><div class="header-content-wrapper"><span class="row-handle"></span><img src="https://via.placeholder.com/40/FFFFFF/468499?text=T" class="cell-icon"><span>దేవుని వాక్యంలో ఉన్న సంపద</span></div></td></tr><tr><td colspan="3"><span class="row-handle"><span class="row-handle-icon">⠿</span></span>1. ఆరోగ్యంగా ఉండండి, లైఫ్‌ని ఎంజాయ్‌ చేయండి. (10 నిమి.)</td></tr><tr><td colspan="3"><span class="row-handle"><span class="row-handle-icon">⠿</span></span>2. దేవుని వాక్యంలో రత్నాలు (10 నిమి.)</td></tr><tr><td colspan="3"><span class="row-handle"><span class="row-handle-icon">⠿</span></span>3. చదవాల్సిన బైబిలు భాగం: (4 నిమి.)</td></tr><tr class="header-row no-actions" data-section="ministry"><td colspan="3" style="background-color: rgb(212, 162, 42);"><div class="header-content-wrapper"><span class="row-handle"></span><img src="https://via.placeholder.com/40/FFFFFF/d4a22a?text=M" class="cell-icon"><span>చక్కగా సువార్త ప్రకటించాలి</span></div></td></tr><tr><td><span class="row-handle"><span class="row-handle-icon">⠿</span></span>4. మళ్ళీ కలిసినప్పుడు (3 నిమి.)</td><td colspan="2"></td></tr><tr><td><span class="row-handle"><span class="row-handle-icon">⠿</span></span>5. మళ్ళీ కలిసినప్పుడు (4 నిమి.)</td><td colspan="2"></td></tr><tr><td><span class="row-handle"><span class="row-handle-icon">⠿</span></span>6. ప్రసంగం (5 నిమి.)</td><td colspan="2"></td></tr><tr class="header-row no-actions" data-section="living"><td colspan="3" style="background-color: rgb(192, 66, 53);"><div class="header-content-wrapper"><span class="row-handle"></span><img src="https://via.placeholder.com/40/FFFFFF/c04235?text=L" class="cell-icon"><span>మన క్రైస్తవ జీవితం</span></div></td></tr><tr><td><div class="cell-content-wrapper"><span class="row-handle"><span class="row-handle-icon">⠿</span></span><img src="https://via.placeholder.com/40/8A2BE2/FFFFFF?text=♫" class="cell-icon"><span>పాట: 111</span></div></td><td colspan="2"></td></tr><tr><td><span class="row-handle"><span class="row-handle-icon">⠿</span></span>7. స్థానిక అవసరాలు (15 నిమి.)</td><td colspan="2"></td></tr><tr><td><span class="row-handle"><span class="row-handle-icon">⠿</span></span>8. సంఘ బైబిలు అధ్యయనం: (30 నిమి.)</td><td colspan="2"></td></tr><tr class="no-actions"><td><span class="row-handle"></span>ముగింపు మాటలు (3 నిమి.)</td><td style="text-align: right;">చైర్మన్</td><td></td></tr><tr class="no-actions"><td><div class="cell-content-wrapper"><span class="row-handle"></span><img src="https://via.placeholder.com/40/8A2BE2/FFFFFF?text=♫" class="cell-icon"><span>పాట: 8</span></div></td><td style="text-align: right;">ముగింపు ప్రార్థన:</td><td></td></tr>`.trim();
+        // --- CORE FUNCTIONALITY ---
+        const createQuoteHtml = (order, orderId, pricePerSft, transportCharges) => {
+            let windowsForPdf = [];
+            try { windowsForPdf = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data", e); }
+            
+            let tableRows = '';
+            let subTotal = 0;
 
-    const appContainer = document.getElementById('app-container');
-    const userEmailEl = document.getElementById('user-email');
-    const userAvatarEl = document.getElementById('user-avatar');
-    const schedulesWrapper = document.getElementById('schedules-wrapper');
-    const scheduleTemplate = document.getElementById('schedule-template');
-    const rowContextMenu = document.getElementById('rowContextMenu');
-    const cellContextMenu = document.getElementById('cellContextMenu');
-
-    let activeSchedules = {};
-    let activeContextScheduleId = null;
-    let currentListener = null;
-
-    const debounce = (func, delay) => {
-        let timeout;
-        return (...args) => { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), delay); };
-    };
-
-    class Schedule {
-        constructor(id, initialData) {
-            this.id = id;
-            this.undoHistory = [];
-            this.redoHistory = [];
-            this.selectedCells = [];
-            this.activeRow = null;
-            this.isUpdatingFromRemote = false;
-
-            this.initDOM();
-            this.render(initialData);
-            this.setupEventListeners();
-        }
-
-        initDOM() {
-            const templateClone = scheduleTemplate.content.cloneNode(true);
-            this.element = templateClone.querySelector('.schedule-block');
-            this.element.dataset.id = this.id;
-            this.titleEl = this.element.querySelector('.schedule-title');
-            this.tableBody = this.element.querySelector('.schedule-table-body');
-            this.statusIndicator = this.element.querySelector('.status-indicator');
-            this.undoBtn = this.element.querySelector('.undo-btn');
-            this.redoBtn = this.element.querySelector('.redo-btn');
-            schedulesWrapper.appendChild(this.element);
-        }
-
-        render(data) {
-            this.isUpdatingFromRemote = true;
-            if (document.activeElement !== this.titleEl) this.titleEl.textContent = data.name;
-
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = `<table><tbody>${data.content}</tbody></table>`;
-            tempDiv.querySelectorAll('td, th').forEach(cell => cell.setAttribute('contenteditable', 'true'));
-            const contentToRender = tempDiv.querySelector('tbody').innerHTML;
-
-            if (!this.tableBody.contains(document.activeElement)) {
-                this.tableBody.innerHTML = contentToRender;
-            }
-
-            this.pushState(data.content, false);
-            this.updateStatus('Synced', 'synced');
-            this.isUpdatingFromRemote = false;
-        }
-
-        pushState(content, shouldSave = true) {
-            if (this.undoHistory.length > 0 && this.undoHistory[this.undoHistory.length - 1] === content) return;
-            this.undoHistory.push(content);
-            this.redoHistory = [];
-            this.updateUndoRedoButtons();
-            if (shouldSave) {
-                this.debouncedSaveToFirestore();
-            }
-        }
-        
-        saveToFirestore() {
-            if (this.isUpdatingFromRemote) return;
-            this.updateStatus('Syncing...', 'syncing');
-            const payload = { name: this.titleEl.textContent, content: this.tableBody.innerHTML };
-            templatesCollection.doc(this.id).set(payload, { merge: true })
-                .catch(err => this.updateStatus('Error', 'error'));
-        }
-        
-        debouncedSaveToFirestore = debounce(() => this.saveToFirestore(), 1500);
-        updateUndoRedoButtons() { this.undoBtn.disabled = this.undoHistory.length <= 1; this.redoBtn.disabled = this.redoHistory.length === 0; }
-        updateStatus(text, status) { this.statusIndicator.textContent = text; this.statusIndicator.dataset.status = status; }
-        clearCellSelection() { this.selectedCells.forEach(c => c.classList.remove('cell-selected')); this.selectedCells = []; }
-
-        setupEventListeners() {
-            this.element.addEventListener('click', (e) => this.handleElementClick(e));
-            this.element.addEventListener('contextmenu', (e) => this.handleContextMenu(e));
-            this.titleEl.addEventListener('input', () => this.pushState(this.tableBody.innerHTML));
-            this.tableBody.addEventListener('input', () => this.pushState(this.tableBody.innerHTML));
-        }
-
-        handleElementClick(e) {
-            const target = e.target;
-            const handle = target.closest('.row-handle');
-            if (target.closest('.undo-btn')) this.undo();
-            else if (target.closest('.redo-btn')) this.redo();
-            else if (target.closest('.reset-btn')) this.reset();
-            else if (target.closest('.delete-btn')) this.delete();
-            else if (handle && !handle.closest('tr').classList.contains('no-actions')) {
-                e.preventDefault();
-                activeContextScheduleId = this.id;
-                this.activeRow = handle.closest('tr');
-                showRowContextMenu(e);
-            } else {
-                const cell = target.closest('td, th');
-                if (cell && (e.ctrlKey || e.metaKey)) {
-                    e.preventDefault();
-                    cell.classList.toggle('cell-selected');
-                    this.selectedCells = Array.from(this.tableBody.querySelectorAll('.cell-selected'));
-                } else if (cell) {
-                    if (!cell.classList.contains('cell-selected')) this.clearCellSelection();
-                }
-            }
-        }
-
-        handleContextMenu(e) {
-            const cell = e.target.closest('td, th');
-            if (cell) {
-                e.preventDefault();
-                activeContextScheduleId = this.id;
-                if (!cell.classList.contains('cell-selected')) {
-                    this.clearCellSelection();
-                    cell.classList.add('cell-selected');
-                    this.selectedCells = [cell];
-                }
-                showCellContextMenu(e);
-            }
-        }
-        
-        undo() { if (this.undoHistory.length <= 1) return; this.redoHistory.push(this.undoHistory.pop()); const prevState = this.undoHistory[this.undoHistory.length - 1]; this.tableBody.innerHTML = prevState; this.pushState(prevState); }
-        redo() { if (this.redoHistory.length === 0) return; const nextState = this.redoHistory.pop(); this.tableBody.innerHTML = nextState; this.pushState(nextState); }
-        reset() { if (confirm('Are you sure you want to reset this template?')) { this.tableBody.innerHTML = DEFAULT_TABLE_HTML; this.pushState(this.tableBody.innerHTML); } }
-        delete() { if (confirm('Are you sure you want to permanently delete this template?')) { templatesCollection.doc(this.id).delete(); } }
-        destroy() { this.element.remove(); }
-    }
-    
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            if (user.email !== ADMIN_EMAIL) {
-                window.location.replace('./dashboard.html');
-                return;
-            }
-            currentUser = user;
-            isAdmin = true;
-            appContainer.classList.remove('hidden');
-            userEmailEl.textContent = user.email;
-            userAvatarEl.textContent = user.email.charAt(0).toUpperCase();
-            initAdminApp();
-        } else {
-            window.location.replace('./login.html');
-        }
-    });
-
-    function initAdminApp() {
-        if (currentListener) currentListener();
-        currentListener = templatesCollection.orderBy("createdAt").onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                const id = change.doc.id;
-                const data = change.doc.data();
-                if (change.type === 'added') {
-                    if (!activeSchedules[id]) activeSchedules[id] = new Schedule(id, data);
-                }
-                if (change.type === 'modified') {
-                    if (activeSchedules[id]) activeSchedules[id].render(data);
-                }
-                if (change.type === 'removed') {
-                    if (activeSchedules[id]) {
-                        activeSchedules[id].destroy();
-                        delete activeSchedules[id];
-                    }
-                }
+            windowsForPdf.forEach((win, index) => {
+                const heightMm = parseFloat(win.height || 0);
+                const widthMm = parseFloat(win.width || 0);
+                const sft = (widthMm / 304) * (heightMm / 304); // Using original 304 factor
+                const windowCost = sft * pricePerSft;
+                subTotal += windowCost;
+                const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                tableRows += `<tr><td>${(index + 1).toString().padStart(2, '0')}</td><td>${itemName}${win.hasGlass && win.glassName ? ` <br><small>(${win.glassName})</small>` : ''}</td><td>${widthMm}</td><td>${heightMm}</td><td>304</td><td>${sft.toFixed(2)}</td><td>${pricePerSft.toLocaleString('en-IN')}</td><td>${windowCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>`;
             });
-        }, error => console.error("Firestore connection error:", error));
-    }
 
-    function setupGlobalUI() {
-        document.getElementById('logout-button').addEventListener('click', () => auth.signOut());
-        document.getElementById('addNewScheduleBtn').addEventListener('click', () => {
-            templatesCollection.add({ name: "New Schedule Template", content: DEFAULT_TABLE_HTML, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-        });
-        document.addEventListener('click', e => {
-            if (!e.target.closest('.context-menu, .row-handle, [contenteditable]')) {
-                 rowContextMenu.style.display = 'none';
-                 cellContextMenu.style.display = 'none';
+            const gst = subTotal * 0.18;
+            const grandTotal = subTotal + gst + transportCharges;
+            
+            return `
+                <div class="quote-controls">
+                    <button id="quote-back-btn" class="btn btn-secondary" data-order-id="${orderId}"><span class="material-symbols-outlined">arrow_back</span>Back to Details</button>
+                    <button onclick="window.print()" class="btn btn-primary print-button"><span class="material-symbols-outlined">print</span>Print / Save PDF</button>
+                </div>
+                <div class="invoice-box">
+                    <div>
+                        <div class="header">
+                            <div class="logo"><img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Company Logo" class="logo-img"></div>
+                            <div class="invoice-details">
+                                <div><strong>Quotation Date:</strong> ${new Date().toLocaleDateString()}</div>
+                                <div><strong>Prepared by:</strong> ${order.createdBy || 'N/A'}</div>
+                            </div>
+                        </div>
+                        <div class="bill-to">
+                            <h3>QUOTATION FOR</h3>
+                            <p><strong>${order.name}</strong><br>${order.address.replace(/\n/g, '<br>')}<br>Phone: ${order.mobileNumber || 'N/A'}</p>
+                        </div>
+                        <table>
+                            <thead><tr><th>S.No</th><th>Item Name</th><th>Width (mm)</th><th>Height (mm)</th><th>mm/ft</th><th>SFT</th><th>Price (₹)</th><th>Total Cost (₹)</th></tr></thead>
+                            <tbody>${tableRows}</tbody>
+                        </table>
+                    </div>
+                    <div class="invoice-summary">
+                        <table>
+                            <tr><td>Sub Total:</td><td style="text-align: right;">${subTotal.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
+                            <tr><td>GST 18%:</td><td style="text-align: right;">+${gst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
+                            <tr><td>Transport:</td><td style="text-align: right;">+${transportCharges.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
+                            <tr><td>Grand Total:</td><td style="text-align: right;">₹ ${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
+                        </table>
+                    </div>
+                    <div class="terms">
+                        <strong>Terms & Conditions</strong>
+                        <ol>
+                            <li>This quotation is based on the <strong>approximate measurements</strong> shared by the customer. <strong>Final measurements</strong> will be taken after the order is confirmed. The total square footage (SFT) may <strong>increase or decrease</strong> accordingly.</li>
+                            <li>A <strong>signed work order</strong> with full contract details must be submitted on the customer's <strong>official letterhead</strong> along with the <strong>advance payment</strong>.</li>
+                            <li><strong>Payment terms:</strong> <strong>60% advance</strong>, <strong>30% after material delivery</strong>, and remaining <strong>10% after installation</strong>.</li>
+                            <li>All payments by <strong>cheque or demand draft</strong> in favour of <strong>“PREMIUM U-PVC DOORS & WINDOWS”</strong>.</li>
+                            <li>Customer is responsible for: <strong>safe storage</strong> of materials, <strong>scaffolding</strong>, and <strong>power supply</strong> at site.</li>
+                            <li>This quotation is <strong>valid for 30 days</strong>.</li>
+                            <li><strong>Delivery timeline:</strong> <strong>30 days from the date of final measurement</strong>.</li>
+                            <li>Customer must arrange any <strong>masonry chipping or leveling</strong> at their own expense.</li>
+                        </ol>
+                    </div>
+                    <div class="footer">
+                        <div class="icons"><span>📞 +91 79815 99155</span> | <span>✉️ kolatapu.k@gmail.com</span> | <span>📍 K.S Enterprises, Jewellery Park, Machilipatnam</span></div>
+                        <div class="signature"><p>K.KIRAN KUMAR</p></div>
+                    </div>
+                </div>`;
+        };
+        
+        // --- FIREBASE & PAGE LOGIC ---
+        async function initializeFirebase() {
+            try {
+// Firebase configuration will be injected by Netlify during build
+const firebaseConfig = {
+    apiKey: "__API_KEY__",
+    authDomain: "__AUTH_DOMAIN__",
+    projectId: "__PROJECT_ID__",
+    storageBucket: "__STORAGE_BUCKET__",
+    messagingSenderId: "__MESSAGING_SENDER_ID__",
+    appId: "__APP_ID__",
+    measurementId: "__MEASUREMENT_ID__"
+};
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        const userDoc = await getDoc(doc(db, "users", user.uid));
+                        if (!userDoc.exists() || userDoc.data().status !== 'approved') {
+                            window.location.href = 'login.html';
+                            return;
+                        }
+                        startPageLogic();
+                    } else {
+                        window.location.href = 'login.html';
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                showMessageModal("Critical error initializing application.");
+                hideLoading();
             }
-            if (!e.target.closest('.schedule-block') && !e.ctrlKey && !e.metaKey) {
-                Object.values(activeSchedules).forEach(s => s.clearCellSelection());
+        }
+        
+        function startPageLogic() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            if (orderId) {
+                priceForm.dataset.id = orderId;
+                priceModal.style.display = 'flex'; 
+                pricePerSftInput.focus();
+            } else {
+                showMessageModal("No order specified for quote. Redirecting...");
+                setTimeout(() => window.location.href = 'view-orders.html', 2000);
+            }
+            hideLoading();
+        }
+
+        // --- EVENT LISTENERS ---
+        priceForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            const orderId = e.currentTarget.dataset.id;
+            const price = parseFloat(pricePerSftInput.value);
+            const transport = parseFloat(transportChargesInput.value || 0);
+
+            try {
+                const orderRef = doc(db, 'upvc_orders', orderId);
+                const orderSnap = await getDoc(orderRef);
+
+                if (orderSnap.exists()) {
+                    const order = { id: orderSnap.id, ...orderSnap.data() };
+                    quoteScreenPrintable.innerHTML = createQuoteHtml(order, orderId, price, transport);
+                    priceModal.style.display = 'none';
+                    
+                    // CORRECTED: Attach listener to the newly created back button
+                    document.getElementById('quote-back-btn').addEventListener('click', () => {
+                        window.location.href = `order-details.html?id=${orderId}`;
+                    });
+                } else {
+                    showMessageModal("Could not find the order to generate a quote.");
+                }
+            } catch (error) {
+                console.error("Error generating quote:", error);
+                showMessageModal("An error occurred while generating the quote.");
+            } finally {
+                hideLoading();
             }
         });
-        rowContextMenu.innerHTML = `<div class="context-menu-item" data-action="addAbove"><span class="material-symbols-outlined">arrow_upward</span>Add row above</div><div class="context-menu-item" data-action="addBelow"><span class="material-symbols-outlined">arrow_downward</span>Add row below</div><hr><div class="context-menu-item delete" data-action="delete"><span class="material-symbols-outlined">delete</span>Delete row</div>`;
-        cellContextMenu.innerHTML = `<div class="context-menu-item" data-action="merge"><span class="material-symbols-outlined">merge</span>Merge Cells</div><div class="context-menu-item" data-action="split"><span class="material-symbols-outlined">call_split</span>Split Cell</div><hr><div class="context-menu-item" data-action="align-left"><span class="material-symbols-outlined">format_align_left</span>Align Left</div><div class="context-menu-item" data-action="align-center"><span class="material-symbols-outlined">format_align_center</span>Align Center</div><div class="context-menu-item" data-action="align-right"><span class="material-symbols-outlined">format_align_right</span>Align Right</div>`;
-        rowContextMenu.addEventListener('click', handleContextMenuClick);
-        cellContextMenu.addEventListener('click', handleContextMenuClick);
-    }
-    
-    function handleContextMenuClick(e) {
-        const action = e.target.closest('[data-action]')?.dataset.action;
-        const schedule = activeSchedules[activeContextScheduleId];
-        if (!action || !schedule) return;
-        
-        let newRow;
-        if (schedule.activeRow) {
-            if (action === 'addAbove') newRow = insertNewRow(schedule.activeRow, 'beforebegin');
-            if (action === 'addBelow') newRow = insertNewRow(schedule.activeRow, 'afterend');
-            if (action === 'delete' && confirm('Delete row?')) schedule.activeRow.remove();
-        }
-        
-        if (schedule.selectedCells.length > 0) {
-            if (action.startsWith('align-')) setCellAlignment(schedule, action.split('-')[1]);
-            else if (action === 'merge') mergeCells(schedule);
-            else if (action === 'split') splitCell(schedule);
-        }
-        
-        schedule.pushState(schedule.tableBody.innerHTML);
-        if (newRow) newRow.cells[0].focus();
-        rowContextMenu.style.display = 'none';
-        cellContextMenu.style.display = 'none';
-    }
-    
-    function positionContextMenu(event, menuElement) {
-        const { clientX: mouseX, clientY: mouseY } = event;
-        const { innerWidth, innerHeight } = window;
-        const { offsetWidth: menuWidth, offsetHeight: menuHeight } = menuElement;
-        let x = mouseX + 5, y = mouseY + 5;
-        if (x + menuWidth > innerWidth) x = mouseX - menuWidth - 5;
-        if (y + menuHeight > innerHeight) y = mouseY - menuHeight - 5;
-        menuElement.style.top = `${y}px`;
-        menuElement.style.left = `${x}px`;
-    }
 
-    function showRowContextMenu(e) {
-        cellContextMenu.style.display = 'none';
-        rowContextMenu.style.display = 'block';
-        positionContextMenu(e, rowContextMenu);
-    }
-
-    function showCellContextMenu(e) {
-        const schedule = activeSchedules[activeContextScheduleId];
-        if (!schedule) return;
-        cellContextMenu.querySelector('[data-action="merge"]').classList.toggle('disabled', !canMerge(schedule));
-        cellContextMenu.querySelector('[data-action="split"]').classList.toggle('disabled', schedule.selectedCells.length !== 1 || schedule.selectedCells[0].colSpan <= 1);
-        cellContextMenu.querySelectorAll('[data-action^="align-"]').forEach(item => item.classList.remove('active'));
-        if (schedule.selectedCells.length === 1) {
-            const alignment = schedule.selectedCells[0].style.textAlign || 'left';
-            const activeItem = cellContextMenu.querySelector(`[data-action="align-${alignment}"]`);
-            if (activeItem) activeItem.classList.add('active');
-        }
-        rowContextMenu.style.display = 'none';
-        cellContextMenu.style.display = 'block';
-        positionContextMenu(e, cellContextMenu);
-    }
-    
-    function insertNewRow (targetRow, position) { const newRow = document.createElement('tr'); newRow.innerHTML = `<td colspan="3" contenteditable="true"><span class="row-handle"><span class="row-handle-icon">⠿</span></span>&nbsp;</td>`; targetRow.insertAdjacentElement(position, newRow); return newRow; };
-    function setCellAlignment(schedule, alignment) { schedule.selectedCells.forEach(cell => cell.style.textAlign = alignment); schedule.clearCellSelection(); }
-    function canMerge(schedule) { if (schedule.selectedCells.length < 2) return false; const parentRow = schedule.selectedCells[0].parentElement; const sortedCells = [...schedule.selectedCells].sort((a, b) => a.cellIndex - b.cellIndex); for(let i = 0; i < sortedCells.length; i++) { if (sortedCells[i].parentElement !== parentRow) return false; if (i > 0 && (sortedCells[i-1].cellIndex + sortedCells[i-1].colSpan) !== sortedCells[i].cellIndex) return false; } return true; }
-    
-    function mergeCells(schedule) {
-        if (!canMerge(schedule)) return;
-        const sortedCells = [...schedule.selectedCells].sort((a, b) => a.cellIndex - b.cellIndex);
-        const firstCell = sortedCells[0];
-        let totalColSpan = 0;
-        const combinedContent = sortedCells.map(cell => {
-            const handle = cell.querySelector('.row-handle');
-            if (handle) handle.remove();
-            let content = cell.innerHTML;
-            const wrapper = cell.querySelector('.cell-content-wrapper');
-            if (wrapper) content = wrapper.innerHTML;
-            return content.trim();
-        }).join('<br>');
-        sortedCells.forEach((cell, index) => {
-            totalColSpan += cell.colSpan;
-            if (index > 0) cell.remove();
+        priceCancelBtn.addEventListener('click', () => {
+            const orderId = priceForm.dataset.id;
+            if (orderId) {
+                window.location.href = `order-details.html?id=${orderId}`;
+            } else {
+                window.location.href = 'view-orders.html'; // Fallback
+            }
         });
-        firstCell.colSpan = totalColSpan;
-        const handleHTML = `<span class="row-handle"><span class="row-handle-icon">⠿</span></span>`;
-        const firstCellHasWrapper = firstCell.querySelector('.cell-content-wrapper');
-        if(firstCellHasWrapper) {
-            firstCell.querySelector('.cell-content-wrapper').innerHTML = handleHTML + combinedContent;
-        } else {
-            firstCell.innerHTML = handleHTML + combinedContent;
-        }
-        schedule.clearCellSelection();
-    }
+        messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
 
-    function splitCell(schedule) {
-        if (schedule.selectedCells.length !== 1) return;
-        const cell = schedule.selectedCells[0];
-        const span = cell.colSpan;
-        if (span <= 1) return;
-        const hasWrapper = cell.querySelector('.cell-content-wrapper');
-        const handle = cell.querySelector('.row-handle');
-        if(handle) handle.remove();
-        let originalContent = hasWrapper ? cell.querySelector('.cell-content-wrapper').innerHTML : cell.innerHTML;
-        cell.colSpan = 1;
-        cell.innerHTML = '';
-        if (hasWrapper) {
-            cell.innerHTML = `<div class="cell-content-wrapper">${handle ? handle.outerHTML : ''}${originalContent}</div>`;
-        } else {
-            cell.innerHTML = (handle ? handle.outerHTML : '') + originalContent;
-        }
-        for (let i = 1; i < span; i++) {
-            const newCell = document.createElement(cell.tagName);
-            newCell.setAttribute('contenteditable', 'true');
-            newCell.innerHTML = hasWrapper ? `<div class="cell-content-wrapper"><span>&nbsp;</span></div>` : `&nbsp;`;
-            cell.insertAdjacentElement('afterend', newCell);
-        }
-        schedule.clearCellSelection();
-    }
-    
-    setupGlobalUI();
-    auth.onAuthStateChanged(user => {
-        if (!user || user.email !== ADMIN_EMAIL) {
-            window.location.replace('./index.html');
-        } else {
-            appContainer.classList.remove('hidden');
-            userEmailEl.textContent = user.email;
-            userAvatarEl.textContent = user.email.charAt(0).toUpperCase();
-            initAdminApp();
-        }
-    });
-
-})();
-</script>
+        // --- INITIALIZATION ---
+        showLoading();
+        initializeFirebase();
+    </script>
 </body>
 </html>
