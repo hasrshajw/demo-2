@@ -518,24 +518,40 @@
                     
                     if (currentOrderData.billDetails) {
                         const savedHash = currentOrderData.billDetails.savedWindowsHash;
-                        const currentHash = currentOrderData.windows; // It's already stringified in DB
+                        const currentHash = currentOrderData.windows;
                         
                         if (savedHash === currentHash) {
-                            // Exact match - Render immediately
                             populateForm(currentOrderData.billDetails, currentOrderData);
                             renderBill(currentOrderData, currentOrderData.billDetails);
                             detailsScreen.style.display = 'none';
                             viewScreen.style.display = 'block';
                         } else {
-                            // Order has changed - notify and open full-screen form
                             modifiedWarning.style.display = 'flex';
                             populateForm(currentOrderData.billDetails, currentOrderData);
                             viewScreen.style.display = 'none';
                             detailsScreen.style.display = 'block';
                         }
                     } else {
-                        // New Bill
-                        populateForm({}, currentOrderData);
+                        // New Bill - Fetch details from Quote if available
+                        let defaultDetails = {};
+                        if (currentOrderData.quoteDetails) {
+                            defaultDetails = {
+                                isDiffPrices: currentOrderData.quoteDetails.isDiffPrices,
+                                globalPrice: currentOrderData.quoteDetails.globalPrice,
+                                itemPrices: currentOrderData.quoteDetails.itemPrices,
+                                freight: currentOrderData.quoteDetails.freight,
+                                discount: currentOrderData.quoteDetails.discount,
+                                billingAddress: currentOrderData.quoteDetails.billingAddress,
+                                shippingAddress: currentOrderData.quoteDetails.billingAddress // Pre-fill shipping with billing address from quote
+                            };
+                            
+                            // Check if windows were modified since quote was generated
+                            if (currentOrderData.quoteDetails.savedWindowsHash !== currentOrderData.windows) {
+                                modifiedWarning.style.display = 'flex';
+                            }
+                        }
+                        
+                        populateForm(defaultDetails, currentOrderData);
                         viewScreen.style.display = 'none';
                         detailsScreen.style.display = 'block';
                         document.getElementById('invoice-number').focus();
