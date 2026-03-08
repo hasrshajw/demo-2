@@ -15,7 +15,39 @@
         #bill-controls{display:flex;justify-content:center;align-items:center;gap:1rem;margin-bottom:20px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer}.btn-primary{background-color:var(--color-primary);color:#fff;box-shadow:var(--shadow-md);}.btn-primary:hover{background-color:#023d3c; transform: translateY(-1px);}.btn-secondary{background-color:#fff;color:#52616b;border-color:var(--light-border);box-shadow:var(--shadow-sm);}.btn-secondary:hover{background-color:#f1f3f6; transform: translateY(-1px);}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:520px;animation:popIn .3s var(--ease)}.form-group{margin-bottom:1.5rem}.input-group{position:relative}.input-field{width:100%;background-color:#fff;border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:1rem;padding:1rem;color:#012726;transition:all .2s;outline:none}.input-label{position:absolute;top:1rem;left:1rem;color:#52616b;pointer-events:none;transition:all .2s var(--ease);background-color:#fff;padding:0 .25rem}.input-field:focus+.input-label,.input-field:not(:placeholder-shown)+.input-label{top:-.625rem;font-size:.75rem;color:var(--color-primary)}.input-field:focus{border-color:var(--color-primary);box-shadow:0 0 0 3px var(--color-focus-ring)}.modal-buttons{display:flex;justify-content:flex-end;gap:1rem;margin-top:2rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid #f1f3f6;border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         .checkbox-group { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .address-textarea { display: none; width: 100%; min-height: 80px; resize: vertical; margin-top: 8px; }
-        @media (max-width:640px){body{padding:0}.invoice-box{padding:15px;min-height:unset;border-radius:0;box-shadow:none}.header{padding-bottom:10px}.logo-img{max-width:100px}.invoice-details{font-size:10px}.invoice-details h2{font-size:1rem;margin-bottom:5px}.customer-info{margin-top:15px;gap:1rem;flex-direction:column}.customer-info .address-block{width:100%}.customer-info h3{font-size:12px}.customer-info p{font-size:10px;line-height:1.4}.items-table{font-size:10px;margin-top:15px}.items-table thead th,.items-table tbody td{padding:5px 4px}.summary-section{margin-top:15px;padding-top:15px;gap:1rem;flex-direction:column}.summary-notes,.summary-totals{width:100%}.summary-notes{font-size:8px;line-height:1.4}.summary-notes strong{font-size:10px}.summary-totals table{font-size:10px}.summary-totals table tr:last-child{font-size:12px}.summary-totals table td{padding:5px 4px}.footer{margin-top:15px;padding-top:15px;font-size:8px}.signature .signature-space{height:40px}.signature .signature-line{width:150px}.signature p{font-size:10px}.signature .signatory-title{font-size:9px}.digital-signature-img{max-height:35px;}}
+        
+        /* Mobile Layout Adjustment */
+        @media (max-width:640px){
+            body{padding:0}
+            .invoice-box{padding:15px;min-height:unset;border-radius:0;box-shadow:none}
+            .header{padding-bottom:10px}
+            .logo-img{max-width:100px}
+            .invoice-details{font-size:10px}
+            .invoice-details h2{font-size:1rem;margin-bottom:5px}
+            .customer-info{margin-top:15px;gap:1rem;flex-direction:column}
+            .customer-info .address-block{width:100%}
+            .customer-info h3{font-size:12px}
+            .customer-info p{font-size:10px;line-height:1.4}
+            .items-table{font-size:10px;margin-top:15px}
+            .items-table thead th,.items-table tbody td{padding:5px 4px}
+            .summary-section{margin-top:15px;padding-top:15px;gap:1rem;flex-direction:column}
+            .summary-notes,.summary-totals{width:100%}
+            .summary-notes{font-size:8px;line-height:1.4}
+            .summary-notes strong{font-size:10px}
+            .summary-totals table{font-size:10px}
+            .summary-totals table tr:last-child{font-size:12px}
+            .summary-totals table td{padding:5px 4px}
+            .footer{margin-top:15px;padding-top:15px;font-size:8px}
+            .signature .signature-space{height:40px}
+            .signature .signature-line{width:150px}
+            .signature p{font-size:10px}
+            .signature .signatory-title{font-size:9px}
+            .digital-signature-img{max-height:35px;}
+            
+            /* Mobile Buttons Stacking */
+            #bill-controls { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 1rem; margin-bottom: 0; }
+            #bill-controls .btn { width: 100%; justify-content: center; }
+        }
         @media print{@page{size:A4;margin:0}body{padding:0!important;background:#fff!important}#bill-controls,.modal,.loading-overlay{display:none!important}.invoice-box{margin:0!important;max-width:100%!important;border-radius:0!important;box-shadow:none!important;padding:10mm!important}.items-table thead th{background-color:#535456!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.items-table tbody tr:nth-child(even){background-color:#f8f8f7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
     </style>
 </head>
@@ -46,16 +78,17 @@
         </div>
     </div>
 
-    <!-- Print Options Modal -->
+    <!-- Print Options Modal (Enhanced UI) -->
     <div id="print-options-modal" class="modal">
-        <div class="modal-content" style="text-align: center; max-width: 450px;">
-            <h3 style="margin-bottom: 1rem;">Print Options</h3>
-            <p style="margin-bottom: 2rem; color: var(--light-text-secondary);">Would you like to include a digital signature on this invoice?</p>
-            <div class="modal-buttons" style="justify-content: center; flex-wrap: wrap; gap: 0.75rem;">
-                <button type="button" id="print-cancel-btn" class="btn btn-secondary">Cancel</button>
-                <button type="button" id="print-without-sig-btn" class="btn btn-secondary">No Signature</button>
-                <button type="button" id="print-with-sig-btn" class="btn btn-primary">Digitally Signed</button>
+        <div class="modal-content" style="text-align: center; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+            <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">draw</span>
+            <h3 style="margin-bottom: 1rem;">Digital Signature</h3>
+            <p style="margin-bottom: 2rem; color: var(--light-text-secondary); line-height: 1.5;">Would you like to include the authorized digital signature on this invoice before printing?</p>
+            <div class="modal-buttons" style="justify-content: center; width: 100%; margin-top: 0; gap: 1rem;">
+                <button type="button" id="print-without-sig-btn" class="btn btn-secondary" style="flex: 1;">No Signature</button>
+                <button type="button" id="print-with-sig-btn" class="btn btn-primary" style="flex: 1;">Add Signature</button>
             </div>
+            <button type="button" id="print-cancel-btn" style="background: none; border: none; color: var(--light-text-muted); font-size: 0.875rem; font-weight: 500; cursor: pointer; margin-top: 1.5rem; text-decoration: underline;">Cancel</button>
         </div>
     </div>
     
