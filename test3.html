@@ -44,9 +44,25 @@
             .signature .signatory-title{font-size:9px}
             .digital-signature-img{max-height:35px;}
             
-            /* Mobile Buttons Stacking */
-            #bill-controls { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 1rem; margin-bottom: 0; }
-            #bill-controls .btn { width: 100%; justify-content: center; }
+            /* Mobile Buttons Stacking - 1 on top, 2 on bottom */
+            #bill-controls { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                gap: 0.75rem; 
+                padding: 1rem; 
+                margin-bottom: 0; 
+            }
+            #bill-controls .btn { 
+                width: 100%; 
+                justify-content: center; 
+                font-size: 0.8rem; 
+                padding: 0.6rem 0.5rem; 
+            }
+            #bill-controls .btn:first-child { 
+                grid-column: span 2; 
+                font-size: 0.875rem; 
+                padding: 0.75rem; 
+            }
         }
         @media print{@page{size:A4;margin:0}body{padding:0!important;background:#fff!important}#bill-controls,.modal,.loading-overlay{display:none!important}.invoice-box{margin:0!important;max-width:100%!important;border-radius:0!important;box-shadow:none!important;padding:10mm!important}.items-table thead th{background-color:#535456!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.items-table tbody tr:nth-child(even){background-color:#f8f8f7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
     </style>
