@@ -453,6 +453,7 @@
                                             <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                             <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                             <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                            <a href="#" class="action-link-item detail-view-job-sheet-btn"><span class="icon material-symbols-outlined">assignment</span><span class="label">View Job Sheet</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                         </div>
                                     </section>
                                     <section class="content-section"><h3>Items (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
@@ -475,6 +476,7 @@
                                    <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                    <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                    <a href="#" class="action-link-item detail-view-bill-btn"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                   <a href="#" class="action-link-item detail-view-job-sheet-btn"><span class="icon material-symbols-outlined">assignment</span><span class="label">View Job Sheet</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
                                 </div>
                             </section>
                             <section class="content-section"><h3>Items (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
@@ -753,6 +755,8 @@
             if (quoteBtn) { e.preventDefault(); window.location.href = `quote.html?id=${currentOrderId}`; }
             const billBtn = e.target.closest('.detail-view-bill-btn');
             if (billBtn) { e.preventDefault(); window.location.href = `bill.html?id=${currentOrderId}`; }
+            const jobSheetBtn = e.target.closest('.detail-view-job-sheet-btn');
+            if (jobSheetBtn) { e.preventDefault(); window.location.href = `job-sheet.html?id=${currentOrderId}`; }
         });
         
         // --- INITIALIZE APP ---
