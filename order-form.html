@@ -338,10 +338,12 @@
         const showMessageModal = (message, redirectUrl = null) => {
             messageText.textContent = message; 
             messageModal.style.display = 'flex';
-            messageOkBtn.onclick = () => {
-                messageModal.style.display = 'none';
-                if (redirectUrl) window.location.href = redirectUrl;
-            };
+            if (redirectUrl) { 
+                setTimeout(() => { 
+                    messageModal.style.display = 'none'; 
+                    window.location.href = redirectUrl; 
+                }, 1500); 
+            }
         };
 
         const updateWindowTitles = (container) => {
@@ -525,7 +527,10 @@
                 } else {
                     addWindowInput(windowsContainer, 1);
                 }
-                showMessageModal("Your unsaved draft has been restored.");
+                
+                // Show message correctly and wait for user to dismiss
+                messageText.textContent = "Your unsaved draft has been restored."; 
+                messageModal.style.display = 'flex';
             }
         }
 
@@ -779,18 +784,20 @@
                     const changes = createChangeLog(originalOrder, orderData);
                     await updateDoc(doc(collectionRef, orderId), { ...orderData, updatedAt: serverTimestamp() });
                     if(Object.keys(changes).length > 0) { await logHistory(orderId, 'Order Edited', changes); }
+                    hideLoading();
                     showMessageModal("Order updated successfully!", `order-details.html?id=${finalOrderId}`);
                 } else {
                     const newDocRef = await addDoc(collectionRef, { ...orderData, status: 'pending', createdBy: currentUserAuth.displayName || "User", createdAt: serverTimestamp() });
                     finalOrderId = newDocRef.id;
                     await logHistory(finalOrderId, 'Order Created');
                     localStorage.removeItem('orderDraft');
+                    hideLoading();
                     showMessageModal("Order created successfully!", `order-details.html?id=${finalOrderId}`);
                 }
             } catch (error) { 
                 console.error("Error saving order:", error); 
-                showMessageModal("Failed to save order."); 
                 hideLoading(); 
+                showMessageModal("Failed to save order."); 
             }
         }
         
@@ -945,7 +952,9 @@
                 addWindowInput(windowsContainer, windowsContainer.children.length + 1);
                 saveDraft();
             });
-            messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
+            messageOkBtn.addEventListener('click', () => {
+                messageModal.style.display = 'none';
+            });
             getLocationBtn.addEventListener('click', openLocationPicker);
             confirmLocationBtn.addEventListener('click', confirmSelectedLocation);
             locationPickerCloseBtn.addEventListener('click', () => locationPickerModal.style.display = 'none');
