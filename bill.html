@@ -16,9 +16,22 @@
         .checkbox-group { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .address-textarea { display: none; width: 100%; min-height: 80px; resize: vertical; margin-top: 8px; }
         
+        /* NEW: Full Page Configuration Styles */
+        .app-container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background-color: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: var(--shadow-sm); }
+        .warning-banner { background-color: #fffbeb; border: 1px solid #fde68a; color: #b45309; padding: 1rem; border-radius: var(--radius-md); display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; font-weight: 500; font-size: 0.95rem; animation: popIn 0.3s ease; }
+        .icon-btn { background: none; border: 1px solid var(--light-border); color: var(--color-primary); padding: 0.5rem; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .icon-btn:hover { background: var(--light-bg-secondary); }
+        .page-header-container { display: flex; align-items: center; margin-bottom: 1.5rem; gap: 1rem; }
+        .page-header-container h2 { font-size: 1.5rem; margin: 0; }
+        
         /* Mobile Layout Adjustment */
         @media (max-width:640px){
             body{padding:0}
+            .app-container { margin: 0; padding: 0; }
+            .card { padding: 1.5rem; border-radius: 0; border: none; box-shadow: none; }
+            .page-header-container { padding: 1rem; margin-bottom: 0; background: #fff; border-bottom: 1px solid var(--light-border); }
+            .warning-banner { margin: 1rem; }
             .invoice-box{padding:15px;min-height:unset;border-radius:0;box-shadow:none}
             .header{padding-bottom:10px}
             .logo-img{max-width:100px}
@@ -69,44 +82,76 @@
 </head>
 <body>
 
-    <div id="bill-container"></div>
+    <div class="app-container">
+        
+        <!-- Configuration Form Screen -->
+        <div id="bill-details-screen" style="display: none; animation: fadeIn 0.3s var(--ease);">
+            <div class="page-header-container">
+                <button id="back-to-order-btn" class="icon-btn" aria-label="Back to Order"><span class="material-symbols-outlined">arrow_back</span></button>
+                <h2>Invoice Configuration</h2>
+            </div>
+            
+            <div id="order-modified-warning" class="warning-banner" style="display: none;">
+                <span class="material-symbols-outlined">warning</span>
+                <span>The order items have been modified. Please verify and update the pricing details below.</span>
+            </div>
 
-    <div id="bill-details-modal" class="modal">
-        <div class="modal-content">
-             <form id="bill-details-form">
-                <h3 style="margin-bottom: 2rem;">Enter Bill Details</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div class="input-group"><input type="text" id="invoice-number" class="input-field" placeholder=" " required><label for="invoice-number" class="input-label">Invoice No.</label></div>
-                    <div class="input-group"><input type="date" id="invoice-date" class="input-field" placeholder=" " required><label for="invoice-date" class="input-label">Invoice Date</label></div>
-                </div>
-                
-                <div class="form-group" style="margin-top: 1.5rem;">
-                    <label for="price-per-sft" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Price per SFT (₹)</label>
-                    <input type="number" id="price-per-sft" class="input-field" min="0" step="0.01" required>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label for="freight-charges" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Freight / Transport (₹)</label>
-                        <input type="number" id="freight-charges" class="input-field" min="0" step="1" value="0" required>
+            <div class="card">
+                 <form id="bill-details-form">
+                    <h3 style="margin-bottom: 1.5rem;">Document Details</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="input-group"><input type="text" id="invoice-number" class="input-field" placeholder=" " required><label for="invoice-number" class="input-label">Invoice No.</label></div>
+                        <div class="input-group"><input type="date" id="invoice-date" class="input-field" placeholder=" " required><label for="invoice-date" class="input-label">Invoice Date</label></div>
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label for="discount-amount" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Discount (₹) Before Tax</label>
-                        <input type="number" id="discount-amount" class="input-field" min="0" step="0.01" value="0">
+                    
+                    <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; border-top: 1px solid var(--light-border); padding-top: 2rem;">Pricing Configuration</h3>
+                    
+                    <div class="checkbox-group" style="margin-bottom: 1.5rem;">
+                        <input type="checkbox" id="diff-prices-check" style="width: 1.25em; height: 1.25em;">
+                        <label for="diff-prices-check" style="font-weight: 600; color: var(--light-text-primary); cursor: pointer;">Use different prices for different items</label>
                     </div>
-                </div>
-                
-                <hr style="border: 0; height: 1px; background-color: var(--light-border); margin: 2rem 0;">
-                <div class="checkbox-group"><input type="checkbox" id="add-billing-address" style="width: 1.15em; height: 1.15em;"><label for="add-billing-address">Add a different Billing Address</label></div>
-                <textarea id="billing-address-textarea" class="input-field address-textarea" placeholder="Enter new billing address..."></textarea>
-                <div class="checkbox-group" style="margin-top: 1rem;"><input type="checkbox" id="add-shipping-address" style="width: 1.15em; height: 1.15em;"><label for="add-shipping-address">Add a different Shipping Address</label></div>
-                <textarea id="shipping-address-textarea" class="input-field address-textarea" placeholder="Enter new shipping address..."></textarea>
-                <div class="modal-buttons">
-                    <button type="button" id="bill-cancel-btn" class="btn btn-secondary">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Generate Bill</button>
-                </div>
-            </form>
+                    
+                    <div id="global-price-container" class="form-group">
+                        <label for="global-price" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Global Price per SFT (₹)</label>
+                        <input type="number" id="global-price" class="input-field" min="0" step="0.01">
+                    </div>
+
+                    <div id="individual-prices-container" style="display: none; border: 1px solid var(--light-border); padding: 1.5rem; border-radius: var(--radius-md); background: #f8f9fa;">
+                        <!-- Price inputs per item injected here -->
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="freight-charges" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Freight / Transport (₹)</label>
+                            <input type="number" id="freight-charges" class="input-field" min="0" step="1" value="0" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="discount-amount" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Discount (₹) Before Tax</label>
+                            <input type="number" id="discount-amount" class="input-field" min="0" step="0.01" value="0">
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; border-top: 1px solid var(--light-border); padding-top: 2rem;">Address Overrides</h3>
+                    
+                    <div class="checkbox-group"><input type="checkbox" id="add-billing-address" style="width: 1.15em; height: 1.15em;"><label for="add-billing-address" style="cursor: pointer;">Add a different Billing Address</label></div>
+                    <textarea id="billing-address-textarea" class="input-field address-textarea" placeholder="Enter new billing address..."></textarea>
+                    
+                    <div class="checkbox-group" style="margin-top: 1rem;"><input type="checkbox" id="add-shipping-address" style="width: 1.15em; height: 1.15em;"><label for="add-shipping-address" style="cursor: pointer;">Add a different Shipping Address</label></div>
+                    <textarea id="shipping-address-textarea" class="input-field address-textarea" placeholder="Enter new shipping address..."></textarea>
+                    
+                    <div class="modal-buttons" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--light-border);">
+                        <button type="button" id="bill-cancel-btn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><span class="material-symbols-outlined">receipt_long</span> Generate Bill</button>
+                    </div>
+                </form>
+            </div>
         </div>
+
+        <!-- Rendered Bill Screen -->
+        <div id="bill-view-screen" style="display: none; animation: fadeIn 0.3s var(--ease);">
+            <div id="bill-container"></div>
+        </div>
+        
     </div>
 
     <!-- Print Options Modal (Enhanced UI) -->
@@ -130,16 +175,28 @@
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Screen Elements
+        const detailsScreen = document.getElementById('bill-details-screen');
+        const viewScreen = document.getElementById('bill-view-screen');
         const billContainer = document.getElementById('bill-container');
-        const detailsModal = document.getElementById('bill-details-modal');
+        const modifiedWarning = document.getElementById('order-modified-warning');
+        
+        // Form Elements
         const detailsForm = document.getElementById('bill-details-form');
         const cancelBtn = document.getElementById('bill-cancel-btn');
+        const backToOrderBtn = document.getElementById('back-to-order-btn');
         const loadingOverlay = document.getElementById('loading-overlay');
         const addBillingAddressCheck = document.getElementById('add-billing-address');
         const billingAddressTextarea = document.getElementById('billing-address-textarea');
         const addShippingAddressCheck = document.getElementById('add-shipping-address');
         const shippingAddressTextarea = document.getElementById('shipping-address-textarea');
         
+        const diffPricesCheck = document.getElementById('diff-prices-check');
+        const globalPriceContainer = document.getElementById('global-price-container');
+        const globalPriceInput = document.getElementById('global-price');
+        const indPricesContainer = document.getElementById('individual-prices-container');
+
+        // Print Modal Elements
         const printOptionsModal = document.getElementById('print-options-modal');
         const printWithSigBtn = document.getElementById('print-with-sig-btn');
         const printWithoutSigBtn = document.getElementById('print-without-sig-btn');
@@ -186,34 +243,57 @@
             let windows = [];
             try { windows = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data", e); }
             
-            const itemGroups = {};
-            windows.forEach(win => {
-                const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
-                if (!itemGroups[itemName]) { itemGroups[itemName] = { qty: 0, totalSft: 0 }; }
-                
-                // Account for potential quantity multiplier introduced in the new structure
-                const qty = parseInt(win.qty) || 1;
-                itemGroups[itemName].qty += qty;
-                
-                const heightMm = parseFloat(win.height || 0);
-                const widthMm = parseFloat(win.width || 0);
-                itemGroups[itemName].totalSft += ((widthMm / 304.8) * (heightMm / 304.8)) * qty; // Note: using 304.8mm for more precise SqFt conversion
-            });
-
             let tableRows = '';
             let subTotal = 0;
-            let itemIndex = 1;
             let totalQty = 0;
             let totalAllSft = 0;
-            for (const itemName in itemGroups) {
-                const group = itemGroups[itemName];
-                const itemCost = group.totalSft * details.pricePerSft; // Use full precision for calculation
-                subTotal += itemCost;
-                totalQty += group.qty;
-                totalAllSft += group.totalSft;
-                tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.pricePerSft.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+            let itemIndex = 1;
+
+            if (!details.isDiffPrices) {
+                // AGGREGATED VIEW (Single Global Price)
+                const itemGroups = {};
+                windows.forEach(win => {
+                    const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                    if (!itemGroups[itemName]) { itemGroups[itemName] = { qty: 0, totalSft: 0 }; }
+                    
+                    const qty = parseInt(win.qty) || 1;
+                    itemGroups[itemName].qty += qty;
+                    
+                    const heightMm = parseFloat(win.height || 0);
+                    const widthMm = parseFloat(win.width || 0);
+                    itemGroups[itemName].totalSft += ((widthMm / 304.8) * (heightMm / 304.8)) * qty; 
+                });
+
+                for (const itemName in itemGroups) {
+                    const group = itemGroups[itemName];
+                    const itemCost = group.totalSft * details.globalPrice; 
+                    subTotal += itemCost;
+                    totalQty += group.qty;
+                    totalAllSft += group.totalSft;
+                    tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.globalPrice.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+                }
+            } else {
+                // INDIVIDUAL VIEW (Different Prices per Item)
+                windows.forEach((win, idx) => {
+                    const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                    const qty = parseInt(win.qty) || 1;
+                    const heightMm = parseFloat(win.height || 0);
+                    const widthMm = parseFloat(win.width || 0);
+                    const totalSft = ((widthMm / 304.8) * (heightMm / 304.8)) * qty;
+                    
+                    const price = details.itemPrices[idx] || 0;
+                    const itemCost = totalSft * price;
+
+                    subTotal += itemCost;
+                    totalQty += qty;
+                    totalAllSft += totalSft;
+
+                    const specs = `<br><small style="color: #718096; font-size: 11px;">Size: ${win.width}x${win.height}mm | Glass: ${win.hasGlass ? (win.glassName || 'Yes') : 'None'} | Profile: ${win.profileName || 'None'}</small>`;
+
+                    tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName} #${idx+1}${specs}</td><td>3952</td><td>${qty}</td><td>${totalSft.toFixed(2)}</td><td>${price.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+                });
             }
-            
+
             // Append Table Footer for Totals
             tableRows += `
                 <tr style="font-weight: 700; background-color: #f8f9fa; border-top: 2px solid var(--light-border);">
@@ -276,7 +356,7 @@
                         </div>
                     </section>
                     <table class="items-table">
-                        <thead><tr><th>SNo.</th><th>Name of the Goods / Service</th><th>HSN/SAC</th><th>Qty</th><th>Sft</th><th>Rate</th><th>Value</th></tr></thead>
+                        <thead><tr><th>SNo.</th><th>Name of the Goods / Service</th><th>HSN/SAC</th><th>Qty</th><th>Sft (Total)</th><th>Rate</th><th>Value</th></tr></thead>
                         <tbody>${tableRows}</tbody>
                     </table>
                     <section class="summary-section">
@@ -309,15 +389,13 @@
 
         async function initializeFirebase() {
             try {
-                // Firebase configuration will be injected by Netlify during build
                 const firebaseConfig = {
                     apiKey: "__API_KEY__",
                     authDomain: "__AUTH_DOMAIN__",
                     projectId: "__PROJECT_ID__",
                     storageBucket: "__STORAGE_BUCKET__",
                     messagingSenderId: "__MESSAGING_SENDER_ID__",
-                    appId: "__APP_ID__",
-                    measurementId: "__MEASUREMENT_ID__"
+                    appId: "__APP_ID__"
                 };
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -329,14 +407,33 @@
             } catch (error) { console.error("Firebase Init Error:", error); }
         }
 
-        function populateForm(details, defaultAddress) {
+        // Dynamic visibility logic for price inputs
+        const togglePriceInputsVisibility = () => {
+            if (diffPricesCheck.checked) {
+                globalPriceContainer.style.display = 'none';
+                indPricesContainer.style.display = 'block';
+                globalPriceInput.removeAttribute('required');
+                document.querySelectorAll('.ind-price-input').forEach(inp => inp.setAttribute('required', 'true'));
+            } else {
+                globalPriceContainer.style.display = 'block';
+                indPricesContainer.style.display = 'none';
+                globalPriceInput.setAttribute('required', 'true');
+                document.querySelectorAll('.ind-price-input').forEach(inp => inp.removeAttribute('required'));
+            }
+        };
+
+        diffPricesCheck.addEventListener('change', togglePriceInputsVisibility);
+
+        function populateForm(details, orderData) {
             document.getElementById('invoice-number').value = details.invoiceNumber || '';
-            document.getElementById('invoice-date').value = details.invoiceDate || '';
-            document.getElementById('price-per-sft').value = details.pricePerSft || '';
+            document.getElementById('invoice-date').value = details.invoiceDate || new Date().toISOString().split('T')[0];
             document.getElementById('freight-charges').value = details.freight || 0;
             document.getElementById('discount-amount').value = details.discount || 0;
             
-            if (details.billingAddress && details.billingAddress !== defaultAddress) {
+            diffPricesCheck.checked = details.isDiffPrices || false;
+            globalPriceInput.value = details.globalPrice || '';
+            
+            if (details.billingAddress && details.billingAddress !== orderData.address) {
                 addBillingAddressCheck.checked = true;
                 billingAddressTextarea.style.display = 'block';
                 billingAddressTextarea.value = details.billingAddress;
@@ -346,7 +443,7 @@
                 billingAddressTextarea.value = '';
             }
 
-            if (details.shippingAddress && details.shippingAddress !== defaultAddress) {
+            if (details.shippingAddress && details.shippingAddress !== orderData.address) {
                 addShippingAddressCheck.checked = true;
                 shippingAddressTextarea.style.display = 'block';
                 shippingAddressTextarea.value = details.shippingAddress;
@@ -355,6 +452,31 @@
                 shippingAddressTextarea.style.display = 'none';
                 shippingAddressTextarea.value = '';
             }
+
+            // Build Individual Pricing Inputs dynamically based on current order windows
+            let windows = [];
+            try { windows = JSON.parse(orderData.windows || '[]'); } catch(e) {}
+            
+            indPricesContainer.innerHTML = '';
+            windows.forEach((win, idx) => {
+                const itemType = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                const qty = parseInt(win.qty) || 1;
+                
+                // Inherit saved price, or fallback to global, or empty
+                const savedPrice = (details.itemPrices && details.itemPrices[idx]) 
+                    ? details.itemPrices[idx] 
+                    : (details.globalPrice || '');
+                
+                const div = document.createElement('div');
+                div.style.marginBottom = '1.25rem';
+                div.innerHTML = `
+                    <label style="display:block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--light-text-primary);">#${idx+1} ${itemType} <span style="color:var(--light-text-muted);font-weight:normal;font-size:0.8rem;">(${win.width}x${win.height}mm, Qty: ${qty})</span></label>
+                    <input type="number" class="input-field ind-price-input" style="padding: 0.75rem;" data-index="${idx}" value="${savedPrice}" min="0" step="0.01" placeholder="Price per SFT for this item">
+                `;
+                indPricesContainer.appendChild(div);
+            });
+
+            togglePriceInputsVisibility();
         }
 
         function renderBill(order, details) {
@@ -363,8 +485,10 @@
             const editBtn = document.getElementById('edit-bill-btn');
             if (editBtn) {
                 editBtn.addEventListener('click', () => {
-                    populateForm(details, order.address);
-                    detailsModal.style.display = 'flex';
+                    populateForm(details, order);
+                    modifiedWarning.style.display = 'none'; // Hide warning if explicitly editing
+                    viewScreen.style.display = 'none';
+                    detailsScreen.style.display = 'block';
                 });
             }
 
@@ -393,13 +517,27 @@
                     detailsForm.dataset.id = orderId;
                     
                     if (currentOrderData.billDetails) {
-                        // If details already exist, render the bill directly
-                        populateForm(currentOrderData.billDetails, currentOrderData.address);
-                        renderBill(currentOrderData, currentOrderData.billDetails);
+                        const savedHash = currentOrderData.billDetails.savedWindowsHash;
+                        const currentHash = currentOrderData.windows; // It's already stringified in DB
+                        
+                        if (savedHash === currentHash) {
+                            // Exact match - Render immediately
+                            populateForm(currentOrderData.billDetails, currentOrderData);
+                            renderBill(currentOrderData, currentOrderData.billDetails);
+                            detailsScreen.style.display = 'none';
+                            viewScreen.style.display = 'block';
+                        } else {
+                            // Order has changed - notify and open full-screen form
+                            modifiedWarning.style.display = 'flex';
+                            populateForm(currentOrderData.billDetails, currentOrderData);
+                            viewScreen.style.display = 'none';
+                            detailsScreen.style.display = 'block';
+                        }
                     } else {
-                        // Show modal for new details
-                        document.getElementById('invoice-date').value = new Date().toISOString().split('T')[0];
-                        detailsModal.style.display = 'flex';
+                        // New Bill
+                        populateForm({}, currentOrderData);
+                        viewScreen.style.display = 'none';
+                        detailsScreen.style.display = 'block';
                         document.getElementById('invoice-number').focus();
                     }
                 } else {
@@ -419,14 +557,23 @@
             const orderId = e.currentTarget.dataset.id;
             
             try {
+                const isDiffPrices = diffPricesCheck.checked;
+                const itemPrices = [];
+                document.querySelectorAll('.ind-price-input').forEach(inp => {
+                    itemPrices.push(parseFloat(inp.value) || 0);
+                });
+
                 const billDetails = {
                     invoiceNumber: document.getElementById('invoice-number').value,
                     invoiceDate: document.getElementById('invoice-date').value,
-                    pricePerSft: parseFloat(document.getElementById('price-per-sft').value),
+                    isDiffPrices: isDiffPrices,
+                    globalPrice: parseFloat(globalPriceInput.value) || 0,
+                    itemPrices: itemPrices,
                     freight: parseFloat(document.getElementById('freight-charges').value || 0),
                     discount: parseFloat(document.getElementById('discount-amount').value || 0),
                     billingAddress: addBillingAddressCheck.checked ? billingAddressTextarea.value : currentOrderData.address,
-                    shippingAddress: addShippingAddressCheck.checked ? shippingAddressTextarea.value : currentOrderData.address
+                    shippingAddress: addShippingAddressCheck.checked ? shippingAddressTextarea.value : currentOrderData.address,
+                    savedWindowsHash: currentOrderData.windows
                 };
                 
                 // Save to Firestore
@@ -435,7 +582,11 @@
                 // Update local memory and render
                 currentOrderData.billDetails = billDetails;
                 renderBill(currentOrderData, billDetails);
-                detailsModal.style.display = 'none';
+                
+                // Switch screens
+                detailsScreen.style.display = 'none';
+                viewScreen.style.display = 'block';
+                
             } catch (error) { 
                 console.error("Error generating bill:", error); 
                 alert("Could not generate bill."); 
@@ -445,14 +596,22 @@
             }
         });
         
+        // Navigation Buttons handlers
+        const goBackToOrder = () => {
+            const orderId = detailsForm.dataset.id;
+            window.location.href = `order-details.html?id=${orderId}`;
+        };
+
         cancelBtn.addEventListener('click', () => {
-            if (currentOrderData && currentOrderData.billDetails) {
-                detailsModal.style.display = 'none';
+            if (currentOrderData && currentOrderData.billDetails && currentOrderData.billDetails.savedWindowsHash === currentOrderData.windows) {
+                detailsScreen.style.display = 'none';
+                viewScreen.style.display = 'block';
             } else {
-                const orderId = detailsForm.dataset.id;
-                window.location.href = `order-details.html?id=${orderId}`;
+                goBackToOrder();
             }
         });
+
+        backToOrderBtn.addEventListener('click', goBackToOrder);
 
         // Print Modal Button Handlers
         printCancelBtn.addEventListener('click', () => {
