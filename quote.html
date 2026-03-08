@@ -151,13 +151,29 @@
 
             let tableRows = '';
             let subTotal = 0;
+            let totalQty = 0;
+            let totalAllSft = 0;
             let itemIndex = 1;
+            
             for (const itemName in itemGroups) {
                 const group = itemGroups[itemName];
                 const itemCost = group.totalSft * details.pricePerSft; // Full precision math
                 subTotal += itemCost;
+                totalQty += group.qty;
+                totalAllSft += group.totalSft;
                 tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.pricePerSft.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
             }
+            
+            // Append Table Footer for Totals
+            tableRows += `
+                <tr style="font-weight: 700; background-color: #f8f9fa; border-top: 2px solid var(--light-border);">
+                    <td colspan="3" style="text-align: right; padding-top: 12px; padding-bottom: 12px;">Total:</td>
+                    <td style="padding-top: 12px; padding-bottom: 12px;">${totalQty}</td>
+                    <td style="padding-top: 12px; padding-bottom: 12px;">${totalAllSft.toFixed(2)}</td>
+                    <td></td>
+                    <td style="padding-top: 12px; padding-bottom: 12px;">${subTotal.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td>
+                </tr>
+            `;
             
             const totalBeforeTax = subTotal;
             const sgst = totalBeforeTax * 0.09;
