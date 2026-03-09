@@ -74,8 +74,7 @@
                     Back to Dashboard
                 </a>
                 <div id="notifications-view" class="view active">
-                    <!-- Notification cards will be rendered here -->
-                </div>
+                    </div>
             </div>
         </main>
     </div>
@@ -89,18 +88,18 @@
         import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, writeBatch, query, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Firebase configuration will be injected by Netlify during build
-const firebaseConfig = {
-    apiKey: "__API_KEY__",
-    authDomain: "__AUTH_DOMAIN__",
-    projectId: "__PROJECT_ID__",
-    storageBucket: "__STORAGE_BUCKET__",
-    messagingSenderId: "__MESSAGING_SENDER_ID__",
-    appId: "__APP_ID__",
-    measurementId: "__MEASUREMENT_ID__"
-};
+        // Firebase configuration will be injected by Netlify during build
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
         
-        let db, auth, currentUserProfile;
+        let db, auth, currentUserProfile, currentUserAuth;
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
         const showLoader = () => document.getElementById('loader').style.display = 'flex';
@@ -114,7 +113,7 @@ const firebaseConfig = {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                renderAppShellModals();
+                
                 bindEventListeners();
                 initializeTheme();
                 listenForAuthStateChanges();
@@ -124,12 +123,43 @@ const firebaseConfig = {
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 showLoader();
-                if (user && user.email === ADMIN_EMAIL) {
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (user) {
+                    currentUserAuth = user;
+                    const userRef = doc(db, "users", user.uid);
+                    let userDoc = await getDoc(userRef);
+                    
+                    // Master admin self-healing/setup
+                    if (user.email === ADMIN_EMAIL) {
+                        if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+                            await setDoc(userRef, { 
+                                displayName: user.displayName || 'Master Admin', 
+                                email: user.email, 
+                                photoURL: user.photoURL,
+                                status: 'approved', 
+                                role: 'admin' 
+                            }, { merge: true });
+                            userDoc = await getDoc(userRef);
+                        }
+                    }
+
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    renderHeader();
-                    await initializeNotificationsView();
-                } else { window.location.href = 'login.html'; }
+                    const isAdmin = (user.email === ADMIN_EMAIL || currentUserProfile.role === 'admin');
+
+                    if (isAdmin) {
+                        renderAppShellModals();
+                        renderHeader();
+                        await initializeNotificationsView();
+                    } else {
+                        window.location.href = 'employee-dashboard.html';
+                    }
+                } else { 
+                    window.location.href = 'login.html'; 
+                }
                 hideLoader();
             });
         }
@@ -193,6 +223,7 @@ const firebaseConfig = {
             const header = document.getElementById('app-header');
             header.innerHTML = `<div class="nav-left"><a href="admin-dashboard.html" style="font-family: var(--font-main); font-size: 1.2rem; font-weight: 600; text-decoration: none; color: var(--color-text-primary);">PayrollPro</a></div><div class="nav-right"><div class="profile-menu"><img src="${currentUserProfile.photoURL}" alt="User Profile" class="user-avatar" data-app-action="toggle-profile-dropdown"><div id="profile-dropdown"><button class="btn btn-secondary" data-app-action="logout"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" /></svg>Logout</button></div></div></div>`;
         }
+        
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
@@ -209,17 +240,129 @@ const firebaseConfig = {
                 }
                 if (action !== 'toggle-profile-dropdown') toggleProfileDropdown(false);
             });
-            document.getElementById('set-salary-form').addEventListener('submit', handleSetSalarySubmit);
+            // We'll attach the submit listener when we render the modal
         }
+        
         function toggleProfileDropdown(show) { const dropdown = document.getElementById('profile-dropdown'); if (show === undefined) { dropdown.classList.toggle('active'); } else { dropdown.classList.toggle('active', show); } }
         function initializeTheme() { const theme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', theme); }
+        
         function renderAppShellModals() {
-            document.getElementById('set-salary-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="set-salary-modal">×</span><h2>Set Salary for <strong id="new-employee-name-modal"></strong></h2><form id="set-salary-form"><input type="hidden" id="new-employee-uid"><div class="form-group"><label for="new-employee-daily-salary">Daily Salary (INR)</label><input type="number" id="new-employee-daily-salary" required min="0" step="1"></div><button type="submit" class="btn btn-primary" style="width:100%">Confirm & Accept</button></form></div>`;
+            document.getElementById('set-salary-modal').innerHTML = `
+                <div class="modal-content">
+                    <span class="close-btn" data-app-action="close-modal" data-modal-id="set-salary-modal">×</span>
+                    <h2>Approve User: <strong id="new-employee-name-modal"></strong></h2>
+                    <form id="set-salary-form">
+                        <input type="hidden" id="new-employee-uid">
+                        
+                        <div class="form-group" id="role-selection-group" style="display: none;">
+                            <label for="new-user-role">Assign Role</label>
+                            <select id="new-user-role" class="input-field">
+                                <option value="employee">Employee</option>
+                                <option value="admin">Co-Admin</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="salary-group">
+                            <label for="new-employee-daily-salary">Daily Salary (INR)</label>
+                            <input type="number" id="new-employee-daily-salary" required min="0" step="1">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%">Confirm & Accept</button>
+                    </form>
+                </div>`;
+            
             document.getElementById('link-user-modal').innerHTML = `<div class="modal-content"></div>`;
+            
+            // Attach listener to the newly created form
+            document.getElementById('set-salary-form').addEventListener('submit', handleSetSalarySubmit);
         }
-        function handleAcceptUserClick(uid, name) { document.getElementById('new-employee-name-modal').textContent = name; document.getElementById('new-employee-uid').value = uid; document.getElementById('set-salary-form').reset(); openModal('set-salary-modal'); }
-        async function handleDenyUser(uid) { if (!confirm("Are you sure you want to deny this user? This cannot be undone.")) return; showLoader(); try { await setDoc(doc(db, "users", uid), { status: 'denied' }, { merge: true }); showToast("User has been denied.", "success"); await initializeNotificationsView(); } catch (e) { showToast("Could not deny user.", "error"); } finally { hideLoader(); } }
-        async function handleSetSalarySubmit(e) { e.preventDefault(); showLoader(); const uid = document.getElementById('new-employee-uid').value; const name = document.getElementById('new-employee-name-modal').textContent; const dailySalary = parseFloat(document.getElementById('new-employee-daily-salary').value); try { const employeeDocRef = await addDoc(collection(db, "employees"), { name, dailySalary, userUID: uid }); await setDoc(doc(db, "users", uid), { status: 'approved', role: 'employee', employeeId: employeeDocRef.id }, { merge: true }); showToast(`${name} is now an employee!`, "success"); closeModal('set-salary-modal'); await initializeNotificationsView(); } catch (err) { showToast("Could not accept user.", "error"); } finally { hideLoader(); } }
+        
+        function handleAcceptUserClick(uid, name) { 
+            document.getElementById('new-employee-name-modal').textContent = name; 
+            document.getElementById('new-employee-uid').value = uid; 
+            document.getElementById('set-salary-form').reset(); 
+            
+            // ONLY show the role dropdown if the current user is the Master Admin
+            if (currentUserAuth && currentUserAuth.email === ADMIN_EMAIL) {
+                document.getElementById('role-selection-group').style.display = 'block';
+            } else {
+                document.getElementById('role-selection-group').style.display = 'none';
+            }
+            
+            // Toggle salary requirement based on role
+            document.getElementById('new-user-role').addEventListener('change', function() {
+                if (this.value === 'admin') {
+                    document.getElementById('salary-group').style.display = 'none';
+                    document.getElementById('new-employee-daily-salary').removeAttribute('required');
+                } else {
+                    document.getElementById('salary-group').style.display = 'block';
+                    document.getElementById('new-employee-daily-salary').setAttribute('required', 'true');
+                }
+            });
+
+            openModal('set-salary-modal'); 
+        }
+        
+        async function handleDenyUser(uid) { 
+            if (!confirm("Are you sure you want to deny this user? This cannot be undone.")) return; 
+            showLoader(); 
+            try { 
+                await setDoc(doc(db, "users", uid), { status: 'denied' }, { merge: true }); 
+                showToast("User has been denied.", "success"); 
+                await initializeNotificationsView(); 
+            } catch (e) { 
+                showToast("Could not deny user.", "error"); 
+            } finally { 
+                hideLoader(); 
+            } 
+        }
+        
+        async function handleSetSalarySubmit(e) { 
+            e.preventDefault(); 
+            showLoader(); 
+            
+            const uid = document.getElementById('new-employee-uid').value; 
+            const name = document.getElementById('new-employee-name-modal').textContent; 
+            
+            // Get the role (defaults to employee if the dropdown is hidden)
+            const roleSelect = document.getElementById('new-user-role');
+            const selectedRole = roleSelect && roleSelect.style.display !== 'none' ? roleSelect.value : 'employee';
+
+            try { 
+                if (selectedRole === 'admin') {
+                    // Create Co-Admin (No employee record needed for salary)
+                    await setDoc(doc(db, "users", uid), { 
+                        status: 'approved', 
+                        role: 'admin',
+                        employeeId: null // Admins don't need attendance/salary tracking usually
+                    }, { merge: true });
+                    showToast(`${name} is now a Co-Admin!`, "success");
+                    
+                } else {
+                    // Create Standard Employee
+                    const dailySalary = parseFloat(document.getElementById('new-employee-daily-salary').value);
+                    const employeeDocRef = await addDoc(collection(db, "employees"), { 
+                        name, 
+                        dailySalary, 
+                        userUID: uid 
+                    }); 
+                    await setDoc(doc(db, "users", uid), { 
+                        status: 'approved', 
+                        role: 'employee', 
+                        employeeId: employeeDocRef.id 
+                    }, { merge: true }); 
+                    showToast(`${name} is now an employee!`, "success");
+                }
+                
+                closeModal('set-salary-modal'); 
+                await initializeNotificationsView(); 
+            } catch (err) { 
+                console.error(err);
+                showToast("Could not accept user.", "error"); 
+            } finally { 
+                hideLoader(); 
+            } 
+        }
+
         async function handleLinkUserClick(employeeId, employeeName) {
             const modal = document.getElementById('link-user-modal'); showLoader();
             try {
@@ -233,6 +376,7 @@ const firebaseConfig = {
                 openModal('link-user-modal');
             } catch (err) { showToast("Could not load pending users.", "error"); console.error(err); } finally { hideLoader(); }
         }
+        
         async function handleLinkUserFormSubmit(e) {
             e.preventDefault();
             const employeeId = document.getElementById('link-employee-id').value;
