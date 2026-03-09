@@ -193,15 +193,19 @@
         .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
         .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #163837, #02302f); }
         
-        /* Premium Breadcrumb Button - Refined for desktop and one-line */
+        /* Premium Breadcrumb Button - Optimized Height and One-Line */
         .breadcrumb { 
-            font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
-            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; 
-            transition: all 0.3s var(--ease-cubic); padding: 6px 12px; border-radius: 10px; background: #fff; 
+            font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
+            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 2rem; 
+            transition: all 0.3s var(--ease-cubic); padding: 10px 16px; border-radius: 12px; background: #fff; 
             border: 1px solid var(--color-border); white-space: nowrap; line-height: 1;
         }
-        .breadcrumb svg { width: 12px; height: 12px; stroke-width: 3.5; }
+        .breadcrumb svg { width: 12px; height: 12px; stroke-width: 3.5; flex-shrink: 0;}
         .breadcrumb:hover { color: var(--color-primary); border-color: var(--color-primary); background: var(--light-bg-tertiary); box-shadow: var(--shadow-sm);}
+        
+        @media (max-width: 768px) {
+            .breadcrumb { margin-top: 20px; } /* 20px padding/margin top in mobile */
+        }
 
         .card { 
             background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); 
@@ -238,7 +242,7 @@
         .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
         .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
         
-        /* Fixed logic for floating labels with select:not([value=""]) */
+        /* Fixed logic for floating labels with select */
         .input-field:focus + .input-label, 
         .input-field:not(:placeholder-shown) + .input-label,
         select.input-field:focus + .input-label, 
@@ -324,7 +328,6 @@
             
             <div class="sidebar-inner">
                 <nav class="nav-menu">
-                    <!-- Dashboard highlighted per request -->
                     <a href="admin-dashboard.html" class="nav-item active" id="nav-link-home">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
                         <span class="nav-label">Dashboard</span>
@@ -396,10 +399,11 @@
                                     </div>
                                     <div class="input-group">
                                         <select id="g-payment-mode" class="input-field" required>
+                                            <option value="" disabled selected hidden></option>
                                             <option value="Cash">Cash</option>
                                             <option value="Online">Online</option>
                                         </select>
-                                        <label class="input-label" for="g-payment-mode">Mode</label>
+                                        <label class="input-label" for="g-payment-mode">Payment Mode</label>
                                     </div>
                                     <div class="input-group">
                                         <input type="text" id="g-payment-note" class="input-field" placeholder=" ">
