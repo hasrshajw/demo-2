@@ -310,15 +310,52 @@
             } catch (error) { document.body.innerHTML = `<h2>Error initializing application.</h2>`; }
         });
 
-        function listenForAuthStateChanges() {
-            onAuthStateChanged(auth, async (user) => {
-                if (user && user.email === "__ADMIN_EMAIL__") {
-                    const userRef = doc(db, "users", user.uid);
-                    const profilePromise = setDoc(userRef, { displayName: user.displayName, email: user.email, photoURL: user.photoURL, status: 'approved', role: 'admin' }, { merge: true }).then(() => getDoc(userRef)).then(userDoc => { currentUserProfile = { id: userDoc.id, ...userDoc.data() }; populateNavbar(currentUserProfile); });
-                    await Promise.all([ profilePromise, initializeAdminView() ]);
-                } else { window.location.href = 'login.html'; }
-            });
+function listenForAuthStateChanges() {
+    onAuthStateChanged(auth, async (user) => {
+        showLoader();
+        if (user) {
+            const userRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userRef);
+            
+            // If user doesn't exist in DB or is pending/denied
+            if (!userDoc.exists() || userDoc.data().status !== 'approved') {
+                // If it's the Master Admin, ensure their profile exists
+                if (user.email === ADMIN_EMAIL) {
+                    await setDoc(userRef, { 
+                        displayName: user.displayName || 'Master Admin', 
+                        email: user.email, 
+                        role: 'admin', 
+                        status: 'approved' 
+                    }, { merge: true });
+                } else {
+                    window.location.href = 'login.html'; // Or pending-approval.html
+                    return;
+                }
+            }
+
+            // Fetch profile again in case we just created it
+            const freshUserDoc = await getDoc(userRef);
+            currentUserProfile = { id: freshUserDoc.id, ...freshUserDoc.data() };
+
+            const isAdmin = (user.email === ADMIN_EMAIL || currentUserProfile.role === 'admin');
+
+            // --- PAGE SPECIFIC REDIRECT LOGIC ---
+            // Example for ADMIN pages:
+            if (!isAdmin) {
+                window.location.href = 'employee-dashboard.html';
+                return;
+            }
+            
+            // Proceed with page initialization...
+            populateNavbar(user, currentUserProfile);
+            // ... rest of the page logic
+            
+        } else {
+            window.location.href = 'login.html';
         }
+        hideLoader();
+    });
+}
         
         function populateNavbar(user) { if (!user) return; document.getElementById('welcome-message').textContent = `Welcome back, ${user.displayName.split(' ')[0]}!`; const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('desktop-profile-email').textContent = user.email || ''; document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin'; document.getElementById('mobile-profile-email').textContent = user.email || '';}
         async function initializeAdminView() {
