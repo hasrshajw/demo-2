@@ -99,6 +99,7 @@
         .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; }
         .content-area { flex: 1; overflow-y: auto; padding-bottom: 80px;} /* padding added to avoid fab overlap */
         
+        /* Updated Mobile Menu Button to exactly match reference */
         .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .m-menu-lines { width: 18px; height: 14px; position: relative; }
         .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
@@ -110,7 +111,7 @@
         .sidebar-overlay.mobile-open { opacity: 1; pointer-events: auto; }
 
         .sidebar-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; transition: all 0.3s; }
-        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: transparent;}
+        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: transparent; cursor: pointer; }
         .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
         .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; background: #111827; }
         .m-drawer-close-icon::before { transform: rotate(45deg); } .m-drawer-close-icon::after { transform: rotate(-45deg); }
@@ -283,11 +284,11 @@
         
         <!-- Mobile Header (Hidden on Desktop) -->
         <header class="m-header mobile-only">
-            <button class="m-menu-btn" id="m-open-drawer" aria-label="Open menu">
+            <button class="m-menu-btn" id="m-open-drawer">
                 <div class="m-menu-lines"><span></span></div>
             </button>
             <a href="admin-dashboard.html" class="brand-logo">
-                <img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Logo">
+                <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
             </a>
             <div style="width:40px;"></div>
         </header>
@@ -299,11 +300,11 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <a href="admin-dashboard.html" class="brand-logo">
-                    <img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Logo">
+                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
                 </a>
                 
-                <span class="mini-logo" style="font-weight: 800; font-size: 24px; color: var(--color-primary);">
-                    IH
+                <span class="mini-logo">
+                    <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
                 </span>
                 
                 <!-- Desktop Collapse Button -->
