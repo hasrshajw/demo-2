@@ -3,38 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Management Portal - Login</title>
+    <title>Management Portal</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- CORE DESIGN SYSTEM --- */
         :root {
             --primary-dark: #012726;
             --accent-green: #33C375;
             --pure-white: #FFFFFF;
             --light-bg: #f8fafc;
-            --text-main: #0f172a;
-            --text-sub: #64748b;
-            --border-color: #e2e8f0;
-            --color-danger: #ef4444;
-            --radius-xl: 32px;
-            --radius-lg: 16px;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border-subtle: #e2e8f0;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --radius-xl: 40px;
             --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
+            --premium-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         html, body { height: 100%; overflow: hidden; }
         
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f1f5f9; 
+            background-color: var(--light-bg); 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            color: var(--text-main); 
+            color: var(--text-primary); 
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container { 
+        .app-container { 
             width: 100%; 
             max-width: 420px; 
             height: 100%; 
@@ -45,15 +53,23 @@
             position: relative;
         }
 
-        .form-panel-wrapper { flex-grow: 1; position: relative; display: flex; flex-direction: column; overflow-y: auto; }
+        .form-panel-wrapper { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            overflow-y: auto; 
+            background: var(--pure-white);
+        }
+
+        /* --- LEFT PANEL (DESKTOP) --- */
         .info-panel { display: none; }
 
-        /* Welcome Screen (Mobile) */
+        /* --- WELCOME SCREEN (MOBILE) --- */
         #welcome-screen { 
             display: flex; 
             flex-direction: column; 
             height: 100%; 
-            background-color: var(--pure-white);
+            background: var(--light-bg);
         }
         
         .welcome-top { 
@@ -64,44 +80,67 @@
             padding: 2rem; 
         }
         
-        .welcome-top .main-icon {
-            width: 100px;
-            height: 100px;
-            background: var(--light-bg);
-            border-radius: 24px;
+        /* Modern abstract illustration placeholder */
+        .welcome-top .illustration {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            aspect-ratio: 1/1;
+            background: linear-gradient(135deg, rgba(51, 195, 117, 0.1) 0%, rgba(1, 39, 38, 0.05) 100%);
+            border-radius: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-dark);
+            position: relative;
+        }
+        
+        .illustration-circles {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px dashed rgba(51, 195, 117, 0.3);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .illustration-node {
+            width: 80px;
+            height: 80px;
+            background: var(--pure-white);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--premium-shadow);
+            z-index: 2;
         }
 
         .welcome-bottom { 
-            flex-shrink: 0; 
             background-color: var(--primary-dark); 
-            border-top-left-radius: 40px; 
-            border-top-right-radius: 40px; 
+            border-top-left-radius: var(--radius-xl); 
+            border-top-right-radius: var(--radius-xl); 
             padding: 3rem 2.5rem; 
             display: flex; 
             flex-direction: column; 
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 -10px 30px rgba(1, 39, 38, 0.2);
         }
-        
+
         .welcome-bottom h1 { 
-            font-family: 'DM Sans', sans-serif;
-            font-size: 2.2rem; 
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 2.25rem; 
             font-weight: 700; 
             margin-bottom: 0.75rem; 
             color: var(--pure-white); 
             letter-spacing: -0.02em;
         }
-        
+
         .welcome-bottom p { 
-            font-size: 1rem; 
+            font-size: 1.05rem; 
             color: rgba(255, 255, 255, 0.7); 
             margin-bottom: 2.5rem; 
             line-height: 1.6; 
         }
-        
+
         .btn-get-started { 
             width: 100%; 
             padding: 1.1rem; 
@@ -113,323 +152,326 @@
             border-radius: 16px; 
             cursor: pointer; 
             transition: all 0.3s var(--ease-cubic); 
-            font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 8px 20px rgba(51, 195, 117, 0.2);
         }
-        
+
         .btn-get-started:hover { 
             background-color: #2eb068; 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(51, 195, 117, 0.3); 
+            box-shadow: 0 12px 24px rgba(51, 195, 117, 0.3); 
         }
 
-        /* Auth Section */
+        /* --- AUTH SECTION --- */
         #auth-section { 
             display: none; 
             flex-direction: column; 
-            padding: 3rem 2rem; 
-            animation: fadeIn 0.5s var(--ease-cubic);
+            padding: 4rem 2rem 2rem; 
+            animation: fadeIn 0.5s var(--ease-cubic) forwards;
         }
-        
+
         .form-toggle { 
             display: flex; 
             background-color: #f1f5f9; 
             border-radius: 14px; 
-            padding: 4px; 
-            margin-bottom: 2.5rem; 
+            padding: 6px; 
+            margin-bottom: 3rem; 
         }
-        
+
         .toggle-btn { 
             flex: 1; 
-            padding: 0.7rem; 
+            padding: 0.8rem; 
             border: none; 
             background-color: transparent; 
-            color: var(--text-sub); 
-            font-size: 0.9rem; 
+            color: var(--text-secondary); 
+            font-size: 0.95rem; 
             font-weight: 700; 
             border-radius: 10px; 
             cursor: pointer; 
             transition: all 0.3s var(--ease-cubic); 
-            font-family: 'DM Sans', sans-serif;
         }
-        
+
         .toggle-btn.active { 
             background-color: var(--pure-white); 
             color: var(--primary-dark); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
         }
 
         .form-container form { display: none; }
         .form-container form.active { display: block; }
-        
+
         .form-header h2 { 
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.8rem; 
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 1.85rem; 
             font-weight: 700; 
+            text-align: center; 
             margin-bottom: 0.5rem; 
             letter-spacing: -0.02em;
         }
-        
+
         .form-header p { 
-            color: var(--text-sub); 
-            margin-bottom: 2rem; 
+            text-align: center; 
+            color: var(--text-secondary); 
+            margin-bottom: 2.5rem; 
             font-size: 0.95rem; 
         }
 
-        .input-group { margin-bottom: 1.25rem; }
+        .input-group { margin-bottom: 1.5rem; }
         .input-group label { 
             display: block; 
-            font-size: 0.85rem; 
-            font-weight: 600; 
-            margin-bottom: 0.5rem; 
-            color: var(--text-main); 
-            font-family: 'DM Sans', sans-serif;
-        }
-        
-        .input-group input { 
-            width: 100%; 
-            padding: 1rem; 
-            border: 1.5px solid var(--border-color); 
-            background-color: #f8fafc; 
-            border-radius: 12px; 
-            font-size: 1rem; 
-            transition: all 0.3s var(--ease-cubic); 
-            outline: none;
-        }
-        
-        .input-group input:focus { 
-            border-color: var(--primary-dark); 
-            background-color: var(--pure-white); 
-            box-shadow: 0 0 0 4px rgba(1, 39, 38, 0.05); 
+            font-size: 0.875rem; 
+            font-weight: 700; 
+            margin-bottom: 0.6rem; 
+            color: var(--text-primary); 
+            padding-left: 4px;
         }
 
-        .form-options { display: flex; justify-content: flex-end; margin-top: -0.5rem; margin-bottom: 1.5rem; }
-        .form-options .forgot-password { font-size: 0.85rem; color: var(--primary-dark); text-decoration: none; font-weight: 600; }
+        .input-group input { 
+            width: 100%; 
+            padding: 1rem 1.2rem; 
+            border: 1.5px solid var(--border-subtle); 
+            background-color: #f8fafc; 
+            border-radius: 14px; 
+            font-size: 1rem; 
+            transition: all 0.2s var(--ease-cubic); 
+            outline: none;
+        }
+
+        .input-group input:focus { 
+            border-color: var(--accent-green); 
+            background-color: var(--pure-white); 
+            box-shadow: 0 0 0 4px rgba(51, 195, 117, 0.1); 
+        }
+
+        .form-options { display: flex; justify-content: flex-end; margin: -0.75rem 0 2rem 0; }
+        .forgot-password { font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+        .forgot-password:hover { color: var(--primary-dark); }
 
         .btn-submit { 
             width: 100%; 
-            padding: 1rem; 
+            padding: 1.1rem; 
             font-size: 1rem; 
             font-weight: 700; 
             color: var(--pure-white); 
             background-color: var(--primary-dark); 
             border: none; 
-            border-radius: 12px; 
+            border-radius: 16px; 
             cursor: pointer; 
-            transition: all 0.3s; 
-            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s var(--ease-cubic); 
+            box-shadow: var(--btn-shadow);
         }
-        
+
         .btn-submit:hover { 
+            background-color: #001a19; 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(1, 39, 38, 0.15); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
         }
 
         .divider { 
             display: flex; 
             align-items: center; 
             text-align: center; 
-            color: var(--text-sub); 
-            margin: 1.5rem 0; 
+            color: var(--text-secondary); 
+            margin: 2rem 0; 
             font-size: 0.75rem; 
-            font-weight: 700; 
+            font-weight: 800; 
             letter-spacing: 0.05em;
         }
-        
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1.5px solid var(--border-color); }
-        .divider:not(:empty)::before { margin-right: 1em; }
-        .divider:not(:empty)::after { margin-left: 1em; }
+
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-subtle); }
+        .divider:not(:empty)::before { margin-right: 1.5rem; }
+        .divider:not(:empty)::after { margin-left: 1.5rem; }
 
         .btn-google { 
             width: 100%; 
-            padding: 0.9rem; 
-            font-size: 0.95rem; 
+            padding: 1rem; 
+            font-size: 1rem; 
             font-weight: 700; 
-            color: var(--text-main); 
+            color: var(--text-primary); 
             background-color: var(--pure-white); 
-            border: 1.5px solid var(--border-color); 
-            border-radius: 12px; 
+            border: 1.5px solid var(--border-subtle); 
+            border-radius: 16px; 
             cursor: pointer; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             gap: 12px;
-            transition: all 0.3s var(--ease-cubic); 
-            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s var(--ease-cubic); 
         }
-        
-        .btn-google:hover { background-color: #f8fafc; border-color: #cbd5e1; }
-        .google-icon { width: 20px; height: 20px; }
 
-        .switch-form-text { text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-sub); }
+        .btn-google:hover { background-color: #f8fafc; border-color: #cbd5e1; }
+        .google-icon { width: 22px; height: 22px; }
+
+        .switch-form-text { text-align: center; margin-top: 2.5rem; font-size: 0.95rem; color: var(--text-secondary); }
         .switch-form-text a { color: var(--primary-dark); font-weight: 700; text-decoration: none; cursor: pointer; }
 
-        /* Loader & Toast */
-        #loader { display: none; position: fixed; inset: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 9999; }
-        .spinner { width: 40px; height: 40px; border: 4px solid rgba(1, 39, 38, 0.1); border-bottom-color: var(--primary-dark); border-radius: 50%; animation: rotation 1s linear infinite; }
-        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 14px 28px; border-radius: 12px; color: white; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: bottom 0.4s var(--ease-out-back); z-index: 10000; font-size: 0.9rem;}
-        #toast.show { bottom: 32px; }
-        #toast.success { background-color: var(--accent-green); color: var(--primary-dark); }
-        #toast.error { background-color: var(--color-danger); }
-
-        @keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Desktop Layout */
+        /* --- DESKTOP ADAPTATION --- */
         @media (min-width: 992px) {
-            body { background-color: #eef2f6; padding: 2rem; overflow: auto; }
-            .container { 
+            body { background-color: #e9eef2; padding: 2rem; min-height: 100vh; }
+            .app-container { 
                 flex-direction: row; 
                 max-width: 1100px; 
-                height: 750px; 
-                border-radius: var(--radius-xl); 
-                box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15); 
+                height: 720px; 
+                border-radius: 32px; 
+                box-shadow: 0 40px 100px -20px rgba(1, 39, 38, 0.15); 
+                overflow: hidden;
             }
+
             .info-panel { 
                 display: flex; 
                 flex-direction: column; 
                 justify-content: space-between; 
-                flex: 1.2; 
-                background: linear-gradient(135deg, rgba(1, 39, 38, 0.9), rgba(1, 39, 38, 0.7)), 
-                            url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200') center center / cover; 
-                padding: 4rem; 
+                flex-basis: 50%; 
+                background: linear-gradient(135deg, rgba(1, 39, 38, 0.92) 0%, rgba(1, 39, 38, 0.8) 100%), 
+                            url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80') center center / cover; 
+                padding: 4.5rem; 
                 color: var(--pure-white); 
+                position: relative;
             }
-            .info-panel-header { 
-                font-family: 'DM Sans', sans-serif;
-                font-size: 1.25rem; 
-                font-weight: 800; 
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-            .info-panel-header::before {
-                content: ''; width: 32px; height: 32px; background: var(--accent-green); border-radius: 8px;
-            }
+
+            .info-panel-header { font-family: 'DM Sans', sans-serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+            
             .info-panel-text h2 { 
-                font-family: 'DM Sans', sans-serif;
+                font-family: 'IBM Plex Sans', sans-serif;
                 font-size: 3.5rem; 
                 font-weight: 700; 
                 line-height: 1.1; 
                 margin-bottom: 1.5rem; 
                 letter-spacing: -0.04em;
             }
-            .info-panel-text p { 
-                font-size: 1.1rem; 
-                max-width: 420px; 
-                line-height: 1.6; 
-                opacity: 0.8; 
-            }
+
+            .info-panel-text p { font-size: 1.15rem; max-width: 400px; line-height: 1.7; opacity: 0.7; font-weight: 400; }
+            
             .form-panel-wrapper { 
-                flex: 1; 
+                flex-basis: 50%; 
                 display: flex; 
                 align-items: center; 
                 justify-content: center; 
-                padding: 3rem; 
-                overflow-y: auto; 
+                padding: 0; 
+                position: static; 
             }
+
             #welcome-screen { display: none; }
-            #auth-section { display: flex; width: 100%; max-width: 380px; padding: 0; }
+            #auth-section { 
+                display: flex; 
+                width: 100%; 
+                max-width: 440px; 
+                padding: 4rem;
+                justify-content: center; 
+            }
         }
+
+        /* Utils & Feedback */
+        #loader { display: none; position: fixed; inset: 0; background: rgba(1, 39, 38, 0.6); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 9999; }
+        .spinner { width: 52px; height: 52px; border: 5px solid rgba(51, 195, 117, 0.2); border-bottom-color: var(--accent-green); border-radius: 50%; animation: rotate 1s linear infinite; }
+        
+        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 16px 32px; border-radius: 16px; color: white; font-weight: 700; box-shadow: var(--premium-shadow); transition: bottom 0.4s var(--ease-out-back); z-index: 10000; }
+        #toast.show { bottom: 40px; }
+        #toast.success { background-color: var(--accent-green); color: var(--primary-dark); }
+        #toast.error { background-color: #ef4444; }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Desktop Info Panel -->
-        <div class="info-panel">
-            <div class="info-panel-header">System Portal</div>
+    <div class="app-container">
+        <!-- Desktop side panel -->
+        <aside class="info-panel">
+            <div class="info-panel-header">Management Portal</div>
             <div class="info-panel-text">
-                <h2>Precision in every operation.</h2>
-                <p>Manage your workforce, track attendance, and oversee complex orders through our unified management interface designed for modern efficiency.</p>
+                <h2>Precision in every detail.</h2>
+                <p>Streamline your professional workflow, manage global resources, and monitor organizational performance within a high-performance environment.</p>
             </div>
-            <div></div> <!-- Spacer -->
-        </div>
+        </aside>
 
-        <!-- Form Wrapper -->
+        <!-- Mobile & Desktop Form Content -->
         <div class="form-panel-wrapper">
-            <!-- Mobile Welcome -->
-            <div id="welcome-screen">
+             <section id="welcome-screen">
                 <div class="welcome-top">
-                    <div class="main-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <div class="illustration">
+                        <div class="illustration-circles"></div>
+                        <div class="illustration-node">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-dark)"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93"/></svg>
+                        </div>
                     </div>
                 </div>
                 <div class="welcome-bottom">
-                    <h1>Portal Access</h1>
-                    <p>Log in to access your dashboard, track your performance, and manage ongoing operations in real-time.</p>
-                    <button id="get-started-btn" class="btn-get-started">Get Started</button>
+                    <h1>Advance</h1>
+                    <p>Experience a centralized ecosystem designed for modern workforce synchronization and administrative efficiency.</p>
+                    <button id="get-started-btn" class="btn-get-started">Begin Setup</button>
                 </div>
-            </div>
+            </section>
 
-            <!-- Main Auth Section -->
-            <div id="auth-section">
+            <section id="auth-section">
                 <div class="form-toggle">
                     <button id="show-login-btn" class="toggle-btn active">Sign In</button>
                     <button id="show-signup-btn" class="toggle-btn">Sign Up</button>
                 </div>
-
+                
                 <div class="form-container">
                     <!-- Login Form -->
                     <form id="login-form" class="active">
                         <div class="form-header">
-                            <h2>Welcome Back</h2>
-                            <p>Authorized personnel only. Please sign in.</p>
+                            <h2>Welcome back</h2>
+                            <p>Authorized personnel only.</p>
                         </div>
                         <div class="input-group">
-                            <label for="login-email">Corporate Email</label>
-                            <input type="email" id="login-email" placeholder="email@example.com" required>
+                            <label for="login-email">Email Address</label>
+                            <input type="email" id="login-email" placeholder="name@company.com" required autocomplete="email">
                         </div>
                         <div class="input-group">
                             <label for="login-password">Security Password</label>
-                            <input type="password" id="login-password" placeholder="••••••••" required>
+                            <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password">
                         </div>
                         <div class="form-options">
-                            <a href="#" class="forgot-password">Forgot password?</a>
+                            <a href="#" class="forgot-password">Recovery Access?</a>
                         </div>
-                        <button type="submit" class="btn-submit">Sign In to Dashboard</button>
+                        <button type="submit" class="btn-submit">Authenticate</button>
                         
                         <div class="divider">OR</div>
                         
                         <button type="button" class="btn-google" id="google-signin-btn">
-                            <svg class="google-icon" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.655-3.344-11.303-7.962l-6.571,4.819C9.656,40.909,16.318,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.089,5.571l6.19,5.238C42.012,36.494,44,30.638,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
-                            Continue with Google
+                            <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                            Gmail Single Sign-On
                         </button>
                         
                         <p class="switch-form-text">
-                            New user? <a class="switch-to-signup">Create Request</a>
+                            New to the portal? <a class="switch-to-signup">Request access</a>
                         </p>
                     </form>
 
                     <!-- Signup Form -->
                     <form id="signup-form">
                         <div class="form-header">
-                            <h2>Access Request</h2>
-                            <p>Enter your details to request system access.</p>
+                            <h2>Enrollment</h2>
+                            <p>Apply for a secure workstation account.</p>
                         </div>
                         <div class="input-group">
-                            <label for="signup-username">Full Name</label>
-                            <input type="text" id="signup-username" placeholder="John Doe" required>
+                            <label for="signup-username">Identification Name</label>
+                            <input type="text" id="signup-username" placeholder="Full name" required autocomplete="name">
                         </div>
                         <div class="input-group">
-                            <label for="signup-email">Preferred Email</label>
-                            <input type="email" id="signup-email" placeholder="john@example.com" required>
+                            <label for="signup-email">Work Email</label>
+                            <input type="email" id="signup-email" placeholder="name@company.com" required autocomplete="email">
                         </div>
                         <div class="input-group">
-                            <label for="signup-password">Choose Password</label>
-                            <input type="password" id="signup-password" placeholder="Min. 6 characters" required>
+                            <label for="signup-password">Security Password</label>
+                            <input type="password" id="signup-password" placeholder="Create password" required autocomplete="new-password">
                         </div>
                         <button type="submit" class="btn-submit">Submit Request</button>
+                        
                         <p class="switch-form-text">
-                            Already have access? <a class="switch-to-login">Sign In</a>
+                            Already enrolled? <a class="switch-to-login">Sign in</a>
                         </p>
                     </form>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
     
+    <!-- Overlays -->
     <div id="toast"></div>
     <div id="loader"><div class="spinner"></div></div>
 
@@ -458,12 +500,12 @@
             t.textContent = message; 
             t.className = `show ${type}`; 
             setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); 
-        };
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith("__")) {
-                    throw new Error("Firebase configuration is missing or invalid.");
+                    throw new Error("Invalid configuration.");
                 }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -472,8 +514,7 @@
                 bindEventListeners();
                 listenForAuthStateChanges();
             } catch (error) {
-                console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<div style="padding:2rem;text-align:center;"><h2>Initialization Error</h2><p>${error.message}</p></div>`;
+                console.error("Init Error:", error);
             }
         });
 
@@ -494,14 +535,14 @@
                 showLoader(); 
                 await signInWithPopup(auth, provider);
             } catch (error) { 
-                console.error("Google Sign-In Error", error); 
-                showToast("Failed to sign in with Google.", "error"); 
+                showToast("Authentication failed.", "error"); 
                 hideLoader(); 
             } 
         }
 
         async function handleUserLoggedIn(user) {
             const userRef = doc(db, "users", user.uid);
+            
             if (user.email === ADMIN_EMAIL) {
                 await setDoc(userRef, { 
                     displayName: user.displayName || user.email,
@@ -522,7 +563,7 @@
                         role: 'employee',
                         status: 'pending',
                         createdAt: new Date().toISOString()
-                    });
+                    }, { merge: true });
                     window.location.href = 'pending-approval.html';
                 } else {
                     await setDoc(userRef, { lastLogin: new Date().toISOString() }, { merge: true });
@@ -530,7 +571,6 @@
                     switch (userData.status) {
                         case 'approved': window.location.href = 'employee-dashboard.html'; break;
                         case 'denied': window.location.href = 'access-denied.html'; break;
-                        case 'pending':
                         default: window.location.href = 'pending-approval.html'; break;
                     }
                 }
@@ -564,7 +604,6 @@
                 signupForm.classList.add('active');
                 showSignupBtn.classList.add('active');
             };
-
             showLoginBtn.addEventListener('click', goToLogin);
             showSignupBtn.addEventListener('click', goToSignup);
             document.querySelector('.switch-to-login').addEventListener('click', goToLogin);
@@ -578,7 +617,7 @@
                 try {
                     await signInWithEmailAndPassword(auth, email, password);
                 } catch (error) {
-                    showToast("Invalid email or password.", "error");
+                    showToast("Authentication failed.", "error");
                     hideLoader();
                 }
             });
@@ -588,21 +627,23 @@
                 showLoader();
                 const email = signupForm['signup-email'].value;
                 const password = signupForm['signup-password'].value;
-                const username = signupForm['signup-username'].value;
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
-                    await setDoc(doc(db, "users", user.uid), {
-                        displayName: username || email,
+                    const userRef = doc(db, "users", user.uid);
+                    await setDoc(userRef, {
+                        displayName: signupForm['signup-username'].value || email,
                         email: email,
                         role: 'employee',
                         status: 'pending',
                         createdAt: new Date().toISOString()
                     });
                 } catch (error) {
-                    if (error.code === 'auth/email-already-in-use') showToast('Email already registered.', 'error');
-                    else if (error.code === 'auth/weak-password') showToast('Password is too weak.', 'error');
-                    else showToast('Failed to create account.', 'error');
+                    if (error.code === 'auth/email-already-in-use') {
+                        showToast('Email already registered.', 'error');
+                    } else {
+                        showToast('Request failed.', 'error');
+                    }
                     hideLoader();
                 }
             });
