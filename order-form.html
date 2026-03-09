@@ -1,283 +1,487 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayrollPro - Order Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Order Form</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
+    <!-- Leaflet Map CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <style>
-        /* --- MERGED & COMPLETE CSS --- */
-        :root {--font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;--font-icon: "Material Symbols Outlined";--light-bg-primary: #ffffff;--light-bg-secondary: #f7f9fc;--light-bg-tertiary: #f1f3f6;--light-text-primary: #012726;--light-text-secondary: #52616b;--light-text-muted: #9ca3af;--light-border: #e5e7eb;--light-border-hover: #d1d5db;--color-primary: #012726;--color-primary-hover: #023d3c;--color-primary-text: #ffffff;--color-accent: #33C375;--color-accent-hover: #2CAC66;--color-accent-text: #012726;--color-danger: #ef4444;--color-danger-hover: #dc2626;--color-danger-text: #ffffff;--color-warning: #f59e0b;--color-warning-hover: #d97706;--color-warning-text: #ffffff;--color-reopen: #6f42c1;--color-reopen-hover: #5a3d9a;--color-reopen-text: #ffffff;--status-pending-bg: #eef2ff;--status-pending-text: #4338ca;--status-completed-bg: #f0fdf4;--status-completed-text: #166534;--status-overdue-bg: #fef2f2;--status-overdue-text: #be123c;--status-overdue-border: #fecaca;--status-upcoming-bg: #fffbeb;--status-upcoming-text: #b45309;--status-upcoming-border: #fde68a;--color-focus-ring: rgba(51, 195, 117, 0.35);--radius-sm: 0.25rem;--radius-md: 0.5rem;--radius-lg: 1rem;--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);--shadow-lg: 0 10px 20px -3px rgb(0 0 0 / 0.07), 0 4px 8px -4px rgb(0 0 0 / 0.07);--ease: cubic-bezier(.4,0,.2,1);}
-        *, *::before, *::after { box-sizing: border-box; }
-        html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body {font-family: var(--font-main);background-color: var(--light-bg-secondary);color: var(--light-text-secondary);margin: 0;min-height: 100vh;padding-top: 72px;}
-        .app-container {max-width: 72rem;margin: 2rem auto;padding: 0 1rem;width: 100%;}
-        h1, h2, h3 {font-weight: 600;color: var(--light-text-primary);margin: 0;}
-        h1 { font-size: 1.875rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
-        .screen { display: none; } .screen.active { display: block; animation: fadeUp 0.5s var(--ease) forwards; }
-        
-        /* --- NAVBAR STYLES --- */
-        .header {position: fixed; top: 0; width: 100%; z-index: 50;background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
-        .header-container { width: 90%; margin-left: auto; margin-right: auto; }
-        @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) { .header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; } }
-        .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
-        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
-        .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
-        .nav-links { display: none; align-items: center; gap: 1rem; }
-        @media (min-width: 48rem) { .nav-links { display: flex; } }
-        .nav-link { padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #012726; transition: color 0.15s, background-color 0.15s; text-decoration: none; border-radius: 0.375rem; }
-        @media (hover: hover) { .nav-link:hover { color: #fff; background-color: #012726; } }
-        .nav-right { display: flex; align-items: center; gap: 1rem; }
-        .menu-button { display: flex; padding: 0.375rem; border: 1px solid #012726; border-radius: 0.375rem; color: #012726; background-color: transparent; cursor: pointer; }
-        @media (min-width: 48rem) { .menu-button { display: none; } }
-        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; }
-        #mobileMenu.active { transform: translateX(0); }
-        #menuOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
-        #menuOverlay.active { display: block; }
-        .mobile-menu-close { padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease; align-self: flex-end; margin-bottom: 24px; cursor: pointer; }
-        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
-        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
-        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
-        .mobile-nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500; color: #012726; background-color: #f8f9fa; transition: background-color 0.15s; }
-        .mobile-nav-link:hover { background-color: #e9ecef; }
-        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
-        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
-        .divider { height: 1px; background-color: var(--light-border); }
-        @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
-        .desktop-profile { display: none; }
-        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
-        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
-        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
-        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
-        .profile-name { font-weight: 500; color: #012726; }
-        .profile-email { font-size: 0.85rem; color: #6c757d; }
-        .profile-dropdown-container { position: relative; }
-        .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background-color: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
-        .logout-popup.show { display: block; }
-        .logout-button { background-color: var(--color-danger); color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
-        .logout-button:hover { background-color: var(--color-danger-hover); }
+        /* --- MERGED CSS VARIABLES --- */
+        :root {
+            /* Layout & Sidebar */
+            --text-sub: #6b7280;
+            --header-height-desktop: 70px;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 90px;
+            --row-height: 52px;
+            --sidebar-bg: #ffffff;
+            --header-bg: #ffffff;
+            --page-bg: #f8fafc;
+            --text-color: #18181A;
+            --icon-color: #6b7280;
+            --brand-primary: #34c375; 
+            --active-bg: #E5E5E5;
+            --hover-bg: #f3f4f6;
+            --border-subtle: #e5e7eb;
+            --radius-md: 10px;
+            
+            /* Theme & Tokens */
+            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; 
+            --font-alt: 'Inter', sans-serif; 
+            --font-nav: 'DM Sans', sans-serif;
+            --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --radius-sm: 6px; --radius-lg: 16px; --radius-xl: 24px;
+            
+            --premium-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
+            --premium-shadow-hover: 0 12px 30px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(0, 0, 0, 0.05);
+            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
+            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
+            --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.25);
+            
+            --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
+            --color-accent: #33C375; --color-accent-hover: #2CAC66; --color-accent-text: #012726;
+            --color-danger: #ef4444; --color-danger-hover: #dc2626; --color-danger-text: #ffffff;
+            --color-success: #10b981; --color-warning: #f59e0b;
+            
+            --light-bg-primary: #ffffff; --light-bg-secondary: #f8fafc; --light-bg-tertiary: #f1f5f9;
+            --light-text-primary: #0f172a; --light-text-secondary: #4b5563; --light-text-muted: #64748b;
+            --light-border: #e2e8f0; --light-border-hover: #cbd5e1;
+        }
 
-        /* --- SKELETON LOADER --- */
-        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, transparent 0, rgba(255,255,255,0.4) 50%, transparent 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
-        @keyframes pulse { 50% { background-color: #f1f5f9; } }
+        /* --- GLOBAL RESETS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; height: 100%; }
+        
+        body {
+            background: var(--page-bg);
+            font-family: var(--font-alt);
+            font-weight: 500;
+            color: var(--light-text-secondary);
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            height: 100%;
+        }
+
+        /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
+        .app-layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .desktop-only { display: none !important; }
+        .mobile-only { display: flex; }
+        
+        .sidebar, .m-header, .profile-popup { font-family: var(--font-nav); }
+
+        .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
+        .brand-logo img { height: 36px; width: auto; display: block; }
+        .mini-logo { display: none; align-items: center; justify-content: center; }
+        .mini-logo img { height: 36px; width: auto; display: block; }
+
+        .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
+        .icon svg { width: 22px; height: 22px; stroke: var(--icon-color); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        
+        .nav-item { position: relative; display: flex; align-items: center; height: var(--row-height); padding: 0 16px; margin: 6px 0; border-radius: var(--radius-md); gap: 14px; cursor: pointer; color: var(--text-color); text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+        .nav-item:hover { background: var(--hover-bg); }
+        .nav-item.active { background: var(--active-bg); color: var(--text-color); font-weight: 800; }
+        .nav-item.active .icon svg { stroke: #000000; }
+
+        .account-card { display: flex; align-items: center; gap: 12px; }
+        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; background: var(--light-border); }
+        .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
+        .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; color: var(--text-color); }
+        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+        /* Mobile First Structure */
+        .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; position: relative; }
+        .content-area { flex: 1; overflow-y: auto; padding-bottom: 100px; } 
+        
+        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .m-menu-lines { width: 18px; height: 14px; position: relative; }
+        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
+        .m-menu-lines::before { top: 0; } .m-menu-lines span { top: 6px; } .m-menu-lines::after { bottom: 0; }
+
+        .sidebar { position: fixed; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%; background: #fff; transform: translateX(-100%); transition: 0.25s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; z-index: 2001; }
+        .sidebar.mobile-open { transform: translateX(0); }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); opacity: 0; pointer-events: none; transition: 0.25s; z-index: 2000; }
+        .sidebar-overlay.mobile-open { opacity: 1; pointer-events: auto; }
+
+        .sidebar-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; transition: all 0.3s; }
+        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: transparent; cursor: pointer; }
+        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
+        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; background: #111827; }
+        .m-drawer-close-icon::before { transform: rotate(45deg); } .m-drawer-close-icon::after { transform: rotate(-45deg); }
+
+        .sidebar-inner { flex: 1; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+        .nav-menu { padding: 20px 12px; }
+        .account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; cursor: pointer; }
+
+        /* Profile Context Menu */
+        .profile-popup { position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--premium-shadow-hover); border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none; transition: 0.2s; overflow: hidden; bottom: 100px; left: 50%; transform: translateX(-50%); }
+        .profile-popup.active { opacity: 1; pointer-events: all; }
+        .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
+        .popup-list { list-style: none; padding: 8px; }
+        .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; font-weight: 500;}
+        .popup-list a:hover { background: var(--hover-bg); }
+
+        /* Desktop Adjustments */
+        @media (min-width: 769px) {
+            .app-layout { flex-direction: row; }
+            .desktop-only { display: flex !important; }
+            .mobile-only { display: none !important; }
+            .m-header { display: none; }
+            .sidebar-overlay { display: none; }
+            .brand-logo img, .mini-logo img { height: 45px; }
+            
+            .main-content { margin-top: 0; }
+            .content-area { padding-top: 20px; padding-bottom: 40px; }
+            
+            .topbar {
+                height: 80px;
+                background: var(--header-bg);
+                border-bottom: 1px solid var(--border-subtle);
+                padding: 0 40px;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+                font-size: 1.75rem;
+                font-family: var(--font-main);
+                color: var(--light-text-primary);
+                flex-shrink: 0;
+            }
+
+            .sidebar { position: relative; transform: translateX(0) !important; width: var(--sidebar-width); max-width: none; background: var(--sidebar-bg); border-right: 1px solid var(--border-subtle); z-index: 100; }
+            .sidebar-header { height: auto; min-height: var(--header-height-desktop); padding: 30px 24px; border-bottom: none; }
+            .nav-menu { padding: 10px 16px; }
+            .account-section { margin-top: auto; padding: 24px 16px; }
+            
+            .profile-popup { bottom: 80px; left: 16px; transform: none; }
+            
+            .sidebar-toggle { background: none; border: none; cursor: pointer; color: var(--icon-color); display: flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; transition: 0.2s; }
+            .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
+
+            /* Collapsed State */
+            .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+            .sidebar.collapsed .brand-logo, .sidebar.collapsed .account-text, .sidebar.collapsed .btn-close-svg { display: none !important; }
+            .sidebar.collapsed .mini-logo, .sidebar.collapsed .btn-open-svg { display: flex !important; }
+            .btn-open-svg { display: none; }
+            .sidebar.collapsed .sidebar-header { flex-direction: column; padding: 30px 0 20px 0; gap: 30px; }
+            .sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
+            .sidebar.collapsed .account-section { display: flex; justify-content: center; padding: 24px 0; }
+            .sidebar.collapsed .nav-label { display: none; }
+            .sidebar.collapsed .sidebar-inner { overflow: visible; }
+            
+            .sidebar.collapsed .nav-item:hover .nav-label { display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+            .sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
+        }
+
+        /* ============= FORM PAGE SPECIFIC COMPONENTS ============= */
+        .app-container { max-width: 72rem; margin: 0 auto; padding: 0 2rem; width: 100%; }
+        h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--light-text-primary); margin: 0; letter-spacing: -0.02em; }
+        h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
+        
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-top: 1rem; }
+        .card { background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-xl); padding: 2.5rem; box-shadow: var(--premium-shadow); position: relative; overflow: hidden; }
+        
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
+        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
+        .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--btn-shadow); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
+        .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #163837, #02302f); }
+        
+        .btn-secondary { background-color: var(--light-bg-primary); color: var(--light-text-secondary); border-color: var(--light-border); box-shadow: var(--shadow-sm); }
+        .btn-secondary:hover:not(:disabled) { border-color: var(--light-border-hover); color: var(--light-text-primary); background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+        .btn-success:hover:not(:disabled) { background: linear-gradient(135deg, #34d399, #10b981); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3); }
+
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; } 
+        @media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid .grid-col-span-2 { grid-column: span 2 / span 2; } }
+        
+        .input-group { position: relative; }
+        .input-field { width: 100%; background-color: var(--light-bg-secondary); border: 2px solid transparent; border-radius: 12px; font-size: 1rem; padding: 14px 16px; color: var(--light-text-primary); transition: all 0.3s ease; outline: none; font-family: inherit; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        .input-field:focus { background-color: var(--light-bg-primary); border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
+        .input-label { position: absolute; top: 16px; left: 16px; color: var(--light-text-muted); pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
+        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: var(--light-bg-primary); padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em;}
+        
+        .window-entry { border: 1px solid var(--light-border); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: var(--radius-lg); background-color: var(--light-bg-primary); position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: center; box-shadow: var(--shadow-sm); transition: transform 0.2s ease;}
+        .window-entry:hover { border-color: var(--light-border-hover); box-shadow: var(--shadow-md); transform: translateY(-2px);}
+        .window-entry-header { grid-column: span 2; display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; margin-bottom: 0.5rem; border-bottom: 1px dashed var(--light-border); gap: 1rem; }
+        .window-entry-title { font-size: 1.1rem; font-weight: 700; color: var(--light-text-primary); flex-grow: 1; font-family: var(--font-main);}
+        .remove-window-btn { background: #fef2f2; border: none; width: 36px; height: 36px; color: var(--color-danger); cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; position: static; flex-shrink: 0;}
+        .remove-window-btn:hover { background-color: #fee2e2; transform: scale(1.1); }
+        
+        .global-options { margin-bottom: 2rem; padding: 1.5rem; background-color: var(--light-bg-tertiary); border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 1.5rem; border: 1px solid var(--light-border); }
+        .checkbox-group { display: flex; align-items: center; gap: 0.75rem; }
+        .checkbox-group label { font-weight: 600; color: var(--light-text-primary); cursor: pointer; font-size: 0.95rem;}
+        .checkbox-group input[type="checkbox"] { width: 1.25rem; height: 1.25rem; accent-color: var(--color-primary); cursor: pointer;}
+        
+        .glass-control, .profile-control { grid-column: span 2; margin-top: 0.5rem; padding-top: 1.25rem; border-top: 1px dashed var(--light-border); display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;}
+        
+        .form-actions-container { display: flex; justify-content: flex-end; margin-top: 2.5rem; border-top: 1px solid var(--light-border); padding-top: 2rem; }
+        
+        /* Premium Modals */
+        .modal { display: none; position: fixed; z-index: 3000; inset: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center; animation: fadeIn 0.3s var(--ease);}
+        .modal-content { background-color: var(--light-bg-primary); padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--modal-shadow); width: 90%; max-width: 440px; text-align: center; animation: popIn 0.3s var(--ease-out-back); }
+        .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: 2rem; color: var(--light-text-primary); }
+        .modal-buttons { display: flex; justify-content: center; gap: 1rem; }
+        
+        .loading-overlay { position: fixed; inset: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px); z-index: 4000; display: flex; align-items: center; justify-content: center; }
+        .spinner { border: 4px solid rgba(1, 39, 38, 0.1); border-bottom-color: var(--color-primary); border-radius: 50%; width: 56px; height: 56px; animation: spin 1s linear infinite; }
+        
+        .map-pin { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%); width: 44px; height: 44px; background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ef4444" width="44px" height="44px"><path d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/></svg>'); background-size: contain; pointer-events: none; z-index: 1000; }
+
+        /* Skeleton System */
+        .skeleton { position: relative; overflow: hidden; background-color: #f1f5f9; border-radius: var(--radius-md); animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;}
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, transparent 0, rgba(255,255,255,0.6) 50%, transparent 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes pulse { 50% { background-color: #e2e8f0; } }
         @keyframes shimmer { 100% { left: 150%; } }
         .skeleton-line { height: 1rem; border-radius: var(--radius-sm); }
-        .skeleton-input { height: 50px; }
-        .skeleton-button { height: 48px; }
-        .skeleton-h3 { width: 40%; height: 24px; margin-top: 1.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-border); }
+        .skeleton-input { height: 56px; }
+        .skeleton-button { height: 52px; }
+        .skeleton-h3 { width: 40%; height: 28px; margin-top: 1.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-border); }
 
-        /* --- FORM & PAGE STYLES --- */
-        button, .btn {display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;padding: 0.75rem 1.25rem;border-radius: var(--radius-md);font-weight: 600; font-size: 0.875rem;transition: all 0.2s var(--ease);border: 1px solid transparent; cursor: pointer;-webkit-user-select: none; user-select: none;}
-        button:hover:not(:disabled), .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); } button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-sm); } button:disabled, .btn:disabled { opacity: 0.6; cursor: not-allowed; } button:focus-visible, .btn:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
-        .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); } .btn-primary:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-        .btn-secondary { background-color: var(--light-bg-primary); color: var(--light-text-secondary); border-color: var(--light-border); box-shadow: var(--shadow-sm); } .btn-secondary:hover:not(:disabled) { background-color: var(--light-bg-tertiary); border-color: var(--light-border-hover); color: var(--light-text-primary); }
-        .btn-success { background-color: var(--color-accent); color: var(--color-accent-text); } .btn-success:hover:not(:disabled) { background-color: var(--color-accent-hover); }
-        .page-header {display: flex; justify-content: space-between; align-items: center;margin-bottom: 2rem; padding: 0 1.5rem;}
-        .card {background-color: var(--light-bg-primary);border: 1px solid var(--light-border);border-radius: var(--radius-lg);padding: 2.5rem;box-shadow: var(--shadow-sm);}
-        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; } @media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid .grid-col-span-2 { grid-column: span 2 / span 2; } }
-        .input-group { position: relative; }
-        .input-field {width: 100%; background-color: var(--light-bg-primary);border: 1px solid var(--light-border); border-radius: var(--radius-md);font-size: 1rem; padding: 1rem; color: var(--light-text-primary);transition: all 0.2s; outline: none;}
-        .input-label {position: absolute; top: 1rem; left: 1rem;color: var(--light-text-secondary); pointer-events: none;transition: all 0.2s var(--ease);background-color: var(--light-bg-primary); padding: 0 0.25rem;}
-        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label {top: -0.625rem; font-size: 0.75rem; color: var(--color-primary);}
-        .input-field:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-focus-ring); }
-        .window-entry {border: 1px solid var(--light-border); padding: 1.5rem;margin-bottom: 1rem; border-radius: var(--radius-md);background-color: var(--light-bg-secondary); position: relative;display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;align-items: center;}
-        .window-entry-header {grid-column: span 2; display: flex; justify-content: space-between; align-items: center;padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--light-border);gap: 1rem;}
-        .window-entry-title { font-size: 1rem; font-weight: 600; color: var(--light-text-primary); flex-grow: 1; }
-        .remove-window-btn {background: none; border: none; padding: 0.25rem;color: var(--light-text-muted); cursor: pointer; border-radius: 9999px;display: flex; align-items: center; justify-content: center;transition: color 0.2s, background-color 0.2s;position: static;}
-        .remove-window-btn:hover { background-color: var(--light-bg-tertiary); color: var(--color-danger); }
-        .global-options {margin-bottom: 1rem;padding: 1.5rem;background-color: var(--light-bg-secondary);border-radius: var(--radius-md);display: flex;flex-direction: column;gap: 1.5rem; border: 1px solid var(--light-border);}
-        .checkbox-group {display: flex;align-items: center;gap: 0.5rem;}
-        .checkbox-group label {font-weight: 500;color: var(--light-text-primary);cursor: pointer;}
-        .glass-control, .profile-control {grid-column: span 2;margin-top: 0.5rem;padding-top: 1rem;border-top: 1px dashed var(--light-border);display: flex;align-items: center;gap: 1.5rem;}
-        .form-actions-container {display: flex; justify-content: flex-end; margin-top: 2rem; border-top: 1px solid var(--light-border); padding-top: 2rem;}
-        .modal {display: none; position: fixed; z-index: 1000; inset: 0;width: 100%; height: 100%;background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(4px);align-items: center; justify-content: center;animation: fadeIn 0.3s var(--ease);}
-        .modal-content {background-color: white; padding: 2rem; border-radius: var(--radius-lg);box-shadow: var(--shadow-lg); width: 90%; max-width: 420px;text-align: center; animation: popIn 0.3s var(--ease);}
-        .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--light-text-primary); }
-        .modal-buttons { display: flex; justify-content: center; gap: 1rem; }
-        .loading-overlay {position: fixed; inset: 0; width: 100%; height: 100%;background-color: rgba(255, 255, 255, 0.9); z-index: 1001;display: flex; align-items: center; justify-content: center;}
-        .spinner {border: 6px solid var(--light-bg-tertiary); border-top: 6px solid var(--color-primary);border-radius: 50%; width: 50px; height: 50px;animation: spin 1s linear infinite;}
-        .map-pin {position: absolute; top: 50%; left: 50%;transform: translate(-50%, -100%); width: 40px; height: 40px;background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ef4444" width="40px" height="40px"><path d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/></svg>');background-size: contain; pointer-events: none; z-index: 1000;}
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } 
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } 
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } 
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+        .screen { display: none; } .screen.active { display: block; animation: fadeUp 0.5s var(--ease-cubic) forwards; }
+
         @media (max-width: 640px) {
-            body { padding: 0; padding-top: 72px; background-color: var(--light-bg-primary); }
-            .app-container { margin: 0; padding: 0; }
-            .page-header { background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); padding: 1rem 1.5rem; margin-bottom: 0; justify-content: center; }
+            .app-container { padding: 0 1rem; }
+            .page-header { padding: 1rem 0; margin-bottom: 1rem; justify-content: center; }
             .page-header h2 { text-align: center; }
-            .card { padding: 1.5rem; border-radius: 0; border: 0; box-shadow: none; }
-            #order-form { padding-bottom: 100px; }
-            .form-actions-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem 1.5rem; background-color: var(--light-bg-primary); border-top: 1px solid var(--light-border); box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 100; margin-top: 0; padding-top: 1rem; justify-content: center; }
-            .form-actions-container .skeleton-button { width: 100%; }
+            .card { padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--light-border); }
+            #order-form { padding-bottom: 80px; }
+            .form-actions-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem 1.5rem; background-color: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-top: 1px solid var(--light-border); box-shadow: 0 -4px 20px rgba(0,0,0,0.05); z-index: 100; margin-top: 0; justify-content: center; }
+            .form-actions-container .btn { width: 100%; }
+            .window-entry { grid-template-columns: 1fr; }
+            .window-entry-header { grid-column: span 1; }
+            .input-group.grid-col-span-2 { grid-column: span 1; }
+            .glass-control, .profile-control { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <nav class="nav">
-                <div class="nav-left">
-                    <a href="#" id="dashboard-link">
-                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
+
+    <!-- App Container -->
+    <div class="app-layout">
+        
+        <!-- Mobile Header (Hidden on Desktop) -->
+        <header class="m-header mobile-only">
+            <button class="m-menu-btn" id="m-open-drawer">
+                <div class="m-menu-lines"><span></span></div>
+            </button>
+            <a href="admin-dashboard.html" class="brand-logo">
+                <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+            </a>
+            <div style="width:40px;"></div>
+        </header>
+
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Unified Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="brand-logo">
+                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+                </a>
+                
+                <span class="mini-logo">
+                    <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
+                </span>
+                
+                <!-- Desktop Collapse Button -->
+                <button class="sidebar-toggle desktop-only" id="sidebar-toggle-btn">
+                    <svg class="btn-close-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg>
+                    <svg class="btn-open-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
+                </button>
+
+                <!-- Mobile Close Button -->
+                <button class="m-drawer-close mobile-only" id="m-close-drawer">
+                    <div class="m-drawer-close-icon"></div>
+                </button>
+            </div>
+            
+            <div class="sidebar-inner">
+                <nav class="nav-menu">
+                    <a href="admin-dashboard.html" class="nav-item" id="nav-link-home">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
+                        <span class="nav-label">Dashboard</span>
                     </a>
-                    <div class="nav-links">
-                        <a class="nav-link" id="nav-link-home" href="#">Home</a>
-                        <a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a>
-                        <a class="nav-link" id="nav-link-secondary" href="#"></a>
-                    </div>
-                </div>
-                <div class="nav-right">
-                    <div class="desktop-profile">
-                         <div class="profile-dropdown-container">
-                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="https://ui-avatars.com/api/?name=User&background=random" class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
-                                <div class="profile-info">
-                                    <span class="profile-name" id="desktop-profile-name">Loading...</span>
-                                    <span class="profile-email" id="desktop-profile-email"></span>
-                                </div>
-                            </div>
-                            <div class="logout-popup" id="logoutPopup">
-                                <button class="logout-button" data-app-action="logout">Logout</button>
-                            </div>
-                         </div>
-                    </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                    </button>
-                </div>
-            </nav>
-            <div class="divider"></div>
-        </div>
-    </header>
+                    <a href="view-orders.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gallery-vertical-end-icon lucide-gallery-vertical-end"><path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/></svg></span>
+                        <span class="nav-label">All Orders</span>
+                    </a>
+                    <a href="admin-employees.html" class="nav-item" id="nav-link-secondary" style="display: none;">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
+                        <span class="nav-label">Manage Employees</span>
+                    </a>
+                    <a href="notifications.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span>
+                        <span class="nav-label">Notifications</span>
+                    </a>
+                    <a href="support.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question-mark-icon lucide-message-circle-question-mark"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+                        <span class="nav-label">Support</span>
+                    </a>
+                </nav>
+            </div>
 
-    <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-        <div class="mobile-menu-content">
-            <div class="mobile-menu-section" id="mobile-menu-links">
-                </div>
-        </div>
-        <div class="mobile-menu-bottom">
-            <div class="profile-container">
-                <img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic">
-                <div class="profile-info">
-                    <span class="profile-name" id="mobile-profile-name">Loading...</span>
-                    <span class="profile-email" id="mobile-profile-email"></span>
+            <div class="account-section" id="profile-trigger">
+                <div class="account-card">
+                    <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+                    <div class="account-text">
+                        <div class="account-name">Loading...</div>
+                        <div class="account-email"></div>
+                    </div>
                 </div>
             </div>
-            <button class="logout-button" data-app-action="logout">Logout</button>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div class="main-content">
+            <header class="topbar desktop-only">Order Form</header>
+            
+            <main class="content-area">
+                <div class="app-container">
+                    
+                    <div id="skeleton-loader">
+                        <div class="page-header">
+                            <div class="skeleton skeleton-line" style="width: 250px; height: 32px;"></div>
+                        </div>
+                        <div class="card">
+                            <div class="skeleton skeleton-h3"></div>
+                            <div class="form-grid">
+                                <div class="skeleton skeleton-input"></div>
+                                <div class="skeleton skeleton-input"></div>
+                                <div class="skeleton skeleton-input grid-col-span-2" style="height: 80px;"></div>
+                                <div class="skeleton skeleton-button grid-col-span-2"></div>
+                                <div class="skeleton skeleton-input grid-col-span-2"></div>
+                            </div>
+                            <div class="skeleton skeleton-h3" style="width: 30%;"></div>
+                            <div class="global-options">
+                                <div class="skeleton skeleton-line" style="width: 200px; height: 24px;"></div>
+                                <div class="skeleton skeleton-line" style="width: 200px; height: 24px;"></div>
+                            </div>
+                            <div class="window-entry">
+                                <div class="window-entry-header">
+                                    <div class="skeleton skeleton-line" style="width: 40%; height: 44px;"></div>
+                                    <div class="skeleton skeleton-line" style="width: 50px; height: 24px;"></div>
+                                    <div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div>
+                                </div>
+                                <div class="skeleton skeleton-input"></div>
+                                <div class="skeleton skeleton-input"></div>
+                            </div>
+                            <div class="skeleton skeleton-button" style="width: 100%; margin: 1.5rem 0;"></div>
+                            <div class="form-actions-container">
+                                <div class="skeleton skeleton-button" style="width: 160px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="real-content" style="display: none;">
+                        <div id="form-screen" class="screen active">
+                            <div class="page-header">
+                                <h2 id="form-title">Create New Order</h2>
+                            </div>
+                            <div class="card">
+                                <form id="order-form">
+                                    <input type="hidden" id="order-id">
+                                    <input type="hidden" id="customer-lat">
+                                    <input type="hidden" id="customer-lon">
+                                    <input type="hidden" id="original-order-data">
+                                    
+                                    <h3 style="margin-top: 0.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-border);">Customer Information</h3>
+                                    <div class="form-grid">
+                                        <div class="input-group"><input type="text" id="customer-name" class="input-field" placeholder=" " required><label for="customer-name" class="input-label">Customer Name</label></div>
+                                        <div class="input-group"><input type="tel" id="customer-mobile" class="input-field" placeholder=" " pattern="[0-9]{10}" title="10-digit mobile number" required><label for="customer-mobile" class="input-label">Mobile Number</label></div>
+                                        <div class="input-group grid-col-span-2"><textarea id="customer-address" rows="2" class="input-field" placeholder=" " required></textarea><label for="customer-address" class="input-label">Customer Address</label></div>
+                                        <div class="input-group grid-col-span-2"><button type="button" id="get-location-btn" class="btn btn-secondary" style="width: 100%;"><span class="material-symbols-outlined">pin_drop</span> Set Customer Location on Map</button></div>
+                                        <div class="input-group grid-col-span-2"><input type="date" id="due-date" class="input-field" placeholder=" " required><label for="due-date" class="input-label">Due Date</label></div>
+                                    </div>
+
+                                    <h3 style="margin-top: 3rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-border);">Item Details & Options</h3>
+                                    
+                                    <div id="global-options-container" class="global-options">
+                                        <div>
+                                            <div class="checkbox-group">
+                                                <input type="checkbox" id="same-glass-all" checked>
+                                                <label for="same-glass-all">Same glass for all items</label>
+                                            </div>
+                                            <div id="global-glass-name-container" style="display: block; margin-top: 1.25rem;">
+                                                <div class="input-group">
+                                                    <input type="text" id="global-glass-name" class="input-field" placeholder=" ">
+                                                    <label for="global-glass-name" class="input-label">Global Glass Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="padding-top: 1.5rem; border-top: 1px dashed var(--light-border);">
+                                            <div class="checkbox-group">
+                                                <input type="checkbox" id="same-profile-all" checked>
+                                                <label for="same-profile-all">Same profile name for all items</label>
+                                            </div>
+                                            <div id="global-profile-name-container" style="display: block; margin-top: 1.25rem;">
+                                                <div class="input-group">
+                                                    <input type="text" id="global-profile-name" class="input-field" placeholder=" ">
+                                                    <label for="global-profile-name" class="input-label">Global Profile Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="windows-container"></div>
+                                    
+                                    <button type="button" id="add-window-btn" class="btn btn-secondary" style="width: 100%; margin: 1rem 0;"><span class="material-symbols-outlined">add</span> Add Another Item</button>
+                                    
+                                    <div class="form-actions-container">
+                                        <button type="submit" id="save-order-btn" class="btn btn-success"><span class="material-symbols-outlined">save</span> Save Order</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
         </div>
     </div>
-    <div id="menuOverlay"></div>
-    
-    <div class="app-container">
-        <div id="skeleton-loader">
-            <div class="page-header">
-                <div class="skeleton skeleton-line" style="width: 250px; height: 30px;"></div>
-            </div>
-            <div class="card">
-                <div class="skeleton skeleton-h3"></div>
-                <div class="form-grid">
-                    <div class="skeleton skeleton-input"></div>
-                    <div class="skeleton skeleton-input"></div>
-                    <div class="skeleton skeleton-input grid-col-span-2" style="height: 70px;"></div>
-                    <div class="skeleton skeleton-button grid-col-span-2"></div>
-                    <div class="skeleton skeleton-input grid-col-span-2"></div>
-                </div>
-                <div class="skeleton skeleton-h3" style="width: 30%;"></div>
-                <div class="global-options">
-                    <div class="skeleton skeleton-line" style="width: 200px; height: 20px;"></div>
-                    <div class="skeleton skeleton-line" style="width: 200px; height: 20px;"></div>
-                </div>
-                <div class="window-entry">
-                    <div class="window-entry-header">
-                        <div class="skeleton skeleton-line" style="width: 50%; height: 40px;"></div>
-                        <div class="skeleton skeleton-line" style="width: 50px; height: 20px;"></div>
-                        <div class="skeleton" style="width: 28px; height: 28px; border-radius: 99px;"></div>
-                    </div>
-                    <div class="skeleton skeleton-input"></div>
-                    <div class="skeleton skeleton-input"></div>
-                </div>
-                <div class="skeleton skeleton-button" style="width: 100%; margin: 1rem 0;"></div>
-                <div class="form-actions-container">
-                    <div class="skeleton skeleton-button" style="width: 140px;"></div>
-                </div>
+
+    <!-- Profile Popup Menu -->
+    <div class="profile-popup" id="profile-popup">
+        <div class="popup-header">
+            <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+            <div class="account-text">
+                <div class="account-name">Loading...</div>
+                <div class="account-email"></div>
             </div>
         </div>
-
-        <div id="real-content" style="display: none;">
-            <div id="form-screen" class="screen active">
-                <div class="page-header">
-                    <h2 id="form-title">Create New Order</h2>
-                </div>
-                <div class="card">
-                    <form id="order-form">
-                        <input type="hidden" id="order-id">
-                        <input type="hidden" id="customer-lat">
-                        <input type="hidden" id="customer-lon">
-                        <input type="hidden" id="original-order-data">
-                        
-                        <h3 style="margin-top: 1.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-border);">Customer Information</h3>
-                        <div class="form-grid">
-                            <div class="input-group"><input type="text" id="customer-name" class="input-field" placeholder=" " required><label for="customer-name" class="input-label">Customer Name</label></div>
-                            <div class="input-group"><input type="tel" id="customer-mobile" class="input-field" placeholder=" " pattern="[0-9]{10}" title="10-digit mobile number" required><label for="customer-mobile" class="input-label">Mobile Number</label></div>
-                            <div class="input-group grid-col-span-2"><textarea id="customer-address" rows="2" class="input-field" placeholder=" " required></textarea><label for="customer-address" class="input-label">Customer Address</label></div>
-                            <div class="input-group grid-col-span-2"><button type="button" id="get-location-btn" class="btn-secondary" style="width: 100%;"><span class="material-symbols-outlined">pin_drop</span> Set Customer Location on Map</button></div>
-                            <div class="input-group grid-col-span-2"><input type="date" id="due-date" class="input-field" placeholder=" " required><label for="due-date" class="input-label">Due Date</label></div>
-                        </div>
-
-                        <h3 style="margin-top: 2.5rem; margin-bottom: 1rem;">Item Details & Options</h3>
-                        
-                        <div id="global-options-container" class="global-options">
-                            <div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="same-glass-all" checked style="width: 1.15em; height: 1.15em;">
-                                    <label for="same-glass-all">Same glass for all items</label>
-                                </div>
-                                <div id="global-glass-name-container" style="display: block; margin-top: 1rem;">
-                                    <div class="input-group">
-                                        <input type="text" id="global-glass-name" class="input-field" placeholder=" ">
-                                        <label for="global-glass-name" class="input-label">Global Glass Name</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="padding-top: 1.5rem; border-top: 1px dashed var(--light-border);">
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="same-profile-all" checked style="width: 1.15em; height: 1.15em;">
-                                    <label for="same-profile-all">Same profile name for all items</label>
-                                </div>
-                                <div id="global-profile-name-container" style="display: block; margin-top: 1rem;">
-                                    <div class="input-group">
-                                        <input type="text" id="global-profile-name" class="input-field" placeholder=" ">
-                                        <label for="global-profile-name" class="input-label">Global Profile Name</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="windows-container"></div>
-                        
-                        <button type="button" id="add-window-btn" class="btn-secondary" style="width: 100%; margin: 1rem 0;"><span class="material-symbols-outlined">add</span> Add Another Item</button>
-                        
-                        <div class="form-actions-container">
-                            <button type="submit" id="save-order-btn" class="btn-success"><span class="material-symbols-outlined">save</span> Save Order</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <ul class="popup-list">
+            <li><a href="#"><span>Profile</span></a></li>
+            <li><a href="#"><span>Settings</span></a></li>
+            <li><a href="#" style="color:var(--color-danger)" data-app-action="logout"><span>Logout</span></a></li>
+        </ul>
     </div>
-    
-    <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn-primary" style="min-width: 120px;">OK</button></div></div>
+
+    <!-- Global Modals & Overlays -->
+    <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px;">OK</button></div></div>
     <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
     
-    <div id="location-picker-modal" class="modal"><div class="modal-content" style="max-width: 800px; text-align: left; padding: 0; animation: popIn 0.3s var(--ease);"><div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-border);"><h3 >Select Customer Location</h3><button id="location-picker-close-btn" class="remove-window-btn" style="position: static; border-radius: 50%;"><span class="material-symbols-outlined">close</span></button></div><div id="map-container" style="height: 400px; width: 100%; position: relative;"><div class="map-pin"></div></div><div style="padding: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--light-border);"><button id="cancel-location-btn" class="btn-secondary">Cancel</button><button id="confirm-location-btn" class="btn-primary">Confirm Location</button></div></div></div>
+    <div id="location-picker-modal" class="modal"><div class="modal-content" style="max-width: 800px; text-align: left; padding: 0; animation: popIn 0.3s var(--ease-out-back);"><div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-border);"><h3 style="font-family: var(--font-main); font-size:1.35rem;">Select Customer Location</h3><button id="location-picker-close-btn" class="remove-window-btn" style="position: static; border-radius: 50%;"><span class="material-symbols-outlined">close</span></button></div><div id="map-container" style="height: 400px; width: 100%; position: relative; background: #e2e8f0;"><div class="map-pin"></div></div><div style="padding: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--light-border); background: var(--light-bg-primary); border-bottom-left-radius: var(--radius-xl); border-bottom-right-radius: var(--radius-xl);"><button id="cancel-location-btn" class="btn btn-secondary">Cancel</button><button id="confirm-location-btn" class="btn btn-primary">Confirm Location</button></div></div></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -370,7 +574,7 @@
             
             windowEntryDiv.innerHTML = `
                 <div class="window-entry-header">
-                    <select class="item-type-select input-field">${optionsHtml}</select>
+                    <select class="item-type-select input-field" style="width:auto; padding: 10px 14px;">${optionsHtml}</select>
                     <span class="window-entry-title">#${index}</span>
                     <button type="button" class="remove-window-btn"><span class="material-symbols-outlined">close</span></button>
                 </div>
@@ -389,8 +593,8 @@
                 
                 <div class="glass-control">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="glass-check-${index}" class="has-glass-checkbox" ${hasGlass ? 'checked' : ''} style="width: 1.15em; height: 1.15em;">
-                        <label for="glass-check-${index}">Glass</label>
+                        <input type="checkbox" id="glass-check-${index}" class="has-glass-checkbox" ${hasGlass ? 'checked' : ''}>
+                        <label for="glass-check-${index}">Includes Glass</label>
                     </div>
                     <div class="individual-glass-name-container" style="display: none; flex-grow: 1;">
                         <div class="input-group">
@@ -509,6 +713,7 @@
                 if (data.lat && data.lon) {
                     getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit';
                     getLocationBtn.classList.add('btn-success');
+                    getLocationBtn.classList.remove('btn-secondary');
                 }
                 
                 windowsContainer.innerHTML = '';
@@ -535,6 +740,7 @@
             
             getLocationBtn.innerHTML = '<span class="material-symbols-outlined">pin_drop</span> Set Customer Location on Map'; 
             getLocationBtn.classList.remove('btn-success'); 
+            getLocationBtn.classList.add('btn-secondary'); 
             
             windowsContainer.innerHTML = ''; 
             addWindowInput(windowsContainer, 1); 
@@ -565,6 +771,7 @@
             if (order.latitude && order.longitude) { 
                 getLocationBtn.innerHTML = '<span class="material-symbols-outlined">edit_location</span> Location Set - Edit'; 
                 getLocationBtn.classList.add('btn-success'); 
+                getLocationBtn.classList.remove('btn-secondary'); 
             } 
             
             let windowsToLoad = []; 
@@ -623,7 +830,7 @@
                 } else { 
                     map.setView([lat, lon], zoom); 
                 } 
-                setTimeout(() => map.invalidateSize(), 10); 
+                setTimeout(() => map.invalidateSize(), 100); 
                 hideLoading(); 
             }; 
             
@@ -793,13 +1000,10 @@
         
         // --- NAVBAR FUNCTIONS ---
         function populateNavbar(user, userProfile) { 
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>'; 
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto; 
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'User'; 
-            document.getElementById('desktop-profile-email').textContent = user.email || ''; 
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto; 
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'User'; 
-            document.getElementById('mobile-profile-email').textContent = user.email || ''; 
+            const defaultPhoto = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E'; 
+            document.querySelectorAll('.account-avatar').forEach(img => img.src = user.photoURL || defaultPhoto); 
+            document.querySelectorAll('.account-name').forEach(el => el.textContent = user.displayName || 'User'); 
+            document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email || ''); 
             
             const isAdmin = user.email === ADMIN_EMAIL || userProfile?.role === 'admin'; 
             const homeLink = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html'; 
@@ -813,61 +1017,50 @@
             navLinkSecondary.textContent = secondaryLink.text; 
             navLinkSecondary.style.display = 'flex'; 
             
+            const secondaryIcon = isAdmin 
+                ? '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>' 
+                : '<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>';
+            
             const mobileLinksContainer = document.getElementById('mobile-menu-links'); 
-            mobileLinksContainer.innerHTML = `<a href="${homeLink}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a><a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a><a href="${secondaryLink.href}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isAdmin ? 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' : 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'}" /></svg><span>${secondaryLink.text}</span></a>`; 
+            mobileLinksContainer.innerHTML = `<a href="${homeLink}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a><a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a><a href="${secondaryLink.href}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${secondaryIcon}" /></svg><span>${secondaryLink.text}</span></a>`; 
         }
 
         function initializeNavbar() { 
-            const mobileMenu = document.getElementById('mobileMenu'); 
-            const mobileMenuButton = document.getElementById('mobileMenuButton'); 
-            const mobileMenuClose = document.getElementById('mobileMenuClose'); 
-            const menuOverlay = document.getElementById('menuOverlay'); 
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); 
-            const logoutPopup = document.getElementById('logoutPopup'); 
+            const sidebar = document.getElementById('sidebar');
+            const mOverlay = document.getElementById('sidebar-overlay');
             
-            function closeMobileMenu() { 
-                if (mobileMenu.classList.contains('active')) { 
-                    mobileMenu.classList.remove('active'); 
-                    menuOverlay.classList.remove('active'); 
-                    document.body.style.overflow = ''; 
-                } 
-            } 
-            mobileMenuButton.addEventListener('click', () => { 
-                mobileMenu.classList.add('active'); 
-                menuOverlay.classList.add('active'); 
-                document.body.style.overflow = 'hidden'; 
-            }); 
-            mobileMenuClose.addEventListener('click', closeMobileMenu); 
-            menuOverlay.addEventListener('click', closeMobileMenu); 
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            if(toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('collapsed');
+                });
+            }
+
+            const mOpen = document.getElementById('m-open-drawer');
+            const mClose = document.getElementById('m-close-drawer');
             
-            if (desktopProfileTrigger && logoutPopup) { 
-                desktopProfileTrigger.addEventListener('click', (event) => { 
-                    event.stopPropagation(); 
-                    const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; 
-                    logoutPopup.classList.toggle('show'); 
-                    desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); 
-                }); 
-                window.addEventListener('click', (event) => { 
-                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { 
-                        if (logoutPopup.classList.contains('show')) { 
-                            logoutPopup.classList.remove('show'); 
-                            desktopProfileTrigger.setAttribute('aria-expanded', 'false'); 
-                        } 
-                    } 
-                }); 
-            } 
-            document.addEventListener('keydown', (e) => { 
-                if (e.key === 'Escape') { 
-                    closeMobileMenu(); 
-                    if (logoutPopup && logoutPopup.classList.contains('show')) { 
-                        logoutPopup.classList.remove('show'); 
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false'); 
-                    } 
-                } 
-            }); 
-            window.addEventListener('resize', () => { 
-                if (window.innerWidth > 768) closeMobileMenu(); 
-            }); 
+            const openMobileDrawer = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); document.body.style.overflow = 'hidden';};
+            const closeMobileDrawer = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); document.body.style.overflow = '';};
+
+            if(mOpen) mOpen.onclick = openMobileDrawer;
+            if(mClose) mClose.onclick = closeMobileDrawer;
+            if(mOverlay) mOverlay.onclick = closeMobileDrawer;
+
+            const pPopup = document.getElementById('profile-popup');
+            const profileTrigger = document.getElementById('profile-trigger');
+
+            if(profileTrigger && pPopup) {
+                profileTrigger.onclick = (e) => {
+                    e.stopPropagation();
+                    if (window.innerWidth > 768) {
+                        pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; pPopup.style.transform = 'none';
+                    } else {
+                        pPopup.style.left = '50%'; pPopup.style.bottom = '100px'; pPopup.style.transform = 'translateX(-50%)';
+                    }
+                    pPopup.classList.toggle('active');
+                };
+            }
+            document.addEventListener('click', () => { if(pPopup) pPopup.classList.remove('active'); });
         }
 
         // --- FIREBASE INITIALIZATION LOGIC ---
@@ -890,7 +1083,6 @@
                     const userRef = doc(db, "users", user.uid);
                     let userDoc = await getDoc(userRef);
                     
-                    // Master admin self-healing/setup
                     if (user.email === ADMIN_EMAIL) {
                         if (!userDoc.exists() || userDoc.data().role !== 'admin') {
                             await setDoc(userRef, { 
