@@ -1,488 +1,214 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayrollPro - Invoice</title>
-    
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    
     <style>
-        /* --- CORE DESIGN SYSTEM --- */
-        :root {
-            /* Layout & Sidebar (SyncSkill) */
-            --text-sub: #6b7280;
-            --header-height-desktop: 70px;
-            --sidebar-width: 260px;
-            --sidebar-collapsed-width: 90px;
-            --row-height: 52px;
-            --sidebar-bg: #ffffff;
-            --header-bg: #ffffff;
-            --page-bg: #f8fafc;
-            --text-color: #18181A;
-            --icon-color: #6b7280;
-            --brand-primary: #34c375; 
-            --active-bg: #E5E5E5;
-            --hover-bg: #f3f4f6;
-            --border-subtle: #e5e7eb;
-            --radius-md: 10px;
-            
-            /* Theme & Tokens (Premium UI) */
-            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; 
-            --font-alt: 'Inter', sans-serif; 
-            --font-nav: 'DM Sans', sans-serif;
-            --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
-            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --radius-sm: 6px; --radius-lg: 20px; --radius-xl: 24px;
-            
-            /* Premium Shadows */
-            --premium-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
-            --premium-shadow-hover: 0 12px 30px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(0, 0, 0, 0.05);
-            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
-            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
-            --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.25);
-            
-            --color-primary: #012726; --color-primary-light: #e0e7ff; --color-primary-dark: #023d3c;
-            --color-background: #f8fafc; --color-surface: #ffffff; 
-            --color-text-primary: #0f172a; --color-text-secondary: #64748b;
-            --color-border: #e2e8f0; 
-            --color-success: #10b981; --color-danger: #ef4444; --color-warning: #f59e0b;
-        }
-
-        /* --- GLOBAL RESETS --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; height: 100%; }
+        /* --- EXACT UNIFIED CSS --- */
+        :root{--font-main:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;--light-bg-secondary:#e9e9e9;--light-border:#e2e8f0;--color-primary:#012726;--color-primary-hover:#023d3c;--color-primary-text:#fff;--shadow-md:0 4px 6px -1px rgba(0,0,0,.07),0 2px 4px -2px rgba(0,0,0,.07);--ease:cubic-bezier(.4,0,.2,1);--radius-md:.5rem;--radius-lg:1rem;--color-focus-ring:rgba(51,195,117,.35);--shadow-sm:0 1px 2px 0 rgba(0,0,0,.04)}*,:after,:before{box-sizing:border-box}html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:var(--font-main);background-color:var(--light-bg-secondary);color:#2d3748;margin:0;padding:2rem}.invoice-box{width:100%;max-width:900px;margin:auto;background:#fff;border-radius:6px;display:flex;flex-direction:column;padding:30px; box-shadow: var(--shadow-sm);}.header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--light-border);padding-bottom:20px}.logo-img{max-width:160px;height:auto}.invoice-details{text-align:right;font-size:13px;line-height:1.5;color:#718096}.invoice-details h2{font-size:1.5rem;line-height:2rem;margin:0 0 10px 0;color:#718096;font-weight:600;text-transform:uppercase}.invoice-details strong{color:#2d3748}.customer-info{margin-top:25px;display:flex;justify-content:space-between;gap:2rem}.customer-info .address-block{width:50%}.customer-info h3{font-weight:600;font-size:16px;margin-bottom:8px}.customer-info p{font-size:13px;color:#718096;margin:3px 0;line-height:1.6}.customer-info p strong{color:#2d3748}.items-table{width:100%;margin-top:25px;border-collapse:collapse;font-size:13px}.items-table thead th{background-color:#535456;color:#fff;font-weight:600;padding:12px 8px;text-align:left;border-bottom:none}.items-table tbody td{padding:10px 8px;border-bottom:1px solid var(--light-border);color:#718096}.items-table tbody .item-name{color:#2d3748;font-weight:500}.items-table tbody tr:nth-child(even){background-color:#f8f8f7}.items-table td:not(:first-child):not(:nth-child(2)),.items-table th:not(:first-child):not(:nth-child(2)){text-align:right}.summary-section{margin-top:20px;padding-top:20px;display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;border-top:1px solid var(--light-border)}.summary-notes{width:55%;font-size:11px;color:#888;line-height:1.5}.summary-notes strong{color:#718096;font-weight:600;font-size:12px;display:block;margin-bottom:5px}.summary-totals{width:45%}.summary-totals table{width:100%;font-size:14px;border-collapse:collapse}.summary-totals table td{border-bottom:1px solid var(--light-border);padding:8px}.summary-totals table tr:last-child{font-weight:700;font-size:18px;color:#2d3748}.summary-totals table tr:last-child td{background-color:#f7fafc;border-bottom:none;padding:12px 8px}.footer{margin-top:20px;padding-top:20px;border-top:1px solid var(--light-border);display:flex;justify-content:space-between;align-items:flex-end;font-size:12px;color:#718096}.signature{text-align:right}.signature .signature-space{height:60px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end}.signature .signature-line{width:220px;border-top:1px solid #718096;margin-top:5px;margin-bottom:5px}.signature p{margin:0;font-weight:600;color:#2d3748}.signature .signatory-title{font-size:11px;font-weight:normal}.digital-signature-img{display:none;max-height:50px;object-fit:contain;margin-bottom:2px}
+        #bill-controls{display:flex;justify-content:center;align-items:center;gap:1rem;margin-bottom:20px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.25rem;border-radius:var(--radius-md);font-weight:600;font-size:.875rem;transition:all .2s var(--ease);border:1px solid transparent;cursor:pointer}.btn-primary{background-color:var(--color-primary);color:#fff;box-shadow:var(--shadow-md);}.btn-primary:hover{background-color:#023d3c; transform: translateY(-1px);}.btn-secondary{background-color:#fff;color:#52616b;border-color:var(--light-border);box-shadow:var(--shadow-sm);}.btn-secondary:hover{background-color:#f1f3f6; transform: translateY(-1px);}.modal{display:none;position:fixed;z-index:1000;inset:0;width:100%;height:100%;background-color:rgba(17,24,39,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.modal-content{background-color:#fff;padding:2rem;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:90%;max-width:520px;animation:popIn .3s var(--ease)}.form-group{margin-bottom:1.5rem}.input-group{position:relative}.input-field{width:100%;background-color:#fff;border:1px solid var(--light-border);border-radius:var(--radius-md);font-size:1rem;padding:1rem;color:#012726;transition:all .2s;outline:none}.input-label{position:absolute;top:1rem;left:1rem;color:#52616b;pointer-events:none;transition:all .2s var(--ease);background-color:#fff;padding:0 .25rem}.input-field:focus+.input-label,.input-field:not(:placeholder-shown)+.input-label{top:-.625rem;font-size:.75rem;color:var(--color-primary)}.input-field:focus{border-color:var(--color-primary);box-shadow:0 0 0 3px var(--color-focus-ring)}.modal-buttons{display:flex;justify-content:flex-end;gap:1rem;margin-top:2rem}.loading-overlay{position:fixed;inset:0;width:100%;height:100%;background-color:rgba(255,255,255,.9);z-index:1001;display:flex;align-items:center;justify-content:center}.spinner{border:6px solid #f1f3f6;border-top:6px solid var(--color-primary);border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        .checkbox-group { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .address-textarea { display: none; width: 100%; min-height: 80px; resize: vertical; margin-top: 8px; }
         
-        body {
-            background: var(--color-background);
-            font-family: var(--font-alt);
-            font-weight: 500;
-            color: var(--color-text-secondary);
-            overflow: hidden; 
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.5;
-            height: 100%;
-        }
-
-        h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em; }
-
-        /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
-        .app-layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        .desktop-only { display: none !important; }
-        .mobile-only { display: flex; }
+        /* NEW: Full Page Configuration Styles */
+        .app-container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background-color: #fff; border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: var(--shadow-sm); }
+        .warning-banner { background-color: #fffbeb; border: 1px solid #fde68a; color: #b45309; padding: 1rem; border-radius: var(--radius-md); display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; font-weight: 500; font-size: 0.95rem; animation: popIn 0.3s ease; }
+        .icon-btn { background: none; border: 1px solid var(--light-border); color: var(--color-primary); padding: 0.5rem; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .icon-btn:hover { background: var(--light-bg-secondary); }
+        .page-header-container { display: flex; align-items: center; margin-bottom: 1.5rem; gap: 1rem; }
+        .page-header-container h2 { font-size: 1.5rem; margin: 0; }
         
-        .sidebar, .m-header, .profile-popup { font-family: var(--font-nav); }
-
-        .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
-        .brand-logo img { height: 36px; width: auto; display: block; }
-        .mini-logo { display: none; align-items: center; justify-content: center; }
-        .mini-logo img { height: 36px; width: auto; display: block; }
-
-        .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
-        .icon svg { width: 22px; height: 22px; stroke: var(--icon-color); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        
-        .nav-item { position: relative; display: flex; align-items: center; height: var(--row-height); padding: 0 16px; margin: 6px 0; border-radius: var(--radius-md); gap: 14px; cursor: pointer; color: var(--text-color); text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
-        .nav-item:hover { background: var(--hover-bg); }
-        .nav-item.active { background: var(--active-bg); color: var(--text-color); font-weight: 800; }
-        .nav-item.active .icon svg { stroke: #000000; }
-
-        .account-card { display: flex; align-items: center; gap: 12px; }
-        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; background: var(--color-border); }
-        .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
-        .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; color: var(--text-color); }
-        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-
-        /* Mobile First Structure */
-        .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; }
-        .content-area { flex: 1; overflow-y: auto; padding-bottom: 40px;} 
-        
-        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .m-menu-lines { width: 18px; height: 14px; position: relative; }
-        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
-        .m-menu-lines::before { top: 0; } .m-menu-lines span { top: 6px; } .m-menu-lines::after { bottom: 0; }
-
-        .sidebar { position: fixed; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%; background: #fff; transform: translateX(-100%); transition: 0.25s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; z-index: 2001; }
-        .sidebar.mobile-open { transform: translateX(0); }
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); opacity: 0; pointer-events: none; transition: 0.25s; z-index: 2000; }
-        .sidebar-overlay.mobile-open { opacity: 1; pointer-events: auto; }
-
-        .sidebar-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; transition: all 0.3s; }
-        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: transparent; cursor: pointer; }
-        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
-        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; background: #111827; }
-        .m-drawer-close-icon::before { transform: rotate(45deg); } .m-drawer-close-icon::after { transform: rotate(-45deg); }
-
-        .sidebar-inner { flex: 1; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
-        .nav-menu { padding: 20px 12px; }
-        .account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; cursor: pointer; }
-
-        /* Profile Context Menu */
-        .profile-popup { position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--premium-shadow-hover); border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none; transition: 0.2s; overflow: hidden; bottom: 100px; left: 50%; transform: translateX(-50%); }
-        .profile-popup.active { opacity: 1; pointer-events: all; }
-        .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
-        .popup-list { list-style: none; padding: 8px; }
-        .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; font-weight: 500;}
-        .popup-list a:hover { background: var(--hover-bg); }
-
-        /* Desktop Adjustments */
-        @media (min-width: 769px) {
-            .app-layout { flex-direction: row; }
-            .desktop-only { display: flex !important; }
-            .mobile-only { display: none !important; }
-            .m-header { display: none; }
-            .sidebar-overlay { display: none; }
-            .brand-logo img, .mini-logo img { height: 45px; }
+        /* Mobile Layout Adjustment */
+        @media (max-width:640px){
+            body{padding:0}
+            .app-container { margin: 0; padding: 0; }
+            .card { padding: 1.5rem; border-radius: 0; border: none; box-shadow: none; }
+            .page-header-container { padding: 1rem; margin-bottom: 0; background: #fff; border-bottom: 1px solid var(--light-border); }
+            .warning-banner { margin: 1rem; }
+            .invoice-box{padding:15px;min-height:unset;border-radius:0;box-shadow:none}
+            .header{padding-bottom:10px}
+            .logo-img{max-width:100px}
+            .invoice-details{font-size:10px}
+            .invoice-details h2{font-size:1rem;margin-bottom:5px}
+            .customer-info{margin-top:15px;gap:1rem;flex-direction:column}
+            .customer-info .address-block{width:100%}
+            .customer-info h3{font-size:12px}
+            .customer-info p{font-size:10px;line-height:1.4}
+            .items-table{font-size:10px;margin-top:15px}
+            .items-table thead th,.items-table tbody td{padding:5px 4px}
+            .summary-section{margin-top:15px;padding-top:15px;gap:1rem;flex-direction:column}
+            .summary-notes,.summary-totals{width:100%}
+            .summary-notes{font-size:8px;line-height:1.4}
+            .summary-notes strong{font-size:10px}
+            .summary-totals table{font-size:10px}
+            .summary-totals table tr:last-child{font-size:12px}
+            .summary-totals table td{padding:5px 4px}
+            .footer{margin-top:15px;padding-top:15px;font-size:8px}
+            .signature .signature-space{height:40px}
+            .signature .signature-line{width:150px}
+            .signature p{font-size:10px}
+            .signature .signatory-title{font-size:9px}
+            .digital-signature-img{max-height:35px;}
             
-            .main-content { margin-top: 0; }
-            .content-area { padding-top: 20px; padding-bottom: 40px; }
-            
-            .topbar {
-                height: 80px;
-                background: var(--header-bg);
-                border-bottom: 1px solid var(--border-subtle);
-                padding: 0 40px;
-                display: flex;
-                align-items: center;
-                font-weight: 600;
-                font-size: 1.75rem;
-                font-family: var(--font-main);
-                color: var(--color-text-primary);
-                flex-shrink: 0;
+            /* Mobile Buttons Stacking - 1 on top, 2 on bottom */
+            #bill-controls { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                gap: 0.75rem; 
+                padding: 1rem; 
+                margin-bottom: 0; 
             }
-
-            .sidebar { position: relative; transform: translateX(0) !important; width: var(--sidebar-width); max-width: none; background: var(--sidebar-bg); border-right: 1px solid var(--border-subtle); z-index: 100; }
-            .sidebar-header { height: auto; min-height: var(--header-height-desktop); padding: 30px 24px; border-bottom: none; }
-            .nav-menu { padding: 10px 16px; }
-            .account-section { margin-top: auto; padding: 24px 16px; }
-            
-            .profile-popup { bottom: 80px; left: 16px; transform: none; }
-            
-            .sidebar-toggle { background: none; border: none; cursor: pointer; color: var(--icon-color); display: flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; transition: 0.2s; }
-            .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
-
-            /* Collapsed State */
-            .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
-            .sidebar.collapsed .brand-logo, .sidebar.collapsed .account-text, .sidebar.collapsed .btn-close-svg { display: none !important; }
-            .sidebar.collapsed .mini-logo, .sidebar.collapsed .btn-open-svg { display: flex !important; }
-            .btn-open-svg { display: none; }
-            .sidebar.collapsed .sidebar-header { flex-direction: column; padding: 30px 0 20px 0; gap: 30px; }
-            .sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
-            .sidebar.collapsed .account-section { display: flex; justify-content: center; padding: 24px 0; }
-            .sidebar.collapsed .nav-label { display: none; }
-            .sidebar.collapsed .sidebar-inner { overflow: visible; }
-            
-            .sidebar.collapsed .nav-item:hover .nav-label { display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
-            .sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
+            #bill-controls .btn { 
+                width: 100%; 
+                justify-content: center; 
+                font-size: 0.8rem; 
+                padding: 0.6rem 0.5rem; 
+            }
+            #bill-controls .btn:first-child { 
+                grid-column: span 2; 
+                font-size: 0.875rem; 
+                padding: 0.75rem; 
+            }
         }
-
-        /* ============= INVOICE SPECIFIC STYLES ============= */
-        .app-container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
-        @media (max-width: 768px) { .app-container { padding: 0 16px; } }
-
-        /* Premium Buttons */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
-        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
-        .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--btn-shadow); }
-        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
-        .btn-secondary { background-color: var(--color-surface); color: var(--color-text-secondary); border-color: var(--color-border); box-shadow: var(--shadow-sm); }
-        
-        /* Premium Breadcrumb Button */
-        .breadcrumb { 
-            font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
-            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; 
-            transition: all 0.3s var(--ease-cubic); padding: 8px 14px; border-radius: 10px; background: #fff; 
-            border: 1px solid var(--color-border); white-space: nowrap; line-height: 1;
-        }
-        .breadcrumb svg { width: 12px; height: 12px; stroke-width: 3.5; flex-shrink: 0;}
-        .breadcrumb:hover { color: var(--color-primary); border-color: var(--color-primary); background: var(--light-bg-tertiary); box-shadow: var(--shadow-sm);}
-        
-        @media (max-width: 768px) { .breadcrumb { margin-top: 20px; } }
-
-        /* INVOICE CARD UI */
-        .card { 
-            background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); 
-            padding: 40px; margin-bottom: 32px; box-shadow: var(--premium-shadow); position: relative;
-        }
-        .card::before {
-            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1;
-        }
-        @media (max-width: 640px) { .card { padding: 20px; } }
-
-        .invoice-box { width: 100%; max-width: 900px; margin: auto; background: #fff; border-radius: 6px; display: flex; flex-direction: column; padding: 10px;}
-        .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--light-border); padding-bottom: 20px }
-        .logo-img { max-width: 160px; height: auto }
-        .invoice-details { text-align: right; font-size: 13px; line-height: 1.5; color: #718096 }
-        .invoice-details h2 { font-size: 1.5rem; line-height: 2rem; margin: 0 0 10px 0; color: #718096; font-weight: 600; text-transform: uppercase }
-        .customer-info { margin-top: 25px; display: flex; justify-content: space-between; gap: 2rem }
-        .items-table { width: 100%; margin-top: 25px; border-collapse: collapse; font-size: 13px }
-        .items-table thead th { background-color: #535456; color: #fff; font-weight: 600; padding: 12px 8px; text-align: left; border-bottom: none }
-        .items-table tbody td { padding: 10px 8px; border-bottom: 1px solid var(--light-border); color: #718096 }
-        .summary-section { margin-top: 20px; padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; border-top: 1px solid var(--light-border) }
-        .summary-totals table { width: 100%; font-size: 14px; border-collapse: collapse }
-        .summary-totals table td { border-bottom: 1px solid var(--light-border); padding: 8px }
-        .summary-totals table tr:last-child { font-weight: 700; font-size: 18px; color: #2d3748 }
-        .summary-totals table tr:last-child td { background-color: #f7fafc; border-bottom: none; padding: 12px 8px }
-        .footer-invoice { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--light-border); display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; color: #718096 }
-
-        /* Form styling */
-        .form-group { position: relative; margin-bottom: 1.5rem; }
-        .input-field { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
-        .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
-        .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; }
-        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em; z-index: 1;}
-
-        .warning-banner { background-color: #fffbeb; border: 1px solid #fde68a; color: #b45309; padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; font-weight: 600; font-size: 0.9rem;}
-        
-        .loading-overlay { position: fixed; inset: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px); z-index: 4000; display: flex; align-items: center; justify-content: center; }
-        .spinner { border: 4px solid rgba(1, 39, 38, 0.1); border-bottom-color: var(--color-primary); border-radius: 50%; width: 48px; height: 48px; animation: rotation 1s linear infinite; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Print Controls Visibility */
-        @media print {
-            .app-layout .sidebar, .app-layout .topbar, .app-layout .m-header, #bill-controls, .loading-overlay, .modal { display: none !important; }
-            .app-layout .main-content { margin: 0 !important; padding: 0 !important; height: auto !important; overflow: visible !important; }
-            .content-area { padding: 0 !important; overflow: visible !important; }
-            .app-container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            .card { border: none !important; box-shadow: none !important; padding: 0 !important; border-radius: 0 !important; }
-            .card::before { display: none !important; }
-            body { background: #fff !important; padding: 0 !important; height: auto !important; overflow: visible !important; }
-        }
+        @media print{@page{size:A4;margin:0}body{padding:0!important;background:#fff!important}#bill-controls,.modal,.loading-overlay{display:none!important}.invoice-box{margin:0!important;max-width:100%!important;border-radius:0!important;box-shadow:none!important;padding:10mm!important}.items-table thead th{background-color:#535456!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.items-table tbody tr:nth-child(even){background-color:#f8f8f7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
     </style>
 </head>
 <body>
 
-    <!-- App Container -->
-    <div class="app-layout">
+    <div class="app-container">
         
-        <!-- Mobile Header (Hidden on Desktop) -->
-        <header class="m-header mobile-only">
-            <button class="m-menu-btn" id="m-open-drawer">
-                <div class="m-menu-lines"><span></span></div>
-            </button>
-            <a href="admin-dashboard.html" class="brand-logo">
-                <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
-            </a>
-            <div style="width:40px;"></div>
-        </header>
-
-        <!-- Sidebar Overlay (Mobile) -->
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
-        
-        <!-- Unified Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <a href="admin-dashboard.html" class="brand-logo">
-                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
-                </a>
-                
-                <span class="mini-logo">
-                    <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
-                </span>
-                
-                <button class="sidebar-toggle desktop-only" id="sidebar-toggle-btn">
-                    <svg class="btn-close-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg>
-                    <svg class="btn-open-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
-                </button>
-
-                <button class="m-drawer-close mobile-only" id="m-close-drawer">
-                    <div class="m-drawer-close-icon"></div>
-                </button>
+        <!-- Configuration Form Screen -->
+        <div id="bill-details-screen" style="display: none; animation: fadeIn 0.3s var(--ease);">
+            <div class="page-header-container">
+                <button id="back-to-order-btn" class="icon-btn" aria-label="Back to Order"><span class="material-symbols-outlined">arrow_back</span></button>
+                <h2>Invoice Configuration</h2>
             </div>
             
-            <div class="sidebar-inner">
-                <nav class="nav-menu">
-                    <a href="admin-dashboard.html" class="nav-item">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
-                        <span class="nav-label">Dashboard</span>
-                    </a>
-                    <a href="view-orders.html" class="nav-item active">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gallery-vertical-end-icon lucide-gallery-vertical-end"><path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/></svg></span>
-                        <span class="nav-label">All Orders</span>
-                    </a>
-                    <a href="admin-employees.html" class="nav-item">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
-                        <span class="nav-label">Manage Employees</span>
-                    </a>
-                    <a href="notifications.html" class="nav-item">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span>
-                        <span class="nav-label">Notifications</span>
-                    </a>
-                    <a href="support.html" class="nav-item">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question-mark-icon lucide-message-circle-question-mark"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
-                        <span class="nav-label">Support</span>
-                    </a>
-                </nav>
+            <div id="order-modified-warning" class="warning-banner" style="display: none;">
+                <span class="material-symbols-outlined">warning</span>
+                <span>The order items have been modified. Please verify and update the pricing details below.</span>
             </div>
 
-            <div class="account-section" id="profile-trigger">
-                <div class="account-card">
-                    <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
-                    <div class="account-text">
-                        <div class="account-name">Loading...</div>
-                        <div class="account-email"></div>
+            <div class="card">
+                 <form id="bill-details-form">
+                    <h3 style="margin-bottom: 1.5rem;">Document Details</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="input-group"><input type="text" id="invoice-number" class="input-field" placeholder=" " required><label for="invoice-number" class="input-label">Invoice No.</label></div>
+                        <div class="input-group"><input type="date" id="invoice-date" class="input-field" placeholder=" " required><label for="invoice-date" class="input-label">Invoice Date</label></div>
                     </div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content Wrapper -->
-        <div class="main-content">
-            <header class="topbar desktop-only" id="desktop-welcome">Invoice Generation</header>
-            
-            <main class="content-area">
-                <div class="app-container">
                     
-                    <!-- Configuration Form Screen -->
-                    <div id="bill-details-screen" style="display: none;">
-                        <a href="#" id="back-to-order-breadcrumb" class="breadcrumb">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                            <span>Back to Order Details</span>
-                        </a>
-
-                        <div id="order-modified-warning" class="warning-banner" style="display: none;">
-                            <span class="material-symbols-outlined">warning</span>
-                            <span>Item details modified. Please re-check pricing.</span>
-                        </div>
-
-                        <div class="card">
-                            <form id="bill-details-form">
-                                <h3 style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);">Invoice Settings</h3>
-                                
-                                <div class="form-grid">
-                                    <div class="input-group">
-                                        <input type="text" id="invoice-number" class="input-field" placeholder=" " required>
-                                        <label for="invoice-number" class="input-label">Invoice No.</label>
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="date" id="invoice-date" class="input-field" placeholder=" " required>
-                                        <label for="invoice-date" class="input-label">Invoice Date</label>
-                                    </div>
-                                </div>
-                                
-                                <h3 style="margin-top: 3rem; margin-bottom: 2rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">Pricing</h3>
-                                
-                                <div class="checkbox-group" style="margin-bottom: 2rem;">
-                                    <input type="checkbox" id="diff-prices-check">
-                                    <label for="diff-prices-check">Individual pricing per item</label>
-                                </div>
-                                
-                                <div id="global-price-container" class="input-group">
-                                    <input type="number" id="global-price" class="input-field" placeholder=" " step="0.01">
-                                    <label class="input-label">Price per SFT (₹)</label>
-                                </div>
-
-                                <div id="individual-prices-container" style="display: none; border: 1px solid var(--color-border); padding: 1.5rem; border-radius: 12px; background: #f8fafc; margin-bottom: 2rem;">
-                                    <!-- Price inputs per item injected here -->
-                                </div>
-                                
-                                <div class="form-grid" style="margin-top: 2rem;">
-                                    <div class="input-group">
-                                        <input type="number" id="freight-charges" class="input-field" placeholder=" " min="0" step="1" value="0">
-                                        <label class="input-label">Freight / Transport (₹)</label>
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="number" id="discount-amount" class="input-field" placeholder=" " min="0" step="0.01" value="0">
-                                        <label class="input-label">Discount (₹) Before Tax</label>
-                                    </div>
-                                </div>
-                                
-                                <h3 style="margin-top: 3rem; margin-bottom: 2rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">Address Overrides</h3>
-                                
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="add-billing-address">
-                                    <label for="add-billing-address">Custom Billing Address</label>
-                                </div>
-                                <textarea id="billing-address-textarea" class="input-field address-textarea" placeholder="Enter new billing address..."></textarea>
-                                
-                                <div class="checkbox-group" style="margin-top: 1.5rem;">
-                                    <input type="checkbox" id="add-shipping-address">
-                                    <label for="add-shipping-address">Custom Shipping Address</label>
-                                </div>
-                                <textarea id="shipping-address-textarea" class="input-field address-textarea" placeholder="Enter new shipping address..."></textarea>
-                                
-                                <div class="form-actions-container">
-                                    <button type="submit" class="btn btn-primary"><span class="material-symbols-outlined">receipt_long</span> Generate Invoice</button>
-                                </div>
-                            </form>
-                        </div>
+                    <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; border-top: 1px solid var(--light-border); padding-top: 2rem;">Pricing Configuration</h3>
+                    
+                    <div class="checkbox-group" style="margin-bottom: 1.5rem;">
+                        <input type="checkbox" id="diff-prices-check" style="width: 1.25em; height: 1.25em;">
+                        <label for="diff-prices-check" style="font-weight: 600; color: var(--light-text-primary); cursor: pointer;">Use different prices for different items</label>
+                    </div>
+                    
+                    <div id="global-price-container" class="form-group">
+                        <label for="global-price" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Global Price per SFT (₹)</label>
+                        <input type="number" id="global-price" class="input-field" min="0" step="0.01">
                     </div>
 
-                    <!-- Rendered Bill Screen -->
-                    <div id="bill-view-screen" style="display: none;">
-                        <div id="bill-container"></div>
+                    <div id="individual-prices-container" style="display: none; border: 1px solid var(--light-border); padding: 1.5rem; border-radius: var(--radius-md); background: #f8f9fa;">
+                        <!-- Price inputs per item injected here -->
                     </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- Print Modal -->
-    <div id="print-options-modal" class="modal">
-        <div class="modal-content">
-            <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">draw</span>
-            <h3>Digital Signature</h3>
-            <p style="margin-bottom: 2rem; color: var(--light-text-secondary);">Add authorized digital signature to invoice?</p>
-            <div class="modal-buttons">
-                <button type="button" id="print-without-sig-btn" class="btn btn-secondary">No Signature</button>
-                <button type="button" id="print-with-sig-btn" class="btn btn-primary">Add Signature</button>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="freight-charges" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Freight / Transport (₹)</label>
+                            <input type="number" id="freight-charges" class="input-field" min="0" step="1" value="0" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="discount-amount" style="display:block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--light-text-secondary);">Discount (₹) Before Tax</label>
+                            <input type="number" id="discount-amount" class="input-field" min="0" step="0.01" value="0">
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; border-top: 1px solid var(--light-border); padding-top: 2rem;">Address Overrides</h3>
+                    
+                    <div class="checkbox-group"><input type="checkbox" id="add-billing-address" style="width: 1.15em; height: 1.15em;"><label for="add-billing-address" style="cursor: pointer;">Add a different Billing Address</label></div>
+                    <textarea id="billing-address-textarea" class="input-field address-textarea" placeholder="Enter new billing address..."></textarea>
+                    
+                    <div class="checkbox-group" style="margin-top: 1rem;"><input type="checkbox" id="add-shipping-address" style="width: 1.15em; height: 1.15em;"><label for="add-shipping-address" style="cursor: pointer;">Add a different Shipping Address</label></div>
+                    <textarea id="shipping-address-textarea" class="input-field address-textarea" placeholder="Enter new shipping address..."></textarea>
+                    
+                    <div class="modal-buttons" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--light-border);">
+                        <button type="button" id="bill-cancel-btn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><span class="material-symbols-outlined">receipt_long</span> Generate Bill</button>
+                    </div>
+                </form>
             </div>
-            <button type="button" id="print-cancel-btn" style="background:none; border:none; color:var(--text-sub); margin-top:1.5rem; text-decoration:underline; cursor:pointer;">Cancel</button>
         </div>
+
+        <!-- Rendered Bill Screen -->
+        <div id="bill-view-screen" style="display: none; animation: fadeIn 0.3s var(--ease);">
+            <div id="bill-container"></div>
+        </div>
+        
     </div>
 
+    <!-- Print Options Modal (Enhanced UI) -->
+    <div id="print-options-modal" class="modal">
+        <div class="modal-content" style="text-align: center; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+            <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">draw</span>
+            <h3 style="margin-bottom: 1rem;">Digital Signature</h3>
+            <p style="margin-bottom: 2rem; color: var(--light-text-secondary); line-height: 1.5;">Would you like to include the authorized digital signature on this invoice before printing?</p>
+            <div class="modal-buttons" style="justify-content: center; width: 100%; margin-top: 0; gap: 1rem;">
+                <button type="button" id="print-without-sig-btn" class="btn btn-secondary" style="flex: 1;">No Signature</button>
+                <button type="button" id="print-with-sig-btn" class="btn btn-primary" style="flex: 1;">Add Signature</button>
+            </div>
+            <button type="button" id="print-cancel-btn" style="background: none; border: none; color: var(--light-text-muted); font-size: 0.875rem; font-weight: 500; cursor: pointer; margin-top: 1.5rem; text-decoration: underline;">Cancel</button>
+        </div>
+    </div>
+    
     <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "__API_KEY__",
-            authDomain: "__AUTH_DOMAIN__",
-            projectId: "__PROJECT_ID__",
-            storageBucket: "__STORAGE_BUCKET__",
-            messagingSenderId: "__MESSAGING_SENDER_ID__",
-            appId: "__APP_ID__",
-            measurementId: "__MEASUREMENT_ID__"
-        };
-
-        let db, auth, currentOrderData = null, currentUserProfile = null;
-        const ADMIN_EMAIL = "__ADMIN_EMAIL__";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Screen Elements
         const detailsScreen = document.getElementById('bill-details-screen');
         const viewScreen = document.getElementById('bill-view-screen');
         const billContainer = document.getElementById('bill-container');
         const modifiedWarning = document.getElementById('order-modified-warning');
+        
+        // Form Elements
         const detailsForm = document.getElementById('bill-details-form');
+        const cancelBtn = document.getElementById('bill-cancel-btn');
+        const backToOrderBtn = document.getElementById('back-to-order-btn');
         const loadingOverlay = document.getElementById('loading-overlay');
         const addBillingAddressCheck = document.getElementById('add-billing-address');
         const billingAddressTextarea = document.getElementById('billing-address-textarea');
         const addShippingAddressCheck = document.getElementById('add-shipping-address');
         const shippingAddressTextarea = document.getElementById('shipping-address-textarea');
+        
         const diffPricesCheck = document.getElementById('diff-prices-check');
         const globalPriceContainer = document.getElementById('global-price-container');
         const globalPriceInput = document.getElementById('global-price');
         const indPricesContainer = document.getElementById('individual-prices-container');
-        const printOptionsModal = document.getElementById('print-options-modal');
 
-        // Function to accurately convert Rs. and Paise to words
+        // Print Modal Elements
+        const printOptionsModal = document.getElementById('print-options-modal');
+        const printWithSigBtn = document.getElementById('print-with-sig-btn');
+        const printWithoutSigBtn = document.getElementById('print-without-sig-btn');
+        const printCancelBtn = document.getElementById('print-cancel-btn');
+
+        let db, auth, currentOrderData = null;
+
+        // Custom function to accurately convert Rs. and Paise
         function numberToWords(num) {
             const a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
             const b = ['', '', 'Twenty ','Thirty ','Forty ','Fifty ', 'Sixty ','Seventy ','Eighty ','Ninety '];
+            
             const convertWhole = (n) => {
                 if (n === 0) return 'Zero';
                 if (n.toString().length > 9) return 'Overflow';
@@ -496,80 +222,122 @@
                 str += (nStr[5] != 0) ? ((str != '') ? 'And ' : '') + (a[Number(nStr[5])] || b[nStr[5][0]] + a[nStr[5][1]]) : '';
                 return str.trim();
             };
+
             let parts = Number(num).toFixed(2).split('.');
             let rupees = parseInt(parts[0], 10);
             let paise = parseInt(parts[1], 10);
+
             let rupeesWords = convertWhole(rupees);
             let result = rupeesWords + ' Rupees';
+
             if (paise > 0) {
                 let paiseWords = convertWhole(paise);
-                paiseWords = paiseWords.replace(/^And\s/i, '');
+                paiseWords = paiseWords.replace(/^And\s/i, ''); // Clean up any hanging 'And'
                 result += ' And ' + paiseWords + ' Paise';
             }
+
             return result + ' Only';
         }
 
         const createBillHtml = (order, details) => {
             let windows = [];
-            try { windows = JSON.parse(order.windows || '[]'); } catch(e) {}
+            try { windows = JSON.parse(order.windows || '[]'); } catch(e) { console.error("Could not parse window data", e); }
+            
             let tableRows = '';
-            let subTotal = 0, totalQty = 0, totalAllSft = 0, itemIndex = 1;
+            let subTotal = 0;
+            let totalQty = 0;
+            let totalAllSft = 0;
+            let itemIndex = 1;
 
             if (!details.isDiffPrices) {
+                // AGGREGATED VIEW (Single Global Price)
                 const itemGroups = {};
                 windows.forEach(win => {
                     const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
-                    if (!itemGroups[itemName]) itemGroups[itemName] = { qty: 0, totalSft: 0 };
+                    if (!itemGroups[itemName]) { itemGroups[itemName] = { qty: 0, totalSft: 0 }; }
+                    
                     const qty = parseInt(win.qty) || 1;
                     itemGroups[itemName].qty += qty;
-                    const heightMm = parseFloat(win.height || 0), widthMm = parseFloat(win.width || 0);
+                    
+                    const heightMm = parseFloat(win.height || 0);
+                    const widthMm = parseFloat(win.width || 0);
                     itemGroups[itemName].totalSft += ((widthMm / 304.8) * (heightMm / 304.8)) * qty; 
                 });
+
                 for (const itemName in itemGroups) {
                     const group = itemGroups[itemName];
                     const itemCost = group.totalSft * details.globalPrice; 
-                    subTotal += itemCost; totalQty += group.qty; totalAllSft += group.totalSft;
+                    subTotal += itemCost;
+                    totalQty += group.qty;
+                    totalAllSft += group.totalSft;
                     tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.globalPrice.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
                 }
             } else {
+                // INDIVIDUAL VIEW (Different Prices per Item)
                 windows.forEach((win, idx) => {
                     const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
                     const qty = parseInt(win.qty) || 1;
-                    const heightMm = parseFloat(win.height || 0), widthMm = parseFloat(win.width || 0);
+                    const heightMm = parseFloat(win.height || 0);
+                    const widthMm = parseFloat(win.width || 0);
                     const totalSft = ((widthMm / 304.8) * (heightMm / 304.8)) * qty;
+                    
                     const price = details.itemPrices[idx] || 0;
                     const itemCost = totalSft * price;
-                    subTotal += itemCost; totalQty += qty; totalAllSft += totalSft;
+
+                    subTotal += itemCost;
+                    totalQty += qty;
+                    totalAllSft += totalSft;
+
                     const specs = `<br><small style="color: #718096; font-size: 11px;">Size: ${win.width}x${win.height}mm | Glass: ${win.hasGlass ? (win.glassName || 'Yes') : 'None'} | Profile: ${win.profileName || 'None'}</small>`;
+
                     tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName} #${idx+1}${specs}</td><td>3952</td><td>${qty}</td><td>${totalSft.toFixed(2)}</td><td>${price.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
                 });
             }
 
-            tableRows += `<tr style="font-weight: 700; background-color: #f8f9fa; border-top: 2px solid var(--light-border);"><td colspan="3" style="text-align: right; padding: 12px 8px;">Total:</td><td>${totalQty}</td><td>${totalAllSft.toFixed(2)}</td><td></td><td>${subTotal.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+            // Append Table Footer for Totals
+            tableRows += `
+                <tr style="font-weight: 700; background-color: #f8f9fa; border-top: 2px solid var(--light-border);">
+                    <td colspan="3" style="text-align: right; padding-top: 12px; padding-bottom: 12px;">Total:</td>
+                    <td style="padding-top: 12px; padding-bottom: 12px;">${totalQty}</td>
+                    <td style="padding-top: 12px; padding-bottom: 12px;">${totalAllSft.toFixed(2)}</td>
+                    <td></td>
+                    <td style="padding-top: 12px; padding-bottom: 12px;">${subTotal.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td>
+                </tr>
+            `;
             
-            const discount = details.discount || 0;
-            const taxableAmount = Math.max(0, subTotal - discount);
-            const sgst = taxableAmount * 0.09, cgst = taxableAmount * 0.09;
-            const grandTotal = taxableAmount + details.freight + sgst + cgst;
-            const totalInWords = numberToWords(grandTotal);
-
             const formatCurrency = (num) => num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-            let summaryHtml = `<tr><td>Total Before Tax:</td><td style="text-align: right;">${formatCurrency(subTotal)}</td></tr>`;
+            // Exact calculation structure incorporating discount
+            const discount = details.discount || 0;
+            const totalBeforeTax = subTotal;
+            const taxableAmount = Math.max(0, totalBeforeTax - discount);
+            const sgst = taxableAmount * 0.09;
+            const cgst = taxableAmount * 0.09;
+            const grandTotal = taxableAmount + details.freight + sgst + cgst;
+            
+            const totalInWords = numberToWords(grandTotal);
+
+            let summaryTableHtml = `<tr><td>Total Before Tax:</td><td style="text-align: right;">${formatCurrency(totalBeforeTax)}</td></tr>`;
             if (discount > 0) {
-                summaryHtml += `<tr><td>Discount:</td><td style="text-align: right;">- ${formatCurrency(discount)}</td></tr>`;
-                summaryHtml += `<tr><td>Taxable Amount:</td><td style="text-align: right;">${formatCurrency(taxableAmount)}</td></tr>`;
+                summaryTableHtml += `<tr><td>Discount:</td><td style="text-align: right;">- ${formatCurrency(discount)}</td></tr>`;
+                summaryTableHtml += `<tr><td>Taxable Amount:</td><td style="text-align: right;">${formatCurrency(taxableAmount)}</td></tr>`;
             }
-            summaryHtml += `<tr><td>Freight:</td><td style="text-align: right;">+ ${formatCurrency(details.freight)}</td></tr><tr><td>SGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(sgst)}</td></tr><tr><td>CGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(cgst)}</td></tr><tr><td>Grand Total:</td><td style="text-align: right;">₹ ${formatCurrency(grandTotal)}</td></tr>`;
+            summaryTableHtml += `
+                <tr><td>Freight:</td><td style="text-align: right;">+ ${formatCurrency(details.freight)}</td></tr>
+                <tr><td>SGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(sgst)}</td></tr>
+                <tr><td>CGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(cgst)}</td></tr>
+                <tr><td>Grand Total:</td><td style="text-align: right;">₹ ${formatCurrency(grandTotal)}</td></tr>
+            `;
 
             return `
-                <div id="bill-controls" style="margin-bottom:30px; display:flex; justify-content:center; gap:16px;">
+                <div id="bill-controls">
+                    <button class="btn btn-secondary" onclick="window.location.href='order-details.html?id=${order.id}'"><span class="material-symbols-outlined">arrow_back</span> Back to Details</button>
                     <button class="btn btn-primary" id="print-bill-btn"><span class="material-symbols-outlined">print</span> Print / Save PDF</button>
                     <button class="btn btn-secondary" id="edit-bill-btn"><span class="material-symbols-outlined">edit</span> Edit Details</button>
                 </div>
                 <div class="invoice-box">
-                    <header class="invoice-header">
-                        <div class="company-details"><img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Logo" class="logo-img"></div>
+                    <header class="header">
+                        <div class="company-details"><img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Company Logo" class="logo-img"></div>
                         <div class="invoice-details">
                             <h2>INVOICE</h2>
                             <div><strong>Invoice No:</strong> ${details.invoiceNumber}</div>
@@ -578,21 +346,70 @@
                         </div>
                     </header>
                     <section class="customer-info">
-                        <div class="address-block"><h3>Billed To</h3><p><strong>${order.name}</strong><br>${details.billingAddress.replace(/\n/g, '<br>')}<br>Phone: ${order.mobileNumber || 'N/A'}</p></div>
-                        <div class="address-block"><h3>Shipped To</h3><p><strong>${order.name}</strong><br>${details.shippingAddress.replace(/\n/g, '<br>')}<br>Phone: ${order.mobileNumber || 'N/A'}</p></div>
+                        <div class="address-block">
+                            <h3>Billed To</h3>
+                            <p><strong>${order.name}</strong><br>${details.billingAddress.replace(/\n/g, '<br>')}<br>Phone: ${order.mobileNumber || 'N/A'}</p>
+                        </div>
+                        <div class="address-block">
+                            <h3>Shipped To</h3>
+                            <p><strong>${order.name}</strong><br>${details.shippingAddress.replace(/\n/g, '<br>')}<br>Phone: ${order.mobileNumber || 'N/A'}</p>
+                        </div>
                     </section>
                     <table class="items-table">
-                        <thead><tr><th>SNo.</th><th>Name of Goods</th><th>HSN</th><th>Qty</th><th>Sft</th><th>Rate</th><th>Value</th></tr></thead>
+                        <thead><tr><th>SNo.</th><th>Name of the Goods / Service</th><th>HSN/SAC</th><th>Qty</th><th>Sft (Total)</th><th>Rate</th><th>Value</th></tr></thead>
                         <tbody>${tableRows}</tbody>
                     </table>
                     <section class="summary-section">
-                        <div class="summary-notes"><strong>Declaration</strong><p>Certified that the particulars given above are true and correct.</p><strong>Total in Words</strong><p>${totalInWords}.</p></div>
-                        <div class="summary-totals"><table><tbody>${summaryHtml}</tbody></table></div>
+                        <div class="summary-notes">
+                            <strong>Declaration & Terms</strong>
+                            <p>Certified that the particulars given above are true and correct. GST on Reverse Charge: NA. Payment: 50% Advance, 50% Balance.</p>
+                            <strong>Total in Words</strong>
+                            <p>${totalInWords}.</p>
+                        </div>
+                        <div class="summary-totals">
+                            <table>
+                                <tbody>
+                                    ${summaryTableHtml}
+                                </tbody>
+                            </table>
+                        </div>
                     </section>
-                    <footer class="footer-invoice"><div class="contact">Email: kolatapuk.k@gmail.com | Phone: 7981599155</div><div class="signature"><div class="signature-space"><img src="https://ksupvc.wixo.in/signature.png" alt="Signature" class="digital-signature-img" id="digital-signature-img"></div><div class="signature-line"></div><p class="signatory-title">Authorised Signatory</p></div></footer>
+                    <footer class="footer">
+                        <div class="contact"><span>Email: kolatapuk.k@gmail.com | Phone: 7981599155</span></div>
+                        <div class="signature">
+                            <div class="signature-space">
+                                <img src="https://ksupvc.wixo.in/signature.png" alt="Digital Signature" class="digital-signature-img" id="digital-signature-img">
+                            </div>
+                            <div class="signature-line"></div>
+                            <p class="signatory-title">Authorised Signatory</p>
+                        </div>
+                    </footer>
                 </div>`;
         };
 
+        async function initializeFirebase() {
+            try {
+                // Firebase configuration will be injected by Netlify during build
+                const firebaseConfig = {
+                    apiKey: "__API_KEY__",
+                    authDomain: "__AUTH_DOMAIN__",
+                    projectId: "__PROJECT_ID__",
+                    storageBucket: "__STORAGE_BUCKET__",
+                    messagingSenderId: "__MESSAGING_SENDER_ID__",
+                    appId: "__APP_ID__",
+                    measurementId: "__MEASUREMENT_ID__"
+                };
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                onAuthStateChanged(auth, user => {
+                    if (user) { startPageLogic(); } 
+                    else { window.location.href = 'login.html'; }
+                });
+            } catch (error) { console.error("Firebase Init Error:", error); }
+        }
+
+        // Dynamic visibility logic for price inputs
         const togglePriceInputsVisibility = () => {
             if (diffPricesCheck.checked) {
                 globalPriceContainer.style.display = 'none';
@@ -607,40 +424,92 @@
             }
         };
 
+        diffPricesCheck.addEventListener('change', togglePriceInputsVisibility);
+
         function populateForm(details, orderData) {
             document.getElementById('invoice-number').value = details.invoiceNumber || '';
             document.getElementById('invoice-date').value = details.invoiceDate || new Date().toISOString().split('T')[0];
             document.getElementById('freight-charges').value = details.freight || 0;
             document.getElementById('discount-amount').value = details.discount || 0;
+            
             diffPricesCheck.checked = details.isDiffPrices || false;
             globalPriceInput.value = details.globalPrice || '';
             
-            billingAddressTextarea.value = details.billingAddress || orderData.address;
-            shippingAddressTextarea.value = details.shippingAddress || orderData.address;
-            addBillingAddressCheck.checked = details.billingAddress && details.billingAddress !== orderData.address;
-            addShippingAddressCheck.checked = details.shippingAddress && details.shippingAddress !== orderData.address;
-            billingAddressTextarea.style.display = addBillingAddressCheck.checked ? 'block' : 'none';
-            shippingAddressTextarea.style.display = addShippingAddressCheck.checked ? 'block' : 'none';
+            if (details.billingAddress && details.billingAddress !== orderData.address) {
+                addBillingAddressCheck.checked = true;
+                billingAddressTextarea.style.display = 'block';
+                billingAddressTextarea.value = details.billingAddress;
+            } else {
+                addBillingAddressCheck.checked = false;
+                billingAddressTextarea.style.display = 'none';
+                billingAddressTextarea.value = '';
+            }
 
+            if (details.shippingAddress && details.shippingAddress !== orderData.address) {
+                addShippingAddressCheck.checked = true;
+                shippingAddressTextarea.style.display = 'block';
+                shippingAddressTextarea.value = details.shippingAddress;
+            } else {
+                addShippingAddressCheck.checked = false;
+                shippingAddressTextarea.style.display = 'none';
+                shippingAddressTextarea.value = '';
+            }
+
+            // Build Individual Pricing Inputs dynamically based on current order windows
             let windows = [];
             try { windows = JSON.parse(orderData.windows || '[]'); } catch(e) {}
+            
             indPricesContainer.innerHTML = '';
             windows.forEach((win, idx) => {
                 const itemType = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
-                const savedPrice = (details.itemPrices && details.itemPrices[idx]) ? details.itemPrices[idx] : (details.globalPrice || '');
+                const qty = parseInt(win.qty) || 1;
+                
+                // Inherit saved price, or fallback to global, or empty
+                const savedPrice = (details.itemPrices && details.itemPrices[idx]) 
+                    ? details.itemPrices[idx] 
+                    : (details.globalPrice || '');
+                
                 const div = document.createElement('div');
-                div.className = 'form-group';
-                div.innerHTML = `<label style="display:block; font-size: 0.85rem; font-weight: 700; color: var(--color-primary); margin-bottom: 6px;">#${idx+1} ${itemType} (${win.width}x${win.height}mm)</label><input type="number" class="input-field ind-price-input" data-index="${idx}" value="${savedPrice}" min="0" step="0.01" placeholder="Price per SFT">`;
+                div.style.marginBottom = '1.25rem';
+                div.innerHTML = `
+                    <label style="display:block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--light-text-primary);">#${idx+1} ${itemType} <span style="color:var(--light-text-muted);font-weight:normal;font-size:0.8rem;">(${win.width}x${win.height}mm, Qty: ${qty})</span></label>
+                    <input type="number" class="input-field ind-price-input" style="padding: 0.75rem;" data-index="${idx}" value="${savedPrice}" min="0" step="0.01" placeholder="Price per SFT for this item">
+                `;
                 indPricesContainer.appendChild(div);
             });
+
             togglePriceInputsVisibility();
+        }
+
+        function renderBill(order, details) {
+            billContainer.innerHTML = createBillHtml(order, details);
+            
+            const editBtn = document.getElementById('edit-bill-btn');
+            if (editBtn) {
+                editBtn.addEventListener('click', () => {
+                    populateForm(details, order);
+                    modifiedWarning.style.display = 'none'; // Hide warning if explicitly editing
+                    viewScreen.style.display = 'none';
+                    detailsScreen.style.display = 'block';
+                });
+            }
+
+            const printBtn = document.getElementById('print-bill-btn');
+            if (printBtn) {
+                printBtn.addEventListener('click', () => {
+                    printOptionsModal.style.display = 'flex';
+                });
+            }
         }
 
         async function startPageLogic() {
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('id');
-            if (!orderId) { window.location.href = 'view-orders.html'; return; }
-            document.getElementById('back-to-order-breadcrumb').href = `order-details.html?id=${orderId}`;
+            if (!orderId) {
+                alert("No order specified. Redirecting...");
+                window.location.href = 'view-orders.html';
+                return;
+            }
 
             loadingOverlay.style.display = 'flex';
             try {
@@ -650,7 +519,10 @@
                     detailsForm.dataset.id = orderId;
                     
                     if (currentOrderData.billDetails) {
-                        if (currentOrderData.billDetails.savedWindowsHash === currentOrderData.windows) {
+                        const savedHash = currentOrderData.billDetails.savedWindowsHash;
+                        const currentHash = currentOrderData.windows;
+                        
+                        if (savedHash === currentHash) {
                             populateForm(currentOrderData.billDetails, currentOrderData);
                             renderBill(currentOrderData, currentOrderData.billDetails);
                             detailsScreen.style.display = 'none';
@@ -658,106 +530,150 @@
                         } else {
                             modifiedWarning.style.display = 'flex';
                             populateForm(currentOrderData.billDetails, currentOrderData);
+                            viewScreen.style.display = 'none';
                             detailsScreen.style.display = 'block';
                         }
                     } else {
-                        // Default logic for new bill
-                        const currentYear = new Date().getFullYear();
-                        const ordersSnap = await getDocs(collection(db, 'upvc_orders'));
-                        let count = 0;
-                        ordersSnap.forEach(d => { if(d.data().createdAt?.toDate()?.getFullYear() === currentYear) count++; });
+                        // Auto-generate Invoice Number based on Order count in DB this year
+                        let autoInvoiceNo = "";
+                        try {
+                            const currentYear = new Date().getFullYear();
+                            const monthLetter = String.fromCharCode(65 + new Date().getMonth());
+                            let orderCountYear = 0;
+                            const allOrdersSnap = await getDocs(collection(db, 'upvc_orders'));
+                            allOrdersSnap.forEach(docSnap => {
+                                const dData = docSnap.data();
+                                if (dData.createdAt) {
+                                    const dDate = dData.createdAt.toDate ? dData.createdAt.toDate() : new Date(dData.createdAt);
+                                    if (dDate.getFullYear() === currentYear) {
+                                        orderCountYear++;
+                                    }
+                                }
+                            });
+                            autoInvoiceNo = `${Math.max(1, orderCountYear)}-${currentYear}${monthLetter}`;
+                        } catch(e) { console.error("Error generating invoice number:", e); }
+
+                        // New Bill - Fetch details from Quote if available
+                        let defaultDetails = { invoiceNumber: autoInvoiceNo };
+                        if (currentOrderData.quoteDetails) {
+                            defaultDetails = {
+                                ...defaultDetails,
+                                isDiffPrices: currentOrderData.quoteDetails.isDiffPrices,
+                                globalPrice: currentOrderData.quoteDetails.globalPrice,
+                                itemPrices: currentOrderData.quoteDetails.itemPrices,
+                                freight: currentOrderData.quoteDetails.freight,
+                                discount: currentOrderData.quoteDetails.discount,
+                                billingAddress: currentOrderData.quoteDetails.billingAddress,
+                                shippingAddress: currentOrderData.quoteDetails.billingAddress // Pre-fill shipping with billing address from quote
+                            };
+                            
+                            // Check if windows were modified since quote was generated
+                            if (currentOrderData.quoteDetails.savedWindowsHash !== currentOrderData.windows) {
+                                modifiedWarning.style.display = 'flex';
+                            }
+                        }
                         
-                        let defaultDetails = { 
-                            invoiceNumber: `${count + 1}-${currentYear}`, 
-                            invoiceDate: new Date().toISOString().split('T')[0],
-                            globalPrice: currentOrderData.quoteDetails?.globalPrice || 0,
-                            freight: currentOrderData.quoteDetails?.freight || 0,
-                            discount: currentOrderData.quoteDetails?.discount || 0,
-                            isDiffPrices: currentOrderData.quoteDetails?.isDiffPrices || false,
-                            itemPrices: currentOrderData.quoteDetails?.itemPrices || [],
-                            billingAddress: currentOrderData.address,
-                            shippingAddress: currentOrderData.address
-                        };
                         populateForm(defaultDetails, currentOrderData);
+                        viewScreen.style.display = 'none';
                         detailsScreen.style.display = 'block';
+                        document.getElementById('invoice-number').focus();
                     }
+                } else {
+                    alert("Order not found.");
                 }
-            } catch (error) { console.error(error); } finally { loadingOverlay.style.display = 'none'; }
+            } catch (error) {
+                console.error("Error loading order:", error);
+                alert("Error loading order.");
+            } finally {
+                loadingOverlay.style.display = 'none';
+            }
         }
-
-        function initSyncSkillUI() {
-            const sidebar = document.getElementById('sidebar');
-            const mOverlay = document.getElementById('sidebar-overlay');
-            const toggleBtn = document.getElementById('sidebar-toggle-btn');
-            if(toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
-            const mOpen = document.getElementById('m-open-drawer');
-            const mClose = document.getElementById('m-close-drawer');
-            mOpen.onclick = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); };
-            mClose.onclick = mOverlay.onclick = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); };
-            const profileTrigger = document.getElementById('profile-trigger');
-            const pPopup = document.getElementById('profile-popup');
-            profileTrigger.onclick = (e) => {
-                e.stopPropagation();
-                if (window.innerWidth > 768) { pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; pPopup.style.transform = 'none'; }
-                else { pPopup.style.left = '50%'; pPopup.style.bottom = '100px'; pPopup.style.transform = 'translateX(-50%)'; }
-                pPopup.classList.toggle('active');
-            };
-            document.addEventListener('click', () => pPopup.classList.remove('active'));
-        }
-
+        
         detailsForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             loadingOverlay.style.display = 'flex';
-            const itemPrices = [];
-            document.querySelectorAll('.ind-price-input').forEach(inp => itemPrices.push(parseFloat(inp.value) || 0));
-            const billDetails = {
-                invoiceNumber: document.getElementById('invoice-number').value,
-                invoiceDate: document.getElementById('invoice-date').value,
-                isDiffPrices: diffPricesCheck.checked,
-                globalPrice: parseFloat(globalPriceInput.value) || 0,
-                itemPrices: itemPrices,
-                freight: parseFloat(document.getElementById('freight-charges').value || 0),
-                discount: parseFloat(document.getElementById('discount-amount').value || 0),
-                billingAddress: addBillingAddressCheck.checked ? billingAddressTextarea.value : currentOrderData.address,
-                shippingAddress: addShippingAddressCheck.checked ? shippingAddressTextarea.value : currentOrderData.address,
-                savedWindowsHash: currentOrderData.windows
-            };
+            const orderId = e.currentTarget.dataset.id;
+            
             try {
-                await updateDoc(doc(db, 'upvc_orders', detailsForm.dataset.id), { billDetails });
+                const isDiffPrices = diffPricesCheck.checked;
+                const itemPrices = [];
+                document.querySelectorAll('.ind-price-input').forEach(inp => {
+                    itemPrices.push(parseFloat(inp.value) || 0);
+                });
+
+                const billDetails = {
+                    invoiceNumber: document.getElementById('invoice-number').value,
+                    invoiceDate: document.getElementById('invoice-date').value,
+                    isDiffPrices: isDiffPrices,
+                    globalPrice: parseFloat(globalPriceInput.value) || 0,
+                    itemPrices: itemPrices,
+                    freight: parseFloat(document.getElementById('freight-charges').value || 0),
+                    discount: parseFloat(document.getElementById('discount-amount').value || 0),
+                    billingAddress: addBillingAddressCheck.checked ? billingAddressTextarea.value : currentOrderData.address,
+                    shippingAddress: addShippingAddressCheck.checked ? shippingAddressTextarea.value : currentOrderData.address,
+                    savedWindowsHash: currentOrderData.windows
+                };
+                
+                // Save to Firestore
+                await updateDoc(doc(db, 'upvc_orders', orderId), { billDetails });
+                
+                // Update local memory and render
                 currentOrderData.billDetails = billDetails;
                 renderBill(currentOrderData, billDetails);
+                
+                // Switch screens
                 detailsScreen.style.display = 'none';
                 viewScreen.style.display = 'block';
-            } catch (error) { alert("Error saving invoice."); } finally { loadingOverlay.style.display = 'none'; }
+                
+            } catch (error) { 
+                console.error("Error generating bill:", error); 
+                alert("Could not generate bill."); 
+            } 
+            finally { 
+                loadingOverlay.style.display = 'none'; 
+            }
         });
-
-        diffPricesCheck.addEventListener('change', togglePriceInputsVisibility);
-        addBillingAddressCheck.addEventListener('change', () => billingAddressTextarea.style.display = addBillingAddressCheck.checked ? 'block' : 'none');
-        addShippingAddressCheck.addEventListener('change', () => shippingAddressTextarea.style.display = addShippingAddressCheck.checked ? 'block' : 'none');
-        document.getElementById('print-without-sig-btn').onclick = () => { document.getElementById('digital-signature-img').style.display = 'none'; printOptionsModal.style.display = 'none'; setTimeout(() => window.print(), 200); };
-        document.getElementById('print-with-sig-btn').onclick = () => { document.getElementById('digital-signature-img').style.display = 'inline-block'; printOptionsModal.style.display = 'none'; setTimeout(() => window.print(), 200); };
-        document.getElementById('print-cancel-btn').onclick = () => printOptionsModal.style.display = 'none';
-
-        const init = () => {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            onAuthStateChanged(auth, user => {
-                if (user) {
-                    const userRef = doc(db, "users", user.uid);
-                    getDoc(userRef).then(snap => {
-                        const profile = snap.data();
-                        document.querySelectorAll('.account-name').forEach(el => el.textContent = profile.displayName || 'Admin');
-                        document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email || '');
-                        document.querySelectorAll('.account-avatar').forEach(img => img.src = user.photoURL || '');
-                        startPageLogic();
-                    });
-                } else { window.location.href = 'login.html'; }
-            });
-            initSyncSkillUI();
+        
+        // Navigation Buttons handlers
+        const goBackToOrder = () => {
+            const orderId = detailsForm.dataset.id;
+            window.location.href = `order-details.html?id=${orderId}`;
         };
 
-        init();
+        cancelBtn.addEventListener('click', () => {
+            if (currentOrderData && currentOrderData.billDetails && currentOrderData.billDetails.savedWindowsHash === currentOrderData.windows) {
+                detailsScreen.style.display = 'none';
+                viewScreen.style.display = 'block';
+            } else {
+                goBackToOrder();
+            }
+        });
+
+        backToOrderBtn.addEventListener('click', goBackToOrder);
+
+        // Print Modal Button Handlers
+        printCancelBtn.addEventListener('click', () => {
+            printOptionsModal.style.display = 'none';
+        });
+
+        printWithSigBtn.addEventListener('click', () => {
+            const sigImg = document.getElementById('digital-signature-img');
+            if (sigImg) sigImg.style.display = 'inline-block';
+            printOptionsModal.style.display = 'none';
+            setTimeout(() => window.print(), 150); // slight delay to allow rendering
+        });
+
+        printWithoutSigBtn.addEventListener('click', () => {
+            const sigImg = document.getElementById('digital-signature-img');
+            if (sigImg) sigImg.style.display = 'none';
+            printOptionsModal.style.display = 'none';
+            setTimeout(() => window.print(), 150);
+        });
+
+        addBillingAddressCheck.addEventListener('change', () => { billingAddressTextarea.style.display = addBillingAddressCheck.checked ? 'block' : 'none'; });
+        addShippingAddressCheck.addEventListener('change', () => { shippingAddressTextarea.style.display = addShippingAddressCheck.checked ? 'block' : 'none'; });
+
+        initializeFirebase();
     </script>
 </body>
 </html>
