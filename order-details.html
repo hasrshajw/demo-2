@@ -1,32 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayrollPro - Order Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Order Details</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
     <style>
-        /* --- UNIFIED CORE STYLES & VARIABLES --- */
+        /* --- MERGED CSS VARIABLES --- */
         :root {
-            /* Fonts */
-            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-            --font-alt: 'Inter', sans-serif;
-            --font-icon: "Material Symbols Outlined";
+            /* Layout & Sidebar (SyncSkill) */
+            --text-sub: #6b7280;
+            --header-height-desktop: 70px;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 90px;
+            --row-height: 52px;
+            --sidebar-bg: #ffffff;
+            --header-bg: #ffffff;
+            --page-bg: #f8fafc;
+            --text-color: #18181A;
+            --icon-color: #6b7280;
+            --brand-primary: #34c375; 
+            --active-bg: #E5E5E5;
+            --hover-bg: #f3f4f6;
+            --border-subtle: #e5e7eb;
             
-            /* Colors (Order Details Theme) */
-            --color-primary: #047857; --color-primary-hover: #059669; --color-primary-text: #ffffff;
-            --color-danger: #dc2626; --color-danger-hover: #b91c1c; --color-danger-text: #ffffff;
+            /* Theme & Tokens (Premium UI) */
+            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; 
+            --font-alt: 'Inter', sans-serif; 
+            --font-nav: 'DM Sans', sans-serif;
+            --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 20px; --radius-xl: 24px;
+            
+            /* Premium Shadows */
+            --premium-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
+            --premium-shadow-hover: 0 12px 30px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(0, 0, 0, 0.05);
+            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
+            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
+            --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.25);
+            
+            --color-primary: #012726; --color-primary-light: #e0e7ff; --color-primary-dark: #023d3c;
+            --color-background: #f8fafc; --color-surface: #ffffff; 
+            --color-text-primary: #0f172a; --color-text-secondary: #64748b; --light-text-muted: #94a3b8;
+            --color-border: #e2e8f0; 
+            --color-success: #10b981; --color-danger: #ef4444; --color-warning: #f59e0b;
             --color-reopen: #6d28d9; --color-reopen-hover: #5b21b6; --color-reopen-text: #ffffff;
-            --color-focus-ring: rgba(4, 120, 87, 0.3);
-            
-            /* Layout & Backgrounds */
-            --light-bg-primary: #ffffff; --light-bg-secondary: #f8f9fa; --light-bg-tertiary: #f1f5f9;
-            --light-text-primary: #111827; --light-text-secondary: #4b5563; --light-text-muted: #6b7280;
-            --light-border: #e5e7eb; --light-border-hover: #d1d5db;
             
             /* Status Tags */
             --status-pending-bg: #eef2ff; --status-pending-text: #4338ca;
@@ -34,468 +59,664 @@
             --status-overdue-bg: #fee2e2; --status-overdue-text: #b91c1c;
             --status-upcoming-bg: #fefce8; --status-upcoming-text: #a16207;
 
-            /* Sizing & Effects */
-            --radius-sm: 0.25rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
-            --ease: cubic-bezier(.4, 0, .2, 1);
-            --sticky-footer-height: 92px;
-            --navbar-height: 72px;
+            --sticky-footer-height: 80px;
         }
 
-        /* --- GLOBAL RESETS & BASE STYLES --- */
-        *, :after, :before { box-sizing: border-box; }
-        html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body { 
-            font-family: var(--font-main); 
-            background-color: var(--light-bg-secondary); 
-            color: var(--light-text-secondary); 
-            margin: 0; 
-            padding-bottom: var(--sticky-footer-height); 
-            font-size: 16px; 
-            padding-top: var(--navbar-height); /* Reserved space for fixed navbar */
+        /* --- GLOBAL RESETS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; height: 100%; }
+        
+        body {
+            background: var(--color-background);
+            font-family: var(--font-alt);
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            height: 100%;
         }
-        h1, h2, h3 { font-weight: 600; color: var(--light-text-primary); margin: 0; }
-        h1 { font-size: 1.25rem; font-weight: 700; } h3 { font-size: 1.125rem; }
+
+        /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
+        .app-layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .desktop-only { display: none !important; }
+        .mobile-only { display: flex; }
+        
+        .sidebar, .m-header, .profile-popup { font-family: var(--font-nav); }
+
+        .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
+        .brand-logo img { height: 36px; width: auto; display: block; }
+        .mini-logo { display: none; align-items: center; justify-content: center; }
+        .mini-logo img { height: 36px; width: auto; display: block; }
+
+        .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
+        .icon svg { width: 22px; height: 22px; stroke: var(--icon-color); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        
+        .nav-item { position: relative; display: flex; align-items: center; height: var(--row-height); padding: 0 16px; margin: 6px 0; border-radius: var(--radius-md); gap: 14px; cursor: pointer; color: var(--text-color); text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+        .nav-item:hover { background: var(--hover-bg); }
+        .nav-item.active { background: var(--active-bg); color: var(--text-color); font-weight: 800; }
+        .nav-item.active .icon svg { stroke: #000000; }
+
+        .account-card { display: flex; align-items: center; gap: 12px; }
+        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; background: var(--color-border); }
+        .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
+        .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; color: var(--text-color); }
+        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+        /* Mobile First Structure */
+        .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; position: relative;}
+        .content-area { flex: 1; overflow-y: auto; padding-bottom: calc(var(--sticky-footer-height) + 20px);} 
+        
+        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .m-menu-lines { width: 18px; height: 14px; position: relative; }
+        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
+        .m-menu-lines::before { top: 0; } .m-menu-lines span { top: 6px; } .m-menu-lines::after { bottom: 0; }
+
+        .sidebar { position: fixed; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%; background: #fff; transform: translateX(-100%); transition: 0.25s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; z-index: 2001; }
+        .sidebar.mobile-open { transform: translateX(0); }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); opacity: 0; pointer-events: none; transition: 0.25s; z-index: 2000; }
+        .sidebar-overlay.mobile-open { opacity: 1; pointer-events: auto; }
+
+        .sidebar-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; transition: all 0.3s; }
+        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: transparent; cursor: pointer; }
+        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
+        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; background: #111827; }
+        .m-drawer-close-icon::before { transform: rotate(45deg); } .m-drawer-close-icon::after { transform: rotate(-45deg); }
+
+        .sidebar-inner { flex: 1; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+        .nav-menu { padding: 20px 12px; }
+        .account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; cursor: pointer; }
+
+        /* Profile Context Menu */
+        .profile-popup { position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--premium-shadow-hover); border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none; transition: 0.2s; overflow: hidden; bottom: 100px; left: 50%; transform: translateX(-50%); }
+        .profile-popup.active { opacity: 1; pointer-events: all; }
+        .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
+        .popup-list { list-style: none; padding: 8px; }
+        .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; font-weight: 500;}
+        .popup-list a:hover { background: var(--hover-bg); }
+
+        /* Desktop Adjustments */
+        @media (min-width: 769px) {
+            .app-layout { flex-direction: row; }
+            .desktop-only { display: flex !important; }
+            .mobile-only { display: none !important; }
+            .m-header { display: none; }
+            .sidebar-overlay { display: none; }
+            .brand-logo img, .mini-logo img { height: 45px; }
+            
+            .main-content { margin-top: 0; }
+            
+            .topbar {
+                height: 80px;
+                background: var(--header-bg);
+                border-bottom: 1px solid var(--border-subtle);
+                padding: 0 40px;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+                font-size: 1.75rem;
+                font-family: var(--font-main);
+                color: var(--color-text-primary);
+                flex-shrink: 0;
+            }
+
+            .sidebar { position: relative; transform: translateX(0) !important; width: var(--sidebar-width); max-width: none; background: var(--sidebar-bg); border-right: 1px solid var(--border-subtle); z-index: 100; }
+            .sidebar-header { height: auto; min-height: var(--header-height-desktop); padding: 30px 24px; border-bottom: none; }
+            .nav-menu { padding: 10px 16px; }
+            .account-section { margin-top: auto; padding: 24px 16px; }
+            
+            .profile-popup { bottom: 80px; left: 16px; transform: none; }
+            
+            .sidebar-toggle { background: none; border: none; cursor: pointer; color: var(--icon-color); display: flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; transition: 0.2s; }
+            .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
+
+            .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+            .sidebar.collapsed .brand-logo, .sidebar.collapsed .account-text, .sidebar.collapsed .btn-close-svg { display: none !important; }
+            .sidebar.collapsed .mini-logo, .sidebar.collapsed .btn-open-svg { display: flex !important; }
+            .btn-open-svg { display: none; }
+            .sidebar.collapsed .sidebar-header { flex-direction: column; padding: 30px 0 20px 0; gap: 30px; }
+            .sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
+            .sidebar.collapsed .account-section { display: flex; justify-content: center; padding: 24px 0; }
+            .sidebar.collapsed .nav-label { display: none; }
+            .sidebar.collapsed .sidebar-inner { overflow: visible; }
+            .sidebar.collapsed .nav-item:hover .nav-label { display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+            .sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
+        }
+
+        /* ============= ORDER DETAILS PAGE SPECIFIC STYLES ============= */
+        h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em;}
+        h1 { font-size: 1.5rem; line-height: 1.2;} 
+        h3 { font-size: 1.125rem; }
         p { margin: 0 0 1rem; line-height: 1.6; }
 
-        /* --- NAVBAR STYLES --- */
-        .header {position: fixed; top: 0; width: 100%; z-index: 50; background-color: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(8px);}
-        .header-container { width: 90%; margin-left: auto; margin-right: auto; }
-        @media (min-width: 48rem) { .header-container { width: 80%; } }
-        @media (max-width: 768px) {.header-container { padding-left: 16px; padding-right: 16px; width: 100%; } .nav-left, .nav-right, .logo, .menu-button { margin: 0; padding: 0; }}
-        .nav { padding-top: 0.75rem; padding-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
-        .nav-left { display: flex; align-items: center; gap: 1.5rem; }
-        .logo { margin-right: 1.5rem; width: 100px; height: 40px; color: transparent; object-fit: contain; }
-        .nav-links { display: none; align-items: center; gap: 1rem; }
-        @media (min-width: 48rem) { .nav-links { display: flex; } }
-        .nav-link { padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #012726; transition: color 0.15s, background-color 0.15s; text-decoration: none; border-radius: 0.375rem; }
-        @media (hover: hover) { .nav-link:hover { color: #fff; background-color: #012726; } }
-        .nav-right { display: flex; align-items: center; gap: 1rem; }
-        .menu-button { display: flex; padding: 0.375rem; border: 1px solid #012726; border-radius: 0.375rem; color: #012726; background-color: transparent; cursor: pointer; }
-        @media (min-width: 48rem) { .menu-button { display: none; } }
-        #mobileMenu { position: fixed; top: 0; right: 0; bottom: 0; width: 75vw; max-width: 320px; background: #ffffff; padding: 24px 16px; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -2px 0 8px rgba(0,0,0,0.1); z-index: 1000; border-top-left-radius: 16px; display: flex; flex-direction: column; }
-        #mobileMenu.active { transform: translateX(0); }
-        #menuOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
-        #menuOverlay.active { display: block; }
-        .mobile-menu-close { padding: 8px; border-radius: 8px; border: none; background: transparent; transition: background 0.2s ease, transform 0.2s ease; align-self: flex-end; margin-bottom: 24px; cursor: pointer; }
-        .mobile-menu-close svg { width: 24px; height: 24px; color: #4b5563; }
-        .mobile-menu-content { flex-grow: 1; overflow-y: auto; }
-        .mobile-menu-section { display: flex; flex-direction: column; gap: 8px; }
-        .mobile-nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 0.5rem; text-decoration: none; font-weight: 500; color: #012726; background-color: #f8f9fa; transition: background-color 0.15s; }
-        .mobile-nav-link:hover { background-color: #e9ecef; }
-        .mobile-nav-icon { width: 20px; height: 20px; margin-right: 12px; color: #495057; }
-        .mobile-menu-bottom { flex-shrink: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid #e9ecef; display: flex; flex-direction: column; gap: 16px; }
-        .divider { height: 1px; background-color: var(--light-border); }
-        @media (max-width: 768px) { .divider { width: 100%; margin: 0; padding: 0; } }
-        .desktop-profile { display: none; }
-        @media (min-width: 48rem) { .desktop-profile { display: flex; } }
-        .profile-container { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; border-radius: 0.375rem; padding: 4px; }
-        .profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e9ecef; }
-        .profile-info { display: flex; flex-direction: column; line-height: 1.3; }
-        .profile-name { font-weight: 500; color: #012726; font-family: var(--font-alt); }
-        .profile-email { font-size: 0.85rem; color: #6c757d; font-family: var(--font-alt); }
-        .profile-dropdown-container { position: relative; }
-        .logout-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: #fff; border-radius: 0.375rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px; z-index: 60; width: 150px; }
-        .logout-popup.show { display: block; }
-        .logout-button { background-color: #dc3545; color: #fff; border: none; padding: 10px 16px; border-radius: 0.375rem; font-weight: 500; cursor: pointer; width: 100%; text-align: center; transition: background-color 0.15s; }
-        .logout-button:hover { background-color: #c82333; }
-
-        /* --- SKELETON LOADER V3 (CORRECTED) --- */
-        .skeleton {
-            position: relative;
-            overflow: hidden;
-            background-color: #e2e8f0;
-            border-radius: var(--radius-md);
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        .skeleton::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 150%;
-            height: 100%;
-            background-image: linear-gradient(90deg, transparent 0, rgba(255,255,255,0.4) 50%, transparent 100%);
-            transform: skewX(-20deg);
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes pulse {
-            50% { background-color: #f1f5f9; }
-        }
-        @keyframes shimmer { 
-            100% { left: 150%; } 
-        }
-        .skeleton-line { height: 1rem; margin-bottom: 0.5rem; }
-        .skeleton-line:last-child { margin-bottom: 0; }
-        .skeleton-circle { border-radius: 50%; }
-        .skeleton-tag { width: 100px; height: 24px; border-radius: 999px; }
-        .skeleton-card {
-            padding: 1.5rem;
-            background-color: var(--light-bg-primary);
-            border: 1px solid var(--light-border);
-            border-radius: var(--radius-lg);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .skeleton-info-grid .skeleton-line { height: 0.8rem; }
-        .skeleton-info-grid .skeleton-line:nth-child(2n) { width: 70%; }
-        .skeleton-tabs { margin-top: 1rem; } /* Mimics .tabs */
-        .skeleton-tabs__nav { /* Mimics .tabs__nav */
-            display: flex;
-            background-color: var(--light-bg-secondary);
-            border-bottom: 1px solid var(--light-border);
-            overflow-x: auto;
-            padding: 0 0.5rem;
-        }
-        /* --- END SKELETON LOADER V3 --- */
+        /* Premium Buttons */
+        .btn { padding: 10px 20px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-family: inherit;}
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; box-shadow: none !important;}
+        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); background: linear-gradient(135deg, #163837, #02302f); }
         
-        /* --- ANIMATIONS --- */
-        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
-        @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
-        @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
-        .screen.active { display: block; animation: fadeUp 0.4s var(--ease) forwards; }
+        .btn-secondary { background: #ffffff; color: var(--color-text-secondary); border: 1px solid var(--color-border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .btn-secondary:hover:not(:disabled) { border-color: #cbd5e1; color: var(--color-text-primary); background: #f8fafc; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05);}
+        
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); border: 1px solid rgba(255,255,255,0.1);}
+        .btn-success:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3); background: linear-gradient(135deg, #34d399, #10b981); }
+        
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); }
+        .btn-danger:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3); }
 
-        /* --- REDESIGNED CORE COMPONENTS (UNCHANGED) --- */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); font-weight: 600; font-size: 0.9375rem; transition: all 0.2s var(--ease); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; }
-        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-sm); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .btn:focus-visible { outline: 3px solid var(--color-focus-ring); outline-offset: 2px; }
-        .btn .material-symbols-outlined { font-size: 1.25rem; }
-        .btn-primary { background-color: var(--color-primary); color: var(--color-primary-text); }
-        .btn-primary:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-        .btn-secondary { background-color: var(--light-bg-primary); color: var(--light-text-secondary); border-color: var(--light-border); box-shadow: var(--shadow-sm); }
-        .btn-secondary:hover:not(:disabled) { border-color: var(--light-border-hover); color: var(--light-text-primary); background-color: var(--light-bg-tertiary); }
-        .btn-danger { background-color: var(--color-danger); color: var(--color-danger-text); }
-        .btn-danger:hover:not(:disabled) { background-color: var(--color-danger-hover); }
-        .btn-success { background-color: var(--color-primary); color: var(--color-primary-text); }
-        .btn-success:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-        .btn-reopen { background-color: var(--color-reopen); color: var(--color-reopen-text); }
-        .btn-reopen:hover:not(:disabled) { background-color: var(--color-reopen-hover); }
-        .icon-btn { display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); transition: all 0.2s ease; flex-shrink: 0; }
-        .icon-btn:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
-        .icon-btn .material-symbols-outlined { font-size: 1.5rem; }
-        .status-tag { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
-        .status-tag::before { content: ""; display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
-        .status-tag.pending { background-color: var(--status-pending-bg); color: var(--status-pending-text); } .status-tag.pending::before { background-color: var(--status-pending-text); }
-        .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); } .status-tag.completed::before { background-color: var(--status-completed-text); }
-        .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); } .status-tag.overdue::before { background-color: var(--status-overdue-text); }
-        .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); } .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
+        .btn-reopen { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2); }
+        .btn-reopen:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(109, 40, 217, 0.3); }
 
-        /* --- REDESIGNED LAYOUT STRUCTURE (UNCHANGED) --- */
+        .icon-btn { display: flex; align-items: center; justify-content: center; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.3s ease; flex-shrink: 0; }
+        .icon-btn:hover { background-color: #e2e8f0; color: var(--color-text-primary); transform: scale(1.05);}
+
+        /* Layout specific to Order Details */
         .page-container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .page-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
-        .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background-color: var(--light-bg-primary); border-bottom: 1px solid var(--light-border); }
+        
+        .details-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem; background-color: var(--color-surface); border-bottom: 1px solid var(--color-border); }
         .details-header__title { display: flex; align-items: center; gap: 0.75rem; flex-grow: 1; min-width: 0; }
-        .details-header__title h1 { line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .details-header__title h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .status-tag { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; letter-spacing: 0.05em; font-family: var(--font-main);}
+        .status-tag::before { content: ""; display: block; width: 0.4rem; height: 0.4rem; border-radius: 50%; }
+        .status-tag.pending { background-color: var(--status-pending-bg); color: var(--status-pending-text); border: 1px solid rgba(67, 56, 202, 0.2);} .status-tag.pending::before { background-color: var(--status-pending-text); }
+        .status-tag.completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); border: 1px solid rgba(22, 101, 52, 0.2);} .status-tag.completed::before { background-color: var(--status-completed-text); }
+        .status-tag.overdue { background-color: var(--status-overdue-bg); color: var(--status-overdue-text); border: 1px solid rgba(185, 28, 28, 0.2);} .status-tag.overdue::before { background-color: var(--status-overdue-text); }
+        .status-tag.upcoming-due { background-color: var(--status-upcoming-bg); color: var(--status-upcoming-text); border: 1px solid rgba(161, 98, 7, 0.2);} .status-tag.upcoming-due::before { background-color: var(--status-upcoming-text); }
+
+        /* Dropdown Menu */
         .actions-menu-container { position: relative; }
-        .actions-dropdown { text-align: left; position: absolute; top: calc(100% + 8px); right: 0; background: var(--light-bg-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 0.5rem; min-width: 220px; z-index: 1001; visibility: hidden; opacity: 0; transform: translateY(-10px); transition: all 0.2s ease-out; border: 1px solid var(--light-border); }
+        .actions-dropdown { position: absolute; top: calc(100% + 8px); right: 0; background: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--premium-shadow-hover); padding: 0.5rem; min-width: 220px; z-index: 1001; visibility: hidden; opacity: 0; transform: translateY(-10px); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--color-border); }
         .actions-dropdown.show { visibility: visible; opacity: 1; transform: translateY(0); }
-        .actions-dropdown button { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.625rem 0.75rem; border: none; background: transparent; text-align: left; font-size: 0.875rem; font-weight: 500; color: var(--light-text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: background-color 0.2s ease; }
-        .actions-dropdown button:hover { background-color: var(--light-bg-tertiary); }
-        .actions-dropdown button .icon { font-size: 1.125rem; color: var(--light-text-secondary); }
-        .actions-dropdown hr { border: none; border-top: 1px solid var(--light-border); margin: 0.5rem 0; }
-        .key-metrics-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--light-border); border: 1px solid var(--light-border); border-radius: var(--radius-lg); overflow: hidden; }
-        .metric-item { background-color: var(--light-bg-primary); padding: 1rem; text-align: center; }
-        .metric-item__label { font-size: 0.70rem; font-weight: 500; color: var(--light-text-secondary); margin-bottom: 0.375rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .metric-item__value { font-size: 1rem; font-weight: 600; color: var(--light-text-primary); line-height: 1.2; }
+        .actions-dropdown button { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.75rem 1rem; border: none; background: transparent; text-align: left; font-size: 0.9rem; font-weight: 600; color: var(--color-text-primary); border-radius: var(--radius-sm); cursor: pointer; transition: background-color 0.2s ease; font-family: inherit;}
+        .actions-dropdown button:hover { background-color: #f1f5f9; }
+        .actions-dropdown button .icon { font-size: 1.125rem; color: var(--color-text-secondary); }
+        .actions-dropdown hr { border: none; border-top: 1px solid var(--color-border); margin: 0.5rem 0; }
+
+        /* Premium Key Metrics */
+        .key-metrics-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background-color: var(--color-border); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);}
+        .metric-item { background-color: var(--color-surface); padding: 1.25rem 1rem; text-align: center; }
+        .metric-item__label { font-size: 0.75rem; font-weight: 700; color: var(--color-text-secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-main);}
+        .metric-item__value { font-size: 1.125rem; font-weight: 700; color: var(--color-text-primary); line-height: 1.2; font-family: var(--font-alt);}
         .metric-item__value.pending { color: var(--color-danger); }
-        .tabs { margin-top: 1rem; }
-        .tabs__nav { display: flex; background-color: var(--light-bg-secondary); border-bottom: 1px solid var(--light-border); overflow-x: auto; padding: 0 0.5rem; }
-        .tabs__button { background: none; border: none; padding: 1rem; font-weight: 600; font-size: 0.875rem; color: var(--light-text-secondary); cursor: pointer; transition: color 0.2s ease; white-space: nowrap; flex-shrink: 0; border-bottom: 3px solid transparent; }
-        .tabs__button.active { color: var(--color-primary);  border-color: var(--color-primary); border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md); }
-        .tabs__content-pane { display: none; padding: 1.5rem; background-color: var(--light-bg-primary); border-radius: var(--radius-lg); margin-top: -1px; }
-        .tabs__content-pane.active { display: block; animation: fadeIn 0.3s ease; }
-        .tabs__nav + .tabs__content-pane.active { border-top-left-radius: 0; }
-        .content-section { margin-bottom: 2.5rem; } .content-section:last-child { margin-bottom: 0; }
-        .content-section h3 { font-size: 1.125rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border); }
-        .info-grid { display: grid; grid-template-columns: 1fr; gap: 0; font-size: 0.9375rem; }
-        .info-grid-item { display: flex; flex-direction: column; padding: 0.875rem 0; border-bottom: 1px solid var(--light-border); }
-        .info-grid-item:last-child { border-bottom: none; }
-        .info-grid dt { font-weight: 500; color: var(--light-text-muted); font-size: 0.8rem; margin-bottom: 0.125rem; }
-        .info-grid dd { color: var(--light-text-primary); margin: 0; text-align: left; font-weight: 500; }
-        .action-links { margin-top: 1.5rem; background-color: var(--light-bg-tertiary); border: 1px solid var(--light-border); border-radius: var(--radius-md); }
-        .action-link-item { display: flex; align-items: center; padding: 1rem; text-decoration: none; color: var(--light-text-primary); font-weight: 500; border-bottom: 1px solid var(--light-border); transition: background-color 0.2s ease; }
+
+        /* Premium Tabs */
+        .tabs { margin-top: 0; }
+        .tabs__nav { display: flex; background-color: transparent; border-bottom: 2px solid var(--color-border); overflow-x: auto; padding: 0; margin-bottom: 1.5rem; scrollbar-width: none;}
+        .tabs__nav::-webkit-scrollbar { display: none; }
+        .tabs__button { background: none; border: none; padding: 1rem 1.5rem; font-weight: 600; font-size: 0.95rem; color: var(--color-text-secondary); cursor: pointer; transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; border-bottom: 3px solid transparent; margin-bottom: -2px; font-family: var(--font-main);}
+        .tabs__button:hover { color: var(--color-text-primary); }
+        .tabs__button.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+        
+        .tabs__content-pane { display: none; }
+        .tabs__content-pane.active { display: block; animation: fadeIn 0.4s var(--ease-cubic); }
+
+        /* Content Sections */
+        .content-section { margin-bottom: 2rem; background: var(--color-surface); padding: 1.5rem; border-radius: var(--radius-xl); border: 1px solid #eef2f6; box-shadow: var(--premium-shadow); position: relative;}
+        .content-section::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1;
+        }
+        .content-section h3 { font-size: 1.125rem; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; color: var(--color-text-primary); display: flex; justify-content: space-between; align-items: center;}
+        
+        /* Premium Info Grid */
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 0; font-size: 0.95rem; }
+        .info-grid-item { display: flex; flex-direction: column; padding: 1rem 0; border-bottom: 1px solid #f1f5f9; }
+        .info-grid-item:last-child { border-bottom: none; padding-bottom: 0;}
+        .info-grid dt { font-weight: 600; color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;}
+        .info-grid dd { color: var(--color-text-primary); margin: 0; text-align: left; font-weight: 500; }
+        
+        /* Action Links List */
+        .action-links { margin-top: 1.5rem; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-lg); overflow: hidden;}
+        .action-link-item { display: flex; align-items: center; padding: 1.25rem; text-decoration: none; color: var(--color-text-primary); font-weight: 600; border-bottom: 1px solid #e2e8f0; transition: background-color 0.2s ease; }
         .action-link-item:last-child { border-bottom: none; }
-        .action-link-item:hover { background-color: #e9ecef; }
-        .action-link-item .icon { color: var(--light-text-secondary); margin-right: 1rem; }
+        .action-link-item:hover { background-color: #f1f5f9; padding-left: 1.5rem; }
+        .action-link-item .icon { color: var(--color-primary); margin-right: 1rem; }
         .action-link-item .label { flex-grow: 1; }
-        .action-link-item .chevron { color: var(--light-text-muted); }
-        .detail-window-item { display: flex; align-items: center; gap: 1rem; padding: 0.875rem; background-color: var(--light-bg-tertiary); border-radius: var(--radius-md); margin-bottom: 0.5rem; border: 1px solid var(--light-border); }
-        .item-number { flex-shrink: 0; width: 2.25rem; height: 2.25rem; background-color: var(--color-primary); color: var(--color-primary-text); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; }
-        .item-info { font-size: 0.9rem; color: var(--light-text-primary); line-height: 1.4; }
-        .item-info small { display: block; color: var(--light-text-secondary); font-size: 0.8rem; margin-top: 0.25rem; }
+        .action-link-item .chevron { color: #cbd5e1; }
+
+        /* Window Items List */
+        .detail-window-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; background-color: #f8fafc; border-radius: var(--radius-md); margin-bottom: 0.75rem; border: 1px solid #e2e8f0; transition: transform 0.2s ease;}
+        .detail-window-item:hover { transform: translateX(4px); border-color: #cbd5e1;}
+        .item-number { flex-shrink: 0; width: 2.5rem; height: 2.5rem; background-color: #e0e7ff; color: #3730a3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; font-family: var(--font-main);}
+        .item-info { font-size: 0.95rem; color: var(--color-text-primary); line-height: 1.5; }
+        .item-info small { display: block; color: var(--color-text-secondary); font-size: 0.85rem; margin-top: 0.25rem; }
+
+        /* Lists (Finance & History) */
         .financial-log, .history-list { list-style: none; padding: 0; margin: 0; }
-        .log-item, .history-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--light-border); }
-        .log-item:last-child, .history-item:last-child { border-bottom: none; }
+        .log-item, .history-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid #f1f5f9; }
+        .log-item:last-child, .history-item:last-child { border-bottom: none; padding-bottom: 0;}
+        .log-item:first-child, .history-item:first-child { padding-top: 0;}
         .log-item__info, .history-item-info { display: flex; flex-direction: column; }
-        .log-item__amount { font-weight: 600; font-size: 1rem; color: var(--light-text-primary); }
-        .log-item__meta { font-size: 0.8125rem; color: var(--light-text-muted); }
-        .log-item__meta .notes { display: block; margin-top: 4px; color: var(--light-text-secondary); font-style: italic; }
-        .log-item__actions { display: flex; gap: 0.5rem; }
-        .log-item--adjustment .log-item__amount { color: var(--light-text-secondary); font-weight: 500; font-size: 0.9rem; }
-        .log-item--adjustment .log-item__meta { font-style: italic; }
-        .history-item-meta { font-size: 0.8rem; color: var(--light-text-muted); margin-bottom: 0.25rem; }
-        .history-item-action { font-weight: 500; color: var(--light-text-primary); }
-        .history-detail { font-size: 0.85rem; color: var(--light-text-secondary); margin-top: 0.75rem; list-style-type: none; padding-left: 1.25rem; border-left: 2px solid var(--light-border); }
+        .log-item__amount { font-weight: 700; font-size: 1.1rem; color: var(--color-text-primary); font-family: var(--font-alt);}
+        .log-item__meta { font-size: 0.85rem; color: var(--color-text-secondary); margin-top: 2px;}
+        .log-item__meta .notes { display: block; margin-top: 4px; color: #94a3b8; font-style: italic; }
+        .log-item__actions { display: flex; gap: 0.5rem; margin-top: 8px; justify-content: flex-end;}
+        .log-item--adjustment .log-item__amount { color: var(--color-text-secondary); font-weight: 600; font-size: 0.95rem; }
+        
+        .history-item-meta { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;}
+        .history-item-action { font-weight: 600; color: var(--color-text-primary); font-size: 0.95rem;}
+        .history-detail { font-size: 0.85rem; color: var(--color-text-secondary); margin-top: 0.75rem; list-style-type: none; padding-left: 1.25rem; border-left: 2px solid var(--color-primary-light); }
         .history-detail ul { padding-left: 1.25rem; margin-top: .25rem; }
-        .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem; background-color: rgba(255, 255, 255, 0.85); border-top: 1px solid var(--light-border); backdrop-filter: blur(8px); z-index: 999; box-shadow: 0 -4px 10px rgba(0,0,0,0.04); }
-        .sticky-action-bar .btn { flex-grow: 1; padding: 1.125rem; font-size: 1rem; }
-        .modal { display: none; position: fixed; z-index: 1000; inset: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center; animation: fadeIn 0.3s var(--ease); padding: 1rem; }
-        .modal-content { background-color: #fff; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); width: 100%; max-width: 450px; text-align: left; animation: popIn 0.3s var(--ease); }
-        .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--light-text-primary); text-align: center; }
+
+        /* Sticky Footer */
+        .sticky-action-bar { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 1rem; padding: 1rem 1.5rem; background-color: rgba(255, 255, 255, 0.85); border-top: 1px solid var(--color-border); backdrop-filter: blur(12px); z-index: 999; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
+        .sticky-action-bar .btn { flex-grow: 1; padding: 1.125rem; font-size: 1rem; border-radius: var(--radius-lg);}
+
+        /* Premium Modals */
+        .modal { display: none; position: fixed; z-index: 3000; inset: 0; background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 1rem;}
+        .modal-content { background-color: var(--color-surface); margin: 1.5rem; padding: 2.5rem; border-radius: var(--radius-xl); width: 100%; max-width: 460px; position: relative; box-shadow: var(--modal-shadow); border: 1px solid rgba(255,255,255,0.6); animation: popIn 0.4s var(--ease-out-back); }
+        .modal-message { font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text-primary); text-align: center; line-height: 1.4;}
         .modal-buttons { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
-        .loading-overlay { position: fixed; inset: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.9); z-index: 1001; display: flex; align-items: center; justify-content: center; }
-        .spinner { border: 6px solid var(--light-bg-tertiary); border-top: 6px solid var(--color-primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        .modal-buttons .btn { flex: 1;}
+        
+        .close-btn { position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #64748b; transition: all 0.2s; display: flex; align-items: center; justify-content: center; flex-shrink: 0;}
+        .close-btn:hover { background: #e2e8f0; color: #0f172a; transform: rotate(90deg);}
+        
+        /* Premium Form Inputs */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-        .form-group { margin-bottom: 1rem; }
+        .form-group { position: relative; margin-bottom: 1.5rem; }
         .form-group.col-span-2 { grid-column: span 2; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.875rem; color: var(--light-text-secondary); }
-        .input-field { width: 100%; padding: 0.875rem; border: 1px solid var(--light-border); border-radius: var(--radius-md); font-size: 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
-        .input-field:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px var(--color-focus-ring); }
+        .input-field { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
+        .form-group label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
+        .form-group .input-field:focus + label, .form-group .input-field:not(:placeholder-shown) + label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em;}
+
+        /* Loader & Toast */
+        .loading-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 9999; }
+        .spinner { width: 56px; height: 56px; border: 4px solid rgba(255,255,255,0.3); border-bottom-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
+        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 14px 28px; border-radius: 12px; color: white; font-weight: 600; font-size: 0.95rem; box-shadow: var(--premium-shadow-hover); transition: bottom 0.4s var(--ease-out-back); z-index: 4000; letter-spacing: 0.01em;}
+        #toast.success { background: linear-gradient(135deg, #10b981, #059669); } 
+        #toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        #toast.show { bottom: calc(var(--sticky-footer-height) + 20px); }
+
+        /* Desktop Layout Overrides */
         .desktop-view { display: none; }
         @media (min-width: 900px) {
-            body { padding-bottom: 0; }
             .mobile-view { display: none; }
             .desktop-view { display: flex; }
-            .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem; }
-            .details-header { background: none; border: none; padding: 1.5rem 0 1.5rem 0; align-items: flex-start; }
-            .details-header__title h1 { font-size: 1.875rem; }
+            .page-grid { grid-template-columns: 1fr 400px; gap: 2rem; padding: 2rem 40px; }
+            .details-header { background: transparent; border: none; padding: 2rem 40px 0 40px; align-items: center; }
+            .details-header__title h1 { font-size: 2rem; }
             .sticky-action-bar { display: none; }
-            .content-section { padding: 1.5rem; background-color: var(--light-bg-primary); border: 1px solid var(--light-border); border-radius: var(--radius-lg); margin: 0; }
-            .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-            .info-grid { grid-template-columns: 120px 1fr; }
-            .info-grid-item { display: grid; flex-direction: row; grid-template-columns: subgrid; grid-column: span 2; }
-            .info-grid dt { text-align: left; font-size: 0.9375rem; margin-bottom: 0; }
-            .action-links { margin-top: 2rem; }
+            .content-section { padding: 2rem; margin: 0; }
+            .grid-main, .grid-sidebar { display: flex; flex-direction: column; gap: 2rem; }
+            
+            /* Enhanced Desktop Grid */
+            .info-grid { grid-template-columns: 150px 1fr; gap: 1rem 0;}
+            .info-grid-item { display: grid; flex-direction: row; grid-template-columns: subgrid; grid-column: span 2; border: none; padding: 0; align-items: center;}
+            .info-grid dt { text-align: left; font-size: 0.9rem; margin-bottom: 0; }
+            .info-grid dd { font-size: 1.05rem; }
+            .action-links { margin-top: 2.5rem; }
+            #toast.show { bottom: 40px; }
+            .content-area { padding-bottom: 40px; }
         }
+        
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
+        @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+
+        /* Skeleton Loaders */
+        .skeleton { position: relative; overflow: hidden; background-color: #f1f5f9; border-radius: var(--radius-md); animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;}
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, transparent 0, rgba(255,255,255,0.6) 50%, transparent 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        @keyframes pulse { 50% { background-color: #e2e8f0; } }
+        @keyframes shimmer { 100% { left: 150%; } }
+        .skeleton-line { height: 1rem; margin-bottom: 0.5rem; }
+        .skeleton-circle { border-radius: 50%; }
+        .skeleton-tag { width: 100px; height: 32px; border-radius: 999px; }
+        .skeleton-card { padding: 1.5rem; background-color: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); display: flex; flex-direction: column; gap: 1rem; box-shadow: var(--premium-shadow);}
+        .skeleton-info-grid .skeleton-line { height: 1rem; }
+        .skeleton-info-grid .skeleton-line:nth-child(2n) { width: 70%; }
+        .skeleton-tabs { margin-top: 1rem; }
+        .skeleton-tabs__nav { display: flex; border-bottom: 2px solid var(--color-border); overflow-x: auto; margin-bottom: 1.5rem;}
     </style>
 </head>
+
 <body>
-    <header class="header">
-        <div class="header-container">
-            <nav class="nav">
-                <div class="nav-left">
-                    <a href="#" id="dashboard-link">
-                        <img class="logo" src="https://ihtnas.com/assets/ihtnas-nav.png" alt="IHTNAS Journal Logo" width="200" height="50" loading="eager">
-                    </a>
-                    <div class="nav-links">
-                        <a class="nav-link" id="nav-link-home" href="#">Home</a>
-                        <a class="nav-link" id="nav-link-orders" href="view-orders.html">All Orders</a>
-                        <a class="nav-link" id="nav-link-secondary" href="#" style="display: none;"></a>
-                    </div>
-                </div>
-                <div class="nav-right">
-                    <div class="desktop-profile">
-                         <div class="profile-dropdown-container">
-                             <div class="profile-container" id="desktopProfileTrigger" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src=" " class="profile-pic" alt="Profile Picture" id="desktop-profile-pic">
-                                <div class="profile-info">
-                                    <span class="profile-name" id="desktop-profile-name">Loading...</span>
-                                    <span class="profile-email" id="desktop-profile-email"></span>
-                                </div>
-                            </div>
-                            <div class="logout-popup" id="logoutPopup"><button class="logout-button" data-app-action="logout">Logout</button></div>
-                         </div>
-                    </div>
-                    <button class="menu-button" id="mobileMenuButton" aria-label="Open menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-                </div>
-            </nav>
-            <div class="divider"></div>
-        </div>
-    </header>
+    <!-- App Container -->
+    <div class="app-layout">
+        
+        <!-- Mobile Header (Hidden on Desktop) -->
+        <header class="m-header mobile-only">
+            <button class="m-menu-btn" id="m-open-drawer">
+                <div class="m-menu-lines"><span></span></div>
+            </button>
+            <a href="admin-dashboard.html" class="brand-logo">
+                <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+            </a>
+            <div style="width:40px;"></div>
+        </header>
 
-    <div id="mobileMenu" role="dialog" aria-modal="true">
-        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
-        <div class="mobile-menu-content">
-            <div class="mobile-menu-section" id="mobile-menu-links">
-                </div>
-        </div>
-        <div class="mobile-menu-bottom">
-            <div class="profile-container"><img src="" class="profile-pic" alt="Profile Picture" id="mobile-profile-pic"><div class="profile-info"><span class="profile-name" id="mobile-profile-name">Loading...</span><span class="profile-email" id="mobile-profile-email"></span></div></div>
-            <button class="logout-button" data-app-action="logout">Logout</button>
-        </div>
-    </div>
-    <div id="menuOverlay"></div>
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Unified Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="brand-logo">
+                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+                </a>
+                
+                <span class="mini-logo">
+                    <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
+                </span>
+                
+                <!-- Desktop Collapse Button -->
+                <button class="sidebar-toggle desktop-only" id="sidebar-toggle-btn">
+                    <svg class="btn-close-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg>
+                    <svg class="btn-open-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
+                </button>
 
-    <div class="page-container">
-        <div id="confirmation-modal" class="modal"><div class="modal-content" style="text-align:center;"><p id="modal-message" class="modal-message"></p><div class="modal-buttons"><button id="cancel-action-btn" class="btn btn-secondary">Cancel</button><button id="confirm-action-btn" class="btn btn-danger">Confirm</button></div></div></div>
-        <div id="message-modal" class="modal"><div class="modal-content" style="text-align:left;"><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px; margin: 0 auto;">OK</button></div></div></div>
-        <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
-        <div id="payment-modal" class="modal"><div class="modal-content"><h3 id="payment-modal-title" style="margin-bottom: 1.5rem;">Add Payment</h3><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-grid"><div class="form-group"><label for="payment-amount">Amount</label><input id="payment-amount" type="number" class="input-field" required min="0.01" step="0.01"></div><div class="form-group"><label for="payment-date">Date</label><input id="payment-date" type="date" class="input-field" required></div></div><div class="form-group"><label for="payment-type">Payment Type</label><select id="payment-type" class="input-field"><option>Cash</option><option>Online</option><option>Other</option></select></div><div class="form-group"><label for="payment-notes">Notes (Optional)</label><textarea id="payment-notes" class="input-field" rows="3"></textarea></div><div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-payment-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Payment</button></div></form></div></div>
-        <div id="edit-total-modal" class="modal"><div class="modal-content"><h3>Edit Final Amount</h3><form id="edit-total-form" style="margin-top: 1.5rem;"><div class="form-group"><label for="final-total-input">Final Order Total</label><input id="final-total-input" type="number" step="0.01" required class="input-field"></div><div class="modal-buttons"><button type="button" class="btn btn-secondary" data-app-action="close-total-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Amount</button></div></form></div></div>
+                <!-- Mobile Close Button -->
+                <button class="m-drawer-close mobile-only" id="m-close-drawer">
+                    <div class="m-drawer-close-icon"></div>
+                </button>
+            </div>
+            
+            <div class="sidebar-inner">
+                <nav class="nav-menu" id="sidebar-nav-links">
+                    <!-- Links injected dynamically based on role -->
+                </nav>
+            </div>
 
-        <main id="order-details-screen" class="screen active">
-            <div id="skeleton-loader">
-                <header class="details-header">
-                    <div class="skeleton skeleton-circle" style="width: 40px; height: 40px; flex-shrink: 0;"></div>
-                    <div class="details-header__title" style="gap: 1rem;">
-                        <div class="skeleton skeleton-line" style="height: 28px; width: 60%; max-width: 220px;"></div>
-                        <div class="skeleton skeleton-tag"></div>
-                    </div>
-                    <div class="skeleton skeleton-circle" style="width: 40px; height: 40px; flex-shrink: 0;"></div>
-                </header>
-                <div class="page-grid">
-                    <div class="grid-main">
-                        <div class="key-metrics-card">
-                            <div class="metric-item"><div class="skeleton skeleton-line" style="height: 0.7rem; width: 80%; margin: 0.375rem auto;"></div><div class="skeleton skeleton-line" style="width: 60%; margin: 0 auto;"></div></div>
-                            <div class="metric-item"><div class="skeleton skeleton-line" style="height: 0.7rem; width: 80%; margin: 0.375rem auto;"></div><div class="skeleton skeleton-line" style="width: 60%; margin: 0 auto;"></div></div>
-                            <div class="metric-item"><div class="skeleton skeleton-line" style="height: 0.7rem; width: 80%; margin: 0.375rem auto;"></div><div class="skeleton skeleton-line" style="width: 60%; margin: 0 auto;"></div></div>
-                        </div>
-
-                        <div class="mobile-view">
-                            <div class="skeleton-tabs">
-                                <nav class="skeleton-tabs__nav">
-                                    <div class="skeleton skeleton-line" style="height: 20px; width: 80px; margin: 1rem; border-radius: var(--radius-sm); animation: none;"></div>
-                                    <div class="skeleton skeleton-line" style="height: 20px; width: 120px; margin: 1rem; border-radius: var(--radius-sm); background-color: #f1f5f9; animation: none;"></div>
-                                    <div class="skeleton skeleton-line" style="height: 20px; width: 90px; margin: 1rem; border-radius: var(--radius-sm); background-color: #f1f5f9; animation: none;"></div>
-                                </nav>
-                                <div class="skeleton-card" style="margin-top: -1px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none;">
-                                    <div class="skeleton skeleton-line" style="width: 50%; height: 1.25rem;"></div>
-                                    <div class="skeleton-info-grid">
-                                        <div class="skeleton skeleton-line" style="width: 30%;"></div> <div class="skeleton skeleton-line" style="width: 70%;"></div>
-                                        <div style="height: 1rem;"></div>
-                                        <div class="skeleton skeleton-line" style="width: 30%;"></div> <div class="skeleton skeleton-line" style="width: 60%;"></div>
-                                    </div>
-                                    <div class="skeleton skeleton-line" style="width: 100%; height: 48px; margin-top: 1rem;"></div>
-                                    <div class="skeleton skeleton-line" style="width: 100%; height: 48px;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                            <div class="skeleton-card">
-                                <div class="skeleton skeleton-line" style="width: 40%; height: 1.25rem;"></div>
-                                <div class="skeleton-info-grid">
-                                    <div class="skeleton skeleton-line" style="width: 100%;"></div><div class="skeleton skeleton-line" style="width: 60%;"></div>
-                                    <div class="skeleton skeleton-line" style="width: 100%; margin-top: 1rem;"></div><div class="skeleton skeleton-line" style="width: 70%; margin-top: 1rem;"></div>
-                                    <div class="skeleton skeleton-line" style="width: 100%; margin-top: 1rem;"></div><div class="skeleton skeleton-line" style="width: 50%; margin-top: 1rem;"></div>
-                                </div>
-                            </div>
-                            <div class="skeleton-card">
-                                <div class="skeleton skeleton-line" style="width: 30%; height: 1.25rem;"></div>
-                                <div class="skeleton skeleton-line" style="height: 48px;"></div>
-                                <div class="skeleton skeleton-line" style="height: 48px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-sidebar desktop-view">
-                         <div class="skeleton-card">
-                            <div class="skeleton skeleton-line" style="width: 60%; height: 1.25rem;"></div>
-                            <div class="skeleton skeleton-line" style="height: 40px;"></div>
-                            <div class="skeleton skeleton-line" style="height: 40px; opacity: 0.7;"></div>
-                            <div class="skeleton skeleton-line" style="height: 40px; opacity: 0.5;"></div>
-                         </div>
-                         <div class="skeleton-card">
-                            <div class="skeleton skeleton-line" style="width: 50%; height: 1.25rem;"></div>
-                            <div class="skeleton skeleton-line" style="height: 40px;"></div>
-                            <div class="skeleton skeleton-line" style="height: 40px; opacity: 0.7;"></div>
-                         </div>
+            <div class="account-section" id="profile-trigger">
+                <div class="account-card">
+                    <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+                    <div class="account-text">
+                        <div class="account-name">Loading...</div>
+                        <div class="account-email"></div>
                     </div>
                 </div>
             </div>
+        </aside>
 
-            <div id="real-content" style="display: none; animation: fadeIn 0.5s var(--ease);">
-                <header class="details-header">
-                    <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
-                    <div class="details-header__title">
-                        <h1 id="detail-customer-name"></h1>
-                        <div id="detail-status-tag" class="status-tag"></div>
-                    </div>
-                    <div class="actions-menu-container">
-                        <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
-                        <div id="actions-dropdown" class="actions-dropdown">
-                            <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
-                            <hr id="menu-divider" style="display:none;">
-                            <button id="menu-edit-total-btn" style="display:none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
-                            <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="topbar desktop-only">Order Details</header>
+            
+            <main class="content-area">
+                
+                <div id="skeleton-loader">
+                    <header class="details-header">
+                        <div class="skeleton skeleton-circle" style="width: 40px; height: 40px; flex-shrink: 0;"></div>
+                        <div class="details-header__title" style="gap: 1rem;">
+                            <div class="skeleton skeleton-line" style="height: 28px; width: 60%; max-width: 220px; margin:0;"></div>
+                            <div class="skeleton skeleton-tag"></div>
                         </div>
-                    </div>
-                </header>
-                <div class="page-grid">
-                    <div class="grid-main">
-                        <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
-                            <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
-                            <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
-                        </div>
-                        
-                        <div class="mobile-view">
-                            <div class="tabs">
-                                <nav class="tabs__nav">
-                                    <button class="tabs__button active" data-tab="details">Details</button>
-                                    <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
-                                    <button class="tabs__button" data-tab="history">History</button>
-                                </nav>
-                                <div id="tab-details" class="tabs__content-pane active">
-                                    <section class="content-section">
-                                        <h3>Customer & Order Info</h3>
-                                        <dl class="info-grid">
-                                            <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div><div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
-                                            <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div><div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
-                                            <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
-                                        </dl>
-                                        <div class="completed-info-block" style="display:none; margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl></div>
-                                        <div class="action-links">
-                                            <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                            <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                            <a href="#" class="action-link-item detail-view-bill-btn" style="display:none;"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                            <a href="#" class="action-link-item detail-view-job-sheet-btn"><span class="icon material-symbols-outlined">assignment</span><span class="label">View Job Sheet</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                        <div class="skeleton skeleton-circle" style="width: 40px; height: 40px; flex-shrink: 0;"></div>
+                    </header>
+                    <div class="page-grid">
+                        <div class="grid-main">
+                            <div class="key-metrics-card">
+                                <div class="metric-item"><div class="skeleton skeleton-line" style="height: 0.7rem; width: 80%; margin: 0.375rem auto;"></div><div class="skeleton skeleton-line" style="width: 60%; margin: 0 auto;"></div></div>
+                                <div class="metric-item"><div class="skeleton skeleton-line" style="height: 0.7rem; width: 80%; margin: 0.375rem auto;"></div><div class="skeleton skeleton-line" style="width: 60%; margin: 0 auto;"></div></div>
+                                <div class="metric-item"><div class="skeleton skeleton-line" style="height: 0.7rem; width: 80%; margin: 0.375rem auto;"></div><div class="skeleton skeleton-line" style="width: 60%; margin: 0 auto;"></div></div>
+                            </div>
+
+                            <div class="mobile-view">
+                                <div class="skeleton-tabs">
+                                    <nav class="skeleton-tabs__nav">
+                                        <div class="skeleton skeleton-line" style="height: 20px; width: 80px; margin: 1rem; border-radius: var(--radius-sm); animation: none;"></div>
+                                        <div class="skeleton skeleton-line" style="height: 20px; width: 120px; margin: 1rem; border-radius: var(--radius-sm); background-color: #f1f5f9; animation: none;"></div>
+                                    </nav>
+                                    <div class="skeleton-card" style="border-top-left-radius: 0; border-top-right-radius: 0; border-top: none;">
+                                        <div class="skeleton skeleton-line" style="width: 50%; height: 1.25rem;"></div>
+                                        <div class="skeleton-info-grid">
+                                            <div class="skeleton skeleton-line" style="width: 30%;"></div> <div class="skeleton skeleton-line" style="width: 70%;"></div>
+                                            <div style="height: 1rem;"></div>
+                                            <div class="skeleton skeleton-line" style="width: 30%;"></div> <div class="skeleton skeleton-line" style="width: 60%;"></div>
                                         </div>
-                                    </section>
-                                    <section class="content-section"><h3>Items (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
+                                        <div class="skeleton skeleton-line" style="width: 100%; height: 60px; margin-top: 1rem; border-radius: 12px;"></div>
+                                    </div>
                                 </div>
-                                <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
-                                <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
                             </div>
-                        </div>
 
-                        <div class="desktop-view" style="flex-direction: column; gap: 1.5rem;">
-                            <section class="content-section">
-                                <h3>Customer & Order Info</h3>
-                                <dl class="info-grid">
-                                    <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div><div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
-                                    <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div><div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
-                                    <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
-                                </dl>
-                                <div class="completed-info-block" style="display:none; margin-top: 1rem;"><dl class="info-grid"><div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div><div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div></dl></div>
-                                <div class="action-links">
-                                   <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                   <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                   <a href="#" class="action-link-item detail-view-bill-btn" style="display:none;"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
-                                   <a href="#" class="action-link-item detail-view-job-sheet-btn"><span class="icon material-symbols-outlined">assignment</span><span class="label">View Job Sheet</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                            <div class="desktop-view" style="flex-direction: column; gap: 2rem;">
+                                <div class="skeleton-card">
+                                    <div class="skeleton skeleton-line" style="width: 40%; height: 1.25rem;"></div>
+                                    <div class="skeleton-info-grid">
+                                        <div class="skeleton skeleton-line" style="width: 100%;"></div><div class="skeleton skeleton-line" style="width: 60%;"></div>
+                                        <div class="skeleton skeleton-line" style="width: 100%; margin-top: 1rem;"></div><div class="skeleton skeleton-line" style="width: 70%; margin-top: 1rem;"></div>
+                                    </div>
                                 </div>
-                            </section>
-                            <section class="content-section"><h3>Items (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
-                        </div>
-                    </div>
-                    <div class="grid-sidebar desktop-view">
-                        <section class="content-section" data-section="payment-management" style="display: none;">
-                            <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--light-border);">
-                                <h3>Financial Log</h3>
-                                <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: 0.5rem 1rem; font-size: 0.875rem;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button>
+                                <div class="skeleton-card">
+                                    <div class="skeleton skeleton-line" style="width: 30%; height: 1.25rem;"></div>
+                                    <div class="skeleton skeleton-line" style="height: 60px; border-radius: 12px;"></div>
+                                    <div class="skeleton skeleton-line" style="height: 60px; border-radius: 12px;"></div>
+                                </div>
                             </div>
-                            <ul class="financial-log"></ul>
-                        </section>
-                        <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section>
+                        </div>
+                        <div class="grid-sidebar desktop-view">
+                             <div class="skeleton-card">
+                                <div class="skeleton skeleton-line" style="width: 60%; height: 1.25rem;"></div>
+                                <div class="skeleton skeleton-line" style="height: 50px; border-radius: 12px;"></div>
+                                <div class="skeleton skeleton-line" style="height: 50px; border-radius: 12px; opacity: 0.7;"></div>
+                             </div>
+                             <div class="skeleton-card">
+                                <div class="skeleton skeleton-line" style="width: 50%; height: 1.25rem;"></div>
+                                <div class="skeleton skeleton-line" style="height: 40px;"></div>
+                                <div class="skeleton skeleton-line" style="height: 40px; opacity: 0.7;"></div>
+                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+
+                <div id="real-content" class="page-container" style="display: none;">
+                    <header class="details-header">
+                        <button id="new-back-btn" class="icon-btn"><span class="material-symbols-outlined">arrow_back</span></button>
+                        <div class="details-header__title">
+                            <h1 id="detail-customer-name"></h1>
+                            <div id="detail-status-tag" class="status-tag"></div>
+                        </div>
+                        <div class="actions-menu-container">
+                            <button id="actions-menu-btn" class="icon-btn"><span class="material-symbols-outlined">more_vert</span></button>
+                            <div id="actions-dropdown" class="actions-dropdown">
+                                <button id="menu-edit-btn"><span class="icon material-symbols-outlined">edit</span>Edit Order</button>
+                                <hr id="menu-divider" style="display:none;">
+                                <button id="menu-edit-total-btn" style="display:none;"><span class="icon material-symbols-outlined">payments</span>Edit Final Amount</button>
+                                <button id="menu-delete-btn" style="display: none; color: var(--color-danger);"><span class="icon material-symbols-outlined" style="color: var(--color-danger);">delete</span>Delete Order</button>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <div class="page-grid">
+                        <div class="grid-main">
+                            <div id="key-metrics-card" class="key-metrics-card" style="display:none;">
+                                <div class="metric-item"><div class="metric-item__label">Due Date</div><div id="metric-due-date" class="metric-item__value"></div></div>
+                                <div class="metric-item"><div class="metric-item__label">Final Total</div><div id="metric-final-total" class="metric-item__value"></div></div>
+                                <div class="metric-item"><div class="metric-item__label">Pending Amount</div><div id="metric-pending-amount" class="metric-item__value pending"></div></div>
+                            </div>
+                            
+                            <div class="mobile-view">
+                                <div class="tabs">
+                                    <nav class="tabs__nav">
+                                        <button class="tabs__button active" data-tab="details">Details</button>
+                                        <button class="tabs__button" data-tab="payments" style="display:none;">Financial Log</button>
+                                        <button class="tabs__button" data-tab="history">History</button>
+                                    </nav>
+                                    <div id="tab-details" class="tabs__content-pane active">
+                                        <section class="content-section">
+                                            <h3>Customer & Order Info</h3>
+                                            <dl class="info-grid">
+                                                <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
+                                                <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
+                                                <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                                <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
+                                                <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
+                                            </dl>
+                                            <div class="completed-info-block" style="display:none; margin-top: 1rem;">
+                                                <dl class="info-grid">
+                                                    <div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div>
+                                                    <div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div>
+                                                </dl>
+                                            </div>
+                                            <div class="action-links">
+                                                <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                                <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                                <a href="#" class="action-link-item detail-view-bill-btn" style="display:none;"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                                <a href="#" class="action-link-item detail-view-job-sheet-btn"><span class="icon material-symbols-outlined">assignment</span><span class="label">View Job Sheet</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                            </div>
+                                        </section>
+                                        <section class="content-section"><h3>Items (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
+                                    </div>
+                                    <div id="tab-payments" class="tabs__content-pane"><section class="content-section" data-section="payment-management"><h3>Financial Log</h3><ul class="financial-log"></ul></section></div>
+                                    <div id="tab-history" class="tabs__content-pane"><section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section></div>
+                                </div>
+                            </div>
+
+                            <div class="desktop-view">
+                                <section class="content-section">
+                                    <h3>Customer & Order Info</h3>
+                                    <dl class="info-grid">
+                                        <div class="info-grid-item"><dt>Address</dt><dd class="detail-customer-address"></dd></div>
+                                        <div class="info-grid-item"><dt>Mobile</dt><dd class="detail-customer-mobile"></dd></div>
+                                        <div class="info-grid-item"><dt>Placed On</dt><dd class="detail-order-taken-date"></dd></div>
+                                        <div class="info-grid-item"><dt>Due Date</dt><dd class="detail-due-date"></dd></div>
+                                        <div class="info-grid-item"><dt>Created By</dt><dd class="detail-created-by"></dd></div>
+                                    </dl>
+                                    <div class="completed-info-block" style="display:none; margin-top: 1rem;">
+                                        <dl class="info-grid">
+                                            <div class="info-grid-item"><dt>Completed On</dt><dd class="detail-completed-date"></dd></div>
+                                            <div class="info-grid-item"><dt>Completed By</dt><dd class="detail-completed-by"></dd></div>
+                                        </dl>
+                                    </div>
+                                    <div class="action-links">
+                                        <a href="#" class="action-link-item detail-get-directions-btn"><span class="icon material-symbols-outlined">directions</span><span class="label">Get Directions</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item detail-view-quote-btn"><span class="icon material-symbols-outlined">request_quote</span><span class="label">View Quote</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item detail-view-bill-btn" style="display:none;"><span class="icon material-symbols-outlined">receipt_long</span><span class="label">View Bill</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                        <a href="#" class="action-link-item detail-view-job-sheet-btn"><span class="icon material-symbols-outlined">assignment</span><span class="label">View Job Sheet</span><span class="chevron material-symbols-outlined">chevron_right</span></a>
+                                    </div>
+                                </section>
+                                <section class="content-section"><h3>Items (<span class="detail-window-count"></span>)</h3><div class="detail-windows-list"></div></section>
+                            </div>
+                        </div>
+                        <div class="grid-sidebar desktop-view">
+                            <section class="content-section" data-section="payment-management" style="display: none;">
+                                <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #f1f5f9;">
+                                    <h3 style="margin:0; padding:0; border:none;">Financial Log</h3>
+                                    <button data-app-action="add-payment" class="btn btn-primary" style="display: none; padding: 0.5rem 1rem; font-size: 0.875rem; border-radius: 8px;"><span class="material-symbols-outlined" style="font-size: 1.125rem;">add_card</span> Add</button>
+                                </div>
+                                <ul class="financial-log"></ul>
+                            </section>
+                            <section class="content-section" data-section="history"><h3>Order History</h3><ul class="history-list"></ul></section>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
+
+    <!-- Profile Popup Menu -->
+    <div class="profile-popup" id="profile-popup">
+        <div class="popup-header">
+            <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+            <div class="account-text">
+                <div class="account-name">Loading...</div>
+                <div class="account-email"></div>
+            </div>
+        </div>
+        <ul class="popup-list">
+            <li><a href="#"><span>Profile</span></a></li>
+            <li><a href="#"><span>Settings</span></a></li>
+            <li><a href="#" style="color:var(--color-danger)" data-app-action="logout"><span>Logout</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Modals & Overlays -->
     <footer class="sticky-action-bar">
         <button data-app-action="add-payment" class="btn btn-secondary" style="display:none;">Add Payment</button>
         <button id="detail-complete-btn" class="btn btn-success"></button>
     </footer>
 
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content" style="text-align:center;">
+            <p id="modal-message" class="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="cancel-action-btn" class="btn btn-secondary">Cancel</button>
+                <button id="confirm-action-btn" class="btn btn-danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="message-modal" class="modal">
+        <div class="modal-content" style="text-align:center;">
+            <p id="message-text" class="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="message-ok-btn" class="btn btn-primary" style="min-width: 140px; margin: 0 auto;">OK</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
+    
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" data-app-action="close-payment-modal"><span class="material-symbols-outlined">close</span></button>
+            <h2 id="payment-modal-title" style="margin-bottom: 1.5rem; text-align: left;">Add Payment</h2>
+            <form id="payment-form">
+                <input type="hidden" id="payment-id">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <input id="payment-amount" type="number" class="input-field" placeholder=" " required min="0.01" step="0.01">
+                        <label for="payment-amount">Amount</label>
+                    </div>
+                    <div class="form-group">
+                        <input id="payment-date" type="date" class="input-field" placeholder=" " required>
+                        <label for="payment-date">Date</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <select id="payment-type" class="input-field" required>
+                        <option value="Cash">Cash</option>
+                        <option value="Online">Online</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label for="payment-type">Payment Type</label>
+                </div>
+                <div class="form-group">
+                    <input id="payment-notes" type="text" class="input-field" placeholder=" ">
+                    <label for="payment-notes">Notes (Optional)</label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 14px;">Save Payment</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="edit-total-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" data-app-action="close-total-modal"><span class="material-symbols-outlined">close</span></button>
+            <h2 style="margin-bottom: 1.5rem; text-align: left;">Edit Final Amount</h2>
+            <form id="edit-total-form">
+                <div class="form-group">
+                    <input id="final-total-input" type="number" step="0.01" placeholder=" " required class="input-field">
+                    <label for="final-total-input">Final Order Total</label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 14px;">Save Amount</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, getDocs, updateDoc, deleteDoc, collection, serverTimestamp, deleteField, query, orderBy, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
 
         // --- DOM ELEMENTS ---
         const skeletonLoader = document.getElementById('skeleton-loader');
@@ -538,9 +759,98 @@
         const formatCurrency = (num) => `₹${num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         const showConfirmationModal = (message, confirmClass, confirmText, callback) => { modalMessage.textContent = message; confirmActionBtn.className = 'btn ' + confirmClass; confirmActionBtn.textContent = confirmText; currentAction.callback = callback; confirmationModal.style.display = 'flex'; };
         const hideConfirmationModal = () => { confirmationModal.style.display = 'none'; };
+        const showToast = (message, type = 'success') => { const t = document.getElementById('toast'); t.textContent = message; t.className = `show ${type}`; setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); }
+
         async function performConfirmedAction() { hideConfirmationModal(); showLoading(); try { await currentAction.callback(); } catch (error) { showMessageModal(`Action failed.`); console.error(error); } finally { hideLoading(); } }
         async function logHistory(action, details = {}) { try { await addDoc(collection(db, `upvc_orders/${currentOrderId}/history`), { action, details, modifiedBy: currentUserName, timestamp: serverTimestamp() }); } catch (error) { console.error("Error logging history:", error); } }
 
+        // --- SyncSkill UI Integration ---
+        function initSyncSkillUI() {
+            const sidebar = document.getElementById('sidebar');
+            const mOverlay = document.getElementById('sidebar-overlay');
+            
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            if(toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+
+            const mOpen = document.getElementById('m-open-drawer');
+            const mClose = document.getElementById('m-close-drawer');
+            
+            const openMobileDrawer = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); };
+            const closeMobileDrawer = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); };
+
+            if(mOpen) mOpen.onclick = openMobileDrawer;
+            if(mClose) mClose.onclick = closeMobileDrawer;
+            if(mOverlay) mOverlay.onclick = closeMobileDrawer;
+
+            const pPopup = document.getElementById('profile-popup');
+            const profileTrigger = document.getElementById('profile-trigger');
+
+            if(profileTrigger && pPopup) {
+                profileTrigger.onclick = (e) => {
+                    e.stopPropagation();
+                    if (window.innerWidth > 768) {
+                        pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; pPopup.style.transform = 'none';
+                    } else {
+                        pPopup.style.left = '50%'; pPopup.style.bottom = '100px'; pPopup.style.transform = 'translateX(-50%)';
+                    }
+                    pPopup.classList.toggle('active');
+                };
+            }
+            document.addEventListener('click', () => { if(pPopup) pPopup.classList.remove('active'); });
+        }
+
+        function populateNavbar(user, userProfile) {
+            const defaultPhoto = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E';
+            
+            document.querySelectorAll('.account-avatar').forEach(img => img.src = user.photoURL || defaultPhoto);
+            document.querySelectorAll('.account-name').forEach(el => el.textContent = user.displayName || 'User');
+            document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email || '');
+
+            const isAdmin = user.email === ADMIN_EMAIL || userProfile?.role === 'admin';
+            const homeLink = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
+            
+            // Build sidebar links dynamically
+            const sidebarLinks = document.getElementById('sidebar-nav-links');
+            if (sidebarLinks) {
+                let linksHtml = `
+                    <a href="${homeLink}" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                    <a href="view-orders.html" class="nav-item active">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/></svg></span>
+                        <span class="nav-label">All Orders</span>
+                    </a>`;
+
+                if (isAdmin) {
+                    linksHtml += `
+                        <a href="admin-employees.html" class="nav-item">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
+                            <span class="nav-label">Manage Employees</span>
+                        </a>
+                        <a href="notifications.html" class="nav-item">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span>
+                            <span class="nav-label">Notifications</span>
+                        </a>`;
+                } else {
+                    linksHtml += `
+                        <a href="my-attendance.html" class="nav-item">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                            <span class="nav-label">My Attendance</span>
+                        </a>`;
+                }
+                
+                linksHtml += `
+                    <a href="support.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+                        <span class="nav-label">Support</span>
+                    </a>`;
+                    
+                sidebarLinks.innerHTML = linksHtml;
+            }
+        }
+
+        // --- Core Page Rendering ---
         function renderOrderDetails(order) {
             currentOrder = order;
             const isAdmin = (currentUserAuth?.email === ADMIN_EMAIL || currentUserProfile?.role === 'admin');
@@ -552,11 +862,13 @@
                 el.className = 'status-tag ' + statusInfo.className;
                 el.textContent = statusInfo.text;
             });
+            
             document.querySelectorAll('.detail-customer-address').forEach(el => el.textContent = order.address || 'N/A');
             document.querySelectorAll('.detail-customer-mobile').forEach(el => el.textContent = order.mobileNumber || 'N/A');
             document.querySelectorAll('.detail-order-taken-date').forEach(el => el.textContent = order.createdAt?.toDate ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'N/A');
             document.querySelectorAll('.detail-due-date').forEach(el => el.textContent = order.dueDate || 'N/A');
             document.querySelectorAll('.detail-created-by').forEach(el => el.textContent = order.createdBy || 'N/A');
+            
             document.querySelectorAll('.completed-info-block').forEach(block => {
                 block.style.display = order.status === 'completed' ? 'block' : 'none';
                 if (order.status === 'completed') {
@@ -564,6 +876,7 @@
                     block.querySelector('.detail-completed-by').textContent = order.completedBy || 'N/A';
                 }
             });
+            
             let windowsToDisplay = [];
             try { windowsToDisplay = JSON.parse(order.windows || '[]'); } catch(e) {}
             const windowsHtml = windowsToDisplay.length > 0 ? windowsToDisplay.map((win, i) => { 
@@ -572,7 +885,8 @@
                 const profileInfo = win.profileName ? `<small>Profile: ${win.profileName}</small>` : '';
                 const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Window'; 
                 return `<div class="detail-window-item"><div class="item-number">${i + 1}</div><div class="item-info"><strong>${itemName} (Qty: ${qty}):</strong> H: ${win.height} mm, W: ${win.width} mm ${glassInfo} ${profileInfo}</div></div>`; 
-            }).join('') : '<p>No window details available.</p>';
+            }).join('') : '<p style="color:var(--light-text-muted);">No window details available.</p>';
+            
             document.querySelectorAll('.detail-windows-list').forEach(list => list.innerHTML = windowsHtml);
             document.querySelectorAll('.detail-window-count').forEach(el => el.textContent = windowsToDisplay.length);
             document.querySelectorAll('.detail-get-directions-btn').forEach(btn => btn.style.display = (order.latitude && order.longitude) ? 'flex' : 'none');
@@ -595,113 +909,182 @@
                 detailCompleteBtn.className = 'btn btn-reopen';
                 menuEditBtn.disabled = true;
             } else {
-                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark as Complete';
+                detailCompleteBtn.innerHTML = '<span class="material-symbols-outlined">check_circle</span>Mark Complete';
                 detailCompleteBtn.className = 'btn btn-success';
                 menuEditBtn.disabled = false;
             }
         }
-        function renderFinancialLog(logItems, container) { container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 1rem 0;">No transactions recorded.</p></li>' : logItems.map(item => { if (item.type === 'adjustment') { return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Amount Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span>${item.date.toLocaleDateString()}</span></li>`; } const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}"><span class="material-symbols-outlined" style="font-size: 18px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></div>`; return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span>${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; }).join('');}
-        function renderHistory(historyItems, container) { container.innerHTML = historyItems.length === 0 ? '<li>No history found.</li>' : historyItems.map(entry => { const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; let detailsHtml = ''; if (entry.details && Object.keys(entry.details).length > 0) { detailsHtml += '<ul class="history-detail">'; for (const [key, value] of Object.entries(entry.details)) { if (typeof value === 'object' && value !== null) { detailsHtml += `<li><strong>${key}:</strong><ul>`; for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } detailsHtml += '</ul></li>'; } else { detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; } } detailsHtml += '</ul>'; } return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; }).join(''); }
-        function updateMetrics(payments) { const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); const finalTotal = currentOrder.finalTotal || 0; const pendingAmount = finalTotal - totalCollected; document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); }
-        const getStatusInfo = (order, today) => { if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; if (dueDate) { const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; } return { text: 'Pending', className: 'pending' }; };
-        function handleDeleteOrder() { showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { await logHistory('Order Deleted'); await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); showMessageModal('Order deleted.'); setTimeout(() => window.location.href = 'view-orders.html', 1500); });}
-        function handleCompleteOrder() { const isCompleted = currentOrder.status === 'completed'; const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); await logHistory(action.log); await loadAndDisplayOrder(currentOrderId); }); }
-        async function handlePaymentFormSubmit(e) { e.preventDefault(); showLoading(); const paymentId = paymentForm.querySelector('#payment-id').value; const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; try { const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } paymentModal.style.display = 'none'; await loadFinancialAndHistoryData(); } catch (error) { console.error("Error saving payment:", error); showMessageModal("Could not save payment."); } finally { hideLoading(); }}
-        async function openPaymentModalForEdit(paymentId) { const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); if(paymentDoc.exists()){ const payment = paymentDoc.data(); paymentModalTitle.textContent = "Edit Payment"; paymentForm.querySelector('#payment-id').value = paymentId; paymentForm.querySelector('#payment-amount').value = payment.amount; paymentForm.querySelector('#payment-date').value = payment.date; paymentForm.querySelector('#payment-type').value = payment.type; paymentForm.querySelector('#payment-notes').value = payment.notes || ''; paymentModal.style.display = 'flex'; } }
-        function handleDeletePayment(paymentId, amount) { showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); await logHistory('Payment Deleted'); await loadFinancialAndHistoryData(); }); }
-        function openPaymentModal() { paymentForm.reset(); paymentForm.querySelector('#payment-id').value = ''; paymentModalTitle.textContent = "Add Payment"; document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; paymentModal.style.display = 'flex'; }
-        function openEditTotalModal() { finalTotalInput.value = currentOrder.finalTotal || 0; editTotalModal.style.display = 'flex'; finalTotalInput.focus(); }
-        async function handleFinalTotalUpdate(e) { e.preventDefault(); const newTotal = parseFloat(finalTotalInput.value); const currentTotal = currentOrder.finalTotal || 0; if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } showLoading(); try { await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); editTotalModal.style.display = 'none'; await loadAndDisplayOrder(currentOrderId); } catch (error) { showMessageModal("Failed to update total."); } finally { hideLoading(); } }
-        
-        async function loadFinancialAndHistoryData() { const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); const financialLogItems = []; const operationalHistoryItems = []; historySnap.docs.forEach(doc => { const entry = doc.data(); const action = entry.action || ''; if (action.includes('Payment') || action.includes('Total')) { if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); } } else { operationalHistoryItems.push(entry); } }); const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); if (currentUserProfile?.role === 'admin') { financialLogItems.push(...payments); financialLogItems.sort((a, b) => { const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); if (!dateA && !dateB) return b.date - a.date; if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; }); } document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); if (currentUserProfile?.role === 'admin') { document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); updateMetrics(paymentsForMetrics); }}
-        
-        function populateNavbar(user, userProfile) {
-            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'User';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'User';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
 
-            const isAdmin = user.email === ADMIN_EMAIL || userProfile?.role === 'admin';
-            const homeLink = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html';
-            const secondaryLink = isAdmin ? { href: 'admin-employees.html', text: 'Manage Employees' } : { href: 'my-attendance.html', text: 'My Attendance' };
-            const secondaryIcon = isAdmin 
-                ? 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' 
-                : 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z';
-
-            // Update desktop links
-            document.getElementById('dashboard-link').href = homeLink;
-            document.getElementById('nav-link-home').href = homeLink;
-            const navLinkSecondary = document.getElementById('nav-link-secondary');
-            navLinkSecondary.href = secondaryLink.href;
-            navLinkSecondary.textContent = secondaryLink.text;
-            navLinkSecondary.style.display = 'flex';
-
-            // Update mobile menu links
-            const mobileLinksContainer = document.getElementById('mobile-menu-links');
-            mobileLinksContainer.innerHTML = `
-                <a href="${homeLink}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a>
-                <a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a>
-                <a href="${secondaryLink.href}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${secondaryIcon}" /></svg><span>${secondaryLink.text}</span></a>`;
-        }
-        
-        function initializeNavbar() { 
-            const mobileMenu = document.getElementById('mobileMenu'); 
-            const mobileMenuButton = document.getElementById('mobileMenuButton'); 
-            const mobileMenuClose = document.getElementById('mobileMenuClose'); 
-            const menuOverlay = document.getElementById('menuOverlay'); 
-            const desktopProfileTrigger = document.getElementById('desktopProfileTrigger'); 
-            const logoutPopup = document.getElementById('logoutPopup'); 
-            
-            function closeMobileMenu() { 
-                if (mobileMenu.classList.contains('active')) { 
-                    mobileMenu.classList.remove('active'); 
-                    menuOverlay.classList.remove('active'); 
-                    document.body.style.overflow = ''; 
+        function renderFinancialLog(logItems, container) { 
+            container.innerHTML = logItems.length === 0 ? '<li><p style="text-align:center; color:var(--light-text-muted); padding: 2rem 0;">No transactions recorded yet.</p></li>' : logItems.map(item => { 
+                if (item.type === 'adjustment') { 
+                    return `<li class="log-item log-item--adjustment"><div class="log-item__info"><span class="log-item__amount">Total Adjusted</span><span class="log-item__meta">From ${item.details.from} to ${item.details.to}</span></div><span style="font-size: 0.85rem; color: var(--light-text-muted); text-align:right;">${item.date.toLocaleDateString()}</span></li>`; 
                 } 
-            } 
-            
-            mobileMenuButton.addEventListener('click', () => { 
-                mobileMenu.classList.add('active'); 
-                menuOverlay.classList.add('active'); 
-                document.body.style.overflow = 'hidden'; 
-            }); 
-            mobileMenuClose.addEventListener('click', closeMobileMenu); 
-            menuOverlay.addEventListener('click', closeMobileMenu); 
-            
-            if (desktopProfileTrigger && logoutPopup) { 
-                desktopProfileTrigger.addEventListener('click', (event) => { 
-                    event.stopPropagation(); 
-                    const isExpanded = desktopProfileTrigger.getAttribute('aria-expanded') === 'true'; 
-                    logoutPopup.classList.toggle('show'); 
-                    desktopProfileTrigger.setAttribute('aria-expanded', !isExpanded); 
-                }); 
-                window.addEventListener('click', (event) => { 
-                    if (!desktopProfileTrigger.contains(event.target) && !logoutPopup.contains(event.target)) { 
-                        if (logoutPopup.classList.contains('show')) { 
-                            logoutPopup.classList.remove('show'); 
-                            desktopProfileTrigger.setAttribute('aria-expanded', 'false'); 
+                const notesHtml = item.notes ? `<span class="notes">${item.notes}</span>` : ''; 
+                const actionsHtml = `<div class="log-item__actions"><button class="icon-btn" data-app-action="edit-payment" data-id="${item.id}" style="width: 32px; height: 32px;"><span class="material-symbols-outlined" style="font-size: 16px;">edit</span></button><button class="icon-btn" data-app-action="delete-payment" data-id="${item.id}" data-amount="${item.amount}" style="width: 32px; height: 32px; color: var(--color-danger);"><span class="material-symbols-outlined" style="font-size: 16px;">delete</span></button></div>`; 
+                return `<li class="log-item"><div class="log-item__info"><span class="log-item__amount">${formatCurrency(item.amount)}</span><span class="log-item__meta">${item.paymentType} ${notesHtml}</span></div><div style="text-align:right;"><span style="font-size: 0.85rem; color: var(--light-text-muted);">${item.date.toLocaleDateString()}</span>${actionsHtml}</div></li>`; 
+            }).join('');
+        }
+
+        function renderHistory(historyItems, container) { 
+            container.innerHTML = historyItems.length === 0 ? '<li><p style="color:var(--light-text-muted);">No history found.</p></li>' : historyItems.map(entry => { 
+                const timestamp = entry.timestamp?.toDate ? entry.timestamp.toDate().toLocaleString() : 'Just now'; 
+                let detailsHtml = ''; 
+                if (entry.details && Object.keys(entry.details).length > 0) { 
+                    detailsHtml += '<ul class="history-detail">'; 
+                    for (const [key, value] of Object.entries(entry.details)) { 
+                        if (typeof value === 'object' && value !== null) { 
+                            detailsHtml += `<li><strong>${key}:</strong><ul>`; 
+                            for (const [subKey, subValue] of Object.entries(value)) { detailsHtml += `<li><strong>${subKey}:</strong> ${subValue}</li>`; } 
+                            detailsHtml += '</ul></li>'; 
+                        } else { 
+                            detailsHtml += `<li><strong>${key}:</strong> ${value}</li>`; 
                         } 
                     } 
-                }); 
-            } 
-            
-            document.addEventListener('keydown', (e) => { 
-                if (e.key === 'Escape') { 
-                    closeMobileMenu(); 
-                    if (logoutPopup && logoutPopup.classList.contains('show')) { 
-                        logoutPopup.classList.remove('show'); 
-                        desktopProfileTrigger.setAttribute('aria-expanded', 'false'); 
-                    } 
+                    detailsHtml += '</ul>'; 
                 } 
-            }); 
-            window.addEventListener('resize', () => { 
-                if (window.innerWidth > 768) closeMobileMenu(); 
+                return `<li class="history-item"><div class="history-item-meta">${timestamp} by <strong>${entry.modifiedBy || 'System'}</strong></div><div class="history-item-action">${entry.action}</div>${detailsHtml}</li>`; 
+            }).join(''); 
+        }
+
+        function updateMetrics(payments) { 
+            const totalCollected = payments.reduce((sum, p) => sum + p.amount, 0); 
+            const finalTotal = currentOrder.finalTotal || 0; 
+            const pendingAmount = finalTotal - totalCollected; 
+            document.querySelectorAll('#metric-due-date').forEach(el => el.textContent = currentOrder.dueDate || 'N/A'); 
+            document.querySelectorAll('#metric-final-total').forEach(el => el.textContent = formatCurrency(finalTotal)); 
+            document.querySelectorAll('#metric-pending-amount').forEach(el => el.textContent = formatCurrency(pendingAmount)); 
+        }
+
+        const getStatusInfo = (order, today) => { 
+            if (order.status === 'completed') return { text: 'Completed', className: 'completed' }; 
+            const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; 
+            if (dueDate && dueDate < today) return { text: 'Overdue', className: 'overdue' }; 
+            if (dueDate) { 
+                const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); 
+                if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; 
+            } 
+            return { text: 'Pending', className: 'pending' }; 
+        };
+
+        function handleDeleteOrder() { 
+            showConfirmationModal('Delete this order permanently?', 'btn-danger', 'Delete Order', async () => { 
+                await logHistory('Order Deleted'); 
+                await deleteDoc(doc(db, 'upvc_orders', currentOrderId)); 
+                showToast('Order deleted.', 'success'); 
+                setTimeout(() => window.location.href = 'view-orders.html', 1500); 
             });
         }
+
+        function handleCompleteOrder() { 
+            const isCompleted = currentOrder.status === 'completed'; 
+            const action = isCompleted ? { confirm: { title: 'Reopen this order?', class: 'btn-reopen', text: 'Reopen Order' }, update: { status: 'pending', completedAt: deleteField(), completedBy: deleteField() }, log: 'Order Reopened' } : { confirm: { title: 'Mark this order as complete?', class: 'btn-success', text: 'Mark Complete' }, update: { status: 'completed', completedAt: serverTimestamp(), completedBy: currentUserName }, log: 'Order Completed' }; 
+            showConfirmationModal(action.confirm.title, action.confirm.class, action.confirm.text, async () => { 
+                await updateDoc(doc(db, 'upvc_orders', currentOrderId), action.update); 
+                await logHistory(action.log); 
+                await loadAndDisplayOrder(currentOrderId); 
+            }); 
+        }
+
+        async function handlePaymentFormSubmit(e) { 
+            e.preventDefault(); 
+            showLoading(); 
+            const paymentId = paymentForm.querySelector('#payment-id').value; 
+            const data = { amount: parseFloat(paymentForm.querySelector('#payment-amount').value), date: paymentForm.querySelector('#payment-date').value, type: paymentForm.querySelector('#payment-type').value, notes: paymentForm.querySelector('#payment-notes').value.trim(), timestamp: serverTimestamp() }; 
+            try { 
+                const paymentsRef = collection(db, `upvc_orders/${currentOrderId}/payments`); 
+                if (paymentId) { await setDoc(doc(paymentsRef, paymentId), data); await logHistory("Payment Edited"); } 
+                else { await addDoc(paymentsRef, data); await logHistory("Payment Added"); } 
+                paymentModal.style.display = 'none'; 
+                await loadFinancialAndHistoryData(); 
+            } catch (error) { 
+                console.error("Error saving payment:", error); 
+                showToast("Could not save payment.", "error"); 
+            } finally { hideLoading(); }
+        }
+
+        async function openPaymentModalForEdit(paymentId) { 
+            const paymentDoc = await getDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); 
+            if(paymentDoc.exists()){ 
+                const payment = paymentDoc.data(); 
+                paymentModalTitle.textContent = "Edit Payment"; 
+                paymentForm.querySelector('#payment-id').value = paymentId; 
+                paymentForm.querySelector('#payment-amount').value = payment.amount; 
+                paymentForm.querySelector('#payment-date').value = payment.date; 
+                paymentForm.querySelector('#payment-type').value = payment.type; 
+                paymentForm.querySelector('#payment-notes').value = payment.notes || ''; 
+                paymentModal.style.display = 'flex'; 
+            } 
+        }
+
+        function handleDeletePayment(paymentId, amount) { 
+            showConfirmationModal(`Delete this payment of ${formatCurrency(amount)}?`, 'btn-danger', 'Delete Payment', async () => { 
+                await deleteDoc(doc(db, `upvc_orders/${currentOrderId}/payments`, paymentId)); 
+                await logHistory('Payment Deleted'); 
+                await loadFinancialAndHistoryData(); 
+            }); 
+        }
+
+        function openPaymentModal() { 
+            paymentForm.reset(); 
+            paymentForm.querySelector('#payment-id').value = ''; 
+            paymentModalTitle.textContent = "Add Payment"; 
+            document.getElementById('payment-date').value = new Date().toISOString().split('T')[0]; 
+            paymentModal.style.display = 'flex'; 
+        }
+
+        function openEditTotalModal() { 
+            finalTotalInput.value = currentOrder.finalTotal || 0; 
+            editTotalModal.style.display = 'flex'; 
+            finalTotalInput.focus(); 
+        }
+
+        async function handleFinalTotalUpdate(e) { 
+            e.preventDefault(); 
+            const newTotal = parseFloat(finalTotalInput.value); 
+            const currentTotal = currentOrder.finalTotal || 0; 
+            if (isNaN(newTotal) || newTotal === currentTotal) { editTotalModal.style.display = 'none'; return; } 
+            showLoading(); 
+            try { 
+                await updateDoc(doc(db, 'upvc_orders', currentOrderId), { finalTotal: newTotal }); 
+                await logHistory("Final Total Updated", { from: formatCurrency(currentTotal), to: formatCurrency(newTotal) }); 
+                editTotalModal.style.display = 'none'; 
+                await loadAndDisplayOrder(currentOrderId); 
+            } catch (error) { 
+                showToast("Failed to update total.", "error"); 
+            } finally { hideLoading(); } 
+        }
         
+        async function loadFinancialAndHistoryData() { 
+            const paymentsQuery = query(collection(db, `upvc_orders/${currentOrderId}/payments`), orderBy('timestamp', 'desc')); 
+            const historyQuery = query(collection(db, `upvc_orders/${currentOrderId}/history`), orderBy('timestamp', 'desc')); 
+            const [paymentsSnap, historySnap] = await Promise.all([ getDocs(paymentsQuery), getDocs(historyQuery) ]); 
+            const financialLogItems = []; const operationalHistoryItems = []; 
+            historySnap.docs.forEach(doc => { 
+                const entry = doc.data(); const action = entry.action || ''; 
+                if (action.includes('Payment') || action.includes('Total')) { 
+                    if (currentUserProfile?.role === 'admin' && action === 'Final Total Updated') { 
+                        financialLogItems.push({ ...entry, type: 'adjustment', date: entry.timestamp.toDate() }); 
+                    } 
+                } else { operationalHistoryItems.push(entry); } 
+            }); 
+            const payments = paymentsSnap.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'payment', paymentType: doc.data().type, date: new Date(doc.data().date) })); 
+            const paymentsForMetrics = paymentsSnap.docs.map(doc => doc.data()); 
+            if (currentUserProfile?.role === 'admin') { 
+                financialLogItems.push(...payments); 
+                financialLogItems.sort((a, b) => { 
+                    const dateA = a.timestamp?.toDate(); const dateB = b.timestamp?.toDate(); 
+                    if (!dateA && !dateB) return b.date - a.date; 
+                    if (!dateA) return 1; if (!dateB) return -1; return dateB - dateA; 
+                }); 
+            } 
+            document.querySelectorAll('.history-list').forEach(list => renderHistory(operationalHistoryItems, list)); 
+            if (currentUserProfile?.role === 'admin') { 
+                document.querySelectorAll('.financial-log').forEach(log => renderFinancialLog(financialLogItems, log)); 
+                updateMetrics(paymentsForMetrics); 
+            }
+        }
+
         async function loadAndDisplayOrder(orderId) { 
             const orderRef = doc(db, 'upvc_orders', orderId); 
             const orderSnap = await getDoc(orderRef); 
@@ -712,17 +1095,16 @@
                 realContent.style.display = 'block';
             } else { 
                 showMessageModal("Order not found."); 
-                skeletonLoader.innerHTML = '<h2 style="text-align:center; padding: 2rem;">Order Not Found</h2>';
+                skeletonLoader.innerHTML = '<h2 style="text-align:center; padding: 4rem;">Order Not Found</h2>';
             } 
         }
-        
+
         async function initializeFirebase() { 
-            const firebaseConfig = { apiKey: "__API_KEY__", authDomain: "__AUTH_DOMAIN__", projectId: "__PROJECT_ID__", storageBucket: "__STORAGE_BUCKET__", messagingSenderId: "__MESSAGING_SENDER_ID__", appId: "__APP_ID__" }; 
             const app = initializeApp(firebaseConfig); 
             db = getFirestore(app); 
             auth = getAuth(app); 
             
-            initializeNavbar();
+            initSyncSkillUI();
             
             onAuthStateChanged(auth, async (user) => { 
                 if (user) { 
@@ -730,7 +1112,6 @@
                     const userRef = doc(db, "users", user.uid); 
                     let userDoc = await getDoc(userRef); 
                     
-                    // Master admin self-healing/setup
                     if (user.email === ADMIN_EMAIL) {
                         if (!userDoc.exists() || userDoc.data().role !== 'admin') {
                             await setDoc(userRef, { 
@@ -759,14 +1140,14 @@
                         await loadAndDisplayOrder(currentOrderId); 
                     } else { 
                         showMessageModal("No order specified."); 
-                        skeletonLoader.innerHTML = '<h2 style="text-align:center; padding: 2rem;">No Order ID Provided</h2>';
+                        skeletonLoader.innerHTML = '<h2 style="text-align:center; padding: 4rem;">No Order ID Provided</h2>';
                     } 
                 } else { 
                     window.location.href = 'login.html'; 
                 } 
             }); 
         }
-        
+
         // --- EVENT LISTENERS ---
         newBackBtn.addEventListener('click', () => window.location.href = 'view-orders.html');
         actionsMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); actionsDropdown.classList.toggle('show'); });
@@ -779,8 +1160,8 @@
         messageOkBtn.addEventListener('click', () => messageModal.style.display = 'none');
         cancelActionBtn.addEventListener('click', hideConfirmationModal);
         confirmActionBtn.addEventListener('click', performConfirmedAction);
-        document.querySelector('[data-app-action="close-payment-modal"]').addEventListener('click', () => paymentModal.style.display = 'none');
-        document.querySelector('[data-app-action="close-total-modal"]').addEventListener('click', () => editTotalModal.style.display = 'none');
+        document.querySelectorAll('[data-app-action="close-payment-modal"]').forEach(btn => btn.addEventListener('click', () => paymentModal.style.display = 'none'));
+        document.querySelectorAll('[data-app-action="close-total-modal"]').forEach(btn => btn.addEventListener('click', () => editTotalModal.style.display = 'none'));
         paymentForm.addEventListener('submit', handlePaymentFormSubmit);
         editTotalForm.addEventListener('submit', handleFinalTotalUpdate);
         
@@ -804,10 +1185,9 @@
             const jobSheetBtn = e.target.closest('.detail-view-job-sheet-btn');
             if (jobSheetBtn) { e.preventDefault(); window.location.href = `job-sheet.html?id=${currentOrderId}`; }
         });
-        
+
         // --- INITIALIZE APP ---
         initializeFirebase();
-
     </script>
 </body>
 </html>
