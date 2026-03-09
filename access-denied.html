@@ -54,20 +54,56 @@
             position: relative;
         }
 
-        .icon-wrap {
-            width: 80px;
-            height: 80px;
-            background: #fef2f2;
-            color: var(--color-danger);
-            border-radius: 24px;
+        /* --- PREMIUM PULSE ANIMATION STYLES (DENIED) --- */
+        .status-animation {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.1);
+            position: relative;
         }
 
-        .icon-wrap .material-symbols-outlined { font-size: 40px; font-weight: 300; }
+        .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--color-danger);
+            opacity: 0;
+            animation: pulse-ripple 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        }
+
+        .pulse-ring:nth-child(2) { animation-delay: -1s; }
+        .pulse-ring:nth-child(3) { animation-delay: -2s; }
+
+        .center-node {
+            width: 52px;
+            height: 52px;
+            background: var(--color-danger);
+            border-radius: 18px;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+            animation: node-pulse 2s var(--ease-cubic) infinite;
+        }
+
+        .center-node .material-symbols-outlined { font-size: 32px; font-weight: 300; }
+
+        @keyframes pulse-ripple {
+            0% { transform: scale(0.2); opacity: 0.6; }
+            80% { transform: scale(1.2); opacity: 0; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        @keyframes node-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
 
         h1 {
             font-family: var(--font-main);
@@ -79,7 +115,7 @@
         }
 
         p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.6;
             margin-bottom: 2.5rem;
             color: var(--color-text-secondary);
@@ -89,30 +125,38 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-width: 320px;
+            max-width: 400px;
             margin: 0 auto;
         }
 
+        .secondary-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
         .btn {
-            padding: 14px 24px;
+            padding: 14px 20px;
             border-radius: 14px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-family: var(--font-nav);
             transition: all 0.3s var(--ease-out-back);
-            border: 1px solid transparent;
+            border: 1.5px solid transparent;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             user-select: none;
+            white-space: nowrap;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #0f2d2c, #012726);
             color: white;
             box-shadow: var(--btn-shadow);
+            width: 100%;
         }
 
         .btn-primary:hover:not(:disabled) {
@@ -129,6 +173,18 @@
         .btn-secondary:hover:not(:disabled) {
             background: #f8fafc;
             border-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger-light {
+            background: #fff;
+            border-color: rgba(239, 68, 68, 0.15);
+            color: var(--color-danger);
+        }
+
+        .btn-danger-light:hover:not(:disabled) {
+            background: #fef2f2;
+            border-color: var(--color-danger);
             transform: translateY(-2px);
         }
 
@@ -168,8 +224,13 @@
 <body>
 
     <div class="status-container">
-        <div class="icon-wrap">
-            <span class="material-symbols-outlined">block</span>
+        <div class="status-animation">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="center-node">
+                <span class="material-symbols-outlined">block</span>
+            </div>
         </div>
         <h1>Access Denied</h1>
         <p>Unfortunately, your request for access has been denied by the administrator. Please contact them if you think this is a mistake.</p>
@@ -179,10 +240,16 @@
                 <span class="material-symbols-outlined">sync</span>
                 <span id="btn-text">Check Status</span>
             </button>
-            <button data-app-action="logout" class="btn btn-secondary">
-                <span class="material-symbols-outlined">logout</span>
-                Logout
-            </button>
+            <div class="secondary-actions">
+                <button data-app-action="logout" class="btn btn-secondary">
+                    <span class="material-symbols-outlined" style="font-size: 1.2rem;">logout</span>
+                    Logout
+                </button>
+                <button data-app-action="delete-account" class="btn btn-danger-light">
+                    <span class="material-symbols-outlined" style="font-size: 1.2rem;">delete_forever</span>
+                    Restart
+                </button>
+            </div>
         </div>
     </div>
 
@@ -191,7 +258,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -271,6 +338,25 @@
             }
         }
 
+        async function deleteAccountRequest() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const isConfirmed = confirm("Are you sure you want to delete your current access request? You will be logged out and can sign up again freshly.");
+            if (!isConfirmed) return;
+
+            showLoader();
+            try {
+                await deleteDoc(doc(db, "users", user.uid));
+                await signOut(auth);
+            } catch (e) {
+                console.error(e);
+                showToast("Failed to delete request. Try logging out instead.", "error");
+            } finally {
+                hideLoader();
+            }
+        }
+
         function startCooldown() {
             const btn = document.getElementById('check-status-btn');
             const btnText = document.getElementById('btn-text');
@@ -293,9 +379,14 @@
         function bindEventListeners() {
             document.body.addEventListener('click', async (e) => {
                 const appAction = e.target.closest('[data-app-action]');
-                if (appAction?.dataset.appAction === 'logout') {
+                if (!appAction) return;
+                
+                const action = appAction.dataset.appAction;
+                if (action === 'logout') {
                     await signOut(auth);
                     window.location.href = 'login.html';
+                } else if (action === 'delete-account') {
+                    await deleteAccountRequest();
                 }
             });
 
