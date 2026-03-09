@@ -323,7 +323,7 @@
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
                         <span class="nav-label">Dashboard</span>
                     </a>
-                    <a href="view-orders.html" class="nav-item">
+                    <a href="view-orders.html" class="nav-item active">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gallery-vertical-end-icon lucide-gallery-vertical-end"><path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/></svg></span>
                         <span class="nav-label">All Orders</span>
                     </a>
@@ -481,7 +481,7 @@
     <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px;">OK</button></div></div>
     <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
     
-    <div id="location-picker-modal" class="modal"><div class="modal-content" style="max-width: 800px; text-align: left; padding: 0; animation: popIn 0.3s var(--ease-out-back);"><div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-border);"><h3 style="font-family: var(--font-main); font-size:1.35rem;">Select Customer Location</h3><button id="location-picker-close-btn" class="remove-window-btn" style="position: static; border-radius: 50%;"><span class="material-symbols-outlined">close</span></button></div><div id="map-container" style="height: 400px; width: 100%; position: relative; background: #e2e8f0;"><div class="map-pin"></div></div><div style="padding: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--light-border); background: var(--light-bg-primary); border-bottom-left-radius: var(--radius-xl); border-bottom-right-radius: var(--radius-xl);"><button id="cancel-location-btn" class="btn btn-secondary">Cancel</button><button id="confirm-location-btn" class="btn btn-primary">Confirm Location</button></div></div></div>
+    <div id="location-picker-modal" class="modal"><div class="modal-content" style="max-width: 800px; text-align: left; padding: 0; animation: popIn 0.3s var(--ease-out-back);"><div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-border);"><h3 style="font-family: var(--font-main); font-size:1.35rem;">Select Customer Location</h3><button id="location-picker-close-btn" class="remove-window-btn" style="position: static; border-radius: 50%; background: #f1f5f9;"><span class="material-symbols-outlined" style="color: var(--light-text-secondary);">close</span></button></div><div id="map-container" style="height: 400px; width: 100%; position: relative; background: #e2e8f0;"><div class="map-pin"></div></div><div style="padding: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--light-border); background: var(--light-bg-primary); border-bottom-left-radius: var(--radius-xl); border-bottom-right-radius: var(--radius-xl);"><button id="cancel-location-btn" class="btn btn-secondary">Cancel</button><button id="confirm-location-btn" class="btn btn-primary">Confirm Location</button></div></div></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -593,7 +593,7 @@
                 
                 <div class="glass-control">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="glass-check-${index}" class="has-glass-checkbox" ${hasGlass ? 'checked' : ''}>
+                        <input type="checkbox" id="glass-check-${index}" class="has-glass-checkbox" ${hasGlass ? 'checked' : ''} style="width: 1.15em; height: 1.15em;">
                         <label for="glass-check-${index}">Includes Glass</label>
                     </div>
                     <div class="individual-glass-name-container" style="display: none; flex-grow: 1;">
@@ -1013,16 +1013,16 @@
             document.getElementById('nav-link-home').href = homeLink; 
             
             const navLinkSecondary = document.getElementById('nav-link-secondary'); 
-            navLinkSecondary.href = secondaryLink.href; 
-            navLinkSecondary.textContent = secondaryLink.text; 
-            navLinkSecondary.style.display = 'flex'; 
-            
-            const secondaryIcon = isAdmin 
-                ? '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>' 
-                : '<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>';
-            
-            const mobileLinksContainer = document.getElementById('mobile-menu-links'); 
-            mobileLinksContainer.innerHTML = `<a href="${homeLink}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Home</span></a><a href="view-orders.html" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><span>All Orders</span></a><a href="${secondaryLink.href}" class="mobile-nav-link"><svg class="mobile-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${secondaryIcon}" /></svg><span>${secondaryLink.text}</span></a>`; 
+            if (navLinkSecondary) {
+                navLinkSecondary.href = secondaryLink.href; 
+                navLinkSecondary.querySelector('.nav-label').textContent = secondaryLink.text; 
+                
+                const secondaryIcon = isAdmin 
+                    ? '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>' 
+                    : '<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>';
+                navLinkSecondary.querySelector('svg').innerHTML = secondaryIcon;
+                navLinkSecondary.style.display = 'flex'; 
+            }
         }
 
         function initializeNavbar() { 
