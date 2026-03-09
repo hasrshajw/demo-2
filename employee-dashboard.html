@@ -336,7 +336,7 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <header class="topbar desktop-only">My Dashboard</header>
+            <header class="topbar desktop-only" id="desktop-welcome">My Dashboard</header>
             
             <main class="content-area">
                 <div class="container" id="main-container">
@@ -531,6 +531,14 @@
             document.querySelectorAll('.account-avatar').forEach(img => img.src = user.photoURL || defaultPhoto);
             document.querySelectorAll('.account-name').forEach(el => el.textContent = user.displayName || 'Employee');
             document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email || '');
+            
+            const firstName = user.displayName ? user.displayName.split(' ')[0] : 'User';
+            const welcomeText = `Welcome back, ${firstName}!`;
+            const desktopWelcome = document.getElementById('desktop-welcome');
+            if (desktopWelcome) desktopWelcome.textContent = welcomeText;
+            
+            const mobileWelcome = document.getElementById('welcome-message');
+            if (mobileWelcome) mobileWelcome.textContent = welcomeText;
         }
 
         async function initializeEmployeeView() {
@@ -595,7 +603,13 @@
             const empDoc = await getDoc(doc(db, "employees", employeeId));
             if (!empDoc.exists()) return;
             const employee = empDoc.data();
-            document.getElementById('welcome-message').textContent = `Welcome back, ${employee.name.split(' ')[0]}!`;
+            
+            // Set greeting based on profile data
+            const firstName = employee.name ? employee.name.split(' ')[0] : 'User';
+            const welcomeText = `Welcome back, ${firstName}!`;
+            document.getElementById('desktop-welcome').textContent = welcomeText;
+            document.getElementById('welcome-message').textContent = welcomeText;
+            
             const [allAttSnap, allPaySnap] = await Promise.all([ getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`)) ]);
             const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
             const startDate = `${year}-${month}-01`; const endDate = todayInIndia;
