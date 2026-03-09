@@ -174,7 +174,7 @@
             .btn-open-svg { display: none; }
             .sidebar.collapsed .sidebar-header { flex-direction: column; padding: 30px 0 20px 0; gap: 30px; }
             .sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
-            .sidebar.collapsed .account-section { display: flex; justify-content: center; padding: 24px 0; }
+            .sidebar.collapsed .account-section { display: center; justify-content: center; padding: 24px 0; }
             .sidebar.collapsed .nav-label { display: none; }
             .sidebar.collapsed .sidebar-inner { overflow: visible; }
             
@@ -195,9 +195,9 @@
         
         /* Premium Breadcrumb Button - Optimized Height and One-Line */
         .breadcrumb { 
-            font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
-            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 2rem; 
-            transition: all 0.3s var(--ease-cubic); padding: 10px 16px; border-radius: 12px; background: #fff; 
+            font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
+            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; 
+            transition: all 0.3s var(--ease-cubic); padding: 12px 18px; border-radius: 12px; background: #fff; 
             border: 1px solid var(--color-border); white-space: nowrap; line-height: 1;
         }
         .breadcrumb svg { width: 12px; height: 12px; stroke-width: 3.5; flex-shrink: 0;}
@@ -253,6 +253,9 @@
             font-size: 1rem; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
             min-height: 52px;
         }
+        /* Ensure no double text - trigger starts empty until value selected */
+        .custom-select-trigger:empty::before { content: "\00a0"; }
+
         .custom-select-wrapper.open .custom-select-trigger { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
         .custom-select-trigger::after {
             content: ""; width: 18px; height: 18px;
@@ -346,7 +349,6 @@
             
             <div class="sidebar-inner">
                 <nav class="nav-menu">
-                    <!-- Dashboard highlighted per request -->
                     <a href="admin-dashboard.html" class="nav-item active" id="nav-link-home">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
                         <span class="nav-label">Dashboard</span>
@@ -404,7 +406,7 @@
                                 <div class="form-grid">
                                     <div class="input-group grid-col-span-2">
                                         <div class="custom-select-wrapper" id="employee-dropdown">
-                                            <div class="custom-select-trigger" id="employee-trigger">Select Employee...</div>
+                                            <div class="custom-select-trigger" id="employee-trigger"></div>
                                             <div class="custom-select-options" id="employee-options">
                                                 <!-- Populated by JS -->
                                             </div>
@@ -422,7 +424,7 @@
                                     </div>
                                     <div class="input-group">
                                         <div class="custom-select-wrapper" id="mode-dropdown">
-                                            <div class="custom-select-trigger" id="mode-trigger">Mode...</div>
+                                            <div class="custom-select-trigger" id="mode-trigger"></div>
                                             <div class="custom-select-options" id="mode-options">
                                                 <div class="custom-select-option" data-value="Cash">Cash</div>
                                                 <div class="custom-select-option" data-value="Online">Online</div>
