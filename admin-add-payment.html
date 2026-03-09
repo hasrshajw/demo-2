@@ -193,14 +193,14 @@
         .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
         .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #163837, #02302f); }
         
-        /* Premium Breadcrumb */
+        /* Premium Breadcrumb Button */
         .breadcrumb { 
-            font-size: 0.95rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
+            font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
             display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 2rem; 
-            transition: all 0.3s var(--ease-cubic); padding: 8px 12px; border-radius: 10px; background: #fff; 
-            border: 1px solid var(--color-border); white-space: nowrap;
+            transition: all 0.3s var(--ease-cubic); padding: 6px 12px; border-radius: 10px; background: #fff; 
+            border: 1px solid var(--color-border); white-space: nowrap; line-height: 1;
         }
-        .breadcrumb svg { width: 16px; height: 16px; }
+        .breadcrumb svg { width: 14px; height: 14px; stroke-width: 3; }
         .breadcrumb:hover { color: var(--color-primary); border-color: var(--color-primary); background: var(--light-bg-tertiary); box-shadow: var(--shadow-sm);}
 
         .card { 
@@ -238,14 +238,16 @@
         .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
         .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
         
+        /* Fixed logic for floating labels with select:valid */
         .input-field:focus + .input-label, 
         .input-field:not(:placeholder-shown) + .input-label,
         select.input-field:focus + .input-label, 
+        select.input-field:not([value=""]) + .input-label,
         select.input-field:valid + .input-label { 
             top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); 
             background-color: #ffffff; padding: 0 6px; border-radius: 4px; 
             font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            z-index: 1;
+            z-index: 2;
         }
 
         .form-actions-container { display: flex; justify-content: flex-end; margin-top: 2.5rem; border-top: 1px solid var(--color-border); padding-top: 2rem; }
@@ -365,7 +367,7 @@
                 <div class="app-container">
                     <div id="add-payment-view" class="view active">
                         <a href="admin-dashboard.html" class="breadcrumb">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
                             <span>Back to Dashboard</span>
                         </a>
                         
@@ -538,10 +540,28 @@
         }
         
         function populateNavbar(user, userProfile) { 
-            const defaultPhoto = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E'; 
+            const defaultPhoto = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E'; 
             document.querySelectorAll('.account-avatar').forEach(img => img.src = userProfile.photoURL || defaultPhoto);
             document.querySelectorAll('.account-name').forEach(el => el.textContent = userProfile.displayName || 'User');
             document.querySelectorAll('.account-email').forEach(el => el.textContent = userProfile.email || '');
+            
+            const isAdmin = user.email === ADMIN_EMAIL || userProfile?.role === 'admin'; 
+            const homeLink = isAdmin ? 'admin-dashboard.html' : 'employee-dashboard.html'; 
+            const secondaryLink = isAdmin ? { href: 'admin-employees.html', text: 'Manage Employees' } : { href: 'my-attendance.html', text: 'My Attendance' }; 
+            
+            const secondaryIcon = isAdmin 
+                ? '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/>' 
+                : '<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>';
+
+            document.getElementById('nav-link-home').href = homeLink;
+            
+            const navLinkSecondary = document.getElementById('nav-link-secondary');
+            if (navLinkSecondary) {
+                navLinkSecondary.href = secondaryLink.href;
+                navLinkSecondary.querySelector('.nav-label').textContent = secondaryLink.text;
+                navLinkSecondary.querySelector('svg').innerHTML = secondaryIcon;
+                navLinkSecondary.style.display = 'flex';
+            }
         }
 
         async function loadEmployees() {
