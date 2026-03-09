@@ -67,7 +67,7 @@
         }
         
         .brand-logo img {
-            height: 45px; 
+            height: 36px; /* Slightly decreased for mobile view */
             width: auto;
             display: block;
         }
@@ -79,7 +79,7 @@
         }
         
         .mini-logo img {
-            height: 45px;
+            height: 36px; /* Slightly decreased for mobile view */
             width: auto;
             display: block;
         }
@@ -231,6 +231,9 @@
             .m-header { display: none; }
             .sidebar-overlay { display: none; }
             
+            /* Restore Logo Size on Desktop */
+            .brand-logo img, .mini-logo img { height: 45px; }
+            
             .main-content { margin-top: 0; }
             .content-area { padding: 40px; }
 
@@ -342,7 +345,7 @@
                 </a>
                 
                 <span class="mini-logo">
-                    <img src="https://ksupvc.wixo.in/image.svg" alt="S">
+                    <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
                 </span>
                 
                 <!-- Desktop Collapse Button -->
