@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Management Portal - Sign In</title>
+    <title>SyncSkill - Secure Access</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
     <style>
         :root {
             --primary-dark: #012726;
+            --primary-hover: #023d3c;
             --accent-green: #34c375;
             --pure-white: #FFFFFF;
             --light-bg: #f8fafc;
@@ -20,8 +21,8 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --error: #ef4444;
-            --radius-xl: 24px;
-            --radius-lg: 16px;
+            --radius-xl: 32px;
+            --radius-lg: 20px;
             --radius-md: 12px;
             --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             --ease-out: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -48,27 +49,21 @@
         /* --- Left Info Panel (Desktop) --- */
         .info-panel { 
             display: none; 
-            flex-basis: 55%; 
+            flex-basis: 50%; 
             position: relative;
-            background: linear-gradient(rgba(1, 39, 38, 0.4), rgba(1, 39, 38, 0.7)), 
-                        url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200') center center / cover;
-            padding: 4rem;
+            background: linear-gradient(135deg, rgba(1, 39, 38, 0.85) 0%, rgba(1, 39, 38, 0.6) 100%), 
+                        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200') center center / cover;
+            padding: 5rem 4rem;
             color: var(--pure-white);
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .info-panel-brand { 
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.5rem; 
-            font-weight: 800; 
-            letter-spacing: -0.02em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .info-panel-brand img { 
+            height: 48px;
+            width: auto;
+            filter: brightness(0) invert(1);
         }
-        
-        .info-panel-brand .dot { width: 12px; height: 12px; background: var(--accent-green); border-radius: 50%; }
 
         .info-panel-content h2 { 
             font-family: 'IBM Plex Sans', sans-serif;
@@ -80,10 +75,17 @@
         }
         
         .info-panel-content p { 
-            font-size: 1.125rem; 
+            font-size: 1.25rem; 
             max-width: 480px; 
             line-height: 1.6; 
             opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .info-panel-footer {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-weight: 500;
         }
 
         /* --- Right Form Panel --- */
@@ -108,36 +110,44 @@
         .welcome-visual { 
             flex: 1; 
             display: flex; 
+            flex-direction: column;
             justify-content: center; 
             align-items: center; 
             padding: 2rem;
             background: var(--light-bg);
+            gap: 2rem;
         }
         
-        .welcome-visual img { 
-            width: 80%; 
-            max-width: 320px; 
+        .mobile-brand-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .welcome-visual .hero-img { 
+            width: 85%; 
+            max-width: 340px; 
             height: auto; 
-            filter: drop-shadow(0 20px 30px rgba(1, 39, 38, 0.15));
+            filter: drop-shadow(0 20px 30px rgba(1, 39, 38, 0.1));
             animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
 
         .welcome-content { 
             background-color: var(--primary-dark); 
             border-top-left-radius: 40px; 
             border-top-right-radius: 40px; 
-            padding: 3rem 2.5rem; 
-            text-align: left;
+            padding: 3.5rem 2.5rem; 
+            text-align: center;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
         }
         
         .welcome-content h1 { 
             font-family: 'IBM Plex Sans', sans-serif;
-            font-size: 2.5rem; 
+            font-size: 2.25rem; 
             font-weight: 700; 
             margin-bottom: 1rem; 
             color: var(--pure-white); 
@@ -145,27 +155,37 @@
         }
         
         .welcome-content p { 
-            font-size: 1.1rem; 
-            color: rgba(255, 255, 255, 0.7); 
+            font-size: 1rem; 
+            color: rgba(255, 255, 255, 0.6); 
             margin-bottom: 2.5rem; 
             line-height: 1.6; 
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Auth Section */
         #auth-section { 
             display: none; 
             flex-direction: column; 
-            padding: 4rem 2.5rem 2rem; 
+            padding: 3rem 2rem; 
             width: 100%;
-            max-width: 460px;
+            max-width: 440px;
             margin: auto;
         }
+
+        .auth-brand-header {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        .auth-brand-header img { height: 32px; width: auto; }
 
         .form-toggle { 
             display: flex; 
             background: #f1f5f9; 
-            border-radius: 16px; 
-            padding: 6px; 
+            border-radius: 14px; 
+            padding: 5px; 
             margin-bottom: 2.5rem; 
         }
         
@@ -175,9 +195,9 @@
             border: none; 
             background: transparent; 
             color: var(--text-muted); 
-            font-size: 0.95rem; 
+            font-size: 0.9rem; 
             font-weight: 700; 
-            border-radius: 12px; 
+            border-radius: 10px; 
             cursor: pointer; 
             transition: all 0.3s var(--ease-out); 
         }
@@ -185,7 +205,7 @@
         .toggle-btn.active { 
             background: var(--pure-white); 
             color: var(--primary-dark); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
         }
 
         .form-container form { display: none; animation: slideIn 0.4s var(--ease-out); }
@@ -197,24 +217,25 @@
         }
 
         .form-header { margin-bottom: 2.5rem; text-align: left; }
-        .form-header h2 { font-size: 2rem; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.02em; }
-        .form-header p { color: var(--text-muted); font-size: 1rem; margin-top: 4px; }
+        .form-header h2 { font-size: 1.85rem; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.02em; }
+        .form-header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 6px; }
 
         .input-group { position: relative; margin-bottom: 1.5rem; }
         .input-group label { 
             display: block; 
-            font-size: 0.85rem; 
-            font-weight: 700; 
+            font-size: 0.8rem; 
+            font-weight: 800; 
             margin-bottom: 8px; 
-            color: var(--text-muted);
+            color: var(--primary-dark);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            opacity: 0.6;
         }
         
         .input-group input { 
             width: 100%; 
             padding: 1rem 1.25rem; 
-            border: 2px solid #f1f5f9; 
+            border: 2px solid transparent; 
             background-color: #f1f5f9; 
             border-radius: 16px; 
             font-size: 1rem; 
@@ -231,7 +252,7 @@
         }
 
         .form-options { display: flex; justify-content: flex-end; margin-top: -0.5rem; margin-bottom: 2rem; }
-        .forgot-password { font-size: 0.9rem; color: var(--primary-dark); text-decoration: none; font-weight: 700; }
+        .forgot-password { font-size: 0.85rem; color: var(--primary-dark); text-decoration: none; font-weight: 700; opacity: 0.8; }
 
         .btn-submit { 
             width: 100%; 
@@ -244,30 +265,32 @@
             border-radius: 16px; 
             cursor: pointer; 
             transition: all 0.3s var(--ease-out);
-            box-shadow: 0 10px 20px -10px rgba(1, 39, 38, 0.4);
+            box-shadow: var(--btn-shadow);
         }
         
         .btn-submit:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 15px 30px -12px rgba(1, 39, 38, 0.5); 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 25px rgba(1, 39, 38, 0.3); 
         }
 
         .btn-get-started {
             width: 100%;
-            padding: 1.25rem;
+            padding: 1.1rem;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary-dark);
             background-color: var(--accent-green);
             border: none;
-            border-radius: 20px;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.3s var(--ease-out);
+            font-family: var(--font-nav);
         }
 
         .btn-get-started:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
             background-color: #2eb468;
+            box-shadow: 0 10px 20px rgba(52, 195, 117, 0.2);
         }
 
         .divider { 
@@ -275,19 +298,19 @@
             align-items: center; 
             color: var(--text-muted); 
             margin: 2rem 0; 
-            font-size: 0.8rem; 
-            font-weight: 700; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
         .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-color); }
-        .divider::before { margin-right: 1.5rem; }
-        .divider::after { margin-left: 1.5rem; }
+        .divider::before { margin-right: 1.25rem; }
+        .divider::after { margin-left: 1.25rem; }
 
         .btn-google { 
             width: 100%; 
             padding: 1rem; 
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             font-weight: 700; 
             color: var(--text-main); 
             background: var(--pure-white); 
@@ -302,7 +325,22 @@
         }
         
         .btn-google:hover { background-color: #f8fafc; border-color: #cbd5e1; }
-        .google-icon { width: 22px; height: 22px; }
+        .google-icon { width: 20px; height: 20px; }
+
+        .switch-form-text {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .switch-form-text a {
+            color: var(--primary-dark);
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            margin-left: 4px;
+        }
 
         /* --- Utilities --- */
         #loader { display: none; position: fixed; inset: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 9999; }
@@ -331,12 +369,13 @@
         @media (min-width: 992px) {
             body { background-color: #f1f5f9; padding: 2rem; }
             .main-wrapper { 
-                max-width: 1200px; 
-                height: 800px; 
+                max-width: 1240px; 
+                height: 840px; 
                 margin: auto;
-                border-radius: 32px; 
+                border-radius: 40px; 
                 overflow: hidden; 
-                box-shadow: 0 40px 100px -20px rgba(1, 39, 38, 0.25);
+                box-shadow: 0 40px 100px -20px rgba(1, 39, 38, 0.2);
+                border: 1px solid rgba(255,255,255,0.6);
             }
             .info-panel { display: flex; }
             .form-panel-wrapper { padding: 4rem; justify-content: center; }
@@ -351,17 +390,16 @@
         <!-- Desktop side panel -->
         <div class="info-panel">
             <div class="info-panel-brand">
-                <div class="dot"></div>
-                Management Portal
+                <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill Logo">
             </div>
             <div class="info-panel-text">
                 <div class="info-panel-content">
-                    <h2>Workforce management, perfected.</h2>
-                    <p>Experience a seamless interface designed to streamline payroll, attendance, and order tracking for your entire team.</p>
+                    <h2>Workforce Management, Perfected.</h2>
+                    <p>Experience the future of seamless operations. One platform to sync your team, track performance, and grow your business.</p>
                 </div>
             </div>
             <div class="info-panel-footer">
-                <p>&copy; 2024 Enterprise Systems</p>
+                <p>&copy; 2024 SyncSkill Enterprise. All rights reserved.</p>
             </div>
         </div>
 
@@ -370,17 +408,22 @@
             <!-- Mobile Welcome Screen -->
             <div id="welcome-screen">
                 <div class="welcome-visual">
-                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/business-growth-and-management-illustration-download-in-svg-png-gif-file-formats--analysis-financial-profit-marketing-strategic-planning-pack-services-illustrations-4720919.png" alt="Portal Illustration">
+                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill Logo" class="mobile-brand-logo">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/business-growth-and-management-illustration-download-in-svg-png-gif-file-formats--analysis-financial-profit-marketing-strategic-planning-pack-services-illustrations-4720919.png" alt="Portal Illustration" class="hero-img">
                 </div>
                 <div class="welcome-content">
                     <h1>Get Started</h1>
-                    <p>Access your professional dashboard and manage your workplace efficiently from anywhere.</p>
+                    <p>Access your professional workspace and manage your team efficiently from anywhere.</p>
                     <button id="get-started-btn" class="btn-get-started">Open Portal</button>
                 </div>
             </div>
 
             <!-- Auth Section -->
             <div id="auth-section">
+                <div class="auth-brand-header mobile-only">
+                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill Logo">
+                </div>
+
                 <div class="form-toggle">
                     <button id="show-login-btn" class="toggle-btn active">Sign In</button>
                     <button id="show-signup-btn" class="toggle-btn">Create Account</button>
@@ -412,6 +455,10 @@
                             <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                             Continue with Google
                         </button>
+                        
+                        <p class="switch-form-text">
+                            Don't have an account? <a class="switch-to-signup">Sign Up</a>
+                        </p>
                     </form>
 
                     <!-- Signup Form -->
@@ -433,6 +480,10 @@
                             <input type="password" id="signup-password" placeholder="Min. 8 characters" required>
                         </div>
                         <button type="submit" class="btn-submit">Request Access</button>
+                        
+                        <p class="switch-form-text">
+                            Already have an account? <a class="switch-to-login">Sign In</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -563,6 +614,10 @@
 
             document.getElementById('show-login-btn').addEventListener('click', goToLogin);
             document.getElementById('show-signup-btn').addEventListener('click', goToSignup);
+            
+            // Add click listeners to the switch links within forms
+            document.querySelectorAll('.switch-to-login').forEach(el => el.addEventListener('click', goToLogin));
+            document.querySelectorAll('.switch-to-signup').forEach(el => el.addEventListener('click', goToSignup));
 
             document.getElementById('login-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
