@@ -2,203 +2,460 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayrollPro - Add Payment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Add Payment</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
     <style>
-        /* --- 1. DESIGN SYSTEM --- */
+        /* --- MERGED CSS VARIABLES --- */
         :root {
-            --font-main: 'Inter', sans-serif;
-            --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
-            --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-focus-ring: 0 0 0 3px;
+            /* Layout & Sidebar (SyncSkill) */
+            --text-sub: #6b7280;
+            --header-height-desktop: 70px;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 90px;
+            --row-height: 52px;
+            --sidebar-bg: #ffffff;
+            --header-bg: #ffffff;
+            --page-bg: #f8fafc;
+            --text-color: #18181A;
+            --icon-color: #6b7280;
+            --brand-primary: #34c375; 
+            --active-bg: #E5E5E5;
+            --hover-bg: #f3f4f6;
+            --border-subtle: #e5e7eb;
+            --radius-md: 10px;
+            
+            /* Theme & Tokens (Premium UI) */
+            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; 
+            --font-alt: 'Inter', sans-serif; 
+            --font-nav: 'DM Sans', sans-serif;
+            --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --radius-sm: 6px; --radius-lg: 20px; --radius-xl: 24px;
+            
+            /* Premium Shadows */
+            --premium-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
+            --premium-shadow-hover: 0 12px 30px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(0, 0, 0, 0.05);
+            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
+            --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.25);
+            
+            --color-primary: #012726; --color-primary-light: #e0e7ff; --color-primary-dark: #023d3c;
+            --color-background: #f8fafc; --color-surface: #ffffff; 
+            --color-text-primary: #0f172a; --color-text-secondary: #64748b;
+            --color-border: #e2e8f0; 
+            --color-success: #10b981; --color-danger: #ef4444; --color-warning: #f59e0b;
         }
 
-        /* [THEME] Light Mode Palette */
-        [data-theme="light"] {
-            --color-primary: #4f46e5; --color-primary-light: #e0e7ff; --color-primary-dark: #3730a3;
-            --color-secondary: #475569; --color-background: #f8fafc;
-            --color-surface: #ffffff; --color-text-primary: #1f2937;
-            --color-text-secondary: #64748b; --color-border: #e5e7eb;
-        }
-
-        /* [THEME] Dark Mode Palette */
-        [data-theme="dark"] {
-            --color-primary: #818cf8; --color-primary-light: rgba(129, 140, 248, 0.16); --color-primary-dark: #a7affb;
-            --color-secondary: #94a3b8; --color-background: #0f172a;
-            --color-surface: #1e293b; --color-text-primary: #f1f5f9;
-            --color-text-secondary: #94a3b8; --color-border: #334155;
-        }
-
-        /* --- 2. GLOBAL RESETS & BASE STYLES --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; }
-        html { scroll-behavior: smooth; }
+        /* --- GLOBAL RESETS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; height: 100%; }
+        
         body {
-            font-family: var(--font-main); background-color: var(--color-background);
-            color: var(--color-text-primary); line-height: 1.5;
-            transition: background-color 0.3s var(--ease-cubic), color 0.3s var(--ease-cubic);
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            background: var(--color-background);
+            font-family: var(--font-alt);
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+            height: 100%;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
-        h2 { font-size: 1.25rem; color: var(--color-text-primary); margin-bottom: 1.5rem; }
-        .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-        .icon-sm { width: 16px; height: 16px; } .icon-lg { width: 24px; height: 24px; }
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
 
-        /* --- 3. LAYOUT & SHELL --- */
-        .app-container { display: block; }
-        main { padding-top: 48px; padding-bottom: 48px; }
-        .app-header {
-            height: 65px;
-            background-color: hsla(0, 0%, 100%, 0.8); border-bottom: 1px solid var(--color-border);
-            padding: 0 16px; display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        [data-theme="dark"] .app-header { background-color: hsla(222, 47%, 11%, 0.8); }
+        h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em; }
+        h1 { font-size: 1.875rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
 
-        /* NAVBAR STYLES */
-        .nav-left, .nav-right { display: flex; align-items: center; gap: 16px; }
-        .nav-menu-btn { display: none; }
-        .profile-menu { position: relative; }
-        #profile-dropdown {
-            display: none; position: absolute; top: calc(100% + 12px); right: 0;
-            background-color: var(--color-surface); border: 1px solid var(--color-border);
-            border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
-            width: 180px; padding: 8px;
-        }
-        #profile-dropdown.active { display: block; }
-        #profile-dropdown .btn { width: 100%; justify-content: flex-start; }
-        #mobile-menu { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background-color: var(--color-surface); transform: translateX(-100%); transition: transform 0.3s var(--ease-cubic); z-index: 1020; padding: 24px; box-shadow: var(--shadow-lg); }
-        #mobile-menu.active { transform: translateX(0); }
-        .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .mobile-menu-title { font-size: 1.2rem; font-weight: 600; }
-        #mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(15, 23, 42, 0.6); z-index: 1010; }
-        #mobile-menu-overlay.active { display: block; }
-        #mobile-menu-content { display: flex; flex-direction: column; gap: 12px; }
-        #mobile-menu-content .btn { width: 100%; justify-content: flex-start; }
+        /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
+        .app-layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .desktop-only { display: none !important; }
+        .mobile-only { display: flex; }
         
-        /* --- 4. COMPONENT LIBRARY --- */
-        .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
-        .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-md); }
-        .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
-        .btn-icon { background: none; border: none; padding: 10px; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-        .btn-icon:hover { color: var(--color-text-primary); background-color: var(--color-border); }
-        .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-        .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-secondary); font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background-color: var(--color-background); transition: all 0.2s; color: var(--color-text-primary); }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); box-shadow: var(--shadow-focus-ring) var(--color-primary-light); }
+        .sidebar, .m-header, .profile-popup { font-family: var(--font-nav); }
 
-        /* --- 5. VIEW-SPECIFIC STYLES --- */
-        .user-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--color-border); cursor: pointer; }
-        #add-payment-view-header { flex-direction: row; align-items: center; justify-content: flex-start; }
-        #add-payment-view-header .btn { padding: 6px 12px; font-size: 0.85rem; }
+        .brand-logo { display: flex; align-items: center; text-decoration: none; transition: all 0.3s; }
+        .brand-logo img { height: 36px; width: auto; display: block; }
+        .mini-logo { display: none; align-items: center; justify-content: center; }
+        .mini-logo img { height: 36px; width: auto; display: block; }
 
-        /* --- 6. UTILITIES & FEEDBACK --- */
-        #loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(4px); }
-        .spinner { width: 48px; height: 48px; border: 5px solid var(--color-primary-light); border-bottom-color: var(--color-primary); border-radius: 50%; animation: rotation 1s linear infinite; }
-        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: var(--radius-md); color: white; font-weight: 500; box-shadow: var(--shadow-lg); transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1001; }
-        #toast.show { bottom: 30px; }
-        #toast.success { background-color: var(--color-primary); }
-        #toast.error { background-color: var(--color-danger); }
-
-        /* --- 7. ANIMATIONS & RESPONSIVE --- */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
+        .icon svg { width: 22px; height: 22px; stroke: var(--icon-color); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         
-        @media (max-width: 768px) {
-            .container { padding: 0 16px; }
-            .desktop-only { display: none !important; }
-            .nav-menu-btn { display: inline-flex; }
-            main { padding-top: 24px; padding-bottom: 24px; }
-            .app-header { padding: 0 16px; }
-            .card { padding: 16px; }
-        }
+        .nav-item { position: relative; display: flex; align-items: center; height: var(--row-height); padding: 0 16px; margin: 6px 0; border-radius: var(--radius-md); gap: 14px; cursor: pointer; color: var(--text-color); text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+        .nav-item:hover { background: var(--hover-bg); }
+        .nav-item.active { background: var(--active-bg); color: var(--text-color); font-weight: 800; }
+        .nav-item.active .icon svg { stroke: #000000; }
+
+        .account-card { display: flex; align-items: center; gap: 12px; }
+        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; background: var(--color-border); }
+        .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
+        .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; color: var(--text-color); }
+        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+        /* Mobile First Structure */
+        .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; }
+        .content-area { flex: 1; overflow-y: auto; padding-bottom: 120px;} 
+        
+        .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .m-menu-lines { width: 18px; height: 14px; position: relative; }
+        .m-menu-lines::before, .m-menu-lines::after, .m-menu-lines span { content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #111827; border-radius: 10px; }
+        .m-menu-lines::before { top: 0; } .m-menu-lines span { top: 6px; } .m-menu-lines::after { bottom: 0; }
+
+        .sidebar { position: fixed; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%; background: #fff; transform: translateX(-100%); transition: 0.25s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; z-index: 2001; }
+        .sidebar.mobile-open { transform: translateX(0); }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); opacity: 0; pointer-events: none; transition: 0.25s; z-index: 2000; }
+        .sidebar-overlay.mobile-open { opacity: 1; pointer-events: auto; }
+
+        .sidebar-header { height: 80px; padding: 0 20px; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; transition: all 0.3s; }
+        .m-drawer-close { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; background: transparent; cursor: pointer; }
+        .m-drawer-close-icon { width: 14px; height: 14px; position: relative; }
+        .m-drawer-close-icon::before, .m-drawer-close-icon::after { content: ""; position: absolute; inset: 0; margin: auto; width: 14px; height: 2px; background: #111827; }
+        .m-drawer-close-icon::before { transform: rotate(45deg); } .m-drawer-close-icon::after { transform: rotate(-45deg); }
+
+        .sidebar-inner { flex: 1; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+        .nav-menu { padding: 20px 12px; }
+        .account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; cursor: pointer; }
+
+        /* Profile Context Menu */
+        .profile-popup { position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--premium-shadow-hover); border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none; transition: 0.2s; overflow: hidden; bottom: 100px; left: 50%; transform: translateX(-50%); }
+        .profile-popup.active { opacity: 1; pointer-events: all; }
+        .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
+        .popup-list { list-style: none; padding: 8px; }
+        .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; font-weight: 500;}
+        .popup-list a:hover { background: var(--hover-bg); }
+
+        /* Desktop Adjustments */
         @media (min-width: 769px) {
+            .app-layout { flex-direction: row; }
+            .desktop-only { display: flex !important; }
             .mobile-only { display: none !important; }
+            .m-header { display: none; }
+            .sidebar-overlay { display: none; }
+            .brand-logo img, .mini-logo img { height: 45px; }
+            
+            .main-content { margin-top: 0; }
+            .content-area { padding-top: 20px; padding-bottom: 40px; }
+            
+            .topbar {
+                height: 80px;
+                background: var(--header-bg);
+                border-bottom: 1px solid var(--border-subtle);
+                padding: 0 40px;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+                font-size: 1.75rem;
+                font-family: var(--font-main);
+                color: var(--color-text-primary);
+                flex-shrink: 0;
+            }
+
+            .sidebar { position: relative; transform: translateX(0) !important; width: var(--sidebar-width); max-width: none; background: var(--sidebar-bg); border-right: 1px solid var(--border-subtle); z-index: 100; }
+            .sidebar-header { height: auto; min-height: var(--header-height-desktop); padding: 30px 24px; border-bottom: none; }
+            .nav-menu { padding: 10px 16px; }
+            .account-section { margin-top: auto; padding: 24px 16px; }
+            
+            .profile-popup { bottom: 80px; left: 16px; transform: none; }
+            
+            .sidebar-toggle { background: none; border: none; cursor: pointer; color: var(--icon-color); display: flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; transition: 0.2s; }
+            .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
+
+            /* Collapsed State */
+            .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
+            .sidebar.collapsed .brand-logo, .sidebar.collapsed .account-text, .sidebar.collapsed .btn-close-svg { display: none !important; }
+            .sidebar.collapsed .mini-logo, .sidebar.collapsed .btn-open-svg { display: flex !important; }
+            .btn-open-svg { display: none; }
+            .sidebar.collapsed .sidebar-header { flex-direction: column; padding: 30px 0 20px 0; gap: 30px; }
+            .sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
+            .sidebar.collapsed .account-section { display: flex; justify-content: center; padding: 24px 0; }
+            .sidebar.collapsed .nav-label { display: none; }
+            .sidebar.collapsed .sidebar-inner { overflow: visible; }
+            
+            .sidebar.collapsed .nav-item:hover .nav-label { display: block; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); background-color: var(--tooltip-bg); color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; white-space: nowrap; z-index: 1000; margin-left: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+            .sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
         }
+
+        /* ============= ADD PAYMENT SPECIFIC STYLES ============= */
+        .app-container { max-width: 800px; margin: 0 auto; padding: 0 32px; }
+        @media (max-width: 768px) { .app-container { padding: 0 16px; } }
+        
+        .screen { display: none; } 
+        .screen.active { display: block; animation: fadeIn 0.5s var(--ease-cubic) forwards; }
+        
+        /* Premium Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
+        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
+        .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--btn-shadow); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
+        .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #163837, #02302f); }
+        
+        .btn-secondary { background-color: var(--color-surface); color: var(--color-text-secondary); border-color: var(--color-border); box-shadow: var(--shadow-sm); }
+        .btn-secondary:hover:not(:disabled) { background-color: var(--light-bg-tertiary); border-color: #cbd5e1; color: var(--color-text-primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-top: 1rem;}
+        @media (max-width: 768px) { .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;} }
+        
+        .breadcrumb { font-size: 0.95rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; transition: color 0.2s;}
+        .breadcrumb:hover { color: var(--color-primary); }
+
+        .card { 
+            background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); 
+            padding: 32px; margin-bottom: 32px; box-shadow: var(--premium-shadow); position: relative;
+        }
+        .card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1;
+        }
+        @media (max-width: 768px) { .card { padding: 20px; border-radius: var(--radius-lg); } }
+
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; } 
+        @media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } .grid-col-span-2 { grid-column: span 2; } }
+        
+        /* Premium Floating Label Inputs */
+        .input-group { position: relative; width: 100%;}
+        .input-field { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
+        .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
+        
+        .input-field:focus + .input-label, 
+        .input-field:not(:placeholder-shown) + .input-label,
+        select.input-field:focus + .input-label, 
+        select.input-field:valid + .input-label { 
+            top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); 
+            background-color: #ffffff; padding: 0 6px; border-radius: 4px; 
+            font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
+        .form-actions-container { display: flex; justify-content: flex-end; margin-top: 2.5rem; border-top: 1px solid var(--color-border); padding-top: 2rem; }
+        @media (max-width: 640px) {
+            .form-actions-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 1.25rem 1.5rem; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom)); background-color: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--color-border); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 1000; margin-top: 0; justify-content: center; }
+            .form-actions-container .btn { width: 100%; }
+        }
+
+        /* Toasts & Loaders */
+        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 14px 28px; border-radius: 12px; color: white; font-weight: 600; font-size: 0.95rem; box-shadow: var(--premium-shadow-hover); transition: bottom 0.4s var(--ease-out-back); z-index: 4000; letter-spacing: 0.01em;}
+        #toast.success { background: linear-gradient(135deg, #10b981, #059669); } 
+        #toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        #toast.show { bottom: 40px; }
+
+        .loading-overlay { position: fixed; inset: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px); z-index: 4000; display: flex; align-items: center; justify-content: center; }
+        .spinner { border: 4px solid rgba(1, 39, 38, 0.1); border-bottom-color: var(--color-primary); border-radius: 50%; width: 48px; height: 48px; animation: spin 1s linear infinite; }
+        
+        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+        @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+
     </style>
 </head>
-
 <body>
-    <div id="app-container" class="app-container">
-        <header id="app-header" class="app-header"></header>
+
+    <!-- App Container -->
+    <div class="app-layout">
         
-        <div id="mobile-menu-overlay" data-app-action="close-menu"></div>
-        <div id="mobile-menu">
-            <div class="mobile-menu-header">
-                <span class="mobile-menu-title">Menu</span>
-                <button class="btn-icon" data-app-action="close-menu">
-                    <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        <!-- Mobile Header (Hidden on Desktop) -->
+        <header class="m-header mobile-only">
+            <button class="m-menu-btn" id="m-open-drawer">
+                <div class="m-menu-lines"><span></span></div>
+            </button>
+            <a href="admin-dashboard.html" class="brand-logo">
+                <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+            </a>
+            <div style="width:40px;"></div>
+        </header>
+
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Unified Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="brand-logo">
+                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+                </a>
+                
+                <span class="mini-logo">
+                    <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
+                </span>
+                
+                <!-- Desktop Collapse Button -->
+                <button class="sidebar-toggle desktop-only" id="sidebar-toggle-btn">
+                    <svg class="btn-close-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg>
+                    <svg class="btn-open-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
+                </button>
+
+                <!-- Mobile Close Button -->
+                <button class="m-drawer-close mobile-only" id="m-close-drawer">
+                    <div class="m-drawer-close-icon"></div>
                 </button>
             </div>
-            <div id="mobile-menu-content"></div>
-        </div>
+            
+            <div class="sidebar-inner">
+                <nav class="nav-menu">
+                    <!-- Dashboard Highlighted -->
+                    <a href="admin-dashboard.html" class="nav-item active">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                    <a href="view-orders.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gallery-vertical-end-icon lucide-gallery-vertical-end"><path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/></svg></span>
+                        <span class="nav-label">All Orders</span>
+                    </a>
+                    <a href="admin-employees.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
+                        <span class="nav-label">Manage Employees</span>
+                    </a>
+                    <a href="notifications.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span>
+                        <span class="nav-label">Notifications</span>
+                    </a>
+                    <a href="support.html" class="nav-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question-mark-icon lucide-message-circle-question-mark"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+                        <span class="nav-label">Support</span>
+                    </a>
+                </nav>
+            </div>
 
-        <main>
-            <div class="container" id="main-container">
-                <!-- This is the main view for this page -->
-                <div id="add-payment-view" class="view active">
-                    <!-- Content injected by JS -->
+            <div class="account-section" id="profile-trigger">
+                <div class="account-card">
+                    <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+                    <div class="account-text">
+                        <div class="account-name">Loading...</div>
+                        <div class="account-email"></div>
+                    </div>
                 </div>
             </div>
-        </main>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div class="main-content">
+            <header class="topbar desktop-only">Add Payment</header>
+            
+            <main class="content-area">
+                <div class="app-container">
+                    <div id="add-payment-view" class="view active">
+                        <!-- Default empty state, will be overwritten by JS -->
+                        <div style="display:flex; justify-content:center; padding: 40px;"><div class="spinner"></div></div>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
-    
+
+    <!-- Profile Popup Menu -->
+    <div class="profile-popup" id="profile-popup">
+        <div class="popup-header">
+            <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+            <div class="account-text">
+                <div class="account-name">Loading...</div>
+                <div class="account-email"></div>
+            </div>
+        </div>
+        <ul class="popup-list">
+            <li><a href="#"><span>Profile</span></a></li>
+            <li><a href="#"><span>Settings</span></a></li>
+            <li><a href="#" style="color:var(--color-danger)" data-app-action="logout"><span>Logout</span></a></li>
+        </ul>
+    </div>
+
     <div id="toast"></div>
-    <div id="loader"><div class="spinner"></div></div>
+    <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // IMPORTANT: Replace with your actual Firebase configuration
-        // Firebase configuration will be injected by Netlify during build
-const firebaseConfig = {
-    apiKey: "__API_KEY__",
-    authDomain: "__AUTH_DOMAIN__",
-    projectId: "__PROJECT_ID__",
-    storageBucket: "__STORAGE_BUCKET__",
-    messagingSenderId: "__MESSAGING_SENDER_ID__",
-    appId: "__APP_ID__",
-    measurementId: "__MEASUREMENT_ID__"
-};
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
         
         let db, auth;
         let currentUserProfile = null;
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
         // --- HELPER FUNCTIONS ---
-        const showLoader = () => document.getElementById('loader').style.display = 'flex';
-        const hideLoader = () => document.getElementById('loader').style.display = 'none';
-        const showToast = (message, type = 'success') => { const t = document.getElementById('toast'); t.textContent = message; t.className = `show ${type}`; setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); }
+        const showLoader = () => document.getElementById('loading-overlay').style.display = 'flex';
+        const hideLoader = () => document.getElementById('loading-overlay').style.display = 'none';
+        const showToast = (message, type = 'success') => { 
+            const t = document.getElementById('toast'); 
+            t.textContent = message; 
+            t.className = `show ${type}`; 
+            setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); 
+        };
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             try {
-                if (!firebaseConfig.apiKey || firebaseConfig.projectId === "your-project-id") {
-                    throw new Error("Firebase config is not set.");
-                }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
+                initSyncSkillUI();
                 bindEventListeners();
-                initializeTheme();
                 listenForAuthStateChanges();
             } catch (error) {
                 console.error("Initialization Failed:", error);
-                document.body.innerHTML = `<div class="full-page-center"><h2>Error initializing application.</h2></div>`;
             }
         });
+
+        // --- SyncSkill UI Integration ---
+        function initSyncSkillUI() {
+            const sidebar = document.getElementById('sidebar');
+            const mOverlay = document.getElementById('sidebar-overlay');
+            
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            if(toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('collapsed');
+                });
+            }
+
+            const mOpen = document.getElementById('m-open-drawer');
+            const mClose = document.getElementById('m-close-drawer');
+            
+            const openMobileDrawer = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); };
+            const closeMobileDrawer = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); };
+
+            if(mOpen) mOpen.onclick = openMobileDrawer;
+            if(mClose) mClose.onclick = closeMobileDrawer;
+            if(mOverlay) mOverlay.onclick = closeMobileDrawer;
+
+            const pPopup = document.getElementById('profile-popup');
+            const profileTrigger = document.getElementById('profile-trigger');
+
+            if(profileTrigger && pPopup) {
+                profileTrigger.onclick = (e) => {
+                    e.stopPropagation();
+                    if (window.innerWidth > 768) {
+                        pPopup.style.left = '16px';
+                        pPopup.style.bottom = '80px';
+                        pPopup.style.transform = 'none';
+                    } else {
+                        pPopup.style.left = '50%';
+                        pPopup.style.bottom = '100px';
+                        pPopup.style.transform = 'translateX(-50%)';
+                    }
+                    pPopup.classList.toggle('active');
+                };
+            }
+            document.addEventListener('click', () => { if(pPopup) pPopup.classList.remove('active'); });
+        }
 
         // --- AUTHENTICATION & ROUTING ---
         function listenForAuthStateChanges() {
@@ -214,8 +471,8 @@ const firebaseConfig = {
                     const userDoc = await getDoc(userRef);
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
                     
-                    renderHeader();
-                    await showAddPaymentView(); // Main function for this page
+                    populateNavbar(user, currentUserProfile);
+                    await showAddPaymentView();
                     
                 } else {
                     window.location.href = 'login.html';
@@ -223,8 +480,17 @@ const firebaseConfig = {
                 hideLoader();
             });
         }
+        
+        function populateNavbar(user, userProfile) { 
+            const defaultPhoto = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E'; 
+            
+            document.querySelectorAll('.account-avatar').forEach(img => img.src = userProfile.photoURL || defaultPhoto);
+            document.querySelectorAll('.account-name').forEach(el => el.textContent = userProfile.displayName || 'User');
+            document.querySelectorAll('.account-email').forEach(el => el.textContent = userProfile.email || '');
+        }
 
         async function handleLogout() { 
+            showLoading();
             await signOut(auth);
         }
         
@@ -237,44 +503,57 @@ const firebaseConfig = {
                 const employeeOptions = employees.map(emp => `<option value="${emp.id}">${emp.name}</option>`).join('');
                 
                 view.innerHTML = `
-                    <div id="add-payment-view-header" style="margin-bottom: 16px;">
-                        <button data-app-action="navigate-home" class="btn btn-secondary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                            Back to Dashboard
-                        </button>
+                    <a href="admin-dashboard.html" class="breadcrumb" style="font-size: 0.95rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; transition: color 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                        <span>Back to Dashboard</span>
+                    </a>
+                    
+                    <div class="page-header mobile-only">
+                        <h2 class="page-title">Add Global Payment</h2>
                     </div>
+                    
                     <div class="card">
-                        <h2>Add a Global Payment</h2>
                         <form id="global-payment-form">
-                            <div class="form-group">
-                                <label for="g-payment-employee">Select Employee</label>
-                                <select id="g-payment-employee" required>
-                                    <option value="">-- Please Select --</option>
-                                    ${employeeOptions}
-                                </select>
+                            <h3 style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-border);">Payment Details</h3>
+                            
+                            <div class="form-grid">
+                                <div class="input-group grid-col-span-2">
+                                    <select id="g-payment-employee" class="input-field" required>
+                                        <option value="" disabled selected hidden></option>
+                                        ${employeeOptions}
+                                    </select>
+                                    <label class="input-label" for="g-payment-employee">Select Employee</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="number" id="g-payment-amount" class="input-field" placeholder=" " required min="0" step="0.01">
+                                    <label class="input-label" for="g-payment-amount">Amount</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="date" id="g-payment-date" class="input-field" placeholder=" " required>
+                                    <label class="input-label" for="g-payment-date">Date</label>
+                                </div>
+                                <div class="input-group">
+                                    <select id="g-payment-mode" class="input-field" required>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Online">Online</option>
+                                    </select>
+                                    <label class="input-label" for="g-payment-mode">Mode</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" id="g-payment-note" class="input-field" placeholder=" ">
+                                    <label class="input-label" for="g-payment-note">Note (Optional)</label>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="g-payment-amount">Amount</label>
-                                <input type="number" id="g-payment-amount" required min="0" step="0.01">
+                            
+                            <div class="form-actions-container">
+                                <button type="submit" class="btn btn-primary"><span class="material-symbols-outlined">save</span> Save Payment</button>
                             </div>
-                            <div class="form-group">
-                                <label for="g-payment-date">Date</label>
-                                <input type="date" id="g-payment-date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="g-payment-note">Note (Optional)</label>
-                                <input type="text" id="g-payment-note">
-                            </div>
-                            <div class="form-group">
-                                <label for="g-payment-mode">Mode</label>
-                                <select id="g-payment-mode">
-                                    <option>Cash</option>
-                                    <option>Online</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="width:100%">Save Payment</button>
                         </form>
                     </div>`;
+                
+                // Pre-fill date with today
+                document.getElementById('g-payment-date').value = new Date().toISOString().split('T')[0];
+                
                 document.getElementById('global-payment-form').addEventListener('submit', handleGlobalPaymentFormSubmit);
             } catch(err) {
                 console.error("Error loading add payment view:", err);
@@ -311,31 +590,6 @@ const firebaseConfig = {
                 hideLoader();
             }
         }
-
-        // --- UI RENDERING (HEADER, THEME, MENUS) ---
-        function renderHeader() {
-            const header = document.getElementById('app-header');
-            header.innerHTML = `
-                <div class="nav-left">
-                     <button class="btn-icon nav-menu-btn" data-app-action="toggle-menu">
-                        <svg class="icon-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                    </button>
-                    <span class="header-title mobile-only">PayrollPro</span>
-                </div>
-                <div class="nav-right">
-                    <div class="profile-menu">
-                        <img src="${currentUserProfile.photoURL}" alt="User Profile" class="user-avatar" data-app-action="toggle-profile-dropdown">
-                        <div id="profile-dropdown">
-                            <button class="btn btn-secondary" data-app-action="logout">Logout</button>
-                        </div>
-                    </div>
-                </div>`;
-            document.getElementById('mobile-menu-content').innerHTML = `<button class="btn btn-secondary" data-app-action="toggle-theme">Toggle Theme</button>`;
-        }
-        function toggleMenu(show) { document.getElementById('mobile-menu').classList.toggle('active', show); document.getElementById('mobile-menu-overlay').classList.toggle('active', show); }
-        function toggleProfileDropdown(show) { const dropdown = document.getElementById('profile-dropdown'); if (show === undefined) { dropdown.classList.toggle('active'); } else { dropdown.classList.toggle('active', show); } }
-        function initializeTheme() { const theme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', theme); }
-        function toggleTheme() { const currentTheme = document.documentElement.getAttribute('data-theme'); const newTheme = currentTheme === 'light' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); }
         
         // --- EVENT HANDLING ---
         function bindEventListeners() {
@@ -343,22 +597,12 @@ const firebaseConfig = {
                 const target = e.target;
                 const appAction = target.closest('[data-app-action]');
 
-                if (!appAction?.dataset?.appAction) {
-                    if (!target.closest('.profile-menu')) toggleProfileDropdown(false);
-                    return;
-                }
+                if (!appAction?.dataset?.appAction) return;
                 
                 e.preventDefault();
                 const action = appAction.dataset.appAction;
                 
                 switch (action) {
-                    case 'navigate-home':
-                        window.location.href = 'admin-dashboard.html';
-                        break;
-                    case 'toggle-menu': toggleMenu(true); break;
-                    case 'close-menu': toggleMenu(false); break;
-                    case 'toggle-profile-dropdown': toggleProfileDropdown(); break;
-                    case 'toggle-theme': toggleTheme(); break;
                     case 'logout': await handleLogout(); break;
                 }
             });
