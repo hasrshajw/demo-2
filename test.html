@@ -389,12 +389,21 @@
         .order-customer-name { font-weight: 500; color: var(--light-text-primary); }
         .order-due-date { font-size: 0.8rem; }
         .order-added-by { font-size: 0.8rem; background-color: var(--light-bg-tertiary); padding: 2px 8px; border-radius: 999px; color: var(--light-text-secondary); white-space: nowrap; }
-        @media (max-width: 768px) {
-  .container { padding: 0 16px; }
-  .card { padding: 16px; }
-  .card-title { font-size: 1.1rem; }
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 0;                /* remove the problematic margin */
+  }
   .content-area {
-    padding: 20px 0 0 0;
+    padding: 72px 0 0 0;          /* top:72px for header, no sides/bottom */
+  }
+  .container {
+    padding: 0 16px;              /* keep left/right spacing via container */
+  }
+  .card {
+    padding: 16px;
+  }
+  .card-title {
+    font-size: 1.1rem;
   }
 }
     </style>
