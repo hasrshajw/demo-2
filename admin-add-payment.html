@@ -43,6 +43,7 @@
             /* Premium Shadows */
             --premium-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
             --premium-shadow-hover: 0 12px 30px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(0, 0, 0, 0.05);
+            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
             --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
             --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.25);
             
@@ -181,31 +182,19 @@
             .sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
         }
 
-        /* ============= ADD PAYMENT SPECIFIC STYLES ============= */
+        /* ============= PAGE CONTENT SPECIFIC STYLES ============= */
         .app-container { max-width: 800px; margin: 0 auto; padding: 0 32px; }
         @media (max-width: 768px) { .app-container { padding: 0 16px; } }
         
         .screen { display: none; } 
         .screen.active { display: block; animation: fadeIn 0.5s var(--ease-cubic) forwards; }
         
-        /* Premium Buttons */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
-        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
-        .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--btn-shadow); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        
-        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
-        .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #163837, #02302f); }
-        
-        .btn-secondary { background-color: var(--color-surface); color: var(--color-text-secondary); border-color: var(--color-border); box-shadow: var(--shadow-sm); }
-        .btn-secondary:hover:not(:disabled) { background-color: var(--light-bg-tertiary); border-color: #cbd5e1; color: var(--color-text-primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-top: 1rem;}
-        @media (max-width: 768px) { .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;} }
-        
         .breadcrumb { font-size: 0.95rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; transition: color 0.2s;}
         .breadcrumb:hover { color: var(--color-primary); }
 
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-top: 1rem;}
+        @media (max-width: 768px) { .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem;} }
+        
         .card { 
             background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); 
             padding: 32px; margin-bottom: 32px; box-shadow: var(--premium-shadow); position: relative;
@@ -218,10 +207,10 @@
         }
         @media (max-width: 768px) { .card { padding: 20px; border-radius: var(--radius-lg); } }
 
+        /* Premium Floating Label Inputs */
         .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; } 
         @media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } .grid-col-span-2 { grid-column: span 2; } }
         
-        /* Premium Floating Label Inputs */
         .input-group { position: relative; width: 100%;}
         .input-field { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
         .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
@@ -235,31 +224,60 @@
             background-color: #ffffff; padding: 0 6px; border-radius: 4px; 
             font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
+        .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
+        .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--btn-shadow); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         
+        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
+        .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #163837, #02302f); }
+        
+        .btn-secondary { background-color: var(--color-surface); color: var(--color-text-secondary); border-color: var(--color-border); box-shadow: var(--shadow-sm); }
+        .btn-secondary:hover:not(:disabled) { background-color: var(--light-bg-tertiary); border-color: #cbd5e1; color: var(--color-text-primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
         .form-actions-container { display: flex; justify-content: flex-end; margin-top: 2.5rem; border-top: 1px solid var(--color-border); padding-top: 2rem; }
-        @media (max-width: 640px) {
-            .form-actions-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 1.25rem 1.5rem; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom)); background-color: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--color-border); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 1000; margin-top: 0; justify-content: center; }
-            .form-actions-container .btn { width: 100%; }
+        @media (max-width: 768px) {
+            .form-actions-container { 
+                position: fixed; 
+                bottom: 0; 
+                left: 0; 
+                right: 0; 
+                padding: 1.25rem 1.5rem; 
+                padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
+                background-color: rgba(255,255,255,0.95); 
+                -webkit-backdrop-filter: blur(12px);
+                backdrop-filter: blur(12px); 
+                border-top: 1px solid var(--color-border); 
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.08); 
+                z-index: 1000; 
+                margin-top: 0; 
+                justify-content: center; 
+            }
+            .form-actions-container .btn { width: 100% !important; }
         }
 
-        /* Toasts & Loaders */
-        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 14px 28px; border-radius: 12px; color: white; font-weight: 600; font-size: 0.95rem; box-shadow: var(--premium-shadow-hover); transition: bottom 0.4s var(--ease-out-back); z-index: 4000; letter-spacing: 0.01em;}
-        #toast.success { background: linear-gradient(135deg, #10b981, #059669); } 
-        #toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
-        #toast.show { bottom: 40px; }
+        /* Modals & Loaders */
+        .modal { display: none; position: fixed; z-index: 3000; inset: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.5); backdrop-filter: blur(5px); align-items: center; justify-content: center; animation: fadeIn 0.3s var(--ease-cubic); padding: 1rem; }
+        .modal-content { background-color: #fff; padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--modal-shadow); width: 100%; max-width: 460px; text-align: center; animation: popIn 0.3s var(--ease-out-back); position: relative;}
+        .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: 2rem; color: var(--color-text-primary); }
+        .modal-buttons { display: flex; justify-content: center; gap: 1rem; }
+        .modal-buttons .btn { width: 100%; }
 
         .loading-overlay { position: fixed; inset: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px); z-index: 4000; display: flex; align-items: center; justify-content: center; }
         .spinner { border: 4px solid rgba(1, 39, 38, 0.1); border-bottom-color: var(--color-primary); border-radius: 50%; width: 48px; height: 48px; animation: spin 1s linear infinite; }
         
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none; } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: none; } }
         @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
 
     </style>
 </head>
-<body>
 
-    <!-- App Container -->
+<body>
+    <!-- App Layout -->
     <div class="app-layout">
         
         <!-- Mobile Header (Hidden on Desktop) -->
@@ -341,9 +359,14 @@
             <header class="topbar desktop-only">Add Payment</header>
             
             <main class="content-area">
+                
+                <!-- Feedback Elements -->
+                <div id="message-modal" class="modal"><div class="modal-content" style="text-align:center;"><h3 style="margin-top:0;">Notification</h3><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px;">OK</button></div></div></div>
+                <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
+
                 <div class="app-container">
                     <div id="add-payment-view" class="view active">
-                        <!-- Default empty state, will be overwritten by JS -->
+                        <!-- Content injected by JS -->
                         <div style="display:flex; justify-content:center; padding: 40px;"><div class="spinner"></div></div>
                     </div>
                 </div>
@@ -368,7 +391,6 @@
     </div>
 
     <div id="toast"></div>
-    <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -385,8 +407,7 @@
             measurementId: "__MEASUREMENT_ID__"
         };
         
-        let db, auth;
-        let currentUserProfile = null;
+        let db, auth, currentUserProfile;
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
         // --- HELPER FUNCTIONS ---
@@ -487,10 +508,19 @@
             document.querySelectorAll('.account-avatar').forEach(img => img.src = userProfile.photoURL || defaultPhoto);
             document.querySelectorAll('.account-name').forEach(el => el.textContent = userProfile.displayName || 'User');
             document.querySelectorAll('.account-email').forEach(el => el.textContent = userProfile.email || '');
+            
+            const isAdmin = user.email === ADMIN_EMAIL || userProfile?.role === 'admin'; 
+            const secondaryLink = isAdmin ? { href: 'admin-employees.html', text: 'Manage Employees' } : { href: 'my-attendance.html', text: 'My Attendance' }; 
+            const navLinkSecondary = document.getElementById('nav-link-secondary');
+            if (navLinkSecondary) {
+                navLinkSecondary.href = secondaryLink.href;
+                navLinkSecondary.querySelector('.nav-label').textContent = secondaryLink.text;
+                navLinkSecondary.style.display = 'flex';
+            }
         }
 
         async function handleLogout() { 
-            showLoading();
+            showLoader();
             await signOut(auth);
         }
         
@@ -503,7 +533,7 @@
                 const employeeOptions = employees.map(emp => `<option value="${emp.id}">${emp.name}</option>`).join('');
                 
                 view.innerHTML = `
-                    <a href="admin-dashboard.html" class="breadcrumb" style="font-size: 0.95rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; transition: color 0.2s;">
+                    <a href="admin-dashboard.html" class="breadcrumb">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                         <span>Back to Dashboard</span>
                     </a>
@@ -514,7 +544,7 @@
                     
                     <div class="card">
                         <form id="global-payment-form">
-                            <h3 style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-border);">Payment Details</h3>
+                            <h3 style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);">Payment Details</h3>
                             
                             <div class="form-grid">
                                 <div class="input-group grid-col-span-2">
@@ -526,7 +556,7 @@
                                 </div>
                                 <div class="input-group">
                                     <input type="number" id="g-payment-amount" class="input-field" placeholder=" " required min="0" step="0.01">
-                                    <label class="input-label" for="g-payment-amount">Amount</label>
+                                    <label class="input-label" for="g-payment-amount">Amount (₹)</label>
                                 </div>
                                 <div class="input-group">
                                     <input type="date" id="g-payment-date" class="input-field" placeholder=" " required>
@@ -537,7 +567,7 @@
                                         <option value="Cash">Cash</option>
                                         <option value="Online">Online</option>
                                     </select>
-                                    <label class="input-label" for="g-payment-mode">Mode</label>
+                                    <label class="input-label" for="g-payment-mode">Payment Mode</label>
                                 </div>
                                 <div class="input-group">
                                     <input type="text" id="g-payment-note" class="input-field" placeholder=" ">
@@ -558,7 +588,7 @@
             } catch(err) {
                 console.error("Error loading add payment view:", err);
                 showToast("Could not load page.", "error");
-                view.innerHTML = `<p>Error loading form. Please try again.</p>`;
+                view.innerHTML = `<div class="card" style="text-align:center;"><p>Error loading form. Please refresh.</p></div>`;
             }
         }
 
@@ -570,16 +600,16 @@
                 amount: parseFloat(document.getElementById('g-payment-amount').value),
                 date: document.getElementById('g-payment-date').value,
                 note: document.getElementById('g-payment-note').value,
-                paymentMode: document.getElementById('g-payment-mode').value
+                paymentMode: document.getElementById('g-payment-mode').value,
+                timestamp: serverTimestamp()
             };
             try {
-                if (!employeeId || !data.amount || !data.date) {
+                if (!employeeId || isNaN(data.amount) || !data.date) {
                     throw new Error("Employee, Amount and Date are required.");
                 }
                 await addDoc(collection(db, `employees/${employeeId}/payments`), data);
                 showToast("Payment added successfully!", "success");
                 
-                // Redirect back to the dashboard after a short delay
                 setTimeout(() => {
                     window.location.href = 'admin-dashboard.html';
                 }, 1500);
@@ -596,15 +626,15 @@
             document.body.addEventListener('click', async (e) => {
                 const target = e.target;
                 const appAction = target.closest('[data-app-action]');
-
                 if (!appAction?.dataset?.appAction) return;
                 
-                e.preventDefault();
                 const action = appAction.dataset.appAction;
-                
                 switch (action) {
                     case 'logout': await handleLogout(); break;
                 }
+            });
+            document.getElementById('message-ok-btn').addEventListener('click', () => {
+                document.getElementById('message-modal').style.display = 'none';
             });
         }
     </script>
