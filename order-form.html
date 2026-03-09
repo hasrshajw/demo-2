@@ -191,8 +191,8 @@
         @media (max-width: 768px) { .app-container { padding: 0 16px; } }
         
         .screen { display: none; } 
-        /* transform: none ensures position fixed works reliably on children during/after animation */
-        .screen.active { display: block; animation: fadeUp 0.5s var(--ease-cubic) forwards; }
+        /* Using fadeIn prevents transform bugs that break position: fixed inside animated elements */
+        .screen.active { display: block; animation: fadeIn 0.5s var(--ease-cubic) forwards; }
         
         /* Premium Buttons */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
@@ -288,6 +288,7 @@
                 left: 0; 
                 right: 0; 
                 padding: 1.25rem 1.5rem; 
+                padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
                 background-color: rgba(255,255,255,0.95); 
                 -webkit-backdrop-filter: blur(12px);
                 backdrop-filter: blur(12px); 
@@ -321,7 +322,7 @@
         .skeleton-h3 { width: 40%; height: 28px; margin-top: 1.5rem; margin-bottom: 1.5rem;}
         
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(.95) } 100% { opacity: 1; transform: scale(1) } }
         @keyframes spin { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
 
@@ -521,7 +522,7 @@
                                     <button type="button" id="add-window-btn" class="btn btn-secondary" style="width: 100%; margin: 1rem 0;"><span class="material-symbols-outlined">add</span> Add Another Item</button>
                                     
                                     <div class="form-actions-container">
-                                        <button type="submit" id="save-order-btn" class="btn btn-success"><span class="material-symbols-outlined">save</span> Save Order</button>
+                                        <button type="submit" id="save-order-btn" form="order-form" class="btn btn-success"><span class="material-symbols-outlined">save</span> Save Order</button>
                                     </div>
                                 </form>
                             </div>
