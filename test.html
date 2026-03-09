@@ -137,6 +137,22 @@
             .brand-logo img, .mini-logo img { height: 45px; }
             
             .main-content { margin-top: 0; }
+            
+            /* Topbar shifted design */
+            .topbar {
+                height: 80px;
+                background: var(--header-bg);
+                border-bottom: 1px solid var(--border-subtle);
+                padding: 0 40px;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+                font-size: 1.75rem;
+                font-family: var(--font-main);
+                color: var(--light-text-primary);
+                flex-shrink: 0;
+            }
+
             .sidebar { position: relative; transform: translateX(0) !important; width: var(--sidebar-width); max-width: none; background: var(--sidebar-bg); border-right: 1px solid var(--border-subtle); z-index: 100; }
             .sidebar-header { height: auto; min-height: var(--header-height-desktop); padding: 30px 24px; border-bottom: none; }
             .nav-menu { padding: 10px 16px; }
@@ -340,12 +356,13 @@
 
         <!-- Main Dashboard Content -->
         <div class="main-content">
+            <header class="topbar desktop-only">Admin Dashboard</header>
             <main class="content-area" id="app-container">
                 <div class="container" id="main-container">
                     <div id="home-view" class="view active">
                         <div class="page-header">
                             <div>
-                                <h1 class="page-title">Admin Dashboard</h1>
+                                <h1 class="page-title mobile-only">Admin Dashboard</h1>
                                 <p class="welcome-message" id="welcome-message">Loading admin details...</p>
                             </div>
                         </div>
