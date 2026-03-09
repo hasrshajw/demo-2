@@ -14,6 +14,7 @@
     
     <!-- Leaflet Map CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <style>
         /* --- MERGED CSS VARIABLES --- */
@@ -35,7 +36,7 @@
             --border-subtle: #e5e7eb;
             --radius-md: 10px;
             
-            /* Theme & Tokens (PayrollPro Premium) */
+            /* Theme & Tokens (Premium UI) */
             --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; 
             --font-alt: 'Inter', sans-serif; 
             --font-nav: 'DM Sans', sans-serif;
@@ -72,7 +73,7 @@
             height: 100%;
         }
 
-        h1, h2, h3 { font-family: var(--font-main); font-weight: 600; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em; }
+        h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em; }
         h1 { font-size: 1.875rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
 
         /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
@@ -104,7 +105,7 @@
         /* Mobile First Structure */
         .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; }
-        .content-area { flex: 1; overflow-y: auto; padding-bottom: 100px;} 
+        .content-area { flex: 1; overflow-y: auto; padding-bottom: 120px;} 
         
         .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .m-menu-lines { width: 18px; height: 14px; position: relative; }
@@ -144,7 +145,7 @@
             .brand-logo img, .mini-logo img { height: 45px; }
             
             .main-content { margin-top: 0; }
-            .content-area { padding-top: 20px; }
+            .content-area { padding-top: 20px; padding-bottom: 40px; }
             
             .topbar {
                 height: 80px;
@@ -229,7 +230,15 @@
         .input-field { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
         .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
         .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
-        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        
+        .input-field:focus + .input-label, 
+        .input-field:not(:placeholder-shown) + .input-label,
+        select.input-field:focus + .input-label, 
+        select.input-field:valid + .input-label { 
+            top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); 
+            background-color: #ffffff; padding: 0 6px; border-radius: 4px; 
+            font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
         textarea.input-field { resize: vertical; min-height: 80px; }
 
         /* Nested Window Entry Card */
@@ -248,7 +257,7 @@
         .window-entry-title { font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); flex-shrink: 0; font-family: var(--font-main);}
         
         /* Select style inside header */
-        .item-type-select { flex-grow: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.2s;}
+        .item-type-select { flex-grow: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid #cbd5e1; background: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.2s; font-family: var(--font-alt);}
         .item-type-select:focus { border-color: var(--color-primary); }
 
         .remove-window-btn {
@@ -276,7 +285,7 @@
         }
 
         /* Modals & Loaders */
-        .modal { display: none; position: fixed; z-index: 3000; inset: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.5); backdrop-filter: blur(6px); align-items: center; justify-content: center; animation: fadeIn 0.3s var(--ease); padding: 1rem;}
+        .modal { display: none; position: fixed; z-index: 3000; inset: 0; width: 100%; height: 100%; background-color: rgba(17, 24, 39, 0.5); backdrop-filter: blur(6px); align-items: center; justify-content: center; animation: fadeIn 0.3s var(--ease-cubic); padding: 1rem;}
         .modal-content { background-color: #fff; padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--modal-shadow); width: 100%; max-width: 460px; text-align: center; animation: popIn 0.3s var(--ease-out-back); position: relative;}
         .modal-message { font-size: 1.125rem; font-weight: 500; margin-bottom: 2rem; color: var(--color-text-primary); }
         
@@ -387,7 +396,7 @@
             <main class="content-area">
                 
                 <!-- Modals placed inside app-container to avoid stacking issues -->
-                <div id="message-modal" class="modal"><div class="modal-content"><p id="message-text" class="modal-message"></p><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px;">OK</button></div></div>
+                <div id="message-modal" class="modal"><div class="modal-content"><h3 style="margin-top:0;">Notification</h3><p id="message-text" class="modal-message"></p><div class="modal-buttons"><button id="message-ok-btn" class="btn btn-primary" style="min-width: 120px;">OK</button></div></div></div>
                 <div id="loading-overlay" class="loading-overlay" style="display: none;"><div class="spinner"></div></div>
                 <div id="location-picker-modal" class="modal"><div class="modal-content" style="max-width: 800px; text-align: left; padding: 0; animation: popIn 0.3s var(--ease-out-back);"><div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-border);"><h3 style="margin:0;">Select Customer Location</h3><button id="location-picker-close-btn" class="remove-window-btn" style="position: static; border-radius: 50%;"><span class="material-symbols-outlined">close</span></button></div><div id="map-container" style="height: 400px; width: 100%; position: relative;"><div class="map-pin"></div></div><div style="padding: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--light-border);"><button id="cancel-location-btn" class="btn btn-secondary">Cancel</button><button id="confirm-location-btn" class="btn btn-primary">Confirm Location</button></div></div></div>
 
@@ -1090,9 +1099,13 @@
                 profileTrigger.onclick = (e) => {
                     e.stopPropagation();
                     if (window.innerWidth > 768) {
-                        pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; pPopup.style.transform = 'none';
+                        pPopup.style.left = '16px';
+                        pPopup.style.bottom = '80px';
+                        pPopup.style.transform = 'none';
                     } else {
-                        pPopup.style.left = '50%'; pPopup.style.bottom = '100px'; pPopup.style.transform = 'translateX(-50%)';
+                        pPopup.style.left = '50%';
+                        pPopup.style.bottom = '100px';
+                        pPopup.style.transform = 'translateX(-50%)';
                     }
                     pPopup.classList.toggle('active');
                 };
