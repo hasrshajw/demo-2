@@ -195,8 +195,8 @@
         
         /* Premium Breadcrumb Button - Optimized Height and One-Line */
         .breadcrumb { 
-            font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
-            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; 
+            font-size: 0.875rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
+            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 2rem; 
             transition: all 0.3s var(--ease-cubic); padding: 10px 16px; border-radius: 12px; background: #fff; 
             border: 1px solid var(--color-border); white-space: nowrap; line-height: 1;
         }
@@ -233,14 +233,15 @@
         .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
         .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem; z-index: 1;}
         
-        /* Standard logic for floating labels */
+        /* Floating label trigger conditions */
         .input-field:focus + .input-label, 
         .input-field:not(:placeholder-shown) + .input-label,
-        .input-field.has-value + .input-label { 
+        .custom-select-trigger.has-value + .input-label,
+        .custom-select-wrapper.open .input-label { 
             top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); 
             background-color: #ffffff; padding: 0 6px; border-radius: 4px; 
             font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            z-index: 3;
+            z-index: 5;
         }
 
         /* CUSTOM DROPDOWN SYSTEM */
@@ -250,6 +251,7 @@
             padding: 14px 16px; background-color: #f8fafc; border-radius: 12px;
             border: 2px solid transparent; color: var(--color-text-primary);
             font-size: 1rem; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            min-height: 52px;
         }
         .custom-select-wrapper.open .custom-select-trigger { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
         .custom-select-trigger::after {
@@ -265,8 +267,8 @@
             z-index: 100; display: none; max-height: 250px; overflow-y: auto;
             border: 1px solid var(--color-border); padding: 8px;
         }
-        .custom-select-wrapper.open .custom-select-options { display: block; animation: fadeUp 0.2s ease-out; }
-        .custom-select-option { padding: 12px 16px; border-radius: 8px; transition: background 0.2s; font-size: 0.95rem; }
+        .custom-select-wrapper.open .custom-select-options { display: block; animation: fadeIn 0.2s ease-out; }
+        .custom-select-option { padding: 12px 16px; border-radius: 8px; transition: background 0.2s; font-size: 0.95rem; color: var(--color-text-primary);}
         .custom-select-option:hover { background-color: var(--hover-bg); color: var(--color-primary); }
         .custom-select-option.selected { background-color: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 600; }
 
@@ -467,7 +469,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, addDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, addDoc, getDoc, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -515,7 +517,6 @@
                 const trigger = wrapper.querySelector('.custom-select-trigger');
                 const options = wrapper.querySelector('.custom-select-options');
                 const hiddenInput = wrapper.querySelector('input[type="hidden"]');
-                const inputField = wrapper.querySelector('.custom-select-trigger'); // Use trigger as "field" for label logic
 
                 trigger.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -533,7 +534,7 @@
                         hiddenInput.value = val;
                         trigger.textContent = label;
                         
-                        // Handle Label Float
+                        // Handle Label Float Logic
                         if (val) {
                             trigger.classList.add('has-value');
                         } else {
@@ -593,14 +594,10 @@
             onAuthStateChanged(auth, async (user) => {
                 showLoader();
                 if (user) {
-                    if (user.email !== ADMIN_EMAIL) {
-                        window.location.href = 'employee-dashboard.html';
-                        return;
-                    }
-                    
                     const userRef = doc(db, "users", user.uid);
                     let userDoc = await getDoc(userRef);
                     
+                    // Master Admin Logic
                     if (user.email === ADMIN_EMAIL && (!userDoc.exists() || userDoc.data().role !== 'admin')) {
                         await setDoc(userRef, { 
                             displayName: user.displayName || 'Master Admin', 
@@ -617,10 +614,16 @@
                         return;
                     }
 
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    
-                    populateNavbar(user, currentUserProfile);
-                    await loadEmployees();
+                    const profile = userDoc.data();
+                    const isAuthorized = (user.email === ADMIN_EMAIL || profile.role === 'admin');
+
+                    if (isAuthorized) {
+                        currentUserProfile = { id: userDoc.id, ...profile };
+                        populateNavbar(user, currentUserProfile);
+                        await loadEmployees();
+                    } else {
+                        window.location.href = 'employee-dashboard.html';
+                    }
                     
                 } else {
                     window.location.href = 'login.html';
