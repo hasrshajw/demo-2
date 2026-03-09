@@ -184,8 +184,7 @@
         <main>
             <div class="container" id="main-container">
                 <div id="payment-history-view" class="view active">
-                    <!-- Content injected by JS showPaymentHistoryView() -->
-                </div>
+                    </div>
             </div>
         </main>
     </div>
@@ -247,15 +246,37 @@
             onAuthStateChanged(auth, async (user) => {
                 showLoader();
                 if (user) {
-                    if (user.email !== ADMIN_EMAIL) { window.location.href = 'employee-dashboard.html'; return; }
-                    
                     const userRef = doc(db, "users", user.uid);
-                    const userDoc = await getDoc(userRef);
+                    let userDoc = await getDoc(userRef);
+                    
+                    // Master admin self-healing/setup
+                    if (user.email === ADMIN_EMAIL) {
+                        if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+                            await setDoc(userRef, { 
+                                displayName: user.displayName || 'Master Admin', 
+                                email: user.email, 
+                                photoURL: user.photoURL,
+                                status: 'approved', 
+                                role: 'admin' 
+                            }, { merge: true });
+                            userDoc = await getDoc(userRef);
+                        }
+                    }
+
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
                     currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    
-                    populateNavbar(user);
-                    await showPaymentHistoryView();
-                    
+                    const isAdmin = (user.email === ADMIN_EMAIL || currentUserProfile.role === 'admin');
+
+                    if (isAdmin) {
+                        populateNavbar(currentUserProfile);
+                        await showPaymentHistoryView();
+                    } else {
+                        window.location.href = 'employee-dashboard.html';
+                    }
                 } else {
                     window.location.href = 'login.html';
                 }
@@ -265,15 +286,15 @@
         async function handleLogout() { showLoader(); await signOut(auth); }
 
         // --- NAVBAR FUNCTIONS ---
-        function populateNavbar(user) {
-            if (!user) return;
+        function populateNavbar(userProfile) {
+            if (!userProfile) return;
             const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-            document.getElementById('desktop-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('desktop-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('desktop-profile-email').textContent = user.email || '';
-            document.getElementById('mobile-profile-pic').src = user.photoURL || defaultPhoto;
-            document.getElementById('mobile-profile-name').textContent = user.displayName || 'Admin';
-            document.getElementById('mobile-profile-email').textContent = user.email || '';
+            document.getElementById('desktop-profile-pic').src = userProfile.photoURL || defaultPhoto;
+            document.getElementById('desktop-profile-name').textContent = userProfile.displayName || 'Admin';
+            document.getElementById('desktop-profile-email').textContent = userProfile.email || '';
+            document.getElementById('mobile-profile-pic').src = userProfile.photoURL || defaultPhoto;
+            document.getElementById('mobile-profile-name').textContent = userProfile.displayName || 'Admin';
+            document.getElementById('mobile-profile-email').textContent = userProfile.email || '';
         }
         
         function initializeNavbar() {
@@ -296,7 +317,6 @@
         }
         
         async function showPaymentHistoryView() {
-            showLoader();
             try {
                 const view = document.getElementById('payment-history-view');
                 const empDoc = await getDoc(doc(db, "employees", currentEmployeeId));
