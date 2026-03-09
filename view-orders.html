@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayrollPro - All Orders</title>
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -159,8 +158,7 @@
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><svg viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
         <div class="mobile-menu-content">
             <div class="mobile-menu-section" id="mobile-menu-links">
-                <!-- Mobile links will be populated by JavaScript -->
-            </div>
+                </div>
         </div>
         <div class="mobile-menu-bottom">
             <div class="profile-container">
@@ -198,8 +196,7 @@
                 </div>
             </div>
             <div id="order-list-container" class="order-list-container">
-                <!-- Order cards or skeleton loaders will be populated here -->
-            </div>
+                </div>
             <div id="order-list-empty" class="text-center" style="display: none;">
                 <span class="icon material-symbols-outlined">folder_off</span>
                 <p>No orders found matching your criteria.</p>
@@ -218,7 +215,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, onSnapshot, collection, query, orderBy, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, onSnapshot, collection, query, orderBy, getDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // --- Global Variables & UI Elements ---
         const loadingOverlay = document.getElementById('loading-overlay');
@@ -398,6 +395,41 @@
             orderSearchInput.addEventListener('input', renderOrderList);
             orderFilterSelect.addEventListener('change', renderOrderList);
         }
+        
+        function listenForAuthStateChanges() {
+            onAuthStateChanged(auth, async (user) => {
+                showLoading();
+                if (user) {
+                    const userRef = doc(db, "users", user.uid);
+                    let userDoc = await getDoc(userRef);
+                    
+                    // Master admin self-healing/setup
+                    if (user.email === ADMIN_EMAIL) {
+                        if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+                            await setDoc(userRef, { 
+                                displayName: user.displayName || 'Master Admin', 
+                                email: user.email, 
+                                photoURL: user.photoURL,
+                                status: 'approved', 
+                                role: 'admin' 
+                            }, { merge: true });
+                            userDoc = await getDoc(userRef);
+                        }
+                    }
+
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { 
+                        window.location.href = 'login.html'; 
+                        return; 
+                    }
+                    
+                    populateNavbar(user, userDoc.data());
+                    listenForOrders();
+                } else { 
+                    window.location.href = 'login.html'; 
+                }
+                hideLoading();
+            });
+        }
 
         // --- Page Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -408,20 +440,7 @@
             
             initializeNavbar();
             bindEventListeners();
-
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { 
-                        window.location.href = 'login.html'; 
-                        return; 
-                    }
-                    populateNavbar(user, userDoc.data());
-                    listenForOrders();
-                } else { 
-                    window.location.href = 'login.html'; 
-                }
-            });
+            listenForAuthStateChanges();
         });
     </script>
 </body>
