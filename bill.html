@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Invoice Configuration</title>
+    <title>PayrollPro - Invoice</title>
     
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -70,7 +71,6 @@
         }
 
         h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em; }
-        h1 { font-size: 1.875rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
 
         /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
         .app-layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
@@ -101,7 +101,7 @@
         /* Mobile First Structure */
         .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; }
-        .content-area { flex: 1; overflow-y: auto; padding-bottom: 40px; } 
+        .content-area { flex: 1; overflow-y: auto; padding-bottom: 40px;} 
         
         .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .m-menu-lines { width: 18px; height: 14px; position: relative; }
@@ -141,7 +141,7 @@
             .brand-logo img, .mini-logo img { height: 45px; }
             
             .main-content { margin-top: 0; }
-            .content-area { padding-top: 24px; padding-bottom: 40px; }
+            .content-area { padding-top: 20px; padding-bottom: 40px; }
             
             .topbar {
                 height: 80px;
@@ -183,20 +183,17 @@
         }
 
         /* ============= INVOICE SPECIFIC STYLES ============= */
-        .app-container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
-        
+        .app-container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+        @media (max-width: 768px) { .app-container { padding: 0 16px; } }
+
         /* Premium Buttons */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
         .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
         .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--btn-shadow); }
-        
         .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
-        .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #163837, #02302f); }
-        
         .btn-secondary { background-color: var(--color-surface); color: var(--color-text-secondary); border-color: var(--color-border); box-shadow: var(--shadow-sm); }
-        .btn-secondary:hover:not(:disabled) { background-color: var(--light-bg-tertiary); border-color: #cbd5e1; color: var(--color-text-primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-        /* Premium Breadcrumb */
+        
+        /* Premium Breadcrumb Button */
         .breadcrumb { 
             font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
             display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; 
@@ -206,9 +203,12 @@
         .breadcrumb svg { width: 12px; height: 12px; stroke-width: 3.5; flex-shrink: 0;}
         .breadcrumb:hover { color: var(--color-primary); border-color: var(--color-primary); background: var(--light-bg-tertiary); box-shadow: var(--shadow-sm);}
         
+        @media (max-width: 768px) { .breadcrumb { margin-top: 20px; } }
+
+        /* INVOICE CARD UI */
         .card { 
             background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); 
-            padding: 32px; margin-bottom: 32px; box-shadow: var(--premium-shadow); position: relative;
+            padding: 40px; margin-bottom: 32px; box-shadow: var(--premium-shadow); position: relative;
         }
         .card::before {
             content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
@@ -216,91 +216,48 @@
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1;
         }
+        @media (max-width: 640px) { .card { padding: 20px; } }
 
-        .warning-banner { background-color: #fffbeb; border: 1px solid #fde68a; color: #b45309; padding: 1.25rem; border-radius: 16px; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; font-weight: 600; font-size: 0.95rem; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease-out;}
-        
-        /* Floating Label Inputs */
-        .input-group { position: relative; width: 100%;}
-        .input-field { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        .invoice-box { width: 100%; max-width: 900px; margin: auto; background: #fff; border-radius: 6px; display: flex; flex-direction: column; padding: 10px;}
+        .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--light-border); padding-bottom: 20px }
+        .logo-img { max-width: 160px; height: auto }
+        .invoice-details { text-align: right; font-size: 13px; line-height: 1.5; color: #718096 }
+        .invoice-details h2 { font-size: 1.5rem; line-height: 2rem; margin: 0 0 10px 0; color: #718096; font-weight: 600; text-transform: uppercase }
+        .customer-info { margin-top: 25px; display: flex; justify-content: space-between; gap: 2rem }
+        .items-table { width: 100%; margin-top: 25px; border-collapse: collapse; font-size: 13px }
+        .items-table thead th { background-color: #535456; color: #fff; font-weight: 600; padding: 12px 8px; text-align: left; border-bottom: none }
+        .items-table tbody td { padding: 10px 8px; border-bottom: 1px solid var(--light-border); color: #718096 }
+        .summary-section { margin-top: 20px; padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; border-top: 1px solid var(--light-border) }
+        .summary-totals table { width: 100%; font-size: 14px; border-collapse: collapse }
+        .summary-totals table td { border-bottom: 1px solid var(--light-border); padding: 8px }
+        .summary-totals table tr:last-child { font-weight: 700; font-size: 18px; color: #2d3748 }
+        .summary-totals table tr:last-child td { background-color: #f7fafc; border-bottom: none; padding: 12px 8px }
+        .footer-invoice { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--light-border); display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; color: #718096 }
+
+        /* Form styling */
+        .form-group { position: relative; margin-bottom: 1.5rem; }
+        .input-field { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
         .input-field:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
-        .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
-        
-        .input-field:focus + .input-label, 
-        .input-field:not(:placeholder-shown) + .input-label { 
-            top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); 
-            background-color: #ffffff; padding: 0 6px; border-radius: 4px; 
-            font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            z-index: 10;
-        }
-        .address-textarea { width: 100%; min-height: 100px; resize: vertical; margin-top: 12px; display: none; }
+        .input-label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; }
+        .input-field:focus + .input-label, .input-field:not(:placeholder-shown) + .input-label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em; z-index: 1;}
 
-        /* Invoice Result Styles */
-        .invoice-box { width: 100%; max-width: 900px; margin: auto; background: #fff; border-radius: 12px; display: flex; flex-direction: column; padding: 40px; box-shadow: var(--premium-shadow); border: 1px solid var(--color-border); }
-        .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--color-border); padding-bottom: 24px; margin-bottom: 24px;}
-        .logo-img { max-width: 180px; height: auto; }
-        .invoice-details { text-align: right; font-size: 14px; line-height: 1.6; color: #64748b; }
-        .invoice-details h2 { font-size: 2rem; margin: 0 0 12px 0; color: #1e293b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
-        .invoice-details strong { color: #1e293b; }
+        .warning-banner { background-color: #fffbeb; border: 1px solid #fde68a; color: #b45309; padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; font-weight: 600; font-size: 0.9rem;}
         
-        .customer-info { margin-bottom: 30px; display: flex; justify-content: space-between; gap: 2rem; }
-        .address-block { width: 48%; }
-        .address-block h3 { font-size: 14px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; letter-spacing: 0.05em; }
-        .address-block p { font-size: 14px; color: #334155; line-height: 1.6; margin: 0; }
-        
-        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
-        .items-table thead th { background-color: #334155; color: #fff; font-weight: 700; padding: 14px 10px; text-align: left; font-size: 13px; }
-        .items-table tbody td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; color: #475569; font-size: 13.5px; }
-        .items-table tbody .item-name { color: #1e293b; font-weight: 700; }
-        .items-table tbody tr:nth-child(even) { background-color: #f8fafc; }
-        .items-table td:not(:first-child):not(:nth-child(2)), .items-table th:not(:first-child):not(:nth-child(2)) { text-align: right; }
-        
-        .summary-section { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-bottom: 30px; }
-        .summary-notes { width: 55%; font-size: 12px; color: #64748b; line-height: 1.6; }
-        .summary-notes strong { color: #1e293b; font-weight: 700; font-size: 13px; margin-bottom: 4px; display: block; }
-        .summary-totals { width: 40%; }
-        .summary-totals table { width: 100%; border-collapse: collapse; }
-        .summary-totals td { padding: 10px 0; border-bottom: 1px solid #f1f5f9; color: #475569; font-weight: 600; }
-        .summary-totals tr:last-child { font-size: 1.25rem; }
-        .summary-totals tr:last-child td { border-bottom: none; color: #1e293b; font-weight: 800; padding-top: 16px; }
-        
-        .footer-invoice { border-top: 1px solid var(--color-border); padding-top: 24px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; color: #64748b; }
-        .signature { text-align: right; }
-        .signature-space { height: 60px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; }
-        .signature-line { width: 220px; border-top: 1px solid #94a3b8; margin: 8px 0; }
-        .digital-signature-img { display: none; max-height: 50px; object-fit: contain; margin-bottom: 4px; }
-        .signatory-title { font-weight: 700; color: #1e293b; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
-
-        #bill-controls { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; padding: 0 1rem; }
-
-        /* Modals */
-        .modal { display: none; position: fixed; z-index: 3000; inset: 0; background-color: rgba(15, 23, 42, 0.5); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 1rem; }
-        .modal-content { background-color: #fff; padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--modal-shadow); width: 100%; max-width: 460px; text-align: center; animation: popIn 0.4s var(--ease-out-back); }
-        
-        .loading-overlay { position: fixed; inset: 0; background-color: rgba(255, 255, 255, 0.85); z-index: 4000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .loading-overlay { position: fixed; inset: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px); z-index: 4000; display: flex; align-items: center; justify-content: center; }
         .spinner { border: 4px solid rgba(1, 39, 38, 0.1); border-bottom-color: var(--color-primary); border-radius: 50%; width: 48px; height: 48px; animation: rotation 1s linear infinite; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        @media (max-width: 768px) {
-            .app-container { padding: 0; }
-            .card { border-radius: 0; padding: 24px 16px; border: none; box-shadow: none; }
-            .invoice-box { border-radius: 0; padding: 20px; border: none; box-shadow: none; }
-            .customer-info { flex-direction: column; gap: 1.5rem; }
-            .address-block { width: 100%; }
-            #bill-controls { flex-direction: column; }
-            .summary-section { flex-direction: column; gap: 1.5rem; }
-            .summary-notes, .summary-totals { width: 100%; }
-            .items-table { font-size: 11px; }
-            .items-table thead th, .items-table tbody td { padding: 8px 4px; }
-            .logo-img { max-width: 130px; }
-        }
-
+        /* Print Controls Visibility */
         @media print {
-            @page { size: A4; margin: 10mm; }
-            body { padding: 0 !important; background: #fff !important; overflow: visible !important; }
-            .app-layout, .app-header, .sidebar, .m-header, .topbar, #bill-controls, .modal, .loading-overlay, .sidebar-overlay { display: none !important; }
-            .main-content, .content-area, .app-container { margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: none !important; overflow: visible !important; position: static !important; }
-            .invoice-box { border: none !important; box-shadow: none !important; width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }
-            .items-table thead th { background-color: #334155 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .summary-totals tr:last-child td { background-color: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .app-layout .sidebar, .app-layout .topbar, .app-layout .m-header, #bill-controls, .loading-overlay, .modal { display: none !important; }
+            .app-layout .main-content { margin: 0 !important; padding: 0 !important; height: auto !important; overflow: visible !important; }
+            .content-area { padding: 0 !important; overflow: visible !important; }
+            .app-container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            .card { border: none !important; box-shadow: none !important; padding: 0 !important; border-radius: 0 !important; }
+            .card::before { display: none !important; }
+            body { background: #fff !important; padding: 0 !important; height: auto !important; overflow: visible !important; }
         }
     </style>
 </head>
@@ -329,13 +286,16 @@
                 <a href="admin-dashboard.html" class="brand-logo">
                     <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
                 </a>
+                
                 <span class="mini-logo">
                     <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
                 </span>
+                
                 <button class="sidebar-toggle desktop-only" id="sidebar-toggle-btn">
                     <svg class="btn-close-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg>
                     <svg class="btn-open-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
                 </button>
+
                 <button class="m-drawer-close mobile-only" id="m-close-drawer">
                     <div class="m-drawer-close-icon"></div>
                 </button>
@@ -377,28 +337,28 @@
             </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- Main Content Wrapper -->
         <div class="main-content">
-            <header class="topbar desktop-only" id="topbar-welcome">Invoice Generation</header>
+            <header class="topbar desktop-only" id="desktop-welcome">Invoice Generation</header>
             
             <main class="content-area">
                 <div class="app-container">
                     
-                    <!-- Form Screen -->
-                    <div id="bill-details-screen" style="display: none; animation: fadeIn 0.4s ease-out;">
-                        <a href="#" id="back-breadcrumb" class="breadcrumb">
+                    <!-- Configuration Form Screen -->
+                    <div id="bill-details-screen" style="display: none;">
+                        <a href="#" id="back-to-order-breadcrumb" class="breadcrumb">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                            <span>Back to Order</span>
+                            <span>Back to Order Details</span>
                         </a>
 
                         <div id="order-modified-warning" class="warning-banner" style="display: none;">
                             <span class="material-symbols-outlined">warning</span>
-                            <span>Item details have changed. Please verify pricing.</span>
+                            <span>Item details modified. Please re-check pricing.</span>
                         </div>
 
                         <div class="card">
                             <form id="bill-details-form">
-                                <h3 style="margin-bottom: 2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">Invoice Configuration</h3>
+                                <h3 style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);">Invoice Settings</h3>
                                 
                                 <div class="form-grid">
                                     <div class="input-group">
@@ -411,48 +371,55 @@
                                     </div>
                                 </div>
                                 
-                                <div class="checkbox-group" style="margin: 2rem 0;">
+                                <h3 style="margin-top: 3rem; margin-bottom: 2rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">Pricing</h3>
+                                
+                                <div class="checkbox-group" style="margin-bottom: 2rem;">
                                     <input type="checkbox" id="diff-prices-check">
-                                    <label for="diff-prices-check">Varying prices per item</label>
+                                    <label for="diff-prices-check">Individual pricing per item</label>
                                 </div>
                                 
-                                <div id="global-price-container" class="input-group" style="margin-bottom: 2rem;">
-                                    <input type="number" id="global-price" class="input-field" placeholder=" " min="0" step="0.01">
-                                    <label for="global-price" class="input-label">Global Rate per SFT (₹)</label>
+                                <div id="global-price-container" class="input-group">
+                                    <input type="number" id="global-price" class="input-field" placeholder=" " step="0.01">
+                                    <label class="input-label">Price per SFT (₹)</label>
                                 </div>
 
-                                <div id="individual-prices-container" style="display: none; border: 1px solid var(--color-border); padding: 1.5rem; border-radius: 16px; background: #f8fafc; margin-bottom: 2rem;">
-                                    <!-- Dynamic price inputs -->
+                                <div id="individual-prices-container" style="display: none; border: 1px solid var(--color-border); padding: 1.5rem; border-radius: 12px; background: #f8fafc; margin-bottom: 2rem;">
+                                    <!-- Price inputs per item injected here -->
                                 </div>
                                 
-                                <div class="form-grid">
+                                <div class="form-grid" style="margin-top: 2rem;">
                                     <div class="input-group">
-                                        <input type="number" id="freight-charges" class="input-field" placeholder=" " min="0" value="0" required>
-                                        <label for="freight-charges" class="input-label">Freight (₹)</label>
+                                        <input type="number" id="freight-charges" class="input-field" placeholder=" " min="0" step="1" value="0">
+                                        <label class="input-label">Freight / Transport (₹)</label>
                                     </div>
                                     <div class="input-group">
                                         <input type="number" id="discount-amount" class="input-field" placeholder=" " min="0" step="0.01" value="0">
-                                        <label for="discount-amount" class="input-label">Discount (₹)</label>
+                                        <label class="input-label">Discount (₹) Before Tax</label>
                                     </div>
                                 </div>
                                 
-                                <div style="margin-top: 2rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">
-                                    <div class="checkbox-group"><input type="checkbox" id="add-billing-address"><label for="add-billing-address">Custom Billing Address</label></div>
-                                    <textarea id="billing-address-textarea" class="input-field address-textarea" placeholder="Enter custom billing address..."></textarea>
-                                    
-                                    <div class="checkbox-group" style="margin-top: 1rem;"><input type="checkbox" id="add-shipping-address"><label for="add-shipping-address">Custom Shipping Address</label></div>
-                                    <textarea id="shipping-address-textarea" class="input-field address-textarea" placeholder="Enter custom shipping address..."></textarea>
+                                <h3 style="margin-top: 3rem; margin-bottom: 2rem; border-top: 1px solid var(--color-border); padding-top: 2rem;">Address Overrides</h3>
+                                
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="add-billing-address">
+                                    <label for="add-billing-address">Custom Billing Address</label>
                                 </div>
+                                <textarea id="billing-address-textarea" class="input-field address-textarea" placeholder="Enter new billing address..."></textarea>
+                                
+                                <div class="checkbox-group" style="margin-top: 1.5rem;">
+                                    <input type="checkbox" id="add-shipping-address">
+                                    <label for="add-shipping-address">Custom Shipping Address</label>
+                                </div>
+                                <textarea id="shipping-address-textarea" class="input-field address-textarea" placeholder="Enter new shipping address..."></textarea>
                                 
                                 <div class="form-actions-container">
-                                    <button type="button" id="bill-cancel-btn" class="btn btn-secondary">Cancel</button>
                                     <button type="submit" class="btn btn-primary"><span class="material-symbols-outlined">receipt_long</span> Generate Invoice</button>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <!-- View Screen -->
+                    <!-- Rendered Bill Screen -->
                     <div id="bill-view-screen" style="display: none;">
                         <div id="bill-container"></div>
                     </div>
@@ -461,17 +428,17 @@
         </div>
     </div>
 
-    <!-- Print Options Modal -->
+    <!-- Print Modal -->
     <div id="print-options-modal" class="modal">
         <div class="modal-content">
-            <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--brand-primary); margin-bottom: 1rem;">draw</span>
-            <h3>Signature Settings</h3>
-            <p class="modal-message">Include the digital authorized signature on this invoice?</p>
-            <div class="modal-buttons" style="flex-direction: column;">
-                <button type="button" id="print-with-sig-btn" class="btn btn-primary">With Signature</button>
-                <button type="button" id="print-without-sig-btn" class="btn btn-secondary">Without Signature</button>
-                <button type="button" id="print-cancel-btn" class="btn btn-secondary" style="border:none; background:none; text-decoration: underline; color: var(--text-sub);">Cancel</button>
+            <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem;">draw</span>
+            <h3>Digital Signature</h3>
+            <p style="margin-bottom: 2rem; color: var(--light-text-secondary);">Add authorized digital signature to invoice?</p>
+            <div class="modal-buttons">
+                <button type="button" id="print-without-sig-btn" class="btn btn-secondary">No Signature</button>
+                <button type="button" id="print-with-sig-btn" class="btn btn-primary">Add Signature</button>
             </div>
+            <button type="button" id="print-cancel-btn" style="background:none; border:none; color:var(--text-sub); margin-top:1.5rem; text-decoration:underline; cursor:pointer;">Cancel</button>
         </div>
     </div>
 
@@ -482,7 +449,6 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Firebase logic
         const firebaseConfig = {
             apiKey: "__API_KEY__",
             authDomain: "__AUTH_DOMAIN__",
@@ -492,16 +458,34 @@
             appId: "__APP_ID__",
             measurementId: "__MEASUREMENT_ID__"
         };
-        
-        let db, auth, currentOrderData = null;
+
+        let db, auth, currentOrderData = null, currentUserProfile = null;
         const ADMIN_EMAIL = "__ADMIN_EMAIL__";
 
-        // Number to words converter
+        // Screen Elements
+        const detailsScreen = document.getElementById('bill-details-screen');
+        const viewScreen = document.getElementById('bill-view-screen');
+        const billContainer = document.getElementById('bill-container');
+        const modifiedWarning = document.getElementById('order-modified-warning');
+        const detailsForm = document.getElementById('bill-details-form');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const addBillingAddressCheck = document.getElementById('add-billing-address');
+        const billingAddressTextarea = document.getElementById('billing-address-textarea');
+        const addShippingAddressCheck = document.getElementById('add-shipping-address');
+        const shippingAddressTextarea = document.getElementById('shipping-address-textarea');
+        const diffPricesCheck = document.getElementById('diff-prices-check');
+        const globalPriceContainer = document.getElementById('global-price-container');
+        const globalPriceInput = document.getElementById('global-price');
+        const indPricesContainer = document.getElementById('individual-prices-container');
+        const printOptionsModal = document.getElementById('print-options-modal');
+
+        // Function to accurately convert Rs. and Paise to words
         function numberToWords(num) {
             const a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
             const b = ['', '', 'Twenty ','Thirty ','Forty ','Fifty ', 'Sixty ','Seventy ','Eighty ','Ninety '];
             const convertWhole = (n) => {
                 if (n === 0) return 'Zero';
+                if (n.toString().length > 9) return 'Overflow';
                 let nStr = ('000000000' + n).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
                 if (!nStr) return '';
                 let str = '';
@@ -513,258 +497,267 @@
                 return str.trim();
             };
             let parts = Number(num).toFixed(2).split('.');
-            let result = convertWhole(parseInt(parts[0], 10)) + ' Rupees';
-            if (parseInt(parts[1], 10) > 0) result += ' And ' + convertWhole(parseInt(parts[1], 10)) + ' Paise';
+            let rupees = parseInt(parts[0], 10);
+            let paise = parseInt(parts[1], 10);
+            let rupeesWords = convertWhole(rupees);
+            let result = rupeesWords + ' Rupees';
+            if (paise > 0) {
+                let paiseWords = convertWhole(paise);
+                paiseWords = paiseWords.replace(/^And\s/i, '');
+                result += ' And ' + paiseWords + ' Paise';
+            }
             return result + ' Only';
         }
 
         const createBillHtml = (order, details) => {
             let windows = [];
             try { windows = JSON.parse(order.windows || '[]'); } catch(e) {}
-            
             let tableRows = '';
-            let subTotal = 0;
-            let totalQty = 0;
-            let totalAllSft = 0;
-            let itemIndex = 1;
+            let subTotal = 0, totalQty = 0, totalAllSft = 0, itemIndex = 1;
 
             if (!details.isDiffPrices) {
                 const itemGroups = {};
                 windows.forEach(win => {
-                    const name = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
-                    if (!itemGroups[name]) itemGroups[name] = { qty: 0, sft: 0 };
-                    const q = parseInt(win.qty) || 1;
-                    itemGroups[name].qty += q;
-                    itemGroups[name].sft += ((parseFloat(win.width || 0) / 304.8) * (parseFloat(win.height || 0) / 304.8)) * q;
+                    const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                    if (!itemGroups[itemName]) itemGroups[itemName] = { qty: 0, totalSft: 0 };
+                    const qty = parseInt(win.qty) || 1;
+                    itemGroups[itemName].qty += qty;
+                    const heightMm = parseFloat(win.height || 0), widthMm = parseFloat(win.width || 0);
+                    itemGroups[itemName].totalSft += ((widthMm / 304.8) * (heightMm / 304.8)) * qty; 
                 });
-                for (const name in itemGroups) {
-                    const g = itemGroups[name];
-                    const val = g.sft * details.globalPrice;
-                    subTotal += val; totalQty += g.qty; totalAllSft += g.sft;
-                    tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${name}</td><td>3952</td><td>${g.qty}</td><td>${g.sft.toFixed(2)}</td><td>${details.globalPrice.toLocaleString('en-IN')}</td><td>${val.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+                for (const itemName in itemGroups) {
+                    const group = itemGroups[itemName];
+                    const itemCost = group.totalSft * details.globalPrice; 
+                    subTotal += itemCost; totalQty += group.qty; totalAllSft += group.totalSft;
+                    tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName}</td><td>3952</td><td>${group.qty}</td><td>${group.totalSft.toFixed(2)}</td><td>${details.globalPrice.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
                 }
             } else {
                 windows.forEach((win, idx) => {
-                    const name = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
-                    const q = parseInt(win.qty) || 1;
-                    const sft = ((parseFloat(win.width || 0) / 304.8) * (parseFloat(win.height || 0) / 304.8)) * q;
+                    const itemName = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                    const qty = parseInt(win.qty) || 1;
+                    const heightMm = parseFloat(win.height || 0), widthMm = parseFloat(win.width || 0);
+                    const totalSft = ((widthMm / 304.8) * (heightMm / 304.8)) * qty;
                     const price = details.itemPrices[idx] || 0;
-                    const val = sft * price;
-                    subTotal += val; totalQty += q; totalAllSft += sft;
-                    tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${name} #${idx+1}<br><small style="color:#64748b;font-size:11px;">${win.width}x${win.height}mm | ${win.hasGlass ? (win.glassName || 'Glass') : 'No Glass'}</small></td><td>3952</td><td>${q}</td><td>${sft.toFixed(2)}</td><td>${price.toLocaleString('en-IN')}</td><td>${val.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+                    const itemCost = totalSft * price;
+                    subTotal += itemCost; totalQty += qty; totalAllSft += totalSft;
+                    const specs = `<br><small style="color: #718096; font-size: 11px;">Size: ${win.width}x${win.height}mm | Glass: ${win.hasGlass ? (win.glassName || 'Yes') : 'None'} | Profile: ${win.profileName || 'None'}</small>`;
+                    tableRows += `<tr><td>${itemIndex++}</td><td class="item-name">${itemName} #${idx+1}${specs}</td><td>3952</td><td>${qty}</td><td>${totalSft.toFixed(2)}</td><td>${price.toLocaleString('en-IN')}</td><td>${itemCost.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
                 });
             }
 
-            tableRows += `<tr style="font-weight: 800; background-color: #f8fafc;"><td colspan="3" style="text-align: right;">Total:</td><td>${totalQty}</td><td>${totalAllSft.toFixed(2)}</td><td></td><td>${subTotal.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+            tableRows += `<tr style="font-weight: 700; background-color: #f8f9fa; border-top: 2px solid var(--light-border);"><td colspan="3" style="text-align: right; padding: 12px 8px;">Total:</td><td>${totalQty}</td><td>${totalAllSft.toFixed(2)}</td><td></td><td>${subTotal.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td></tr>`;
+            
+            const discount = details.discount || 0;
+            const taxableAmount = Math.max(0, subTotal - discount);
+            const sgst = taxableAmount * 0.09, cgst = taxableAmount * 0.09;
+            const grandTotal = taxableAmount + details.freight + sgst + cgst;
+            const totalInWords = numberToWords(grandTotal);
 
-            const taxable = Math.max(0, subTotal - (details.discount || 0));
-            const tax = taxable * 0.09;
-            const grandTotal = taxable + details.freight + (tax * 2);
-            const fmt = (n) => n.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            const formatCurrency = (num) => num.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            let summaryHtml = `<tr><td>Total Before Tax:</td><td style="text-align: right;">${formatCurrency(subTotal)}</td></tr>`;
+            if (discount > 0) {
+                summaryHtml += `<tr><td>Discount:</td><td style="text-align: right;">- ${formatCurrency(discount)}</td></tr>`;
+                summaryHtml += `<tr><td>Taxable Amount:</td><td style="text-align: right;">${formatCurrency(taxableAmount)}</td></tr>`;
+            }
+            summaryHtml += `<tr><td>Freight:</td><td style="text-align: right;">+ ${formatCurrency(details.freight)}</td></tr><tr><td>SGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(sgst)}</td></tr><tr><td>CGST (9%):</td><td style="text-align: right;">+ ${formatCurrency(cgst)}</td></tr><tr><td>Grand Total:</td><td style="text-align: right;">₹ ${formatCurrency(grandTotal)}</td></tr>`;
 
             return `
-                <div id="bill-controls">
-                    <button class="btn btn-secondary" id="back-to-order-btn-view"><span class="material-symbols-outlined">arrow_back</span> Back</button>
-                    <button class="btn btn-primary" id="print-bill-btn"><span class="material-symbols-outlined">print</span> Print Invoice</button>
+                <div id="bill-controls" style="margin-bottom:30px; display:flex; justify-content:center; gap:16px;">
+                    <button class="btn btn-primary" id="print-bill-btn"><span class="material-symbols-outlined">print</span> Print / Save PDF</button>
                     <button class="btn btn-secondary" id="edit-bill-btn"><span class="material-symbols-outlined">edit</span> Edit Details</button>
                 </div>
                 <div class="invoice-box">
-                    <div class="invoice-header">
-                        <img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Company Logo" class="logo-img">
+                    <header class="invoice-header">
+                        <div class="company-details"><img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="Logo" class="logo-img"></div>
                         <div class="invoice-details">
                             <h2>INVOICE</h2>
-                            <div><strong>No:</strong> ${details.invoiceNumber}</div>
-                            <div><strong>Date:</strong> ${new Date(details.invoiceDate + 'T00:00:00').toLocaleDateString('en-GB')}</div>
+                            <div><strong>Invoice No:</strong> ${details.invoiceNumber}</div>
+                            <div><strong>Invoice Date:</strong> ${new Date(details.invoiceDate + 'T00:00:00').toLocaleDateString('en-GB')}</div>
                             <div><strong>GSTIN:</strong> 37ECPPK6026R1ZO</div>
                         </div>
-                    </div>
-                    <div class="customer-info">
-                        <div class="address-block"><h3>Billed To</h3><p><strong>${order.name}</strong><br>${details.billingAddress.replace(/\n/g, '<br>')}<br>Ph: ${order.mobileNumber || 'N/A'}</p></div>
-                        <div class="address-block"><h3>Shipped To</h3><p><strong>${order.name}</strong><br>${details.shippingAddress.replace(/\n/g, '<br>')}<br>Ph: ${order.mobileNumber || 'N/A'}</p></div>
-                    </div>
+                    </header>
+                    <section class="customer-info">
+                        <div class="address-block"><h3>Billed To</h3><p><strong>${order.name}</strong><br>${details.billingAddress.replace(/\n/g, '<br>')}<br>Phone: ${order.mobileNumber || 'N/A'}</p></div>
+                        <div class="address-block"><h3>Shipped To</h3><p><strong>${order.name}</strong><br>${details.shippingAddress.replace(/\n/g, '<br>')}<br>Phone: ${order.mobileNumber || 'N/A'}</p></div>
+                    </section>
                     <table class="items-table">
-                        <thead><tr><th>SNo.</th><th>Description</th><th>HSN</th><th>Qty</th><th>SFT</th><th>Rate</th><th>Total</th></tr></thead>
+                        <thead><tr><th>SNo.</th><th>Name of Goods</th><th>HSN</th><th>Qty</th><th>Sft</th><th>Rate</th><th>Value</th></tr></thead>
                         <tbody>${tableRows}</tbody>
                     </table>
-                    <div class="summary-section">
-                        <div class="summary-notes">
-                            <strong>Terms & Conditions</strong>
-                            <p>Certified that particulars given are correct. GST Reverse Charge: NA. Payment: 50% Advance / 50% Final.</p>
-                            <strong>Total (Words)</strong>
-                            <p>${numberToWords(grandTotal)}</p>
-                        </div>
-                        <div class="summary-totals">
-                            <table>
-                                <tr><td>Sub-Total:</td><td>${fmt(subTotal)}</td></tr>
-                                ${details.discount > 0 ? `<tr><td>Discount:</td><td>- ${fmt(details.discount)}</td></tr>` : ''}
-                                <tr><td>Freight:</td><td>+ ${fmt(details.freight)}</td></tr>
-                                <tr><td>SGST (9%):</td><td>+ ${fmt(tax)}</td></tr>
-                                <tr><td>CGST (9%):</td><td>+ ${fmt(tax)}</td></tr>
-                                <tr><td>Grand Total:</td><td>₹ ${fmt(grandTotal)}</td></tr>
-                            </table>
-                        </div>
-                    </div>
-                    <footer class="footer-invoice">
-                        <div>Email: kolatapuk.k@gmail.com | Ph: 7981599155</div>
-                        <div class="signature">
-                            <div class="signature-space"><img src="https://ksupvc.wixo.in/signature.png" class="digital-signature-img" id="digital-signature-img"></div>
-                            <div class="signature-line"></div>
-                            <p class="signatory-title">Authorized Signatory</p>
-                        </div>
-                    </footer>
+                    <section class="summary-section">
+                        <div class="summary-notes"><strong>Declaration</strong><p>Certified that the particulars given above are true and correct.</p><strong>Total in Words</strong><p>${totalInWords}.</p></div>
+                        <div class="summary-totals"><table><tbody>${summaryHtml}</tbody></table></div>
+                    </section>
+                    <footer class="footer-invoice"><div class="contact">Email: kolatapuk.k@gmail.com | Phone: 7981599155</div><div class="signature"><div class="signature-space"><img src="https://ksupvc.wixo.in/signature.png" alt="Signature" class="digital-signature-img" id="digital-signature-img"></div><div class="signature-line"></div><p class="signatory-title">Authorised Signatory</p></div></footer>
                 </div>`;
         };
 
-        // UI Logic
-        const initSyncSkillUI = () => {
-            const sidebar = document.getElementById('sidebar');
-            const mOverlay = document.getElementById('sidebar-overlay');
-            const toggleBtn = document.getElementById('sidebar-toggle-btn');
-            if(toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
-
-            const mOpen = document.getElementById('m-open-drawer');
-            const mClose = document.getElementById('m-close-drawer');
-            const close = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); };
-            if(mOpen) mOpen.onclick = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); };
-            if(mClose) mClose.onclick = close;
-            if(mOverlay) mOverlay.onclick = close;
-
-            const pPopup = document.getElementById('profile-popup');
-            const profileTrigger = document.getElementById('profile-trigger');
-            if(profileTrigger && pPopup) {
-                profileTrigger.onclick = (e) => {
-                    e.stopPropagation();
-                    if (window.innerWidth > 768) { pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; pPopup.style.transform = 'none'; } 
-                    else { pPopup.style.left = '50%'; pPopup.style.bottom = '100px'; pPopup.style.transform = 'translateX(-50%)'; }
-                    pPopup.classList.toggle('active');
-                };
+        const togglePriceInputsVisibility = () => {
+            if (diffPricesCheck.checked) {
+                globalPriceContainer.style.display = 'none';
+                indPricesContainer.style.display = 'block';
+                globalPriceInput.removeAttribute('required');
+                document.querySelectorAll('.ind-price-input').forEach(inp => inp.setAttribute('required', 'true'));
+            } else {
+                globalPriceContainer.style.display = 'block';
+                indPricesContainer.style.display = 'none';
+                globalPriceInput.setAttribute('required', 'true');
+                document.querySelectorAll('.ind-price-input').forEach(inp => inp.removeAttribute('required'));
             }
-            document.addEventListener('click', () => pPopup && pPopup.classList.remove('active'));
         };
 
-        const populateNavbar = (userProfile) => {
-            const firstName = userProfile.displayName ? userProfile.displayName.split(' ')[0] : 'Admin';
-            document.getElementById('topbar-welcome').textContent = `Welcome back, ${firstName}!`;
-            document.querySelectorAll('.account-avatar').forEach(img => img.src = userProfile.photoURL || '');
-            document.querySelectorAll('.account-name').forEach(el => el.textContent = userProfile.displayName || 'Admin');
-            document.querySelectorAll('.account-email').forEach(el => el.textContent = userProfile.email || '');
-        };
+        function populateForm(details, orderData) {
+            document.getElementById('invoice-number').value = details.invoiceNumber || '';
+            document.getElementById('invoice-date').value = details.invoiceDate || new Date().toISOString().split('T')[0];
+            document.getElementById('freight-charges').value = details.freight || 0;
+            document.getElementById('discount-amount').value = details.discount || 0;
+            diffPricesCheck.checked = details.isDiffPrices || false;
+            globalPriceInput.value = details.globalPrice || '';
+            
+            billingAddressTextarea.value = details.billingAddress || orderData.address;
+            shippingAddressTextarea.value = details.shippingAddress || orderData.address;
+            addBillingAddressCheck.checked = details.billingAddress && details.billingAddress !== orderData.address;
+            addShippingAddressCheck.checked = details.shippingAddress && details.shippingAddress !== orderData.address;
+            billingAddressTextarea.style.display = addBillingAddressCheck.checked ? 'block' : 'none';
+            shippingAddressTextarea.style.display = addShippingAddressCheck.checked ? 'block' : 'none';
 
-        const togglePriceInputs = () => {
-            const check = document.getElementById('diff-prices-check');
-            document.getElementById('global-price-container').style.display = check.checked ? 'none' : 'block';
-            document.getElementById('individual-prices-container').style.display = check.checked ? 'block' : 'none';
-        };
+            let windows = [];
+            try { windows = JSON.parse(orderData.windows || '[]'); } catch(e) {}
+            indPricesContainer.innerHTML = '';
+            windows.forEach((win, idx) => {
+                const itemType = win.itemType ? (win.itemType.charAt(0).toUpperCase() + win.itemType.slice(1)) : 'Item';
+                const savedPrice = (details.itemPrices && details.itemPrices[idx]) ? details.itemPrices[idx] : (details.globalPrice || '');
+                const div = document.createElement('div');
+                div.className = 'form-group';
+                div.innerHTML = `<label style="display:block; font-size: 0.85rem; font-weight: 700; color: var(--color-primary); margin-bottom: 6px;">#${idx+1} ${itemType} (${win.width}x${win.height}mm)</label><input type="number" class="input-field ind-price-input" data-index="${idx}" value="${savedPrice}" min="0" step="0.01" placeholder="Price per SFT">`;
+                indPricesContainer.appendChild(div);
+            });
+            togglePriceInputsVisibility();
+        }
 
         async function startPageLogic() {
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('id');
             if (!orderId) { window.location.href = 'view-orders.html'; return; }
+            document.getElementById('back-to-order-breadcrumb').href = `order-details.html?id=${orderId}`;
 
+            loadingOverlay.style.display = 'flex';
             try {
                 const orderSnap = await getDoc(doc(db, 'upvc_orders', orderId));
-                if (!orderSnap.exists()) { window.location.href = 'view-orders.html'; return; }
-                currentOrderData = { id: orderSnap.id, ...orderSnap.data() };
-                
-                document.getElementById('back-breadcrumb').onclick = (e) => { e.preventDefault(); window.location.href = `order-details.html?id=${orderId}`; };
-
-                if (currentOrderData.billDetails && currentOrderData.billDetails.savedWindowsHash === currentOrderData.windows) {
-                    renderBill(currentOrderData, currentOrderData.billDetails);
-                    document.getElementById('bill-details-screen').style.display = 'none';
-                    document.getElementById('bill-view-screen').style.display = 'block';
-                } else {
-                    if (currentOrderData.billDetails) document.getElementById('order-modified-warning').style.display = 'flex';
-                    populateForm(currentOrderData.billDetails || {}, currentOrderData);
-                    document.getElementById('bill-view-screen').style.display = 'none';
-                    document.getElementById('bill-details-screen').style.display = 'block';
+                if (orderSnap.exists()) {
+                    currentOrderData = { id: orderSnap.id, ...orderSnap.data() };
+                    detailsForm.dataset.id = orderId;
+                    
+                    if (currentOrderData.billDetails) {
+                        if (currentOrderData.billDetails.savedWindowsHash === currentOrderData.windows) {
+                            populateForm(currentOrderData.billDetails, currentOrderData);
+                            renderBill(currentOrderData, currentOrderData.billDetails);
+                            detailsScreen.style.display = 'none';
+                            viewScreen.style.display = 'block';
+                        } else {
+                            modifiedWarning.style.display = 'flex';
+                            populateForm(currentOrderData.billDetails, currentOrderData);
+                            detailsScreen.style.display = 'block';
+                        }
+                    } else {
+                        // Default logic for new bill
+                        const currentYear = new Date().getFullYear();
+                        const ordersSnap = await getDocs(collection(db, 'upvc_orders'));
+                        let count = 0;
+                        ordersSnap.forEach(d => { if(d.data().createdAt?.toDate()?.getFullYear() === currentYear) count++; });
+                        
+                        let defaultDetails = { 
+                            invoiceNumber: `${count + 1}-${currentYear}`, 
+                            invoiceDate: new Date().toISOString().split('T')[0],
+                            globalPrice: currentOrderData.quoteDetails?.globalPrice || 0,
+                            freight: currentOrderData.quoteDetails?.freight || 0,
+                            discount: currentOrderData.quoteDetails?.discount || 0,
+                            isDiffPrices: currentOrderData.quoteDetails?.isDiffPrices || false,
+                            itemPrices: currentOrderData.quoteDetails?.itemPrices || [],
+                            billingAddress: currentOrderData.address,
+                            shippingAddress: currentOrderData.address
+                        };
+                        populateForm(defaultDetails, currentOrderData);
+                        detailsScreen.style.display = 'block';
+                    }
                 }
-            } catch (error) { console.error(error); }
-            document.getElementById('skeleton-loader').style.display = 'none';
+            } catch (error) { console.error(error); } finally { loadingOverlay.style.display = 'none'; }
         }
 
-        const populateForm = (details, orderData) => {
-            document.getElementById('invoice-number').value = details.invoiceNumber || '';
-            document.getElementById('invoice-date').value = details.invoiceDate || new Date().toISOString().split('T')[0];
-            document.getElementById('freight-charges').value = details.freight || 0;
-            document.getElementById('discount-amount').value = details.discount || 0;
-            document.getElementById('diff-prices-check').checked = details.isDiffPrices || false;
-            document.getElementById('global-price').value = details.globalPrice || '';
-            
-            const windows = JSON.parse(orderData.windows || '[]');
-            const container = document.getElementById('individual-prices-container');
-            container.innerHTML = '<h4>Rates per Item</h4>';
-            windows.forEach((win, idx) => {
-                const val = (details.itemPrices && details.itemPrices[idx]) ? details.itemPrices[idx] : (details.globalPrice || '');
-                const div = document.createElement('div');
-                div.className = "input-group";
-                div.style.marginTop = "1rem";
-                div.innerHTML = `<input type="number" class="input-field ind-price-input" data-index="${idx}" value="${val}" min="0" step="0.01" placeholder=" " required><label class="input-label">#${idx+1} ${win.itemType} (₹)</label>`;
-                container.appendChild(div);
-            });
-            togglePriceInputs();
-        };
+        function initSyncSkillUI() {
+            const sidebar = document.getElementById('sidebar');
+            const mOverlay = document.getElementById('sidebar-overlay');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            if(toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+            const mOpen = document.getElementById('m-open-drawer');
+            const mClose = document.getElementById('m-close-drawer');
+            mOpen.onclick = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); };
+            mClose.onclick = mOverlay.onclick = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); };
+            const profileTrigger = document.getElementById('profile-trigger');
+            const pPopup = document.getElementById('profile-popup');
+            profileTrigger.onclick = (e) => {
+                e.stopPropagation();
+                if (window.innerWidth > 768) { pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; pPopup.style.transform = 'none'; }
+                else { pPopup.style.left = '50%'; pPopup.style.bottom = '100px'; pPopup.style.transform = 'translateX(-50%)'; }
+                pPopup.classList.toggle('active');
+            };
+            document.addEventListener('click', () => pPopup.classList.remove('active'));
+        }
 
-        document.getElementById('bill-details-form').onsubmit = async (e) => {
+        detailsForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            document.getElementById('loading-overlay').style.display = 'flex';
-            const prices = Array.from(document.querySelectorAll('.ind-price-input')).map(i => parseFloat(i.value) || 0);
-            const details = {
+            loadingOverlay.style.display = 'flex';
+            const itemPrices = [];
+            document.querySelectorAll('.ind-price-input').forEach(inp => itemPrices.push(parseFloat(inp.value) || 0));
+            const billDetails = {
                 invoiceNumber: document.getElementById('invoice-number').value,
                 invoiceDate: document.getElementById('invoice-date').value,
-                isDiffPrices: document.getElementById('diff-prices-check').checked,
-                globalPrice: parseFloat(document.getElementById('global-price').value) || 0,
-                itemPrices: prices,
-                freight: parseFloat(document.getElementById('freight-charges').value) || 0,
-                discount: parseFloat(document.getElementById('discount-amount').value) || 0,
-                billingAddress: document.getElementById('add-billing-address').checked ? document.getElementById('billing-address-textarea').value : currentOrderData.address,
-                shippingAddress: document.getElementById('add-shipping-address').checked ? document.getElementById('shipping-address-textarea').value : currentOrderData.address,
+                isDiffPrices: diffPricesCheck.checked,
+                globalPrice: parseFloat(globalPriceInput.value) || 0,
+                itemPrices: itemPrices,
+                freight: parseFloat(document.getElementById('freight-charges').value || 0),
+                discount: parseFloat(document.getElementById('discount-amount').value || 0),
+                billingAddress: addBillingAddressCheck.checked ? billingAddressTextarea.value : currentOrderData.address,
+                shippingAddress: addShippingAddressCheck.checked ? shippingAddressTextarea.value : currentOrderData.address,
                 savedWindowsHash: currentOrderData.windows
             };
-            await updateDoc(doc(db, 'upvc_orders', currentOrderData.id), { billDetails: details });
-            currentOrderData.billDetails = details;
-            renderBill(currentOrderData, details);
-            document.getElementById('bill-details-screen').style.display = 'none';
-            document.getElementById('bill-view-screen').style.display = 'block';
-            document.getElementById('loading-overlay').style.display = 'none';
+            try {
+                await updateDoc(doc(db, 'upvc_orders', detailsForm.dataset.id), { billDetails });
+                currentOrderData.billDetails = billDetails;
+                renderBill(currentOrderData, billDetails);
+                detailsScreen.style.display = 'none';
+                viewScreen.style.display = 'block';
+            } catch (error) { alert("Error saving invoice."); } finally { loadingOverlay.style.display = 'none'; }
+        });
+
+        diffPricesCheck.addEventListener('change', togglePriceInputsVisibility);
+        addBillingAddressCheck.addEventListener('change', () => billingAddressTextarea.style.display = addBillingAddressCheck.checked ? 'block' : 'none');
+        addShippingAddressCheck.addEventListener('change', () => shippingAddressTextarea.style.display = addShippingAddressCheck.checked ? 'block' : 'none');
+        document.getElementById('print-without-sig-btn').onclick = () => { document.getElementById('digital-signature-img').style.display = 'none'; printOptionsModal.style.display = 'none'; setTimeout(() => window.print(), 200); };
+        document.getElementById('print-with-sig-btn').onclick = () => { document.getElementById('digital-signature-img').style.display = 'inline-block'; printOptionsModal.style.display = 'none'; setTimeout(() => window.print(), 200); };
+        document.getElementById('print-cancel-btn').onclick = () => printOptionsModal.style.display = 'none';
+
+        const init = () => {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            onAuthStateChanged(auth, user => {
+                if (user) {
+                    const userRef = doc(db, "users", user.uid);
+                    getDoc(userRef).then(snap => {
+                        const profile = snap.data();
+                        document.querySelectorAll('.account-name').forEach(el => el.textContent = profile.displayName || 'Admin');
+                        document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email || '');
+                        document.querySelectorAll('.account-avatar').forEach(img => img.src = user.photoURL || '');
+                        startPageLogic();
+                    });
+                } else { window.location.href = 'login.html'; }
+            });
+            initSyncSkillUI();
         };
 
-        document.getElementById('diff-prices-check').addEventListener('change', togglePriceInputs);
-        document.getElementById('add-billing-address').onchange = (e) => billingAddressTextarea.style.display = e.target.checked ? 'block' : 'none';
-        document.getElementById('add-shipping-address').onchange = (e) => shippingAddressTextarea.style.display = e.target.checked ? 'block' : 'none';
-
-        // Print Modal
-        document.getElementById('print-options-modal').addEventListener('click', (e) => {
-            if(e.target.id === 'print-with-sig-btn') {
-                document.getElementById('digital-signature-img').style.display = 'inline-block';
-                document.getElementById('print-options-modal').style.display = 'none';
-                setTimeout(() => window.print(), 150);
-            } else if(e.target.id === 'print-without-sig-btn') {
-                document.getElementById('digital-signature-img').style.display = 'none';
-                document.getElementById('print-options-modal').style.display = 'none';
-                setTimeout(() => window.print(), 150);
-            } else if(e.target.id === 'print-cancel-btn') {
-                document.getElementById('print-options-modal').style.display = 'none';
-            }
-        });
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                const userRef = doc(db, "users", user.uid);
-                getDoc(userRef).then(snap => {
-                    const profile = snap.data();
-                    if(user.email === ADMIN_EMAIL || (profile && profile.role === 'admin')) {
-                        populateNavbar({ id: snap.id, ...profile });
-                        startPageLogic();
-                    } else { window.location.href = 'login.html'; }
-                });
-            } else { window.location.href = 'login.html'; }
-        });
-
-        initSyncSkillUI();
+        init();
     </script>
 </body>
 </html>
