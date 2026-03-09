@@ -71,6 +71,9 @@
             height: 100%;
         }
 
+        h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em; }
+        h1 { font-size: 1.875rem; } h2 { font-size: 1.25rem; } h3 { font-size: 1.125rem; }
+
         /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
         .app-layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         .desktop-only { display: none !important; }
@@ -92,15 +95,15 @@
         .nav-item.active .icon svg { stroke: #000000; }
 
         .account-card { display: flex; align-items: center; gap: 12px; }
-        .account-avatar-sm { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; background: var(--color-border); }
+        .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; background: var(--color-border); }
         .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
-        .account-name-nav { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; color: var(--text-color); }
-        .account-email-nav { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+        .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; color: var(--text-color); }
+        .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
 
         /* Mobile Header */
         .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; }
-        .content-area { flex: 1; overflow-y: auto; padding-bottom: 80px;} 
+        .content-area { flex: 1; overflow-y: auto; padding-bottom: 40px;} 
         
         .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .m-menu-lines { width: 18px; height: 14px; position: relative; }
@@ -122,7 +125,7 @@
         .nav-menu { padding: 20px 12px; }
         .account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; cursor: pointer; }
 
-        /* Profile Context Menu */
+        /* Profile Popup */
         .profile-popup { position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--premium-shadow-hover); border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none; transition: 0.2s; overflow: hidden; bottom: 100px; left: 50%; transform: translateX(-50%); }
         .profile-popup.active { opacity: 1; pointer-events: all; }
         .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
@@ -130,7 +133,7 @@
         .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; font-weight: 500;}
         .popup-list a:hover { background: var(--hover-bg); }
 
-        /* Desktop Topbar */
+        /* Desktop Adjustments */
         @media (min-width: 769px) {
             .app-layout { flex-direction: row; }
             .desktop-only { display: flex !important; }
@@ -181,114 +184,121 @@
             .sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
         }
 
-        /* ============= PAGE COMPONENTS ============= */
+        /* ============= PAGE CONTENT STYLES ============= */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         @media (max-width: 768px) { .container { padding: 0 16px; } }
 
-        .view.active { display: block; animation: fadeIn 0.4s ease-out forwards; }
-        .icon-sm { width: 14px; height: 14px; stroke-width: 3.5; }
-        
         /* Premium Buttons */
-        .btn { padding: 10px 20px; border: 1px solid transparent; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-family: inherit;}
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 10px 20px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); border: 1px solid transparent; cursor: pointer; user-select: none; text-decoration: none; font-family: inherit;}
         .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
         .btn:active:not(:disabled) { transform: translateY(0); box-shadow: var(--btn-shadow); }
-        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); }
-        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
-        
-        .page-header { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; padding-top: 1rem; }
-        .page-header-top { display: flex; justify-content: space-between; align-items: center; }
-        
-        /* Premium Breadcrumb */
+        .btn-icon { background: none; border: none; padding: 8px; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .btn-icon:hover { color: var(--color-text-primary); background-color: var(--color-border); }
+
+        /* Refined Breadcrumb */
         .breadcrumb { 
             font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; 
-            display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s var(--ease-cubic); 
-            padding: 8px 12px; border-radius: 10px; background: #fff; border: 1px solid var(--color-border); 
-            white-space: nowrap; line-height: 1;
+            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 2rem; 
+            transition: all 0.3s var(--ease-cubic); padding: 8px 14px; border-radius: 10px; background: #fff; 
+            border: 1px solid var(--color-border); white-space: nowrap; line-height: 1;
         }
+        .breadcrumb svg { width: 12px; height: 12px; stroke-width: 3.5; flex-shrink: 0;}
         .breadcrumb:hover { color: var(--color-primary); border-color: var(--color-primary); background: var(--light-bg-tertiary); box-shadow: var(--shadow-sm);}
-        @media (max-width: 768px) { .breadcrumb { margin-top: 20px; } }
 
+        .page-header { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
+        .page-header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
         .employee-header { display: flex; align-items: center; gap: 1.25rem; }
-        .employee-avatar { width: 64px; height: 64px; border-radius: 18px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #059669; font-size: 1.5rem; font-family: var(--font-main); flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .employee-name { font-family: var(--font-main); font-size: 1.75rem; font-weight: 700; color: var(--color-text-primary); line-height: 1.2; letter-spacing: -0.02em; }
-        .employee-salary { font-size: 1rem; color: var(--color-text-secondary); margin-top: 4px; }
+        .employee-avatar { width: 64px; height: 64px; border-radius: 18px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #059669; font-size: 1.5rem; font-family: var(--font-main); flex-shrink: 0; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.1); }
+        .employee-name { font-family: var(--font-main); font-size: 1.75rem; font-weight: 700; color: var(--color-text-primary); line-height: 1.2; letter-spacing: -0.03em;}
+        .employee-salary { font-size: 0.95rem; color: var(--color-text-secondary); font-weight: 500;}
 
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
         @media (min-width: 1024px) { .detail-grid { grid-template-columns: 2fr 1fr; } }
         
-        .card { 
-            background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); 
-            padding: 24px; margin-bottom: 24px; box-shadow: var(--premium-shadow); position: relative;
-        }
-        .card::before {
-            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1;
-        }
+        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
+        
+        .card { background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--premium-shadow); position: relative; overflow: hidden; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+        
+        /* Stats Cards */
+        .stat-card { display: flex; align-items: center; gap: 1.25rem; padding: 24px; }
+        .stat-icon { flex-shrink: 0; width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--color-primary); background-color: var(--color-primary-light); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .stat-card-value { font-size: 1.75rem; font-weight: 800; line-height: 1.1; font-family: var(--font-alt); color: var(--color-text-primary); letter-spacing: -0.02em;}
+        .stat-card-label { font-size: 0.8rem; color: var(--color-text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;}
 
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9;}
-        .card-header h2 { font-size: 1.2rem; font-weight: 700; color: var(--color-text-primary); }
-
-        .stat-card { display: flex; align-items: center; gap: 1rem; padding: 24px; }
-        .stat-icon { flex-shrink: 0; width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--color-primary); background-color: var(--color-primary-light); border: 1px solid rgba(1, 39, 38, 0.1); }
-        .stat-card-value { font-size: 1.85rem; font-weight: 800; line-height: 1.2; font-family: var(--font-nav); color: var(--color-text-primary); }
-        .stat-card-label { font-size: 0.85rem; color: var(--color-text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-
-        /* Calendar Styling */
-        .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
-        .month-year-display { font-size: 1.15rem; font-weight: 700; text-align: center; font-family: var(--font-main); }
-        .calendar-nav-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--color-border); background: #fff; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
-        .calendar-nav-btn:hover { border-color: var(--color-primary); color: var(--color-primary); background-color: var(--color-primary-light); }
-        .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; text-align: center; font-size: 0.75rem; color: var(--color-text-secondary); font-weight: 700; margin-bottom: 0.75rem; text-transform: uppercase; }
-        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.35rem; }
-        .day { display: flex; align-items: center; justify-content: center; height: 42px; width: 42px; margin: auto; border-radius: 12px; transition: all 0.2s; font-size: 0.95rem; font-weight: 600; color: var(--color-text-primary); border: 1px solid transparent; }
-        .day.today { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-light); }
-        .day.present { background-color: var(--color-success); color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); } 
-        .day.absent { background-color: var(--color-danger); color: white; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2); } 
-        .day.paid-holiday { background-color: var(--color-warning); color: #fff; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2); } 
+        /* Calendar Styles */
+        .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; background: #f8fafc; padding: 8px; border-radius: 12px; border: 1px solid #e2e8f0;}
+        .calendar-nav-btn { width: 36px; height: 36px; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
+        .calendar-nav-btn:hover { background-color: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+        .month-year-display { font-size: 1.1rem; font-weight: 700; text-align: center; flex-grow: 1; font-family: var(--font-main); }
+        
+        .weekdays-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; text-align: center; font-size: 0.75rem; color: var(--color-text-secondary); font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; padding: 0 4px;}
+        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; padding: 0 4px;}
+        .day { display: flex; align-items: center; justify-content: center; height: 36px; width: 36px; margin: auto; border-radius: 10px; transition: all 0.2s; font-size: 0.9rem; font-weight: 600; color: var(--color-text-primary); }
+        .day.today { box-shadow: inset 0 0 0 2px var(--color-primary); color: var(--color-primary); }
+        .day.present { background-color: var(--color-success); color: white; } 
+        .day.absent { background-color: var(--color-danger); color: white; } 
+        .day.paid-holiday { background-color: var(--color-warning); color: #fff; } 
         .day.half-day { background: var(--gradient-half-day); color: white; }
         .day.prev-month, .day.next-month { opacity: 0.3; font-weight: 400; }
 
+        .calendar-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #f1f5f9; }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: var(--color-text-secondary); }
+        .legend-color { width: 10px; height: 10px; border-radius: 50%; }
+
         /* Payment List */
-        #payment-list li { display: flex; align-items: center; gap: 1.25rem; padding: 1rem 0; border-bottom: 1px solid #f1f5f9; }
+        #payment-list li { display: flex; align-items: center; gap: 1.25rem; padding: 16px 0; border-bottom: 1px solid #f1f5f9; }
         #payment-list li:last-child { border-bottom: none; }
-        .payment-icon { flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: var(--color-success-bg); color: var(--color-success); border: 1px solid rgba(16, 185, 129, 0.1); }
-        .payment-amount { font-weight: 800; color: var(--color-text-primary); font-size: 1.1rem; }
-        .payment-date-time { font-size: 0.9rem; color: var(--color-text-primary); font-weight: 600; }
-        .payment-date-time .time { font-size: 0.8rem; color: var(--color-text-secondary); margin-left: 0.5rem; font-weight: 400; }
+        .payment-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: #f0fdf4; color: #10b981; border: 1px solid #dcfce7;}
+        .payment-amount { font-weight: 800; color: var(--color-text-primary); font-size: 1.05rem;}
+        .payment-date-time { font-size: 0.85rem; font-weight: 600; color: var(--color-text-primary);}
+        .payment-date-time .time { font-size: 0.75rem; color: var(--color-text-secondary); margin-left: 0.5rem; font-weight: 500;}
+        .payment-note { font-size: 0.8rem; color: var(--color-text-secondary); margin-top: 2px;}
 
         /* Premium Modals */
-        .modal { display: none; position: fixed; z-index: 3000; inset: 0; background-color: rgba(15, 23, 42, 0.5); backdrop-filter: blur(6px); align-items: center; justify-content: center;}
-        .modal-content { background-color: var(--color-surface); margin: 1rem; padding: 2.5rem; border-radius: var(--radius-xl); width: 100%; max-width: 480px; position: relative; box-shadow: var(--modal-shadow); animation: modalOpen 0.4s var(--ease-out-back); }
-        .modal-header h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
-        
+        .modal { display: none; position: fixed; z-index: 3000; inset: 0; background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(6px); align-items: center; justify-content: center;}
+        .modal-content { background-color: var(--color-surface); margin: 1rem; padding: 2.5rem; border-radius: var(--radius-xl); width: 100%; max-width: 500px; position: relative; box-shadow: var(--modal-shadow); animation: modalOpen 0.4s var(--ease-out-back); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .modal-header h2 { font-size: 1.5rem; font-weight: 700; color: var(--color-text-primary); letter-spacing: -0.02em; }
+        .close-btn { background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #64748b; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .close-btn:hover { background: #e2e8f0; color: #0f172a; transform: rotate(90deg); }
+
+        /* Premium Inputs */
         .form-group { position: relative; margin-bottom: 1.5rem; }
-        .form-group input, .form-group select { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        .form-group input, .form-group select { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; transition: all 0.3s; }
         .form-group input:focus, .form-group select:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
-        .form-group label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
+        .form-group label { position: absolute; top: 14px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; }
         .form-group input:focus + label, .form-group input:not(:placeholder-shown) + label,
-        .form-group select:focus + label, .form-group select:valid + label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em; z-index: 10;}
-        
-        .manage-action { display: flex; align-items: center; gap: 1rem; padding: 14px; border-radius: 12px; text-decoration: none; color: var(--color-text-primary); font-weight: 600; transition: all 0.2s; cursor: pointer; border: none; width: 100%; background: #f8fafc; font-family: inherit; font-size: 1rem; margin-bottom: 8px;}
-        .manage-action:hover { background-color: var(--light-bg-tertiary); transform: translateX(4px); }
-        .manage-action.danger-action { color: var(--color-danger); background-color: #fff5f5; }
-        
-        /* Skeleton */
-        .skeleton { position: relative; overflow: hidden; background-color: #f1f5f9; border-radius: 12px; animation: pulse 2s infinite; }
-        @keyframes pulse { 50% { opacity: 0.6; } }
-        
+        .form-group select:focus + label, .form-group select:valid + label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em; }
+
+        .manage-action { display: flex; align-items: center; gap: 1rem; padding: 16px; border-radius: 14px; color: var(--color-text-primary); font-weight: 600; transition: all 0.3s; cursor: pointer; border: 1px solid transparent; width: 100%; background: #f8fafc; font-family: inherit; font-size: 1rem;}
+        .manage-action:hover { background-color: #f1f5f9; transform: translateY(-2px); border-color: #e2e8f0; }
+
+        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 14px 28px; border-radius: 12px; color: white; font-weight: 600; box-shadow: var(--premium-shadow-hover); transition: bottom 0.4s var(--ease-out-back); z-index: 4000; }
+        #toast.show { bottom: 30px; }
+        #toast.success { background: linear-gradient(135deg, #10b981, #059669); } 
+        #toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes modalOpen { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        @media (max-width: 768px) {
+            .page-header-top { flex-direction: row; }
+            .employee-name { font-size: 1.5rem; }
+            .stat-card-value { font-size: 1.5rem; }
+            .breadcrumb { margin-top: 10px; margin-bottom: 1.5rem; }
+        }
     </style>
 </head>
 
 <body>
-    <!-- App Layout -->
+    <!-- App Container -->
     <div class="app-layout">
         
-        <!-- Mobile Header (Hidden on Desktop) -->
+        <!-- Mobile Header -->
         <header class="m-header mobile-only">
             <button class="m-menu-btn" id="m-open-drawer">
                 <div class="m-menu-lines"><span></span></div>
@@ -325,8 +335,7 @@
             
             <div class="sidebar-inner">
                 <nav class="nav-menu">
-                    <!-- Dashboard highlighted per request -->
-                    <a href="admin-dashboard.html" class="nav-item active" id="nav-link-home">
+                    <a href="admin-dashboard.html" class="nav-item" id="nav-link-home">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
                         <span class="nav-label">Dashboard</span>
                     </a>
@@ -334,7 +343,7 @@
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gallery-vertical-end-icon lucide-gallery-vertical-end"><path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/></svg></span>
                         <span class="nav-label">All Orders</span>
                     </a>
-                    <a href="admin-employees.html" class="nav-item" id="nav-link-secondary">
+                    <a href="admin-employees.html" class="nav-item active" id="nav-link-secondary">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
                         <span class="nav-label">Manage Employees</span>
                     </a>
@@ -351,44 +360,43 @@
 
             <div class="account-section" id="profile-trigger">
                 <div class="account-card">
-                    <img class="account-avatar-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+                    <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
                     <div class="account-text">
-                        <div class="account-name-nav">Loading...</div>
-                        <div class="account-email-nav"></div>
+                        <div class="account-name">Loading...</div>
+                        <div class="account-email"></div>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content Wrapper -->
+        <!-- Main Content -->
         <div class="main-content">
             <header class="topbar desktop-only">Employee Details</header>
             
             <main class="content-area">
                 <div class="container" id="main-container">
                     <div id="detail-view" class="view active">
-                        <!-- Initial Skeletons -->
+                        <!-- Skeletons shown initially -->
                         <div class="page-header">
                             <div class="page-header-top">
-                                <div class="skeleton" style="height: 36px; width: 100px;"></div>
-                                <div class="skeleton" style="height: 44px; width: 120px;"></div>
+                                <div class="skeleton" style="height: 36px; width: 80px; border-radius: 10px;"></div>
+                                <div class="skeleton" style="height: 44px; width: 120px; border-radius: 12px;"></div>
                             </div>
                             <div class="employee-header">
                                 <div class="skeleton" style="width: 64px; height: 64px; border-radius: 18px;"></div>
                                 <div>
-                                    <div class="skeleton" style="height: 32px; width: 220px; margin-bottom: 8px;"></div>
+                                    <div class="skeleton" style="height: 36px; width: 240px; margin-bottom: 8px;"></div>
                                     <div class="skeleton" style="height: 20px; width: 140px;"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="detail-grid">
                             <div class="main-column">
-                                <div class="card"><div class="skeleton" style="height: 300px; width: 100%;"></div></div>
-                                <div class="card"><div class="skeleton" style="height: 200px; width: 100%;"></div></div>
+                                <div class="card"><div class="skeleton" style="height: 300px;"></div></div>
                             </div>
                             <div class="sidebar-column">
-                                <div class="card" style="height: 100px;"><div class="skeleton" style="height: 100%; width: 100%;"></div></div>
-                                <div class="card" style="height: 100px;"><div class="skeleton" style="height: 100%; width: 100%;"></div></div>
+                                <div class="card stat-card"><div class="skeleton" style="height: 60px; width: 100%;"></div></div>
+                                <div class="card stat-card"><div class="skeleton" style="height: 60px; width: 100%;"></div></div>
                             </div>
                         </div>
                     </div>
@@ -397,23 +405,13 @@
         </div>
     </div>
 
-    <!-- UI Modals -->
-    <div id="toast"></div>
-    <div id="edit-options-modal" class="modal"></div>
-    <div id="employee-modal" class="modal"></div>
-    <div id="link-user-modal" class="modal"></div>
-    <div id="missed-attendance-modal" class="modal"></div>
-    <div id="payment-modal" class="modal"></div>
-    <div id="delete-employee-modal" class="modal"></div>
-    <div id="delete-payment-modal" class="modal"></div>
-    
     <!-- Profile Popup Menu -->
     <div class="profile-popup" id="profile-popup">
         <div class="popup-header">
-            <img class="account-avatar-sm" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
+            <img class="account-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e5e7eb'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User">
             <div class="account-text">
-                <div class="account-name-nav">Loading...</div>
-                <div class="account-email-nav"></div>
+                <div class="account-name">Loading...</div>
+                <div class="account-email"></div>
             </div>
         </div>
         <ul class="popup-list">
@@ -422,6 +420,16 @@
             <li><a href="#" style="color:var(--color-danger)" data-app-action="logout"><span>Logout</span></a></li>
         </ul>
     </div>
+
+    <!-- UI Overlays -->
+    <div id="toast"></div>
+    <div id="edit-options-modal" class="modal"></div>
+    <div id="employee-modal" class="modal"></div>
+    <div id="link-user-modal" class="modal"></div>
+    <div id="missed-attendance-modal" class="modal"></div>
+    <div id="payment-modal" class="modal"></div>
+    <div id="delete-employee-modal" class="modal"></div>
+    <div id="delete-payment-modal" class="modal"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -460,7 +468,28 @@
         const getInitials = (name) => { const parts = name.split(' '); let initials = parts[0] ? parts[0][0] : ''; if (parts.length > 1) initials += parts[parts.length - 1][0]; return initials.toUpperCase(); };
         const formatEntryTime = (timestamp) => { if (!timestamp || !timestamp.toDate) return ''; return timestamp.toDate().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }); };
 
-        // --- SyncSkill UI Integration ---
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                currentEmployeeIdForDetail = urlParams.get('id');
+                if (!currentEmployeeIdForDetail) { throw new Error("No employee ID specified in URL."); }
+                
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                renderAppShellModals();
+                initSyncSkillUI();
+                bindEventListeners();
+                listenForAuthStateChanges();
+
+            } catch (error) {
+                console.error("Initialization Failed:", error);
+                document.body.innerHTML = `<div style="padding: 2rem; text-align: center;"><h2>Error: ${error.message}</h2><p>Redirecting...</p></div>`;
+                setTimeout(() => window.location.href = 'admin-employees.html', 3000);
+            }
+        });
+
         function initSyncSkillUI() {
             const sidebar = document.getElementById('sidebar');
             const mOverlay = document.getElementById('sidebar-overlay');
@@ -497,6 +526,46 @@
             document.addEventListener('click', () => { if(pPopup) pPopup.classList.remove('active'); });
         }
 
+        function listenForAuthStateChanges() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    currentUserAuth = user;
+                    const userRef = doc(db, "users", user.uid);
+                    let userDoc = await getDoc(userRef);
+                    
+                    if (user.email === ADMIN_EMAIL && (!userDoc.exists() || userDoc.data().role !== 'admin')) {
+                        await setDoc(userRef, { 
+                            displayName: user.displayName || 'Master Admin', 
+                            email: user.email, 
+                            photoURL: user.photoURL,
+                            status: 'approved', 
+                            role: 'admin' 
+                        }, { merge: true });
+                        userDoc = await getDoc(userRef);
+                    }
+
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                    populateNavbar(currentUserProfile);
+                    await showDetailView(true); 
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        
+        function populateNavbar(userProfile) {
+            if (!userProfile) return;
+            const defaultPhoto = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E';
+            document.querySelectorAll('.account-avatar').forEach(img => img.src = userProfile.photoURL || defaultPhoto);
+            document.querySelectorAll('.account-name').forEach(el => el.textContent = userProfile.displayName || 'Admin');
+            document.querySelectorAll('.account-email').forEach(el => el.textContent = userProfile.email || '');
+        }
+
         async function showDetailView(initialLoad = false) {
             if (initialLoad) currentCalendarDate = new Date();
             try {
@@ -504,7 +573,10 @@
                     const empDoc = await getDoc(doc(db, "employees", currentEmployeeIdForDetail));
                     if (!empDoc.exists()) throw new Error("Employee not found");
                     currentEmployee = { id: empDoc.id, ...empDoc.data() };
-                    const [allAttSnap, allPaySnap] = await Promise.all([ getDocs(collection(db, `employees/${currentEmployeeIdForDetail}/attendance`)), getDocs(collection(db, `employees/${currentEmployeeIdForDetail}/payments`)) ]);
+                    const [allAttSnap, allPaySnap] = await Promise.all([ 
+                        getDocs(collection(db, `employees/${currentEmployeeIdForDetail}/attendance`)), 
+                        getDocs(collection(db, `employees/${currentEmployeeIdForDetail}/payments`)) 
+                    ]);
                     allAttendance = allAttSnap.docs.map(d => d.data());
                     allPayments = allPaySnap.docs.map(d => ({id: d.id, ...d.data()}));
                 }
@@ -512,62 +584,39 @@
                 document.getElementById('detail-view').innerHTML = `
                     <div class="page-header">
                         <div class="page-header-top">
-                            <a href="admin-employees.html" class="breadcrumb" data-app-action="navigate-employees">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                                <span>Back to Employees</span>
-                            </a>
-                            <button data-app-action="open-edit-options" data-id="${currentEmployee.id}" data-name="${currentEmployee.name}" class="btn btn-primary">
-                                <span class="material-symbols-outlined" style="font-size: 1.2rem;">tune</span>
-                                <span>Manage</span>
-                            </button>
+                            <a href="admin-employees.html" class="breadcrumb"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg><span>Back</span></a>
+                            <button data-app-action="open-edit-options" data-id="${currentEmployee.id}" data-name="${currentEmployee.name}" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg><span>Manage</span></button>
                         </div>
-                        <div class="employee-header">
-                            <div class="employee-avatar">${getInitials(currentEmployee.name)}</div>
-                            <div>
-                                <h1 class="employee-name">${currentEmployee.name}</h1>
-                                <p class="employee-salary">₹${currentEmployee.dailySalary} / day</p>
-                            </div>
-                        </div>
+                        <div class="employee-header"><div class="employee-avatar">${getInitials(currentEmployee.name)}</div><div><h1 class="employee-name">${currentEmployee.name}</h1><p class="employee-salary">₹${currentEmployee.dailySalary}/day</p></div></div>
                     </div>
                     <div class="detail-grid">
                         <div class="main-column">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h2>Attendance</h2>
-                                    <button data-app-action="open-modal" data-modal-id="missed-attendance-modal" class="btn btn-secondary">Add Missed</button>
-                                </div>
-                                <div class="calendar-header">
-                                    <button data-app-action="calendar-prev" class="calendar-nav-btn"><span class="material-symbols-outlined">chevron_left</span></button>
-                                    <h3 id="month-year" class="month-year-display"></h3>
-                                    <button data-app-action="calendar-next" class="calendar-nav-btn"><span class="material-symbols-outlined">chevron_right</span></button>
-                                </div>
-                                <div id="weekdays" class="weekdays-grid"></div>
-                                <div id="days-grid" class="days-grid"></div>
-                                <div class="calendar-legend">
-                                    <div class="legend-item"><span class="legend-color" style="background:var(--color-success)"></span>Present</div>
-                                    <div class="legend-item"><span class="legend-color" style="background:var(--color-danger)"></span>Absent</div>
-                                    <div class="legend-item"><span class="legend-color" style="background:var(--gradient-half-day)"></span>Half Day</div>
-                                    <div class="legend-item"><span class="legend-color" style="background:var(--color-warning)"></span>Paid Holiday</div>
-                                </div>
+                            <div class="card"> 
+                                <div class="card-header"><h2>Attendance</h2> <button data-app-action="open-modal" data-modal-id="missed-attendance-modal" data-form-id="missed-attendance-form" class="btn btn-secondary">Add Missed</button> </div> 
+                                <div class="calendar-header"> <button data-app-action="calendar-prev" class="calendar-nav-btn"><span class="material-symbols-outlined">chevron_left</span></button> <h3 id="month-year" class="month-year-display"></h3> <button data-app-action="calendar-next" class="calendar-nav-btn"><span class="material-symbols-outlined">chevron_right</span></button> </div> 
+                                <div id="weekdays" class="weekdays-grid"></div> 
+                                <div id="days-grid" class="days-grid"></div> 
+                                <div class="calendar-legend"> 
+                                    <div class="legend-item"><span class="legend-color" style="background:var(--color-success)"></span>Present</div> 
+                                    <div class="legend-item"><span class="legend-color" style="background:var(--color-danger)"></span>Absent</div> 
+                                    <div class="legend-item"><span class="legend-color" style="background:var(--gradient-half-day)"></span>Half Day</div> 
+                                    <div class="legend-item"><span class="legend-color" style="background:var(--color-warning)"></span>Paid Holiday</div> 
+                                </div> 
                             </div>
-                            <div class="card">
-                                <div class="card-header">
-                                    <h2>Payment History</h2>
-                                    <button data-app-action="open-modal" data-modal-id="payment-modal" class="btn btn-secondary">Add Payment</button>
-                                </div>
-                                <div id="payment-list"></div>
+                            <div class="card"> 
+                                <div class="card-header"><h2>Recent Payments</h2> <button data-app-action="open-modal" data-modal-id="payment-modal" data-form-id="payment-form" class="btn btn-secondary">Add Payment</button> </div> 
+                                <div id="payment-list"></div> 
                             </div>
                         </div>
-                        <div class="sidebar-column">
-                            <div class="card stat-card" id="overall-summary"></div>
-                            <div class="card stat-card" id="monthly-summary"></div>
+                        <div class="sidebar-column"> 
+                            <div class="card stat-card" id="overall-summary"></div> 
+                            <div class="card stat-card" id="monthly-summary"></div> 
                         </div>
                     </div>`;
-                
                 rerenderDynamicContent();
             } catch (error) { 
                 showToast(`Error: ${error.message}`, "error"); 
-                document.getElementById('detail-view').innerHTML = `<div class="card"><p>Error loading employee details.</p></div>`; 
+                document.getElementById('detail-view').innerHTML = `<h2>Error loading details.</h2>`; 
             }
         }
 
@@ -577,194 +626,89 @@
             renderPaymentList(allPayments, currentEmployee);
         }
         
-        function renderCalendar(attendanceData) { 
-            const monthYearEl = document.getElementById('month-year'); 
-            const daysGridEl = document.getElementById('days-grid'); 
-            const weekdaysEl = document.getElementById('weekdays'); 
-            if(!monthYearEl || !daysGridEl || !weekdaysEl) return; 
-
-            monthYearEl.textContent = currentCalendarDate.toLocaleString('default', { month: 'long', year: 'numeric' }); 
-            daysGridEl.innerHTML = ''; 
-            weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join(''); 
-
-            const month = currentCalendarDate.getMonth(); 
-            const year = currentCalendarDate.getFullYear(); 
-            const firstDayIndex = new Date(year, month, 1).getDay(); 
-            const lastDay = new Date(year, month + 1, 0).getDate(); 
-            const prevLastDay = new Date(year, month, 0).getDate(); 
-            const lastDayIndex = new Date(year, month, lastDay).getDay(); 
-            const nextDays = 7 - lastDayIndex - 1; 
-            const todayString = formatDate(new Date()); 
-            const attendanceMap = new Map(attendanceData.map(item => [item.date, item.status])); 
-
-            let daysHTML = ''; 
-            for (let x = firstDayIndex; x > 0; x--) { daysHTML += `<div class="day prev-month">${prevLastDay - x + 1}</div>`; } 
-            for (let i = 1; i <= lastDay; i++) { 
-                const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; 
-                const status = attendanceMap.get(dayStr); 
-                let classes = 'day'; 
-                if (dayStr === todayString) classes += ' today'; 
-                if (status) classes += ` ${status}`; 
-                daysHTML += `<div class="${classes}">${i}</div>`; 
-            } 
-            for (let j = 1; j <= nextDays; j++) { daysHTML += `<div class="day next-month">${j}</div>`; } 
-            daysGridEl.innerHTML = daysHTML; 
-        }
-
-        function renderFinancialSummaries(employee, allAttendance, allPayments) { 
-            if (!Array.isArray(allAttendance) || !Array.isArray(allPayments)) return; 
-            const year = currentCalendarDate.getFullYear(); 
-            const month = currentCalendarDate.getMonth(); 
-            const startOfMonth = new Date(year, month, 1); 
-            const endOfMonth = new Date(year, month + 1, 0); 
-            const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth)); 
-            const overall = calculateFinancials(employee, allAttendance, allPayments); 
-            const monthly = calculateFinancials(employee, monthlyAttendance, []); 
-            const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : 'success-text'; 
-            
-            const overallSummaryEl = document.getElementById('overall-summary'); 
-            const monthlySummaryEl = document.getElementById('monthly-summary'); 
-
-            if (overallSummaryEl) { 
-                overallSummaryEl.innerHTML = `
-                    <div class="stat-icon"><span class="material-symbols-outlined">account_balance_wallet</span></div>
-                    <div class="stat-info">
-                        <div class="stat-card-label">Overall Amount Due</div>
-                        <div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div>
-                    </div>`; 
-            } 
-            if (monthlySummaryEl) { 
-                monthlySummaryEl.innerHTML = `
-                    <div class="stat-icon"><span class="material-symbols-outlined">event_note</span></div>
-                    <div class="stat-info">
-                        <div class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Earnings</div>
-                        <div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div>
-                    </div>`; 
-            } 
-            document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000)); 
-        }
-
+        function renderCalendar(attendanceData) { const monthYearEl = document.getElementById('month-year'); const daysGridEl = document.getElementById('days-grid'); const weekdaysEl = document.getElementById('weekdays'); if(!monthYearEl || !daysGridEl || !weekdaysEl) return; monthYearEl.textContent = currentCalendarDate.toLocaleString('default', { month: 'long', year: 'numeric' }); daysGridEl.innerHTML = ''; weekdaysEl.innerHTML = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div>${day}</div>`).join(''); const month = currentCalendarDate.getMonth(); const year = currentCalendarDate.getFullYear(); const firstDayIndex = new Date(year, month, 1).getDay(); const lastDay = new Date(year, month + 1, 0).getDate(); const prevLastDay = new Date(year, month, 0).getDate(); const lastDayIndex = new Date(year, month, lastDay).getDay(); const nextDays = 7 - lastDayIndex - 1; const todayString = formatDate(new Date()); const attendanceMap = new Map(attendanceData.map(item => [item.date, item.status])); let daysHTML = ''; for (let x = firstDayIndex; x > 0; x--) { daysHTML += `<div class="day prev-month">${prevLastDay - x + 1}</div>`; } for (let i = 1; i <= lastDay; i++) { const dayStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`; const status = attendanceMap.get(dayStr); let classes = 'day'; if (dayStr === todayString) classes += ' today'; if (status) classes += ` ${status}`; daysHTML += `<div class="${classes}">${i}</div>`; } for (let j = 1; j <= nextDays; j++) { daysHTML += `<div class="day next-month">${j}</div>`; } daysGridEl.innerHTML = daysHTML; }
+        function renderFinancialSummaries(employee, allAttendance, allPayments) { if (!Array.isArray(allAttendance) || !Array.isArray(allPayments)) return; const year = currentCalendarDate.getFullYear(); const month = currentCalendarDate.getMonth(); const startOfMonth = new Date(year, month, 1); const endOfMonth = new Date(year, month + 1, 0); const monthlyAttendance = allAttendance.filter(a => a?.date >= formatDate(startOfMonth) && a?.date <= formatDate(endOfMonth)); const overall = calculateFinancials(employee, allAttendance, allPayments); const monthly = calculateFinancials(employee, monthlyAttendance, []); const dueAmountClass = overall.dueAmount > 0 ? 'danger-text' : 'success-text'; const overallSummaryEl = document.getElementById('overall-summary'); const monthlySummaryEl = document.getElementById('monthly-summary'); if (overallSummaryEl) { overallSummaryEl.innerHTML = `<div class="stat-icon"><span class="material-symbols-outlined">account_balance_wallet</span></div><div class="stat-info"><div class="stat-card-label">Overall Amount Due</div><div class="stat-card-value ${dueAmountClass}">₹<span data-target="${overall.dueAmount.toFixed(2)}">0</span></div></div>`; } if (monthlySummaryEl) { monthlySummaryEl.innerHTML = `<div class="stat-icon"><span class="material-symbols-outlined">calendar_month</span></div><div class="stat-info"><div class="stat-card-label">${currentCalendarDate.toLocaleString('default', { month: 'long' })} Earnings</div><div class="stat-card-value">₹<span data-target="${monthly.totalEarned.toFixed(2)}">0</span></div></div>`; } document.querySelectorAll('.stat-card-value span').forEach(el => animateValue(el, 0, parseFloat(el.dataset.target), 1000)); }
         function calculateFinancials(employee, attendance, payments) { if (!employee || !Array.isArray(attendance) || !Array.isArray(payments)) { return { totalEarned: 0, dueAmount: 0 }; } let p=0,h=0,ph=0; attendance.forEach(a=>{if(a?.status==='present')p++;else if(a?.status==='half-day')h++;else if(a?.status==='paid-holiday')ph++;}); const earned=(p+(h*0.5)+ph)*(employee.dailySalary||0); const paid=payments.reduce((s,p)=>s+(p?.amount||0),0); return {totalEarned:earned, dueAmount:earned-paid}; }
-
-        function renderPaymentList(allPayments, employee) { 
-            const container = document.getElementById('payment-list'); 
-            if (!container || !Array.isArray(allPayments) || !employee) return; 
-            if (allPayments.length === 0) { 
-                container.innerHTML = '<p style="padding: 2rem 0; color: var(--color-text-secondary); text-align: center;">No payments recorded.</p>'; 
-                return; 
-            } 
-            allPayments.sort((a, b) => (b.createdAt?.toDate() || 0) - (a.createdAt?.toDate() || 0)); 
-            const recentPayments = allPayments.slice(0, 3); 
-            container.innerHTML = `<ul>${recentPayments.map(p => `
-                <li>
-                    <div class="payment-icon"><span class="material-symbols-outlined">${p.paymentMode === 'Online' ? 'credit_card' : 'payments'}</span></div>
-                    <div class="payment-details">
-                        <div class="payment-info">
-                            <span class="payment-date-time">${p.date}<span class="time">${formatEntryTime(p.createdAt)}</span></span>
-                            <span class="payment-amount">₹${p.amount.toFixed(2)}</span>
-                        </div>
-                        <div style="font-size:0.85rem; color: var(--color-text-secondary); margin-top: 2px;">${p.note || p.paymentMode}</div>
-                    </div>
-                    <div class="payment-actions">
-                        <button class="btn-icon" title="Edit Payment" data-app-action="open-edit-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg></button>
-                        <button class="btn-icon" title="Delete Payment" data-app-action="open-delete-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button>
-                    </div>
-                </li>`).join('')}</ul>`; 
-            if (allPayments.length > 3) { 
-                container.innerHTML += `<div style="text-align: center; margin-top: 1.5rem;"><button class="btn btn-secondary" data-app-action="navigate-payment-history" data-employee-id="${employee.id}">View Full History</button></div>`; 
-            } 
-        }
-
+        function renderPaymentList(allPayments, employee) { const container = document.getElementById('payment-list'); if (!container || !Array.isArray(allPayments) || !employee) return; if (allPayments.length === 0) { container.innerHTML = '<p style="padding: 1rem 0; color: var(--color-text-secondary); text-align: center;">No payments recorded.</p>'; return; } allPayments.sort((a, b) => (b.createdAt?.toDate() || 0) - (a.createdAt?.toDate() || 0)); const recentPayments = allPayments.slice(0, 3); container.innerHTML = `<ul>${recentPayments.map(p => `<li><div class="payment-icon"><span class="material-symbols-outlined">${p.paymentMode === 'Online' ? 'credit_card' : 'payments'}</span></div><div class="payment-details"><div class="payment-info"><span class="payment-date-time">${p.date}<span class="time">${formatEntryTime(p.createdAt)}</span></span><span class="payment-amount">₹${p.amount.toFixed(2)}</span></div><div class="payment-note">${p.note || p.paymentMode}</div></div><div class="payment-actions"><button class="btn-icon" title="Edit Payment" data-app-action="open-edit-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg></button><button class="btn-icon" title="Delete Payment" data-app-action="open-delete-payment-modal" data-payment-id="${p.id}" data-employee-id="${employee.id}"><svg class="icon-sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button></div></li>`).join('')}</ul>`; if (allPayments.length > 3) { container.innerHTML += `<div class="payment-history-actions"><button class="btn btn-secondary" style="width:100%" data-app-action="navigate-payment-history" data-employee-id="${employee.id}">View Full History</button></div>`; } }
         function animateValue(obj, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); obj.innerHTML = Math.abs(progress * (end - start) + start).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); if (progress < 1) window.requestAnimationFrame(step); else { obj.innerHTML = Math.abs(end).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); } }; window.requestAnimationFrame(step); }
-        
+
         function renderAppShellModals() { 
-            document.getElementById('edit-options-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2 id="edit-options-title"></h2><button class="close-btn" data-app-action="close-modal" data-modal-id="edit-options-modal"><span class="material-symbols-outlined">close</span></button></div><div id="edit-options-modal-content" style="margin-top: 1.5rem;"></div></div>`; 
-            
+            document.getElementById('edit-options-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2 id="edit-options-title"></h2><button class="close-btn" data-app-action="close-modal" data-modal-id="edit-options-modal"><span class="material-symbols-outlined">close</span></button></div><div id="edit-options-modal-content"></div></div>`; 
             document.getElementById('employee-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Edit Employee</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="employee-modal"><span class="material-symbols-outlined">close</span></button></div><form id="employee-form"><input type="hidden" id="employee-id"><div class="form-group"><input type="text" id="full-name" required placeholder=" "><label for="full-name">Full Name</label></div><div class="form-group"><input type="number" id="daily-salary" required min="0" step="0.01" placeholder=" "><label for="daily-salary">Daily Salary</label></div><button type="submit" class="btn btn-primary" style="width:100%">Save Changes</button></form></div>`; 
-            
             document.getElementById('payment-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2 id="payment-modal-title">Add Payment</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="payment-modal"><span class="material-symbols-outlined">close</span></button></div><form id="payment-form"><input type="hidden" id="payment-id"><div class="form-group"><input type="number" id="payment-amount" required placeholder=" "><label for="payment-amount">Amount</label></div><div class="form-group"><input type="date" id="payment-date" required><label for="payment-date">Date</label></div><div class="form-group"><input type="text" id="payment-note" placeholder=" "><label for="payment-note">Note (Optional)</label></div><div class="form-group"><select id="payment-mode" required><option value="Cash">Cash</option><option value="Online">Online</option></select><label for="payment-mode">Mode</label></div><button type="submit" class="btn btn-primary" style="width:100%">Save Payment</button></form></div>`; 
-            
             document.getElementById('missed-attendance-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Add Attendance</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="missed-attendance-modal"><span class="material-symbols-outlined">close</span></button></div><form id="missed-attendance-form"><div class="form-group"><input type="date" id="missed-attendance-date" required><label for="missed-attendance-date">Select Date</label></div><div class="form-group"><select id="missed-attendance-status" required><option value="" disabled selected hidden></option><option value="present">Present</option><option value="absent">Absent</option><option value="half-day">Half Day</option><option value="paid-holiday">Paid Holiday</option></select><label for="missed-attendance-status">Status</label></div><button type="submit" class="btn btn-primary" style="width:100%">Save Attendance</button></form></div>`; 
-            
-            document.getElementById('delete-employee-modal').innerHTML = `<div class="modal-content" style="text-align:center;"><div class="modal-header"><h2>Delete Employee</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="delete-employee-modal"><span class="material-symbols-outlined">close</span></button></div><p style="margin-bottom: 1.5rem;">Permanently delete <strong id="delete-employee-name"></strong>?</p><div class="form-group"><input type="text" id="delete-confirm-name" autocomplete="off" placeholder=" "><label for="delete-confirm-name">Type name to confirm</label></div><button id="confirm-delete-btn" class="btn btn-danger" style="width:100%" disabled>Confirm Deletion</button></div>`; 
-            
-            document.getElementById('delete-payment-modal').innerHTML = `<div class="modal-content" style="text-align:center;"><div class="modal-header"><h2>Delete Payment</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="delete-payment-modal"><span class="material-symbols-outlined">close</span></button></div><p style="margin-bottom: 2rem;">Delete this payment record?</p><div style="display:flex; gap:12px;"><button class="btn btn-secondary" style="flex:1;" data-app-action="close-modal" data-modal-id="delete-payment-modal">Cancel</button><button id="confirm-delete-payment-btn" class="btn btn-danger" style="flex:1;">Confirm</button></div></div>`; 
-            
+            document.getElementById('delete-employee-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Delete Employee</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="delete-employee-modal"><span class="material-symbols-outlined">close</span></button></div><p>You are about to delete <strong id="delete-employee-name"></strong>.</p><p style="color:var(--color-danger); font-weight: 700; margin-top: 8px;">Warning: This is permanent.</p><div class="form-group" style="margin-top: 1.5rem;"><input type="text" id="delete-confirm-name" autocomplete="off" placeholder=" "><label for="delete-confirm-name">Type name to confirm</label></div><button id="confirm-delete-btn" class="btn btn-danger" style="width:100%" disabled>Confirm Deletion</button></div>`; 
+            document.getElementById('delete-payment-modal').innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Delete Payment</h2><button class="close-btn" data-app-action="close-modal" data-modal-id="delete-payment-modal"><span class="material-symbols-outlined">close</span></button></div><p>Are you sure you want to permanently delete this payment record?</p><div class="modal-actions" style="display:flex; gap:12px; margin-top:24px;"><button class="btn btn-secondary" style="flex:1" data-app-action="close-modal" data-modal-id="delete-payment-modal">Cancel</button><button id="confirm-delete-payment-btn" class="btn btn-danger" style="flex:1">Confirm</button></div></div>`; 
             document.getElementById('link-user-modal').innerHTML = `<div class="modal-content"></div>`; 
         }
 
-        async function handleMissedAttendanceSubmit(e) { e.preventDefault(); try { const date = document.getElementById('missed-attendance-date').value; const status = document.getElementById('missed-attendance-status').value; if (!date || !status) throw new Error("Date and status are required."); await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/attendance`, date), { status, date }); showToast("Attendance updated.", "success"); closeModal('missed-attendance-modal'); await showDetailView(true); } catch(err) { showToast(`Error: ${err.message}`, "error"); } }
-        
+        // Action Handlers
+        async function handleMissedAttendanceSubmit(e) { e.preventDefault(); try { const date = document.getElementById('missed-attendance-date').value; const status = document.getElementById('missed-attendance-status').value; if (!date || !status) throw new Error("Date and status are required."); await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/attendance`, date), { status, date }); showToast("Missed attendance added.", "success"); closeModal('missed-attendance-modal'); await showDetailView(true); } catch(err) { showToast(`Error: ${err.message}`, "error"); } }
         async function handlePaymentFormSubmit(e) { e.preventDefault(); const paymentId = document.getElementById('payment-id').value; const data = { amount: parseFloat(document.getElementById('payment-amount').value), date: document.getElementById('payment-date').value, note: document.getElementById('payment-note').value, paymentMode: document.getElementById('payment-mode').value }; try { if (!data.amount || !data.date) throw new Error("Amount and Date are required."); if (paymentId) { await setDoc(doc(db, `employees/${currentEmployeeIdForDetail}/payments`, paymentId), data, {merge: true}); showToast("Payment updated!", "success"); } else { data.createdAt = serverTimestamp(); await addDoc(collection(db, `employees/${currentEmployeeIdForDetail}/payments`), data); showToast("Payment added!", "success"); } closeModal('payment-modal'); await showDetailView(true); } catch(err) { showToast(`Error: ${err.message}`, "error"); } }
-        
         async function openEmployeeModalForEdit(employeeId) { try { const empDoc = await getDoc(doc(db, "employees", employeeId)); if (!empDoc.exists()) throw new Error("Employee not found."); const employee = empDoc.data(); document.getElementById('employee-id').value = employeeId; document.getElementById('full-name').value = employee.name; document.getElementById('daily-salary').value = employee.dailySalary; openModal('employee-modal'); } catch (error) { showToast(error.message, 'error'); } }
-        
         async function handleEmployeeFormSubmit(e) { e.preventDefault(); try { const id = document.getElementById('employee-id').value; const data = { name: document.getElementById('full-name').value, dailySalary: parseFloat(document.getElementById('daily-salary').value) }; await setDoc(doc(db, "employees", id), data, { merge: true }); await showDetailView(true); showToast("Employee saved!", "success"); closeModal('employee-modal'); } catch(err) { showToast("Error: Could not save employee.", "error"); } }
-        
         async function openDeleteModal(employeeId, employeeName) { const modal = document.getElementById('delete-employee-modal'); const confirmInput = document.getElementById('delete-confirm-name'); const confirmBtn = document.getElementById('confirm-delete-btn'); document.getElementById('delete-employee-name').textContent = employeeName; modal.dataset.employeeId = employeeId; modal.dataset.employeeName = employeeName; confirmInput.value = ''; confirmBtn.disabled = true; confirmInput.oninput = () => { confirmBtn.disabled = confirmInput.value.trim() !== employeeName; }; openModal('delete-employee-modal'); }
+        async function handleDeleteEmployee() { const modal = document.getElementById('delete-employee-modal'); const { employeeId, employeeName } = modal.dataset; if (!employeeId) return; try { const batch = writeBatch(db); const empDoc = await getDoc(doc(db, "employees", employeeId)); const userUID = empDoc.data().userUID; if (userUID) { batch.update(doc(db, "users", userUID), {status: 'denied', role: null, employeeId: null}); } const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); attSnap.forEach(d => batch.delete(d.ref)); paySnap.forEach(d => batch.delete(d.ref)); batch.delete(doc(db, "employees", employeeId)); await batch.commit(); closeModal('delete-employee-modal'); showToast(`${employeeName} has been permanently deleted.`, 'success'); setTimeout(() => window.location.href = 'admin-employees.html', 1500); } catch(err) { showToast("Could not delete employee.", "error"); } }
+        async function openPaymentModalForEdit(paymentId, employeeId) { try { const paymentDoc = await getDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); if (!paymentDoc.exists()) throw new Error("Payment record not found."); const payment = paymentDoc.data(); document.getElementById('payment-modal-title').textContent = 'Edit Payment'; document.getElementById('payment-id').value = paymentId; document.getElementById('payment-amount').value = payment.amount; document.getElementById('payment-date').value = payment.date; document.getElementById('payment-note').value = payment.note || ''; document.getElementById('payment-mode').value = payment.paymentMode || 'Cash'; openModal('payment-modal'); } catch (err) { showToast(err.message, 'error'); } }
+        async function handleDeletePayment() { const modal = document.getElementById('delete-payment-modal'); const { paymentId, employeeId } = modal.dataset; if (!paymentId || !employeeId) return; try { await deleteDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); closeModal('delete-payment-modal'); showToast("Payment deleted successfully.", "success"); await showDetailView(true); } catch(err) { showToast("Could not delete payment.", "error"); } }
         
-        async function handleDeleteEmployee() { const modal = document.getElementById('delete-employee-modal'); const { employeeId, employeeName } = modal.dataset; if (!employeeId) return; try { const batch = writeBatch(db); const empDoc = await getDoc(doc(db, "employees", employeeId)); const userUID = empDoc.data().userUID; if (userUID) { batch.update(doc(db, "users", userUID), {status: 'denied', role: null, employeeId: null}); } const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); attSnap.forEach(d => batch.delete(d.ref)); paySnap.forEach(d => batch.delete(d.ref)); batch.delete(doc(db, "employees", employeeId)); await batch.commit(); closeModal('delete-employee-modal'); showToast(`${employeeName} deleted.`, 'success'); setTimeout(() => window.location.href = 'admin-employees.html', 1500); } catch(err) { showToast("Could not delete employee.", "error"); } }
-        
-        async function openPaymentModalForEdit(paymentId, employeeId) { try { const paymentDoc = await getDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); if (!paymentDoc.exists()) throw new Error("Payment not found."); const payment = paymentDoc.data(); document.getElementById('payment-modal-title').textContent = 'Edit Payment'; document.getElementById('payment-id').value = paymentId; document.getElementById('payment-amount').value = payment.amount; document.getElementById('payment-date').value = payment.date; document.getElementById('payment-note').value = payment.note || ''; document.getElementById('payment-mode').value = payment.paymentMode || 'Cash'; openModal('payment-modal'); } catch (err) { showToast(err.message, 'error'); } }
-        
-        async function handleDeletePayment() { const modal = document.getElementById('delete-payment-modal'); const { paymentId, employeeId } = modal.dataset; if (!paymentId || !employeeId) return; try { await deleteDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); closeModal('delete-payment-modal'); showToast("Payment removed.", "success"); await showDetailView(true); } catch(err) { showToast("Could not remove payment.", "error"); } }
-        
-        async function handleOpenEditOptions(employeeId, employeeName) { 
-            const empDoc = await getDoc(doc(db, "employees", employeeId)); 
-            const employee = empDoc.data(); 
-            const title = document.getElementById('edit-options-title'); 
-            const content = document.getElementById('edit-options-modal-content'); 
-            title.textContent = `Manage ${employeeName}`; 
+        async function handleOpenEditOptions(employeeId, employeeName) { 
+            const empDoc = await getDoc(doc(db, "employees", employeeId)); 
+            const employee = empDoc.data(); 
+            const title = document.getElementById('edit-options-title'); 
+            const content = document.getElementById('edit-options-modal-content'); 
+            title.textContent = `Manage ${employeeName}`; 
             
-            let buttonsHtml = `<button class="manage-action" data-app-action="open-name-salary-modal" data-id="${employeeId}"><span class="material-symbols-outlined">drive_file_rename_outline</span><span>Edit Name / Salary</span></button>`; 
+            let buttonsHtml = `<button class="manage-action" data-app-action="open-name-salary-modal" data-id="${employeeId}"><span class="material-symbols-outlined">drive_file_rename_outline</span><span>Edit Name/Salary</span></button>`; 
             
-            if (employee.userUID) { 
+            if (employee.userUID) { 
                 if (currentUserAuth && currentUserAuth.email === ADMIN_EMAIL) {
                     buttonsHtml += `<button class="manage-action warning-action" data-app-action="make-co-admin" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">admin_panel_settings</span><span>Make Co-Admin</span></button>`;
                 }
-                buttonsHtml += `<button class="manage-action danger-action" data-app-action="unlink-user" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link_off</span><span>Unlink Google Account</span></button>`; 
-            } else { 
-                buttonsHtml += `<button class="manage-action" data-app-action="open-link-user-from-profile" data-employee-id="${employeeId}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link</span><span>Link Google Account</span></button>`; 
-            } 
+                buttonsHtml += `<button class="manage-action danger-action" data-app-action="unlink-user" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link_off</span><span>Unlink Google Account</span></button>`; 
+            } else { 
+                buttonsHtml += `<button class="manage-action" data-app-action="open-link-user-from-profile" data-employee-id="${employeeId}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link</span><span>Link Google Account</span></button>`; 
+            } 
             
-            buttonsHtml += `<div class="manage-modal-section" style="margin-top: 1rem; border-top: 1px solid #f1f5f9; padding-top: 1rem;"></div><button class="manage-action danger-action" data-app-action="open-delete-modal" data-id="${employeeId}" data-name="${employeeName}"><span class="material-symbols-outlined">delete</span><span>Delete Employee</span></button>`; 
-            content.innerHTML = buttonsHtml; 
-            openModal('edit-options-modal'); 
+            buttonsHtml += `<div class="manage-modal-section" style="padding-top: 1rem; margin-top: 1rem; border-top: 1px solid var(--color-border);"></div><button class="manage-action danger-action" data-app-action="open-delete-modal" data-id="${employeeId}" data-name="${employeeName}"><span class="material-symbols-outlined">delete</span><span>Delete Employee</span></button>`; 
+            content.innerHTML = `<div style="display:flex; flex-direction:column; gap:12px;">${buttonsHtml}</div>`; 
+            openModal('edit-options-modal'); 
         }
 
         async function handleMakeCoAdmin(employeeId, userUID, employeeName) {
-            if (!confirm(`Promote ${employeeName} to Co-Admin? They will no longer be tracked for salary.`)) return;
+            if (!confirm(`Are you sure you want to make ${employeeName} a Co-Admin? This will give them full access to all orders and employee records, but they will no longer be tracked for attendance or salary.`)) return;
             try {
                 const batch = writeBatch(db);
                 batch.update(doc(db, "users", userUID), { role: 'admin', employeeId: null });
-                const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); 
-                attSnap.forEach(d => batch.delete(d.ref)); 
-                paySnap.forEach(d => batch.delete(d.ref)); 
+                const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); 
+                attSnap.forEach(d => batch.delete(d.ref)); 
+                paySnap.forEach(d => batch.delete(d.ref)); 
                 batch.delete(doc(db, "employees", employeeId));
                 await batch.commit();
-                showToast(`${employeeName} promoted.`, "success");
+                showToast(`${employeeName} is now a Co-Admin.`, "success");
                 closeModal('edit-options-modal');
                 setTimeout(() => window.location.href = 'admin-employees.html', 1500);
-            } catch(err) { showToast("Failed to promote user.", "error"); }
+            } catch(err) {
+                console.error(err);
+                showToast("Failed to promote user to Admin.", "error");
+            }
         }
 
-        async function handleUnlinkUser(employeeId, userUID, employeeName) { if (!confirm(`Unlink account from ${employeeName}? Their access will be revoked.`)) return; try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: null }); if (userUID) { batch.update(doc(db, "users", userUID), { status: 'denied', employeeId: null }); } await batch.commit(); showToast("Account unlinked.", "success"); closeModal('edit-options-modal'); await showDetailView(true); } catch(err) { showToast("Failed to unlink.", "error"); } }
-        async function handleOpenLinkUserFromProfile(employeeId, employeeName) { const modal = document.getElementById('link-user-modal'); const q = query(collection(db, "users"), where("status", "in", ["pending", "denied"])); try { const usersSnap = await getDocs(q); const availableUsers = usersSnap.docs.map(d => ({ id: d.id, ...d.data() })); const userOptions = availableUsers.map(user => `<option value="${user.id}">${user.displayName} (${user.email})</option>`).join(''); modal.innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Link Account for <strong>${employeeName}</strong></h2><button class="close-btn" data-app-action="close-modal" data-modal-id="link-user-modal"><span class="material-symbols-outlined">close</span></button></div><form id="link-user-form"><input type="hidden" id="link-employee-id" value="${employeeId}"><div class="form-group"><select id="link-user-select" required><option value="" disabled selected hidden></option>${userOptions}</select><label for="link-user-select">Select User</label></div><button type="submit" class="btn btn-primary" style="width:100%">Link Account</button></form></div>`; document.getElementById('link-user-form').addEventListener('submit', handleLinkUserFormSubmit); openModal('link-user-modal'); } catch (err) { showToast("Could not load users.", "error"); } }
-        async function handleLinkUserFormSubmit(e) { e.preventDefault(); const employeeId = document.getElementById('link-employee-id').value; const userUID = document.getElementById('link-user-select').value; if (!employeeId || !userUID) return; try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: userUID }); batch.update(doc(db, "users", userUID), { status: 'approved', role: 'employee', employeeId: employeeId }); await batch.commit(); showToast("Account linked!", "success"); closeModal('link-user-modal'); await showDetailView(true); } catch (err) { showToast("Failed to link.", "error"); } }
+        async function handleUnlinkUser(employeeId, userUID, employeeName) { if (!confirm(`Are you sure you want to unlink the Google account from ${employeeName}? Their access will be revoked.`)) return; try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: null }); if (userUID) { batch.update(doc(db, "users", userUID), { status: 'denied', employeeId: null }); } await batch.commit(); showToast("Account unlinked successfully.", "success"); closeModal('edit-options-modal'); await showDetailView(true); } catch(err) { showToast("Failed to unlink account.", "error"); } }
+        async function handleOpenLinkUserFromProfile(employeeId, employeeName) { const modal = document.getElementById('link-user-modal'); const q = query(collection(db, "users"), where("status", "in", ["pending", "denied"])); try { const usersSnap = await getDocs(q); const availableUsers = usersSnap.docs.map(d => ({ id: d.id, ...d.data() })); const userOptions = availableUsers.map(user => `<option value="${user.id}">${user.displayName} (${user.email})</option>`).join(''); modal.innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Link Account for <strong>${employeeName}</strong></h2><button class="close-btn" data-app-action="close-modal" data-modal-id="link-user-modal"><span class="material-symbols-outlined">close</span></button></div><form id="link-user-form"><input type="hidden" id="link-employee-id" value="${employeeId}"><div class="form-group"><select id="link-user-select" required><option value="" disabled selected hidden></option>${userOptions}</select><label for="link-user-select">Select Available User</label></div><button type="submit" class="btn btn-primary" style="width:100%">Confirm & Link Account</button></form></div>`; document.getElementById('link-user-form').addEventListener('submit', handleLinkUserFormSubmit); openModal('link-user-modal'); } catch (err) { showToast("Could not load users.", "error"); } }
+        async function handleLinkUserFormSubmit(e) { e.preventDefault(); const employeeId = document.getElementById('link-employee-id').value; const userUID = document.getElementById('link-user-select').value; if (!employeeId || !userUID) { showToast("Please select a user to link.", "error"); return; } try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: userUID }); batch.update(doc(db, "users", userUID), { status: 'approved', role: 'employee', employeeId: employeeId }); await batch.commit(); showToast("Account linked successfully!", "success"); closeModal('link-user-modal'); closeModal('edit-options-modal'); await showDetailView(true); } catch (err) { showToast("Failed to link account.", "error"); } }
         
         function bindEventListeners() {
              document.body.addEventListener('click', async (e) => {
                 const target = e.target;
                 const appAction = target.closest('[data-app-action]');
                 if (!appAction?.dataset?.appAction) return; 
-                
+                e.preventDefault();
                 const action = appAction.dataset.appAction;
-                // Don't prevent default on breadcrumb links or detal nav
-                if(action !== 'navigate-employees' && action !== 'navigate-payment-history') {
-                    e.preventDefault();
-                }
-
                 switch (action) {
+                    case 'navigate-back':
+                    case 'navigate-employees': window.location.href = 'admin-employees.html'; break;
+                    case 'navigate-payment-history': window.location.href = `admin-payment-history.html?id=${appAction.dataset.employeeId}`; break;
                     case 'logout': await signOut(auth); break;
                     case 'open-modal': document.getElementById(appAction.dataset.formId)?.reset(); if(appAction.dataset.modalId === 'payment-modal') { document.getElementById('payment-modal-title').textContent = 'Add Payment'; document.getElementById('payment-id').value = ''; } openModal(appAction.dataset.modalId); break;
                     case 'close-modal': closeModal(appAction.dataset.modalId); break;
@@ -785,9 +729,6 @@
             document.getElementById('confirm-delete-btn').addEventListener('click', handleDeleteEmployee);
             document.getElementById('confirm-delete-payment-btn').addEventListener('click', handleDeletePayment);
         }
-
-        // --- Start App ---
-        initSyncSkillUI();
     </script>
 </body>
 </html>
