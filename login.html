@@ -7,514 +7,438 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
     <style>
         :root {
-            --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; 
-            --font-alt: 'Inter', sans-serif; 
-            --font-nav: 'DM Sans', sans-serif;
-            --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
-            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-            
-            --color-primary: #012726; 
-            --color-primary-dark: #001a19;
-            --color-accent: #34c375;
-            --color-background: #f8fafc; 
-            --color-surface: #ffffff; 
-            --color-text-primary: #0f172a; 
-            --color-text-secondary: #64748b;
-            --color-border: #e2e8f0;
-            
-            --premium-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
+            --primary-dark: #012726;
+            --accent-green: #34c375;
+            --pure-white: #FFFFFF;
+            --light-bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --error: #ef4444;
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --ease-out: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body {
-            background-color: var(--color-background);
-            font-family: var(--font-alt);
-            color: var(--color-text-secondary);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; overflow: hidden; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--light-bg); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            color: var(--text-main);
         }
 
-        .app-container {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            background: var(--color-surface);
-            overflow: hidden;
+        .main-wrapper { 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            background: var(--pure-white);
         }
 
-        /* --- LEFT PANEL (DESKTOP) --- */
-        .info-panel {
-            display: none;
-            flex: 1.2;
-            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+        /* --- Left Info Panel (Desktop) --- */
+        .info-panel { 
+            display: none; 
+            flex-basis: 55%; 
             position: relative;
+            background: linear-gradient(rgba(1, 39, 38, 0.4), rgba(1, 39, 38, 0.7)), 
+                        url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200') center center / cover;
             padding: 4rem;
-            color: white;
+            color: var(--pure-white);
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .info-panel::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
-            opacity: 0.1;
-            pointer-events: none;
-        }
-
-        .brand-identifier {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: var(--font-nav);
-            font-weight: 800;
-            font-size: 1.5rem;
+        .info-panel-brand { 
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.5rem; 
+            font-weight: 800; 
             letter-spacing: -0.02em;
-            z-index: 10;
-        }
-
-        .brand-logo-node {
-            width: 40px;
-            height: 40px;
-            background: var(--color-accent);
-            border-radius: 12px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--color-primary);
+            gap: 10px;
         }
+        
+        .info-panel-brand .dot { width: 12px; height: 12px; background: var(--accent-green); border-radius: 50%; }
 
-        .info-content { z-index: 10; }
-        .info-content h2 {
-            font-family: var(--font-main);
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
+        .info-panel-content h2 { 
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 3.5rem; 
+            font-weight: 700; 
+            line-height: 1.1; 
+            margin-bottom: 1.5rem; 
             letter-spacing: -0.04em;
         }
-
-        .info-content p {
-            font-size: 1.125rem;
-            line-height: 1.6;
-            opacity: 0.8;
-            max-width: 500px;
-            margin-bottom: 3rem;
+        
+        .info-panel-content p { 
+            font-size: 1.125rem; 
+            max-width: 480px; 
+            line-height: 1.6; 
+            opacity: 0.9;
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .feature-item {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .feature-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-        }
-
-        .feature-item h4 { font-size: 1.1rem; font-weight: 700; color: var(--color-accent); }
-        .feature-item span { font-size: 0.9rem; opacity: 0.7; }
-
-        /* --- RIGHT PANEL (FORMS) --- */
-        .form-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+        /* --- Right Form Panel --- */
+        .form-panel-wrapper { 
+            flex: 1; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
             overflow-y: auto;
-            position: relative;
-            background: var(--color-surface);
+            background: var(--pure-white);
         }
 
-        /* Welcome/Get Started Screen (Mobile Friendly) */
-        #welcome-screen {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
+        /* Welcome Screen (Mobile First) */
+        #welcome-screen { 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%; 
+            position: relative;
+            z-index: 10;
+        }
+        
+        .welcome-visual { 
+            flex: 1; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
             padding: 2rem;
-            text-align: center;
+            background: var(--light-bg);
+        }
+        
+        .welcome-visual img { 
+            width: 80%; 
+            max-width: 320px; 
+            height: auto; 
+            filter: drop-shadow(0 20px 30px rgba(1, 39, 38, 0.15));
+            animation: float 6s ease-in-out infinite;
         }
 
-        .welcome-animation {
-            width: 140px;
-            height: 140px;
-            margin-bottom: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
-        .pulse-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background-color: var(--color-accent);
-            opacity: 0;
-            animation: pulse-ripple 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        .welcome-content { 
+            background-color: var(--primary-dark); 
+            border-top-left-radius: 40px; 
+            border-top-right-radius: 40px; 
+            padding: 3rem 2.5rem; 
+            text-align: left;
         }
-
-        .pulse-ring:nth-child(2) { animation-delay: -1s; }
-
-        .welcome-animation .center-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--color-primary);
-            color: var(--color-accent);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-            box-shadow: 0 12px 24px rgba(1, 39, 38, 0.2);
-        }
-
-        .welcome-animation .center-icon .material-symbols-outlined { font-size: 32px; }
-
-        #welcome-screen h1 {
-            font-family: var(--font-main);
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--color-text-primary);
-            margin-bottom: 1rem;
+        
+        .welcome-content h1 { 
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            margin-bottom: 1rem; 
+            color: var(--pure-white); 
             letter-spacing: -0.03em;
         }
-
-        #welcome-screen p {
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-            max-width: 400px;
+        
+        .welcome-content p { 
+            font-size: 1.1rem; 
+            color: rgba(255, 255, 255, 0.7); 
+            margin-bottom: 2.5rem; 
+            line-height: 1.6; 
         }
 
         /* Auth Section */
-        #auth-section {
-            display: none;
-            flex-direction: column;
-            padding: 4rem 3rem;
-            max-width: 500px;
+        #auth-section { 
+            display: none; 
+            flex-direction: column; 
+            padding: 4rem 2.5rem 2rem; 
             width: 100%;
-            margin: 0 auto;
+            max-width: 460px;
+            margin: auto;
         }
 
-        .form-toggle {
-            display: flex;
-            background: var(--color-background);
-            padding: 6px;
-            border-radius: 16px;
-            margin-bottom: 3rem;
+        .form-toggle { 
+            display: flex; 
+            background: #f1f5f9; 
+            border-radius: 16px; 
+            padding: 6px; 
+            margin-bottom: 2.5rem; 
+        }
+        
+        .toggle-btn { 
+            flex: 1; 
+            padding: 10px; 
+            border: none; 
+            background: transparent; 
+            color: var(--text-muted); 
+            font-size: 0.95rem; 
+            font-weight: 700; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.3s var(--ease-out); 
+        }
+        
+        .toggle-btn.active { 
+            background: var(--pure-white); 
+            color: var(--primary-dark); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
         }
 
-        .toggle-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            font-weight: 700;
-            font-family: var(--font-nav);
-            color: var(--color-text-secondary);
-            cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.3s var(--ease-cubic);
+        .form-container form { display: none; animation: slideIn 0.4s var(--ease-out); }
+        .form-container form.active { display: block; }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .toggle-btn.active {
-            background: var(--color-surface);
-            color: var(--color-primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
+        .form-header { margin-bottom: 2.5rem; text-align: left; }
+        .form-header h2 { font-size: 2rem; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.02em; }
+        .form-header p { color: var(--text-muted); font-size: 1rem; margin-top: 4px; }
 
-        .form-header { margin-bottom: 2.5rem; }
-        .form-header h2 {
-            font-family: var(--font-main);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--color-text-primary);
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid transparent;
-            border-radius: 14px;
-            background: var(--color-background);
-            font-size: 1rem;
-            font-family: inherit;
-            color: var(--color-text-primary);
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .input-field:focus {
-            background: #fff;
-            border-color: var(--color-primary);
-            box-shadow: 0 4px 12px rgba(1, 39, 38, 0.05);
-        }
-
-        .input-label {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            color: #94a3b8;
-            pointer-events: none;
-            transition: all 0.2s ease-out;
-            background: transparent;
-            padding: 0 4px;
-        }
-
-        .input-field:focus + .input-label,
-        .input-field:not(:placeholder-shown) + .input-label {
-            top: -10px;
-            left: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--color-primary);
-            background: #fff;
-            border-radius: 4px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: none;
-            background: linear-gradient(135deg, #0f2d2c, #012726);
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            font-family: var(--font-nav);
-            cursor: pointer;
-            margin-top: 1rem;
-            box-shadow: var(--btn-shadow);
-            transition: all 0.3s var(--ease-out-back);
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(1, 39, 38, 0.2);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin: 2rem 0;
-            color: #cbd5e1;
-            font-size: 0.85rem;
-            font-weight: 700;
+        .input-group { position: relative; margin-bottom: 1.5rem; }
+        .input-group label { 
+            display: block; 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            margin-bottom: 8px; 
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
-        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
-
-        .btn-google {
-            width: 100%;
-            padding: 14px;
-            border-radius: 14px;
-            border: 1.5px solid var(--color-border);
-            background: white;
-            color: var(--color-text-primary);
-            font-weight: 700;
-            font-family: var(--font-nav);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.2s ease;
+        
+        .input-group input { 
+            width: 100%; 
+            padding: 1rem 1.25rem; 
+            border: 2px solid #f1f5f9; 
+            background-color: #f1f5f9; 
+            border-radius: 16px; 
+            font-size: 1rem; 
+            font-family: inherit;
+            color: var(--text-main);
+            transition: all 0.3s ease; 
+        }
+        
+        .input-group input:focus { 
+            outline: none; 
+            border-color: var(--accent-green); 
+            background-color: var(--pure-white); 
+            box-shadow: 0 0 0 4px rgba(52, 195, 117, 0.1); 
         }
 
-        .btn-google:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .form-options { display: flex; justify-content: flex-end; margin-top: -0.5rem; margin-bottom: 2rem; }
+        .forgot-password { font-size: 0.9rem; color: var(--primary-dark); text-decoration: none; font-weight: 700; }
+
+        .btn-submit { 
+            width: 100%; 
+            padding: 1.1rem; 
+            font-size: 1rem; 
+            font-weight: 700; 
+            color: var(--pure-white); 
+            background: linear-gradient(135deg, #0f2d2c, #012726);
+            border: none; 
+            border-radius: 16px; 
+            cursor: pointer; 
+            transition: all 0.3s var(--ease-out);
+            box-shadow: 0 10px 20px -10px rgba(1, 39, 38, 0.4);
+        }
+        
+        .btn-submit:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 30px -12px rgba(1, 39, 38, 0.5); 
+        }
+
+        .btn-get-started {
+            width: 100%;
+            padding: 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            background-color: var(--accent-green);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .btn-get-started:hover {
+            transform: scale(1.02);
+            background-color: #2eb468;
+        }
+
+        .divider { 
+            display: flex; 
+            align-items: center; 
+            color: var(--text-muted); 
+            margin: 2rem 0; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-color); }
+        .divider::before { margin-right: 1.5rem; }
+        .divider::after { margin-left: 1.5rem; }
+
+        .btn-google { 
+            width: 100%; 
+            padding: 1rem; 
+            font-size: 1rem; 
+            font-weight: 700; 
+            color: var(--text-main); 
+            background: var(--pure-white); 
+            border: 2px solid var(--border-color); 
+            border-radius: 16px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px;
+            transition: all 0.3s; 
+        }
+        
+        .btn-google:hover { background-color: #f8fafc; border-color: #cbd5e1; }
         .google-icon { width: 22px; height: 22px; }
 
-        .switch-form-text {
-            text-align: center;
-            margin-top: 2.5rem;
-            font-size: 0.95rem;
-        }
-
-        .switch-form-text a {
-            color: var(--color-primary);
-            font-weight: 700;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Feedback UI */
-        #loader { display: none; position: fixed; inset: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; }
-        .spinner { width: 48px; height: 48px; border: 4px solid rgba(1, 39, 38, 0.1); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        /* --- Utilities --- */
+        #loader { display: none; position: fixed; inset: 0; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 9999; }
+        .spinner { width: 48px; height: 48px; border: 4px solid #f1f5f9; border-top-color: var(--accent-green); border-radius: 50%; animation: rotation 1s linear infinite; }
         
-        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 14px 28px; border-radius: 12px; color: white; font-weight: 600; box-shadow: var(--premium-shadow); transition: bottom 0.4s var(--ease-out-back); z-index: 10000; }
-        #toast.show { bottom: 40px; }
-        #toast.success { background: #10b981; }
-        #toast.error { background: var(--color-danger); }
-
-        @keyframes pulse-ripple {
-            0% { transform: scale(0.2); opacity: 0.8; }
-            80% { transform: scale(1.4); opacity: 0; }
-            100% { transform: scale(1.4); opacity: 0; }
+        #toast { 
+            position: fixed; 
+            bottom: -100px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            padding: 16px 32px; 
+            border-radius: 16px; 
+            color: white; 
+            font-weight: 600; 
+            box-shadow: var(--shadow-premium); 
+            transition: bottom 0.5s var(--ease-out); 
+            z-index: 10001; 
         }
+        #toast.show { bottom: 40px; }
+        #toast.success { background-color: var(--accent-green); color: var(--primary-dark); }
+        #toast.error { background-color: var(--error); }
 
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Responsive */
+        /* Responsive Layout */
         @media (min-width: 992px) {
+            body { background-color: #f1f5f9; padding: 2rem; }
+            .main-wrapper { 
+                max-width: 1200px; 
+                height: 800px; 
+                margin: auto;
+                border-radius: 32px; 
+                overflow: hidden; 
+                box-shadow: 0 40px 100px -20px rgba(1, 39, 38, 0.25);
+            }
             .info-panel { display: flex; }
-            .form-panel { justify-content: center; }
+            .form-panel-wrapper { padding: 4rem; justify-content: center; }
             #welcome-screen { display: none; }
-            #auth-section { display: flex; }
+            #auth-section { display: flex; padding: 0; margin: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <!-- Desktop Info Section -->
+    <div class="main-wrapper">
+        <!-- Desktop side panel -->
         <div class="info-panel">
-            <div class="brand-identifier">
-                <div class="brand-logo-node">
-                    <span class="material-symbols-outlined">analytics</span>
-                </div>
-                <span>WORKFLOW.</span>
+            <div class="info-panel-brand">
+                <div class="dot"></div>
+                Management Portal
             </div>
-
-            <div class="info-content">
-                <h2>The future of workspace management.</h2>
-                <p>Streamline your operations, track real-time attendance, and manage orders with an integrated premium suite.</p>
-                
-                <div class="feature-grid">
-                    <div class="feature-item">
-                        <div class="feature-icon"><span class="material-symbols-outlined">speed</span></div>
-                        <h4>Efficiency</h4>
-                        <span>Optimized processing speed for every single request.</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon"><span class="material-symbols-outlined">security</span></div>
-                        <h4>Security</h4>
-                        <span>Enterprise-grade protection for all sensitive data.</span>
-                    </div>
+            <div class="info-panel-text">
+                <div class="info-panel-content">
+                    <h2>Workforce management, perfected.</h2>
+                    <p>Experience a seamless interface designed to streamline payroll, attendance, and order tracking for your entire team.</p>
                 </div>
             </div>
-
-            <div class="info-footer">
-                <span style="opacity: 0.5; font-size: 0.85rem;">© 2024 Workflow Systems Ltd. All rights reserved.</span>
+            <div class="info-panel-footer">
+                <p>&copy; 2024 Enterprise Systems</p>
             </div>
         </div>
 
-        <!-- Form Section -->
-        <div class="form-panel">
+        <!-- Mobile-first content wrapper -->
+        <div class="form-panel-wrapper">
             <!-- Mobile Welcome Screen -->
             <div id="welcome-screen">
-                <div class="welcome-animation">
-                    <div class="pulse-ring"></div>
-                    <div class="pulse-ring"></div>
-                    <div class="center-icon">
-                        <span class="material-symbols-outlined">waving_hand</span>
-                    </div>
+                <div class="welcome-visual">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/business-growth-and-management-illustration-download-in-svg-png-gif-file-formats--analysis-financial-profit-marketing-strategic-planning-pack-services-illustrations-4720919.png" alt="Portal Illustration">
                 </div>
-                <h1>Welcome</h1>
-                <p>Access your workspace portal to manage operations and view progress.</p>
-                <button id="get-started-btn" class="btn-submit">Get Started</button>
+                <div class="welcome-content">
+                    <h1>Get Started</h1>
+                    <p>Access your professional dashboard and manage your workplace efficiently from anywhere.</p>
+                    <button id="get-started-btn" class="btn-get-started">Open Portal</button>
+                </div>
             </div>
 
-            <!-- Auth Container -->
+            <!-- Auth Section -->
             <div id="auth-section">
                 <div class="form-toggle">
                     <button id="show-login-btn" class="toggle-btn active">Sign In</button>
-                    <button id="show-signup-btn" class="toggle-btn">Sign Up</button>
+                    <button id="show-signup-btn" class="toggle-btn">Create Account</button>
                 </div>
 
-                <!-- Sign In Form -->
-                <form id="login-form" style="display: block;">
-                    <div class="form-header">
-                        <h2>Welcome back</h2>
-                        <p>Enter your credentials to continue.</p>
-                    </div>
-                    <div class="input-group">
-                        <input type="email" id="login-email" class="input-field" placeholder=" " required>
-                        <label class="input-label">Email Address</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" id="login-password" class="input-field" placeholder=" " required>
-                        <label class="input-label">Password</label>
-                    </div>
-                    <button type="submit" class="btn-submit">Sign In</button>
-                    
-                    <div class="divider">Or secure access via</div>
-                    
-                    <button type="button" class="btn-google" id="google-signin-btn">
-                        <svg class="google-icon" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.655-3.344-11.303-7.962l-6.571,4.819C9.656,40.909,16.318,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.089,5.571l6.19,5.238C42.012,36.494,44,30.638,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
-                        Google Account
-                    </button>
+                <div class="form-container">
+                    <!-- Login Form -->
+                    <form id="login-form" class="active">
+                        <div class="form-header">
+                            <h2>Welcome Back</h2>
+                            <p>Enter your credentials to continue.</p>
+                        </div>
+                        <div class="input-group">
+                            <label for="login-email">Email Address</label>
+                            <input type="email" id="login-email" placeholder="name@company.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-options">
+                            <a href="#" class="forgot-password">Reset Password?</a>
+                        </div>
+                        <button type="submit" class="btn-submit">Secure Login</button>
+                        
+                        <div class="divider">OR</div>
+                        
+                        <button type="button" class="btn-google" id="google-signin-btn">
+                            <svg class="google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                            Continue with Google
+                        </button>
+                    </form>
 
-                    <p class="switch-form-text">
-                        Don't have an account? <a id="link-to-signup">Sign Up</a>
-                    </p>
-                </form>
-
-                <!-- Sign Up Form -->
-                <form id="signup-form" style="display: none;">
-                    <div class="form-header">
-                        <h2>Create Account</h2>
-                        <p>Join the professional network today.</p>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="signup-username" class="input-field" placeholder=" " required>
-                        <label class="input-label">Full Name</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="email" id="signup-email" class="input-field" placeholder=" " required>
-                        <label class="input-label">Email Address</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" id="signup-password" class="input-field" placeholder=" " required>
-                        <label class="input-label">Create Password</label>
-                    </div>
-                    <button type="submit" class="btn-submit">Get Started</button>
-                    
-                    <p class="switch-form-text">
-                        Already registered? <a id="link-to-login">Sign In</a>
-                    </p>
-                </form>
+                    <!-- Signup Form -->
+                    <form id="signup-form">
+                        <div class="form-header">
+                            <h2>Join Portal</h2>
+                            <p>Register your account to get started.</p>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-username">Full Name</label>
+                            <input type="text" id="signup-username" placeholder="John Doe" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-email">Email Address</label>
+                            <input type="email" id="signup-email" placeholder="name@company.com" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-password">Create Password</label>
+                            <input type="password" id="signup-password" placeholder="Min. 8 characters" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Request Access</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-
+    
     <div id="toast"></div>
     <div id="loader"><div class="spinner"></div></div>
 
@@ -542,15 +466,17 @@
             const t = document.getElementById('toast'); 
             t.textContent = message; 
             t.className = `show ${type}`; 
-            setTimeout(() => { t.className = ''; }, 3000); 
-        };
+            setTimeout(() => { t.className = t.className.replace('show', ''); }, 3000); 
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             try {
+                if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith("__")) {
+                    throw new Error("Config missing.");
+                }
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
                 bindEventListeners();
                 listenForAuthStateChanges();
             } catch (error) {
@@ -575,14 +501,13 @@
                 showLoader(); 
                 await signInWithPopup(auth, provider);
             } catch (error) { 
-                showToast("Failed to sign in with Google.", "error"); 
+                showToast("Sign-in failed.", "error"); 
                 hideLoader(); 
             } 
         }
 
         async function handleUserLoggedIn(user) {
             const userRef = doc(db, "users", user.uid);
-            
             if (user.email === ADMIN_EMAIL) {
                 await setDoc(userRef, { 
                     displayName: user.displayName || user.email,
@@ -606,61 +531,59 @@
                     }, { merge: true });
                     window.location.href = 'pending-approval.html';
                 } else {
+                    await setDoc(userRef, { lastLogin: new Date().toISOString() }, { merge: true });
                     const userData = userDoc.data();
                     switch (userData.status) {
                         case 'approved': window.location.href = 'employee-dashboard.html'; break;
                         case 'denied': window.location.href = 'access-denied.html'; break;
-                        case 'pending':
                         default: window.location.href = 'pending-approval.html'; break;
                     }
                 }
             }
         }
-
+        
         function bindEventListeners() {
-            const welcome = document.getElementById('welcome-screen');
-            const authSection = document.getElementById('auth-section');
-            const getStarted = document.getElementById('get-started-btn');
-            const showLogin = document.getElementById('show-login-btn');
-            const showSignup = document.getElementById('show-signup-btn');
-            const loginForm = document.getElementById('login-form');
-            const signupForm = document.getElementById('signup-form');
+            document.getElementById('get-started-btn').addEventListener('click', () => {
+                document.getElementById('welcome-screen').style.display = 'none';
+                document.getElementById('auth-section').style.display = 'flex';
+            });
 
-            getStarted.onclick = () => { welcome.style.display = 'none'; authSection.style.display = 'flex'; };
-
-            const toggleToLogin = () => {
-                showLogin.classList.add('active'); showSignup.classList.remove('active');
-                loginForm.style.display = 'block'; signupForm.style.display = 'none';
+            const goToLogin = () => {
+                document.getElementById('signup-form').classList.remove('active');
+                document.getElementById('show-signup-btn').classList.remove('active');
+                document.getElementById('login-form').classList.add('active');
+                document.getElementById('show-login-btn').classList.add('active');
             };
-            const toggleToSignup = () => {
-                showSignup.classList.add('active'); showLogin.classList.remove('active');
-                signupForm.style.display = 'block'; loginForm.style.display = 'none';
+            const goToSignup = () => {
+                document.getElementById('login-form').classList.remove('active');
+                document.getElementById('show-login-btn').classList.remove('active');
+                document.getElementById('signup-form').classList.add('active');
+                document.getElementById('show-signup-btn').classList.add('active');
             };
 
-            showLogin.onclick = toggleToLogin;
-            showSignup.onclick = toggleToSignup;
-            document.getElementById('link-to-signup').onclick = toggleToSignup;
-            document.getElementById('link-to-login').onclick = toggleToLogin;
+            document.getElementById('show-login-btn').addEventListener('click', goToLogin);
+            document.getElementById('show-signup-btn').addEventListener('click', goToSignup);
 
-            loginForm.onsubmit = async (e) => {
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 showLoader();
                 try {
-                    await signInWithEmailAndPassword(auth, loginForm['login-email'].value, loginForm['login-password'].value);
+                    await signInWithEmailAndPassword(auth, e.target['login-email'].value, e.target['login-password'].value);
                 } catch (error) {
                     showToast("Invalid credentials.", "error");
                     hideLoader();
                 }
-            };
-
-            signupForm.onsubmit = async (e) => {
+            });
+            
+            document.getElementById('signup-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 showLoader();
                 try {
-                    const cred = await createUserWithEmailAndPassword(auth, signupForm['signup-email'].value, signupForm['signup-password'].value);
-                    await setDoc(doc(db, "users", cred.user.uid), {
+                    const cred = await createUserWithEmailAndPassword(auth, e.target['signup-email'].value, e.target['signup-password'].value);
+                    const user = cred.user;
+                    await setDoc(doc(db, "users", user.uid), {
                         displayName: document.getElementById('signup-username').value,
-                        email: signupForm['signup-email'].value,
+                        email: user.email,
                         role: 'employee',
                         status: 'pending',
                         createdAt: new Date().toISOString()
@@ -669,9 +592,9 @@
                     showToast("Registration failed.", "error");
                     hideLoader();
                 }
-            };
-
-            document.getElementById('google-signin-btn').onclick = handleGoogleLogin;
+            });
+            
+            document.getElementById('google-signin-btn').addEventListener('click', handleGoogleLogin);
         }
     </script>
 </body>
