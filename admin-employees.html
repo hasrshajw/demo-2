@@ -37,20 +37,21 @@
             --font-alt: 'Inter', sans-serif; 
             --font-nav: 'DM Sans', sans-serif;
             --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
-            --radius-sm: 4px; --radius-lg: 16px;
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --radius-sm: 6px; --radius-lg: 20px; --radius-xl: 24px;
             
             /* Premium Shadows */
-            --premium-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
-            --premium-shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
-            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.2);
-            --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.3);
+            --premium-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
+            --premium-shadow-hover: 0 12px 30px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(0, 0, 0, 0.05);
+            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
+            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
+            --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.25);
             
             --color-primary: #012726; --color-primary-light: #e0e7ff; --color-primary-dark: #023d3c;
             --color-background: #f8fafc; --color-surface: #ffffff; 
-            --color-text-primary: #1f2937; --color-text-secondary: #64748b;
-            --color-border: #e5e7eb; 
-            --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b;
+            --color-text-primary: #0f172a; --color-text-secondary: #64748b;
+            --color-border: #e2e8f0; 
+            --color-success: #10b981; --color-danger: #ef4444; --color-warning: #f59e0b;
             --color-warning-bg: #fffbeb; --color-danger-bg: #fef2f2;
         }
 
@@ -183,101 +184,118 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         @media (max-width: 768px) { .container { padding: 0 16px; } }
         
-        h1, h2, h3 { font-family: var(--font-main); font-weight: 600; letter-spacing: -0.025em; margin: 0; }
+        h1, h2, h3 { font-family: var(--font-main); font-weight: 600; letter-spacing: -0.02em; margin: 0; }
         .page-title { font-size: 1.5rem; color: var(--color-text-primary); }
-        .view.active { display: block; animation: fadeIn 0.5s var(--ease-cubic); }
-        .icon-sm { width: 16px; height: 16px; } .icon-lg { width: 24px; height: 24px; }
+        .view.active { display: block; animation: fadeIn 0.4s ease-out forwards; }
+        .icon-sm { width: 18px; height: 18px; } .icon-lg { width: 24px; height: 24px; }
         .danger-text { color: var(--color-danger) !important; } .success-text { color: var(--color-success) !important; }
         
         /* Premium Buttons */
-        .btn { padding: 10px 20px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-family: inherit;}
-        .btn-primary { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)); color: white; box-shadow: var(--btn-shadow); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); }
+        .btn { padding: 10px 20px; border: 1px solid transparent; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s var(--ease-out-back); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-family: inherit;}
+        .btn-primary { background: linear-gradient(135deg, #0f2d2c, #012726); color: white; box-shadow: var(--btn-shadow); border: 1px solid rgba(255,255,255,0.05); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--btn-shadow-hover); background: linear-gradient(135deg, #163837, #02302f); }
+        .btn-primary:active { transform: translateY(0); box-shadow: var(--btn-shadow); }
         
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-top: 1rem;}
         @media (max-width: 768px) { .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; } }
 
-        #employee-list-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; padding-bottom: 2rem;}
+        #employee-list-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; padding-bottom: 2rem;}
         @media (max-width: 768px) { #employee-list-container { grid-template-columns: 1fr; gap: 1rem; } }
         
         /* Premium Employee Cards */
         .employee-card { 
             display: flex; align-items: center; gap: 1.25rem; background: var(--color-surface); padding: 1.5rem; 
-            border: 1px solid #f1f5f9; border-radius: 20px; box-shadow: var(--premium-shadow); 
+            border: 1px solid #eef2f6; border-radius: var(--radius-xl); box-shadow: var(--premium-shadow); 
             transition: all 0.3s var(--ease-cubic); text-decoration: none; position: relative; overflow: hidden;
+            z-index: 1;
         }
         .employee-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, transparent, transparent); transition: background 0.3s;
+            content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1;
+            transition: background 0.3s ease;
         }
-        .employee-card:hover { transform: translateY(-5px); box-shadow: var(--premium-shadow-hover); border-color: #e2e8f0; }
-        .employee-card:hover::before { background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary)); }
+        .employee-card:hover { transform: translateY(-4px); box-shadow: var(--premium-shadow-hover); border-color: transparent;}
+        .employee-card:hover::before { background: linear-gradient(135deg, #34c375, #012726); }
         
-        .employee-icon { flex-shrink: 0; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #f1f5f9, #e2e8f0); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .employee-info { flex-grow: 1; }
-        .employee-name { font-weight: 700; color: var(--color-text-primary); font-size: 1.15rem; letter-spacing: -0.01em;}
-        .employee-stats { display: flex; gap: 1rem; color: var(--color-text-secondary); font-size: 0.85rem; margin-top: 0.35rem; }
+        .employee-icon { flex-shrink: 0; width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 1px solid #e2e8f0; color: #475569; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); transition: all 0.3s; }
+        .employee-card:hover .employee-icon { background: linear-gradient(135deg, #f0fdf4, #dcfce7); color: #059669; border-color: #bbf7d0; transform: scale(1.05); }
+        
+        .employee-info { flex-grow: 1; overflow: hidden; }
+        
+        /* Flex wrapper to handle badging nicely */
+        .employee-name-wrapper { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;}
+        .employee-name { font-weight: 700; color: var(--color-text-primary); font-size: 1.15rem; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
+        
+        .employee-stats { display: flex; gap: 1rem; color: var(--color-text-secondary); font-size: 0.875rem; }
         .employee-stats strong { color: var(--color-text-primary); font-weight: 600; }
-        .employee-arrow { color: var(--color-border); transition: color 0.3s, transform 0.3s; }
-        .employee-card:hover .employee-arrow { color: var(--color-primary); transform: translateX(3px); }
+        .employee-arrow { color: #cbd5e1; transition: color 0.3s, transform 0.3s; flex-shrink: 0;}
+        .employee-card:hover .employee-arrow { color: var(--color-primary); transform: translateX(4px); }
         
         /* Premium Admin Cards */
         .admin-card {
-            background: linear-gradient(145deg, #ffffff, #fffdf5);
-            border-color: #fde68a;
+            background: linear-gradient(145deg, #ffffff, #fffcf5);
+            border-color: #fef08a;
         }
-        .admin-card:hover::before { background: linear-gradient(90deg, #fde68a, #f59e0b); }
-        .admin-card:hover { border-color: #fbbf24; }
+        .admin-card:hover::before { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
         .admin-icon-wrap {
             background: linear-gradient(135deg, #fef3c7, #fde68a);
-            color: #d97706;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+            color: #d97706; border-color: #fde68a;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.15);
         }
+        .admin-card:hover .admin-icon-wrap { background: linear-gradient(135deg, #fde68a, #fcd34d); color: #b45309; border-color: #fbbf24;}
+        
         .admin-badge {
-            background: #fef3c7; color: #d97706; padding: 4px 8px; border-radius: 6px; 
-            font-size: 0.65rem; font-weight: 800; letter-spacing: 0.05em; 
-            border: 1px solid rgba(245, 158, 11, 0.2); margin-left: 8px; vertical-align: text-bottom;
+            background: #fffbeb; color: #b45309; padding: 4px 10px; border-radius: 9999px; 
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; 
+            border: 1px solid rgba(245, 158, 11, 0.3); white-space: nowrap; display: inline-block;
         }
 
-        .empty-state { text-align: center; padding: 4rem 1rem; background-color: var(--color-surface); border: 2px dashed var(--color-border); border-radius: 20px; grid-column: 1 / -1;}
-        .empty-state-icon { color: var(--color-text-secondary); margin-bottom: 1rem;}
-        .empty-state h3 { margin-top: 1rem; color: var(--color-text-primary); font-size: 1.25rem;}
-        .empty-state p { color: var(--color-text-secondary); margin-top: 0.5rem; }
+        .empty-state { text-align: center; padding: 5rem 2rem; background: var(--color-surface); border: 2px dashed #e2e8f0; border-radius: var(--radius-xl); grid-column: 1 / -1;}
+        .empty-state-icon { color: #cbd5e1; margin-bottom: 1rem; width: 64px; height: 64px;}
+        .empty-state h3 { margin-top: 1rem; color: var(--color-text-primary); font-size: 1.35rem;}
+        .empty-state p { color: var(--color-text-secondary); margin-top: 0.5rem; font-size: 1rem;}
         
         /* Modals & Toasts */
-        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: var(--radius-md); color: white; font-weight: 500; box-shadow: var(--shadow-lg); transition: bottom 0.5s; z-index: 4000; }
-        #toast.success { background-color: var(--color-success); } #toast.error { background-color: var(--color-danger); }
-        #toast.show { bottom: 30px; }
+        #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 14px 28px; border-radius: 12px; color: white; font-weight: 600; font-size: 0.95rem; box-shadow: var(--premium-shadow-hover); transition: bottom 0.4s var(--ease-out-back); z-index: 4000; letter-spacing: 0.01em;}
+        #toast.success { background: linear-gradient(135deg, #10b981, #059669); } 
+        #toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        #toast.show { bottom: 40px; }
         
         /* Premium Modals */
-        .modal { display: none; position: fixed; z-index: 3000; inset: 0; background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px); align-items: center; justify-content: center;}
-        .modal-content { background-color: var(--color-surface); margin: 1rem; padding: 2.5rem; border-radius: 24px; width: 100%; max-width: 480px; position: relative; box-shadow: var(--modal-shadow); border: 1px solid rgba(255,255,255,0.8); animation: modalOpen 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .modal { display: none; position: fixed; z-index: 3000; inset: 0; background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(6px); align-items: center; justify-content: center;}
+        .modal-content { background-color: var(--color-surface); margin: 1.5rem; padding: 2.5rem; border-radius: var(--radius-xl); width: 100%; max-width: 460px; position: relative; box-shadow: var(--modal-shadow); border: 1px solid rgba(255,255,255,0.6); animation: modalOpen 0.4s var(--ease-out-back); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .modal-header h2 { margin: 0; font-family: var(--font-main); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em;}
-        .close-btn { background: none; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-        .close-btn:hover { color: var(--color-text-primary); background-color: var(--color-border); }
+        .modal-header h2 { margin: 0; font-family: var(--font-main); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--color-text-primary);}
+        .close-btn { background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #64748b; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+        .close-btn:hover { background: #e2e8f0; color: #0f172a; transform: rotate(90deg);}
         
         /* Premium Form Inputs */
         .form-group { position: relative; margin-bottom: 1.5rem; }
-        .form-group input, .form-group select { width: 100%; padding: 14px 16px; border: 1.5px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
-        .form-group input:focus, .form-group select:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 0 0 4px var(--color-primary-light); }
-        .form-group label { position: absolute; top: 14px; left: 16px; color: var(--color-text-secondary); pointer-events: none; transition: all 0.2s var(--ease-cubic); background-color: transparent; padding: 0;}
+        .form-group input, .form-group select { width: 100%; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background-color: #f8fafc; color: var(--color-text-primary); font-size: 1rem; outline: none; font-family: inherit; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        .form-group input:focus, .form-group select:focus { background-color: #ffffff; border-color: var(--color-primary); box-shadow: 0 4px 12px rgba(1,39,38,0.08); }
+        .form-group label { position: absolute; top: 16px; left: 16px; color: #94a3b8; pointer-events: none; transition: all 0.2s ease-out; background-color: transparent; padding: 0; font-size: 1rem;}
         .form-group input:focus + label, .form-group input:not(:placeholder-shown) + label,
-        .form-group select:focus + label, .form-group select:valid + label { top: -10px; left: 12px; font-size: 0.8rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 600;}
+        .form-group select:focus + label, .form-group select:valid + label { top: -10px; left: 12px; font-size: 0.75rem; color: var(--color-primary); background-color: #ffffff; padding: 0 6px; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em;}
         
-        .manage-action { display: flex; align-items: center; gap: 1rem; padding: 16px; border-radius: 12px; text-decoration: none; color: var(--color-text-primary); font-weight: 600; transition: background-color 0.2s; cursor: pointer; border: 1px solid #e5e7eb; width: 100%; background: #f9fafb; font-family: inherit; font-size: 1rem;}
-        .manage-action:hover { background-color: #f1f5f9; border-color: #cbd5e1;}
-        .manage-action.danger-action { color: var(--color-danger); }
-        .manage-action.danger-action:hover { background-color: var(--color-danger-bg); border-color: #fca5a5;}
-        .manage-action.warning-action { color: #d97706; border-color: #fef3c7; background: #fffbeb;}
-        .manage-action.warning-action:hover { background-color: #fef3c7; border-color: #fde68a;}
+        /* Action Buttons inside Modal */
+        .manage-action { display: flex; align-items: center; justify-content: center; text-align: center; gap: 0.75rem; padding: 16px; border-radius: 14px; text-decoration: none; color: var(--color-text-primary); font-weight: 600; transition: all 0.3s var(--ease-cubic); cursor: pointer; border: 1px solid transparent; width: 100%; background: #f8fafc; font-family: inherit; font-size: 1rem; letter-spacing: 0.01em;}
+        .manage-action:hover { background-color: #f1f5f9; border-color: #e2e8f0; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05);}
+        .manage-action:active { transform: translateY(0); box-shadow: none; }
         
-        /* Skeleton */
-        .skeleton { position: relative; overflow: hidden; background-color: #e2e8f0; border-radius: var(--radius-md); }
-        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite; }
+        .manage-action.danger-action { color: #dc2626; background: #fef2f2; border-color: #fee2e2;}
+        .manage-action.danger-action:hover { background-color: #fee2e2; border-color: #fca5a5; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);}
+        
+        .manage-action.warning-action { color: #d97706; background: #fffbeb; border-color: #fef3c7;}
+        .manage-action.warning-action:hover { background-color: #fef3c7; border-color: #fde68a; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);}
+        
+        /* Skeleton Animations */
+        .skeleton { position: relative; overflow: hidden; background-color: #f1f5f9; border-radius: var(--radius-md); }
+        .skeleton::after { content: ''; position: absolute; top: 0; left: -150%; width: 150%; height: 100%; background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%); transform: skewX(-20deg); animation: shimmer 1.5s infinite ease-in-out; }
         @keyframes shimmer { 100% { left: 150%; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes modalOpen { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 
@@ -374,9 +392,9 @@
                         </div>
                         
                         <div id="employee-list-container">
-                            <div class="employee-card"><div class="skeleton" style="width: 50px; height: 50px; border-radius: 50%;"></div><div class="employee-info"><div class="skeleton" style="height: 24px; width: 60%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 80%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
-                            <div class="employee-card"><div class="skeleton" style="width: 50px; height: 50px; border-radius: 50%;"></div><div class="employee-info"><div class="skeleton" style="height: 24px; width: 50%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 70%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
-                            <div class="employee-card"><div class="skeleton" style="width: 50px; height: 50px; border-radius: 50%;"></div><div class="employee-info"><div class="skeleton" style="height: 24px; width: 70%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 90%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
+                            <div class="employee-card"><div class="skeleton" style="width: 56px; height: 56px; border-radius: 16px;"></div><div class="employee-info"><div class="skeleton" style="height: 24px; width: 60%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 80%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
+                            <div class="employee-card"><div class="skeleton" style="width: 56px; height: 56px; border-radius: 16px;"></div><div class="employee-info"><div class="skeleton" style="height: 24px; width: 50%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 70%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
+                            <div class="employee-card"><div class="skeleton" style="width: 56px; height: 56px; border-radius: 16px;"></div><div class="employee-info"><div class="skeleton" style="height: 24px; width: 70%; border-radius: var(--radius-sm);"></div><div class="skeleton" style="height: 16px; width: 90%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="skeleton" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>
                         </div>
                     </div>
                 </div>
@@ -552,7 +570,7 @@
                 } else {
                     document.getElementById('employee-list-container').innerHTML = `
                     <div class="empty-state">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="empty-state-icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 48px; height: 48px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-4.59c.12-.344.242-.69.368-1.036.144-.423.29-1.006.368-1.484a3.397 3.397 0 00-2.403-3.26C6.737 7.95 6 6.522 6 5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 5c0 1.522-.737 2.95-1.903 3.682A3.397 3.397 0 0015 11.558c-.078.478-.224 1.061-.368 1.484-.126.346-.248.692-.368 1.036a6.375 6.375 0 01-1.24 3.07m0-12.222a3 3 0 00-3-3c-1.657 0-3 1.343-3 3a3 3 0 003 3c1.657 0 3-1.343 3-3z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="empty-state-icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-4.59c.12-.344.242-.69.368-1.036.144-.423.29-1.006.368-1.484a3.397 3.397 0 00-2.403-3.26C6.737 7.95 6 6.522 6 5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 5c0 1.522-.737 2.95-1.903 3.682A3.397 3.397 0 0015 11.558c-.078.478-.224 1.061-.368 1.484-.126.346-.248.692-.368 1.036a6.375 6.375 0 01-1.24 3.07m0-12.222a3 3 0 00-3-3c-1.657 0-3 1.343-3 3a3 3 0 003 3c1.657 0 3-1.343 3-3z" /></svg>
                         <h3>No Employees Found</h3>
                         <p>Get started by adding your first employee manually.</p>
                     </div>`;
@@ -573,10 +591,13 @@
                 <a href="#" class="employee-card admin-card" data-app-action="manage-admin" data-uid="${admin.id}" data-name="${admin.displayName}">
                     <div class="employee-icon admin-icon-wrap"><span class="material-symbols-outlined">admin_panel_settings</span></div>
                     <div class="employee-info">
-                        <div class="employee-name">${admin.displayName} <span class="admin-badge">CO-ADMIN</span></div>
+                        <div class="employee-name-wrapper">
+                            <span class="employee-name">${admin.displayName}</span>
+                            <span class="admin-badge">CO-ADMIN</span>
+                        </div>
                         <div class="employee-stats"><span>Email: <strong>${admin.email}</strong></span></div>
                     </div>
-                    <span class="material-symbols-outlined employee-arrow" style="color: #d97706;">settings</span>
+                    <span class="material-symbols-outlined employee-arrow">settings</span>
                 </a>
             `).join('');
             html += adminHtml;
@@ -588,9 +609,11 @@
                 const dueAmountClass = dueAmount > 0 ? 'danger-text' : 'success-text';
                 return `
                 <a href="#" class="employee-card" data-app-action="navigate-detail" data-employee-id="${emp.id}">
-                    <div class="employee-icon"><svg xmlns="http://www.w3.org/2000/svg" class="icon-lg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg></div>
+                    <div class="employee-icon"><svg xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg></div>
                     <div class="employee-info">
-                        <div class="employee-name">${emp.name}</div>
+                        <div class="employee-name-wrapper">
+                            <span class="employee-name">${emp.name}</span>
+                        </div>
                         <div class="employee-stats"><span>Amount Due: <strong class="${dueAmountClass}">₹${dueAmount.toFixed(2)}</strong></span></div>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-lg employee-arrow" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
@@ -626,7 +649,7 @@
                         <div class="form-group"><input type="text" id="manual-full-name" placeholder=" " required><label for="manual-full-name">Full Name</label></div>
                         <div class="form-group"><input type="number" id="manual-daily-salary" placeholder=" " required min="0" step="0.01"><label for="manual-daily-salary">Daily Salary</label></div>
                         <div class="form-group"><select id="manual-link-user" required><option value="" disabled selected hidden></option><option value="none">None (No Gmail Link)</option></select><label for="manual-link-user">Link Gmail Account (Optional)</label></div>
-                        <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 8px;">Save Employee</button>
+                        <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 12px; padding: 14px; font-size: 1rem;">Save Employee</button>
                     </form>
                 </div>`;
             
@@ -638,8 +661,8 @@
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
                         <button class="manage-action warning-action" id="revoke-admin-btn">
-                            <span class="material-symbols-outlined">person_off</span>
-                            <span>Revoke Admin Access (Move to Pending)</span>
+                            <span class="material-symbols-outlined" style="font-size: 22px;">person_off</span>
+                            <span>Revoke Admin Access</span>
                         </button>
                     </div>
                 </div>`;
@@ -671,7 +694,7 @@
                 closeModal('manual-employee-modal');
                 
                 const view = document.getElementById('employees-view');
-                view.querySelector('#employee-list-container').innerHTML = `<div class="employee-card skeleton"><div class="employee-icon" style="width:50px;height:50px;border-radius:50%"></div><div class="employee-info"><div style="height: 24px; width: 60%; border-radius: var(--radius-sm);"></div><div style="height: 16px; width: 80%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="employee-arrow" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>`;
+                view.querySelector('#employee-list-container').innerHTML = `<div class="employee-card skeleton"><div class="employee-icon" style="width:56px;height:56px;border-radius:16px;"></div><div class="employee-info"><div style="height: 24px; width: 60%; border-radius: var(--radius-sm);"></div><div style="height: 16px; width: 80%; margin-top: 8px; border-radius: var(--radius-sm);"></div></div><div class="employee-arrow" style="width: 24px; height: 24px; border-radius: var(--radius-sm);"></div></div>`;
                 await showEmployeesView();
             } catch(err) { showToast("Error: Could not save employee.", "error"); }
         }
