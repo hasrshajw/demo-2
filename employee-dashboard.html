@@ -47,6 +47,8 @@
             --color-text-primary: #0f172a; --color-text-secondary: #64748b;
             --color-border: #e2e8f0; 
             --color-success: #10b981; --color-danger: #ef4444; --color-warning: #f59e0b;
+            
+            /* Status Colors */
             --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
             --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
         }
@@ -201,14 +203,21 @@
         .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
         
-        /* Orders & Summary */
+        /* Orders & Summary with Restored Colors */
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
         .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
         .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        
         .upcoming-order-card .customer-name { font-weight: 600; color: var(--color-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
+        .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 700; }
+        
+        /* Overdue Card Colors */
         .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
+        .upcoming-order-card.overdue .due-status { color: var(--status-overdue-text); }
+        
+        /* Upcoming Card Colors */
         .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
+        .upcoming-order-card.upcoming-due .due-status { color: var(--status-upcoming-text); }
         
         .recent-order-row { display: flex; align-items: center; gap: 1rem; padding: 12px 4px; border-bottom: 1px solid var(--color-border); }
         .recent-order-row:last-child { border-bottom: none; }
@@ -226,10 +235,13 @@
         
         .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; text-align: left; }
         .global-stat { display: flex; flex-direction: column; gap: 4px; }
-        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--color-text-primary); font-family: var(--font-alt); }
-        .global-stat .value.danger-text { color: var(--color-danger); }
-        .global-stat .value.success-text { color: var(--color-success); }
-        .global-stat .label { font-size: 0.8rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
+        .global-stat .value { font-size: 1.75rem; font-weight: 800; line-height: 1.2; color: var(--color-text-primary); font-family: var(--font-alt); }
+        
+        /* Utility Text Colors */
+        .danger-text { color: var(--color-danger) !important; }
+        .success-text { color: var(--color-success) !important; }
+        
+        .global-stat .label { font-size: 0.8rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); font-weight: 600;}
 
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
         .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; }
