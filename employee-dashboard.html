@@ -15,7 +15,7 @@
     <style>
         /* --- CORE DESIGN SYSTEM --- */
         :root {
-            /* Layout & Sidebar (SyncSkill) */
+            /* Layout & Sidebar */
             --text-sub: #6b7280;
             --header-height-desktop: 70px;
             --sidebar-width: 260px;
@@ -32,26 +32,23 @@
             --border-subtle: #e5e7eb;
             --radius-md: 10px;
             
-            /* Theme & Tokens (Premium UI) */
+            /* Theme & Tokens */
             --font-main: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; 
             --font-alt: 'Inter', sans-serif; 
             --font-nav: 'DM Sans', sans-serif;
             --ease-cubic: cubic-bezier(0.25, 0.8, 0.25, 1);
-            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
             --radius-sm: 6px; --radius-lg: 20px; --radius-xl: 24px;
             
-            /* Premium Shadows */
             --premium-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
             --premium-shadow-hover: 0 12px 30px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -3px rgba(0, 0, 0, 0.05);
-            --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
-            --btn-shadow: 0 4px 12px rgba(1, 39, 38, 0.15);
-            --btn-shadow-hover: 0 6px 16px rgba(1, 39, 38, 0.25);
             
             --color-primary: #012726; --color-primary-light: #e0e7ff; --color-primary-dark: #023d3c;
             --color-background: #f8fafc; --color-surface: #ffffff; 
             --color-text-primary: #0f172a; --color-text-secondary: #64748b;
             --color-border: #e2e8f0; 
             --color-success: #10b981; --color-danger: #ef4444; --color-warning: #f59e0b;
+            --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
+            --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
         }
 
         /* --- GLOBAL RESETS --- */
@@ -68,9 +65,6 @@
             line-height: 1.5;
             height: 100%;
         }
-
-        h1, h2, h3 { font-family: var(--font-main); font-weight: 700; color: var(--color-text-primary); margin: 0; letter-spacing: -0.02em; }
-        h1 { font-size: 1.875rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
 
         /* ============= UNIFIED LAYOUT & SIDEBAR ============= */
         .app-layout { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
@@ -101,7 +95,7 @@
         /* Mobile Header */
         .m-header { height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000; }
         .main-content { flex: 1; display: flex; flex-direction: column; margin-top: 72px; overflow: hidden; }
-        .content-area { flex: 1; overflow-y: auto; padding-bottom: 40px;} 
+        .content-area { flex: 1; overflow-y: auto; padding-bottom: 40px; padding-top: 24px; } 
         
         .m-menu-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .m-menu-lines { width: 18px; height: 14px; position: relative; }
@@ -123,7 +117,7 @@
         .nav-menu { padding: 20px 12px; }
         .account-section { padding: 20px; border-top: 1px solid var(--border-subtle); background: #fff; cursor: pointer; }
 
-        /* Profile Context Menu */
+        /* Profile Popup */
         .profile-popup { position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--premium-shadow-hover); border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none; transition: 0.2s; overflow: hidden; bottom: 100px; left: 50%; transform: translateX(-50%); }
         .profile-popup.active { opacity: 1; pointer-events: all; }
         .popup-header { padding: 16px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; display: flex; align-items: center; gap: 12px; }
@@ -141,8 +135,6 @@
             .brand-logo img, .mini-logo img { height: 45px; }
             
             .main-content { margin-top: 0; }
-            .content-area { padding-top: 20px; padding-bottom: 40px; }
-            
             .topbar {
                 height: 80px;
                 background: var(--header-bg);
@@ -185,71 +177,62 @@
         /* ============= DASHBOARD COMPONENTS ============= */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         @media (max-width: 768px) { .container { padding: 0 16px; } }
-
-        .page-header { margin-bottom: 32px; }
+        
+        .page-header { margin-bottom: 24px; }
         .page-title { font-family: var(--font-main); font-size: 1.75rem; font-weight: 600; color: var(--color-text-primary); }
         .welcome-message { font-size: 1rem; color: var(--color-text-secondary); margin-top: 4px; }
         
         .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-        @media (min-width: 1024px) { 
-            .dashboard-grid { grid-template-columns: 2fr 1fr; } 
-            .main-column { display: flex; flex-direction: column; }
-        }
+        @media (min-width: 1024px) { .dashboard-grid { grid-template-columns: 2fr 1fr; } }
+        
+        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
         @media (max-width: 1023px) {
-            .dashboard-grid { display: flex; flex-direction: column; }
             #orders-card { order: 1; }
             #recent-orders-card { order: 2; }
             #quick-actions-card { order: 3; }
             #financial-summary-card { order: 4; }
         }
 
-        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
-        
-        .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); }
-        @media (max-width: 768px) { .card { padding: 20px; } }
-        
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card { background: var(--color-surface); border: 1px solid #eef2f6; border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--premium-shadow); position: relative; overflow: hidden; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         .card-title { font-family: var(--font-main); font-size: 1.125rem; font-weight: 600; color: var(--color-text-primary); }
+
+        .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+        .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
         
-        /* Stats & Links */
+        /* Orders & Summary */
         .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
-        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; transition: all 0.2s ease; }
+        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
         .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .upcoming-order-card .customer-name { font-weight: 700; color: var(--color-text-primary); font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 600; }
-        .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); color: var(--status-overdue-text); }
-        .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); color: var(--status-upcoming-text); }
+        .upcoming-order-card .customer-name { font-weight: 600; color: var(--color-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
+        .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
+        .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
         
+        .recent-order-row { display: flex; align-items: center; gap: 1rem; padding: 12px 4px; border-bottom: 1px solid var(--color-border); }
+        .recent-order-row:last-child { border-bottom: none; }
+        .order-customer-info { flex-grow: 1; }
+        .order-customer-name { font-weight: 500; color: var(--color-text-primary); }
+        .order-due-date { font-size: 0.8rem; }
+        .order-added-by { font-size: 0.8rem; background-color: var(--hover-bg); padding: 2px 8px; border-radius: 999px; color: var(--color-text-secondary); white-space: nowrap; }
+
         .quick-actions-container { display: flex; flex-direction: column; gap: 1rem; }
-        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; }
+        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
         .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-        .link-tile span { color: var(--color-text-primary); font-weight: 700; font-size: 15px; font-family: var(--font-main); }
-        .link-tile svg { width: 18px; height: 18px; stroke: var(--color-primary); transition: transform 0.2s ease; }
+        .link-tile span { color: var(--color-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
+        .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
         .link-tile:hover svg { transform: translateX(3px); }
         
         .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; text-align: left; }
         .global-stat { display: flex; flex-direction: column; gap: 4px; }
-        .global-stat .value { font-size: 1.75rem; font-weight: 800; line-height: 1.2; color: var(--color-text-primary); font-family: var(--font-alt); }
+        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--color-text-primary); font-family: var(--font-alt); }
         .global-stat .value.danger-text { color: var(--color-danger); }
         .global-stat .value.success-text { color: var(--color-success); }
-        .global-stat .label { font-size: 0.8rem; color: var(--color-text-secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; font-family: var(--font-alt); }
+        .global-stat .label { font-size: 0.8rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
 
-        .recent-order-row { display: flex; align-items: center; gap: 1rem; padding: 14px 0; border-bottom: 1px solid var(--color-border); }
-        .recent-order-row:last-child { border-bottom: none; }
-        .order-customer-info { flex-grow: 1; min-width: 0; }
-        .order-customer-name { font-weight: 700; color: var(--color-text-primary); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .order-due-date { font-size: 0.85rem; color: var(--color-text-secondary); margin-top: 2px; }
-        .order-added-by { font-size: 0.75rem; background-color: var(--light-bg-tertiary); padding: 4px 10px; border-radius: 999px; color: var(--color-text-secondary); font-weight: 600; white-space: nowrap; }
-
-        .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-family: inherit;}
-        .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
-        .btn-secondary:hover { background-color: var(--light-bg-tertiary); border-color: #cbd5e1; }
-        .btn-sm { padding: 6px 14px; font-size: 0.8rem; border-radius: 10px; }
-
-        /* FAB */
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
-        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        .fab-button:hover { background: var(--color-primary-dark); transform: scale(1.05); }
+        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; }
 
         /* Skeletons */
@@ -266,7 +249,7 @@
     <!-- App Container -->
     <div class="app-layout">
         
-        <!-- Mobile Header (Hidden on Desktop) -->
+        <!-- Mobile Header -->
         <header class="m-header mobile-only">
             <button class="m-menu-btn" id="m-open-drawer">
                 <div class="m-menu-lines"><span></span></div>
@@ -277,7 +260,7 @@
             <div style="width:40px;"></div>
         </header>
 
-        <!-- Sidebar Overlay (Mobile) -->
+        <!-- Sidebar Overlay -->
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
         
         <!-- Unified Sidebar -->
@@ -291,11 +274,13 @@
                     <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
                 </span>
                 
+                <!-- Desktop Collapse Button -->
                 <button class="sidebar-toggle desktop-only" id="sidebar-toggle-btn">
                     <svg class="btn-close-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg>
                     <svg class="btn-open-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
                 </button>
 
+                <!-- Mobile Close Button -->
                 <button class="m-drawer-close mobile-only" id="m-close-drawer">
                     <div class="m-drawer-close-icon"></div>
                 </button>
@@ -312,7 +297,7 @@
                         <span class="nav-label">All Orders</span>
                     </a>
                     <a href="my-attendance.html" class="nav-item">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></span>
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
                         <span class="nav-label">My Attendance</span>
                     </a>
                     <a href="notifications.html" class="nav-item">
@@ -337,20 +322,19 @@
             </div>
         </aside>
 
-        <!-- Main Content Wrapper -->
+        <!-- Main Content -->
         <div class="main-content">
             <header class="topbar desktop-only">My Dashboard</header>
             
             <main class="content-area">
                 <div class="container" id="main-container">
                     <div id="home-view" class="view active">
-                         <div class="page-header">
+                         <div class="page-header mobile-only">
                             <div>
-                                <h1 class="page-title mobile-only">My Dashboard</h1>
+                                <h1 class="page-title">My Dashboard</h1>
                                 <p class="welcome-message" id="welcome-message">Loading your details...</p>
                             </div>
                         </div>
-                        
                         <div class="dashboard-grid">
                             <div class="main-column">
                                 <div id="orders-card" class="card">
@@ -359,15 +343,15 @@
                                         <div class="skeleton" style="height: 52px;"></div><div class="skeleton" style="height: 52px;"></div>
                                     </div>
                                 </div>
-                                 <div id="recent-orders-card" class="card">
+                                <div id="recent-orders-card" class="card">
                                     <div class="card-header"><div class="skeleton" style="height: 24px; width: 55%;"></div></div>
                                     <div id="recent-orders-list">
+                                        <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
                                         <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
                                         <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="sidebar-column">
                                 <div id="financial-summary-card" class="card">
                                     <div class="card-header"><div class="skeleton" style="height: 24px; width: 60%;"></div></div>
@@ -437,16 +421,12 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
                 initSyncSkillUI();
                 bindEventListeners();
                 listenForAuthStateChanges();
-            } catch (error) { 
-                console.error("Firebase Initialization Failed", error);
-            }
+            } catch (error) { document.body.innerHTML = `<h2>Error initializing application.</h2>`; }
         });
 
-        // --- SyncSkill UI Integration ---
         function initSyncSkillUI() {
             const sidebar = document.getElementById('sidebar');
             const mOverlay = document.getElementById('sidebar-overlay');
@@ -459,8 +439,14 @@
             const mOpen = document.getElementById('m-open-drawer');
             const mClose = document.getElementById('m-close-drawer');
             
-            const openMobileDrawer = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); };
-            const closeMobileDrawer = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); };
+            const openMobileDrawer = () => {
+                sidebar.classList.add('mobile-open');
+                mOverlay.classList.add('mobile-open');
+            };
+            const closeMobileDrawer = () => {
+                sidebar.classList.remove('mobile-open');
+                mOverlay.classList.remove('mobile-open');
+            };
 
             if(mOpen) mOpen.onclick = openMobileDrawer;
             if(mClose) mClose.onclick = closeMobileDrawer;
@@ -489,16 +475,17 @@
                     const userRef = doc(db, "users", user.uid);
                     let userDoc = await getDoc(userRef);
                     
-                    // Master Admin Setup
-                    if (user.email === ADMIN_EMAIL && (!userDoc.exists() || userDoc.data().role !== 'admin')) {
-                        await setDoc(userRef, { 
-                            displayName: user.displayName || 'Master Admin', 
-                            email: user.email, 
-                            photoURL: user.photoURL,
-                            status: 'approved', 
-                            role: 'admin' 
-                        }, { merge: true });
-                        userDoc = await getDoc(userRef);
+                    if (user.email === ADMIN_EMAIL) {
+                        if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+                            await setDoc(userRef, { 
+                                displayName: user.displayName || 'Master Admin', 
+                                email: user.email, 
+                                photoURL: user.photoURL,
+                                status: 'approved', 
+                                role: 'admin' 
+                            }, { merge: true });
+                            userDoc = await getDoc(userRef);
+                        }
                     }
 
                     if (!userDoc.exists() || userDoc.data().status !== 'approved') { 
@@ -515,7 +502,7 @@
                     }
 
                     if (!currentUserProfile.employeeId) { 
-                        document.getElementById('main-container').innerHTML = `<div class="card"><h2>Error: Link Required</h2><p>Your account is not linked to an employee profile. Please contact an administrator.</p></div>`; 
+                        document.getElementById('main-container').innerHTML = `<h2>Error: Your account is not linked to an employee profile. Please contact an administrator.</h2>`; 
                         return; 
                     }
                     
@@ -529,7 +516,6 @@
         function populateNavbar(user) { 
             if (!user) return; 
             const defaultPhoto = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E'; 
-            
             document.querySelectorAll('.account-avatar').forEach(img => img.src = user.photoURL || defaultPhoto);
             document.querySelectorAll('.account-name').forEach(el => el.textContent = user.displayName || 'Employee');
             document.querySelectorAll('.account-email').forEach(el => el.textContent = user.email || '');
@@ -574,83 +560,49 @@
             const today = new Date(); today.setHours(0,0,0,0);
             const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
             document.querySelector('#orders-card .card-header').innerHTML = `<h2 class="card-title">Critical Orders</h2>`;
-            if (criticalOrders.length === 0) { 
-                container.innerHTML = '<p style="color: var(--color-text-secondary); grid-column: 1 / -1; padding: 12px 0;">No critical orders found.</p>'; 
-            } else { 
-                container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); 
-            }
+            if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--color-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
+            else { container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); }
         }
 
         function populateRecentOrdersList(orders) {
             const container = document.getElementById('recent-orders-list');
             const recentOrders = orders.slice(0, 5);
             document.querySelector('#recent-orders-card .card-header').innerHTML = `<h2 class="card-title">Recently Added Orders</h2>`;
-            if (recentOrders.length === 0) { 
-                container.innerHTML = '<p style="color: var(--color-text-secondary); padding: 12px 0;">No recent orders to display.</p>'; 
-            } else { 
-                container.innerHTML = recentOrders.map(order => `<div class="recent-order-row">
+            if (recentOrders.length === 0) { container.innerHTML = '<p style="color: var(--color-text-secondary); padding: 12px 4px;">No recent orders to display.</p>'; } 
+            else { container.innerHTML = recentOrders.map(order => `<div class="recent-order-row">
                         <div class="order-customer-info">
                             <div class="order-customer-name">${order.name}</div>
                             <div class="order-due-date">Due: ${order.dueDate || 'N/A'}</div>
                         </div>
                         <span class="order-added-by">${order.createdBy ? order.createdBy.split(' ')[0] : 'Admin'}</span>
                         <a href="order-details.html?id=${order.id}" class="btn btn-secondary btn-sm">View</a>
-                    </div>`).join(''); 
-            }
+                    </div>`).join(''); }
         }
 
         async function renderFinancialSummary(employeeId) {
             const empDoc = await getDoc(doc(db, "employees", employeeId));
             if (!empDoc.exists()) return;
             const employee = empDoc.data();
-            
-            const welcomeEl = document.getElementById('welcome-message');
-            if(welcomeEl) welcomeEl.textContent = `Welcome back, ${employee.name.split(' ')[0]}!`;
-            
-            const [allAttSnap, allPaySnap] = await Promise.all([ 
-                getDocs(collection(db, `employees/${employeeId}/attendance`)), 
-                getDocs(collection(db, `employees/${employeeId}/payments`)) 
-            ]);
-            
-            const todayInIndia = getIndiaDateString(); 
-            const [year, month] = todayInIndia.split('-');
-            const startDate = `${year}-${month}-01`; 
-            const endDate = todayInIndia;
-            
+            document.getElementById('welcome-message').textContent = `Welcome back, ${employee.name.split(' ')[0]}!`;
+            const [allAttSnap, allPaySnap] = await Promise.all([ getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`)) ]);
+            const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`; const endDate = todayInIndia;
             const monthlyAttendance = allAttSnap.docs.map(d => d.data()).filter(a => a.date >= startDate && a.date <= endDate);
-            
             const { totalEarned: overallEarned, dueAmount: overallDue } = calculateFinancials(employee, allAttSnap.docs.map(d => d.data()), allPaySnap.docs.map(d => d.data()));
             const { totalEarned: monthlyEarned } = calculateFinancials(employee, monthlyAttendance, []);
-            
             const dueClass = overallDue > 0 ? 'danger-text' : 'success-text';
             const container = document.getElementById('financial-summary-card');
-            
-            container.querySelector('.card-header').innerHTML = `<h2 class="card-title">Financial Overview</h2>`;
-            container.querySelector('.global-summary-grid').innerHTML = `
-                <div class="global-stat">
-                    <div class="label">Overall Amount Due</div>
-                    <div class="value ${dueClass}">₹${overallDue.toFixed(2)}</div>
-                </div>
-                <div class="global-stat">
-                    <div class="label">Earned This Month</div>
-                    <div class="value">₹${monthlyEarned.toFixed(2)}</div>
-                </div>`;
-                
+            container.querySelector('.card-header').innerHTML = `<h2 class="card-title">My Financial Summary</h2>`;
+            container.querySelector('.global-summary-grid').innerHTML = `<div class="global-stat"><div class="label">Overall Amount Due</div><div class="value ${dueClass}">₹${overallDue.toFixed(2)}</div></div><div class="global-stat"><div class="label">Earned This Month (So Far)</div><div class="value">₹${monthlyEarned.toFixed(2)}</div></div>`;
             const actionsCard = document.getElementById('quick-actions-card');
             actionsCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Quick Actions</h2>`;
-            actionsCard.querySelector('.quick-actions-container').innerHTML = `
-                <a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>
-                <a href="my-attendance.html" class="link-tile"><span>View My Attendance</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
+            actionsCard.querySelector('.quick-actions-container').innerHTML = `<a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a><a href="my-attendance.html" class="link-tile"><span>View My Attendance</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
         }
 
         function calculateFinancials(employee, attendance, payments) {
             if (!employee) return { totalEarned: 0, dueAmount: 0 };
             let p=0, h=0, ph=0;
-            attendance.forEach(a => { 
-                if (a?.status === 'present') p++; 
-                else if (a?.status === 'half-day') h++; 
-                else if (a?.status === 'paid-holiday') ph++; 
-            });
+            attendance.forEach(a => { if (a?.status === 'present') p++; else if (a?.status === 'half-day') h++; else if (a?.status === 'paid-holiday') ph++; });
             const earned = (p + (h * 0.5) + ph) * (employee.dailySalary || 0);
             const paid = payments.reduce((s, p) => s + (p?.amount || 0), 0);
             return { totalEarned: earned, dueAmount: earned - paid };
