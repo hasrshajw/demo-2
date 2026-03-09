@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SyncSkill - Admin Dashboard</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayrollPro - Admin Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
+        /* --- MERGED & COMPLETE CSS (including previous sidebar) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
+            --font-main: "IBM Plex Sans", sans-serif; --font-alt: 'Inter', sans-serif; --ease-cubic: cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05); --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --light-bg-primary: #ffffff; --light-bg-secondary: #f7f9fc; --light-bg-tertiary: #f1f3f6;
+            --light-text-primary: #1f2937; --light-text-secondary: #52616b; --light-border: #e5e7eb;
+            --color-primary: #012726; --color-primary-hover: #023d3c; --color-primary-text: #ffffff;
+            --status-overdue-bg: #fef2f2; --status-overdue-text: #be123c; --status-overdue-border: #fecaca;
+            --status-upcoming-bg: #fffbeb; --status-upcoming-text: #b45309; --status-upcoming-border: #fde68a;
+            
+            /* Previous sidebar variables */
             --text-sub: #6b7280;
             --header-height-desktop: 70px;
             --sidebar-width: 260px;
@@ -30,58 +42,55 @@
             --tooltip-bg: #1f2937;
             --danger-color: #ef4444;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        [data-theme="light"] { --color-background: #f8fafc; --color-surface: #ffffff; --color-success: #16a34a; --color-danger: #dc2626; --color-warning: #f59e0b; }
+        html { scroll-behavior: smooth; }
+        
         body {
-            background: var(--page-bg);
-            font-family: "DM Sans", Roboto, sans-serif;
-            font-weight: 500;
-            color: var(--text-color);
-            overflow: hidden;
+            font-family: var(--font-alt); line-height: 1.6; background-color: var(--color-background);
+            color: var(--light-text-secondary); 
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden; /* from previous */
         }
 
-        /* ============= UNIFIED LAYOUT ============= */
+        /* --- SIDEBAR LAYOUT (previous) --- */
         .app-layout {
             display: flex;
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
         }
+        @media (min-width: 769px) {
+            .app-layout { flex-direction: row; }
+        }
 
         /* Utility classes for visibility */
         .desktop-only { display: none !important; }
         .mobile-only { display: flex; }
 
-        /* ============= LOGO STYLING ============= */
+        /* Logo */
         .brand-logo {
             display: flex;
             align-items: center;
             text-decoration: none;
             transition: all 0.3s;
         }
-        
         .brand-logo img {
-            height: 36px; /* Slightly decreased for mobile view */
+            height: 36px;
             width: auto;
             display: block;
         }
-
         .mini-logo {
             display: none;
             align-items: center;
             justify-content: center;
         }
-        
         .mini-logo img {
-            height: 36px; /* Slightly decreased for mobile view */
+            height: 36px;
             width: auto;
             display: block;
+        }
+        @media (min-width: 769px) {
+            .brand-logo img, .mini-logo img { height: 45px; }
         }
 
         /* SVG Icons Styling */
@@ -109,7 +118,7 @@
             height: 24px;
         }
 
-        /* ============= NAVIGATION LINKS STYLING (GLOBAL) ============= */
+        /* Navigation items */
         .nav-item {
             position: relative; 
             display: flex;
@@ -134,34 +143,19 @@
         .nav-item.active .icon svg { stroke: #000000; }
         .nav-item.active .icon svg.custom-cert { fill: #000000; stroke: none; }
 
-        /* Generic Account Styling */
+        /* Account card */
         .account-card { display: flex; align-items: center; gap: 12px; }
         .account-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex-shrink: 0; }
         .account-text { display: flex; flex-direction: column; overflow: hidden; transition: opacity 0.2s; }
         .account-name { font-size: 15px; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
         .account-email { font-size: 13px; color: var(--text-sub); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
 
-        /* ============= MOBILE FIRST LAYOUT ============= */
+        /* Mobile header */
         .m-header {
             height: 72px; background: #fff; border-bottom: 1px solid var(--border-subtle);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 16px; position: fixed; top: 0; width: 100%; z-index: 1000;
         }
-        
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin-top: 72px; /* Offset for fixed mobile header */
-            overflow: hidden;
-        }
-        
-        .content-area {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
         .m-menu-btn {
             width: 40px; height: 40px; border-radius: 10px; border: 1px solid #e5e7eb;
             background: #f9fafb; display: flex; align-items: center; justify-content: center;
@@ -174,7 +168,7 @@
         .m-menu-lines span { top: 6px; }
         .m-menu-lines::after { bottom: 0; }
 
-        /* Unified Sidebar Mobile Default */
+        /* Sidebar */
         .sidebar {
             position: fixed; left: 0; top: 0; width: 300px; max-width: 85vw; height: 100%;
             background: #fff; transform: translateX(-100%); transition: 0.25s, width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -209,7 +203,7 @@
             background: #fff; cursor: pointer;
         }
 
-        /* Profile Popup Default (Mobile Position) */
+        /* Profile Popup */
         .profile-popup {
             position: fixed; background: #fff; border-radius: 12px; box-shadow: var(--shadow-premium);
             border: 1px solid #e5e7eb; width: 260px; z-index: 3000; opacity: 0; pointer-events: none;
@@ -222,21 +216,15 @@
         .popup-list a { display: flex; align-items: center; gap: 12px; padding: 12px; text-decoration: none; color: var(--text-color); border-radius: 8px; cursor: pointer; }
         .popup-list a:hover { background: var(--hover-bg); }
 
-        /* ============= DESKTOP LAYOUT (Min-Width 769px) ============= */
+        /* Desktop styles */
         @media (min-width: 769px) {
-            .app-layout { flex-direction: row; }
             .desktop-only { display: flex !important; }
             .mobile-only { display: none !important; }
-
             .m-header { display: none; }
             .sidebar-overlay { display: none; }
             
-            /* Restore Logo Size on Desktop */
-            .brand-logo img, .mini-logo img { height: 45px; }
-            
             .main-content { margin-top: 0; }
-            .content-area { padding: 40px; }
-
+            
             .topbar {
                 height: 80px;
                 background: var(--header-bg);
@@ -268,12 +256,10 @@
             .nav-menu { padding: 10px 16px; }
             .account-section { margin-top: auto; padding: 24px 16px; }
 
-            /* Adjust Profile Popup location for Desktop */
             .profile-popup {
                 bottom: 80px; left: 16px; transform: none;
             }
 
-            /* Toggle Button Styling */
             .sidebar-toggle {
                 background: none; border: none; cursor: pointer; color: var(--icon-color);
                 display: flex; align-items: center; justify-content: center;
@@ -281,7 +267,6 @@
             }
             .sidebar-toggle:hover { background: var(--hover-bg); color: var(--text-color); }
 
-            /* ============= DESKTOP COLLAPSED STATE ============= */
             .sidebar.collapsed { width: var(--sidebar-collapsed-width); }
             
             .sidebar.collapsed .brand-logo, 
@@ -303,7 +288,6 @@
             .sidebar.collapsed .nav-label { display: none; }
             .sidebar.collapsed .sidebar-inner { overflow: visible; }
 
-            /* Collapsed Tooltip On Hover */
             .sidebar.collapsed .nav-item:hover .nav-label {
                 display: block; position: absolute; left: 100%; top: 50%;
                 transform: translateY(-50%); background-color: var(--tooltip-bg);
@@ -319,33 +303,137 @@
                 border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent;
             }
         }
+
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-top: 72px; /* mobile offset */
+            overflow: hidden;
+        }
+        @media (min-width: 769px) {
+            .main-content { margin-top: 0; }
+        }
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        @media (min-width: 769px) {
+            .content-area { padding: 40px; }
+        }
+
+        /* --- EXISTING DASHBOARD STYLES (unchanged) --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+        main { padding-top: 24px; padding-bottom: 48px; }
+        .page-header { margin-bottom: 24px; }
+        .page-title { font-family: var(--font-main); font-size: 1.75rem; font-weight: 600; color: var(--light-text-primary); }
+        .welcome-message { font-size: 1rem; color: var(--light-text-secondary); }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+        @media (min-width: 1024px) { 
+            .dashboard-grid { grid-template-columns: 2fr 1fr; } 
+            .main-column { display: flex; flex-direction: column; }
+            #orders-card { order: 1; }
+            #attendance-card { order: 2; }
+            #recent-orders-card { order: 3; }
+        }
+        @media (max-width: 1023px) {
+            .dashboard-grid { display: flex; flex-direction: column; }
+            #attendance-card { order: 1; }
+            #orders-card { order: 2; }
+            #quick-actions-card { order: 3; }
+            #recent-orders-card { order: 4; } 
+            #global-summary-card { order: 5; }
+        }
+        .main-column, .sidebar-column { display: flex; flex-direction: column; gap: 24px; }
+        .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn-success { background-color: var(--color-success); color: white; } .btn-danger { background-color: var(--color-danger); color: white; } .btn-warning { background-color: var(--color-warning); color: #1f2937; }
+        .btn-secondary { background-color: var(--color-surface); border-color: var(--light-border); color: var(--light-text-primary); box-shadow: var(--shadow-sm); }
+        .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+        .btn-icon { background-color: transparent; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; color: var(--light-text-secondary); display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s var(--ease-cubic); }
+        .btn-icon:hover { background-color: var(--light-bg-tertiary); color: var(--light-text-primary); }
+        .card { background: var(--color-surface); border: 1px solid var(--light-border); border-radius: var(--radius-lg); padding: 24px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-title { font-family: var(--font-main); font-size: 1.125rem; font-weight: 600; color: var(--light-text-primary); }
+        .employee-row-v2 { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--light-border); transition: all 0.5s var(--ease-cubic); opacity: 1; transform: translateY(0); }
+        .employee-row-v2.hidden { opacity: 0; transform: translateY(-10px); height: 0; padding-top: 0; padding-bottom: 0; margin: 0; border: none; }
+        .employee-row-v2:first-of-type { border-top: 1px solid var(--light-border); }
+        .employee-info-v2 { display: flex; align-items: center; gap: 12px; }
+        .employee-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: var(--light-bg-tertiary); display: flex; align-items: center; justify-content: center; font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; }
+        .employee-name { font-weight: 500; color: var(--light-text-primary); } .actions { display: flex; align-items: center; gap: 8px; }
+        .attendance-done { text-align: center; padding: 24px 0; color: var(--light-text-secondary); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .attendance-done .material-symbols-outlined { color: var(--color-success); font-size: 2.5rem; }
+        .upcoming-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+        .upcoming-order-card { border: 1px solid; border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s ease; }
+        .upcoming-order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .upcoming-order-card .customer-name { font-weight: 600; color: var(--light-text-primary); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .upcoming-order-card .due-status { font-size: 0.8rem; font-weight: 500; }
+        .upcoming-order-card.overdue { background-color: var(--status-overdue-bg); border-color: var(--status-overdue-border); }
+        .upcoming-order-card.upcoming-due { background-color: var(--status-upcoming-bg); border-color: var(--status-upcoming-border); }
+        .quick-actions-container { display: flex; flex-direction: column; gap: 1rem; }
+        .link-tile { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background-color: var(--color-surface); border: 1px solid var(--light-border); border-radius: 999px; text-decoration: none; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
+        .link-tile:hover { background-color: var(--light-bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .link-tile span { color: var(--light-text-primary); font-weight: 600; font-size: 16px; font-family: var(--font-main); }
+        .link-tile svg { width: 20px; height: 20px; stroke: var(--color-primary); transition: transform 0.2s ease; }
+        .link-tile:hover svg { transform: translateX(3px); }
+        .global-summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; text-align: left; }
+        .global-stat { display: flex; flex-direction: column; gap: 4px; }
+        .global-stat .value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--light-text-primary); font-family: var(--font-alt); }
+        .global-stat .value.danger-text { color: var(--color-danger); }
+        .global-stat .label { font-size: 0.8rem; color: var(--light-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-alt); }
+        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .fab-button { width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); color: white; border: none; box-shadow: var(--shadow-lg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        .fab-button .material-symbols-outlined { font-size: 32px; font-weight: 300; transition: transform 0.3s ease; }
+        .fab-button:hover { background: var(--color-primary-hover); transform: translateY(-2px); }
+        .fab-button.open .material-symbols-outlined { transform: rotate(45deg); }
+        .fab-menu { position: absolute; bottom: 75px; right: 5px; display: flex; flex-direction: column; align-items: flex-end; gap: 15px; visibility: hidden; opacity: 0; transition: all 0.3s ease; }
+        .fab-menu.show { visibility: visible; opacity: 1; }
+        .fab-item { display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(20px); transition: all 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55); cursor: pointer; }
+        .fab-menu.show .fab-item { opacity: 1; transform: translateY(0); }
+        .fab-menu.show .fab-item:nth-child(1) { transition-delay: 0.05s; } .fab-menu.show .fab-item:nth-child(2) { transition-delay: 0.1s; }
+        .fab-item .label { padding: 6px 12px; border-radius: var(--radius-sm); background: var(--light-bg-primary); color: var(--light-text-primary); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-sm); white-space: nowrap; }
+        .fab-item .action-button { width: 48px; height: 48px; border-radius: 50%; background: var(--light-bg-primary); border: none; color: var(--color-primary); box-shadow: var(--shadow-sm); font-size: 20px; display: flex; align-items: center; justify-content: center; }
+        .modal { display: none; position: fixed; z-index: 1001; inset: 0; }
+        .modal-content { background-color: var(--color-surface); margin: 5rem auto; padding: 32px; border-radius: var(--radius-lg); width: 90%; max-width: 400px; position: relative; box-shadow: var(--shadow-lg); animation: modalOpen 0.4s var(--ease-cubic); }
+        .close-btn { position: absolute; top: 12px; right: 12px; font-size: 24px; color: var(--light-text-secondary); background: transparent; border: none; cursor: pointer; }
+        @keyframes modalOpen { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .recent-order-row { display: flex; align-items: center; gap: 1rem; padding: 12px 4px; border-bottom: 1px solid var(--light-border); }
+        .recent-order-row:last-child { border-bottom: none; }
+        .order-customer-info { flex-grow: 1; }
+        .order-customer-name { font-weight: 500; color: var(--light-text-primary); }
+        .order-due-date { font-size: 0.8rem; }
+        .order-added-by { font-size: 0.8rem; background-color: var(--light-bg-tertiary); padding: 2px 8px; border-radius: 999px; color: var(--light-text-secondary); white-space: nowrap; }
+        @media (max-width: 768px) { .container { padding: 0 16px; } main { padding-top: 24px; padding-bottom: 24px; } .card { padding: 16px; } .card-title { font-size: 1.1rem; } }
     </style>
 </head>
 <body>
 
+    <!-- === REPLACED NAVBAR: PREVIOUS SIDEBAR (exact) === -->
     <div class="app-layout">
-        
         <!-- Mobile Header (Hidden on Desktop) -->
         <header class="m-header mobile-only">
             <button class="m-menu-btn" id="m-open-drawer">
                 <div class="m-menu-lines"><span></span></div>
             </button>
             <a href="#" class="brand-logo">
-                <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+                <img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="PayrollPro">
             </a>
             <div style="width:40px;"></div>
         </header>
 
-        <!-- Unified Sidebar (Behaves as Drawer on Mobile, Static Sidebar on Desktop) -->
+        <!-- Sidebar Overlay (Mobile) -->
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Unified Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <a href="#" class="brand-logo">
-                    <img src="https://ksupvc.wixo.in/image.svg" alt="SyncSkill">
+                <a href="admin-dashboard.html" class="brand-logo">
+                    <img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="PayrollPro">
                 </a>
                 
                 <span class="mini-logo">
-                    <img src="https://ksupvc.wixo.in/logo-square.png" alt="S">
+                    <img src="https://ihtnas.com/assets/ihtnas-nav.png" alt="P">
                 </span>
                 
                 <!-- Desktop Collapse Button -->
@@ -361,38 +449,38 @@
             </div>
             
             <div class="sidebar-inner">
-                <!-- SINGLE NAVIGATION MENU -->
+                <!-- SINGLE NAVIGATION MENU (previous items) -->
                 <nav class="nav-menu">
-                    <a href="#" class="nav-item active">
+                    <a href="admin-dashboard.html" class="nav-item" id="nav-dashboard">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-panel-left-icon lucide-layout-panel-left"><rect width="7" height="18" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/></svg></span>
                         <span class="nav-label">Dashboard</span>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="view-orders.html" class="nav-item">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gallery-vertical-end-icon lucide-gallery-vertical-end"><path d="M7 2h10"/><path d="M5 6h14"/><rect width="18" height="12" x="3" y="10" rx="2"/></svg></span>
                         <span class="nav-label">All Orders</span>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="admin-employees.html" class="nav-item">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
                         <span class="nav-label">Manage Employees</span>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="notifications.html" class="nav-item">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span>
                         <span class="nav-label">Notifications</span>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="support.html" class="nav-item">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question-mark-icon lucide-message-circle-question-mark"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
                         <span class="nav-label">Support</span>
                     </a>
                 </nav>
             </div>
 
-            <!-- SINGLE ACCOUNT SECTION -->
+            <!-- SINGLE ACCOUNT SECTION (profile trigger) -->
             <div class="account-section" id="profile-trigger">
                 <div class="account-card">
-                    <img class="account-avatar" src="https://ui-avatars.com/api/?name=John+Doe&background=34c375&color=fff" alt="User">
+                    <img class="account-avatar" id="sidebar-profile-pic" src="" alt="User">
                     <div class="account-text">
-                        <div class="account-name">John Doe</div>
-                        <div class="account-email">john@syncskill.com</div>
+                        <div class="account-name" id="sidebar-profile-name">Loading...</div>
+                        <div class="account-email" id="sidebar-profile-email"></div>
                     </div>
                 </div>
             </div>
@@ -400,77 +488,392 @@
 
         <!-- Main Content Wrapper -->
         <div class="main-content">
-            <header class="topbar desktop-only">Overview</header>
+            <header class="topbar desktop-only">Admin Dashboard</header>
             <main class="content-area">
-                <h1>Welcome to Dashboard</h1>
-                <p style="margin-top: 10px; color: var(--text-sub);">Sidebar is fully collapsible. Use the button next to the logo.</p>
+                <!-- EXISTING DASHBOARD CONTENT (unchanged) -->
+                <div class="container" id="main-container">
+                    <div id="home-view" class="view active">
+                        <div class="page-header">
+                            <div>
+                                <h1 class="page-title">Admin Dashboard</h1>
+                                <p class="welcome-message" id="welcome-message">Loading admin details...</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-grid">
+                            <div class="main-column">
+                                <div id="orders-card" class="card">
+                                    <div class="card-header"><div class="skeleton" style="height: 24px; width: 50%;"></div></div>
+                                    <div id="upcoming-overdue-list" class="upcoming-cards-container">
+                                        <div class="skeleton" style="height: 52px;"></div><div class="skeleton" style="height: 52px;"></div>
+                                    </div>
+                                </div>
+                                <div id="attendance-card" class="card">
+                                    <div class="card-header"><div class="skeleton" style="height: 24px; width: 40%;"></div></div>
+                                    <div id="attendance-tracker">
+                                        <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 120px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                        <div class="employee-row-v2"><div class="employee-info-v2"><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div><div class="skeleton" style="height: 20px; width: 150px;"></div></div><div class="actions"><div class="skeleton" style="height: 32px; width: 80px;"></div><div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div></div></div>
+                                    </div>
+                                </div>
+                                <div id="recent-orders-card" class="card">
+                                    <div class="card-header"><div class="skeleton" style="height: 24px; width: 55%;"></div></div>
+                                    <div id="recent-orders-list">
+                                        <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                        <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                        <div class="recent-order-row"><div class="skeleton" style="flex-grow: 1; height: 20px;"></div><div class="skeleton" style="width: 80px; height: 24px; border-radius: 999px;"></div><div class="skeleton" style="width: 70px; height: 36px;"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sidebar-column">
+                                <div id="global-summary-card" class="card">
+                                    <div class="card-header"><div class="skeleton" style="height: 24px; width: 60%;"></div></div>
+                                    <div class="global-summary-grid">
+                                        <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                        <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                        <div class="global-stat"><div class="skeleton" style="height: 16px; width: 60%; margin-bottom: 8px;"></div><div class="skeleton" style="height: 34px; width: 40%;"></div></div>
+                                    </div>
+                                </div>
+                                <div id="quick-actions-card" class="card">
+                                    <div class="card-header"><div class="skeleton" style="height: 24px; width: 45%;"></div></div>
+                                    <div class="quick-actions-container">
+                                        <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
+                                        <div class="skeleton" style="height: 56px; border-radius: 999px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
 
-    <!-- Profile Context Menu -->
+    <!-- Profile Context Menu (previous popup) -->
     <div class="profile-popup" id="profile-popup">
         <div class="popup-header">
-            <img class="account-avatar" src="https://ui-avatars.com/api/?name=John+Doe&background=34c375&color=fff" alt="User">
+            <img class="account-avatar" id="popup-profile-pic" src="" alt="User">
             <div class="account-text">
-                <div class="account-name">John Doe</div>
-                <div class="account-email">john@syncskill.com</div>
+                <div class="account-name" id="popup-profile-name"></div>
+                <div class="account-email" id="popup-profile-email"></div>
             </div>
         </div>
         <ul class="popup-list">
-            <li><a><span>Profile</span></a></li>
-            <li><a><span>Settings</span></a></li>
-            <li><a style="color:var(--danger-color)"><span>Logout</span></a></li>
+            <li><a href="#" data-app-action="profile"><span>Profile</span></a></li>
+            <li><a href="#" data-app-action="settings"><span>Settings</span></a></li>
+            <li><a href="#" data-app-action="logout" style="color:var(--danger-color)"><span>Logout</span></a></li>
         </ul>
     </div>
 
-    <script>
-        // DOM Elements
-        const sidebar = document.getElementById('sidebar');
-        const mOverlay = document.getElementById('sidebar-overlay');
+    <!-- FAB and modal (keep original) -->
+    <div class="fab-container" id="fabContainer">
+        <div class="fab-menu" id="fabMenu"><div class="fab-item" data-app-action="navigate-order-form"><span class="label">Take Order</span><div class="action-button"><span class="material-symbols-outlined">add_shopping_cart</span></div></div><div class="fab-item" data-app-action="navigate-add-payment"><span class="label">Add Payment</span><div class="action-button"><span class="material-symbols-outlined">payments</span></div></div></div>
+        <button class="fab-button" id="fabButton" data-app-action="toggle-fab"><span class="material-symbols-outlined">add</span></button>
+    </div>
+    
+    <div id="other-options-modal" class="modal"></div>
+
+    <script type="module">
+        // --- ORIGINAL FIREBASE IMPORTS AND SETUP (unchanged) ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         
-        // Desktop Toggle
-        const toggleBtn = document.getElementById('sidebar-toggle-btn');
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            storageBucket: "__STORAGE_BUCKET__",
+            messagingSenderId: "__MESSAGING_SENDER_ID__",
+            appId: "__APP_ID__",
+            measurementId: "__MEASUREMENT_ID__"
+        };
+        
+        let db, auth, currentUserProfile;
+        const openModal = (id) => document.getElementById(id).style.display = 'block';
+        const closeModal = (id) => document.getElementById(id).style.display = 'none';
+        const getIndiaDateString = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                document.getElementById('other-options-modal').innerHTML = `<div class="modal-content"><span class="close-btn" data-app-action="close-modal" data-modal-id="other-options-modal">×</span><h2 id="other-options-title" style="font-size:1.2rem; margin-bottom: 1.5rem;"></h2><div id="other-options-buttons" style="display: flex; flex-direction: column; gap: 10px;"></div></div>`;
+                
+                // Setup sidebar interactions (new)
+                setupSidebar();
+                
+                // Bind existing event listeners (FAB, etc) - but we already have global listener
+                bindEventListeners();
+                listenForAuthStateChanges();
+            } catch (error) { document.body.innerHTML = `<h2>Error initializing application.</h2>`; }
         });
 
-        // Mobile Drawer Toggle
-        const mOpen = document.getElementById('m-open-drawer');
-        const mClose = document.getElementById('m-close-drawer');
-        
-        const openMobileDrawer = () => {
-            sidebar.classList.add('mobile-open');
-            mOverlay.classList.add('mobile-open');
-        };
-        const closeMobileDrawer = () => {
-            sidebar.classList.remove('mobile-open');
-            mOverlay.classList.remove('mobile-open');
-        };
-
-        mOpen.onclick = openMobileDrawer;
-        mClose.onclick = closeMobileDrawer;
-        mOverlay.onclick = closeMobileDrawer;
-
-        // Profile Popup
-        const pPopup = document.getElementById('profile-popup');
-        const profileTrigger = document.getElementById('profile-trigger');
-
-        profileTrigger.onclick = (e) => {
-            e.stopPropagation();
-            if (window.innerWidth > 768) {
-                pPopup.style.left = '16px';
-                pPopup.style.bottom = '80px';
-                pPopup.style.transform = 'none';
-            } else {
-                pPopup.style.left = '50%';
-                pPopup.style.bottom = '100px';
-                pPopup.style.transform = 'translateX(-50%)';
+        // --- SIDEBAR INTERACTIONS (from previous code, adapted) ---
+        function setupSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mOverlay = document.getElementById('sidebar-overlay');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            const mOpen = document.getElementById('m-open-drawer');
+            const mClose = document.getElementById('m-close-drawer');
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('collapsed');
+                });
             }
-            pPopup.classList.toggle('active');
-        };
+            
+            const openMobileDrawer = () => {
+                sidebar.classList.add('mobile-open');
+                mOverlay.classList.add('mobile-open');
+            };
+            const closeMobileDrawer = () => {
+                sidebar.classList.remove('mobile-open');
+                mOverlay.classList.remove('mobile-open');
+            };
+            
+            if (mOpen) mOpen.onclick = openMobileDrawer;
+            if (mClose) mClose.onclick = closeMobileDrawer;
+            if (mOverlay) mOverlay.onclick = closeMobileDrawer;
+            
+            // Profile popup
+            const pPopup = document.getElementById('profile-popup');
+            const profileTrigger = document.getElementById('profile-trigger');
+            
+            if (profileTrigger) {
+                profileTrigger.onclick = (e) => {
+                    e.stopPropagation();
+                    if (window.innerWidth > 768) {
+                        pPopup.style.left = '16px';
+                        pPopup.style.bottom = '80px';
+                        pPopup.style.transform = 'none';
+                    } else {
+                        pPopup.style.left = '50%';
+                        pPopup.style.bottom = '100px';
+                        pPopup.style.transform = 'translateX(-50%)';
+                    }
+                    pPopup.classList.toggle('active');
+                };
+            }
+            
+            document.addEventListener('click', () => {
+                if (pPopup) pPopup.classList.remove('active');
+            });
+            
+            // Highlight current nav based on path
+            const path = window.location.pathname.split('/').pop() || 'admin-dashboard.html';
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const href = item.getAttribute('href');
+                if (href === path) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
 
-        document.addEventListener('click', () => pPopup.classList.remove('active'));
+        // --- EXISTING FUNCTIONS (mostly unchanged, but updated to also fill sidebar profile) ---
+        function listenForAuthStateChanges() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const userRef = doc(db, "users", user.uid);
+                    let userDoc = await getDoc(userRef);
+                    
+                    // Master admin self-healing/setup
+                    if (user.email === "__ADMIN_EMAIL__") {
+                        await setDoc(userRef, { 
+                            displayName: user.displayName || 'Master Admin', 
+                            email: user.email, 
+                            photoURL: user.photoURL,
+                            status: 'approved', 
+                            role: 'admin' 
+                        }, { merge: true });
+                        userDoc = await getDoc(userRef);
+                    }
+
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                    const isAdmin = (user.email === "__ADMIN_EMAIL__" || currentUserProfile.role === 'admin');
+
+                    if (isAdmin) {
+                        populateNavbar(currentUserProfile); // updates header welcome and sidebar profile
+                        await initializeAdminView();
+                    } else {
+                        window.location.href = 'employee-dashboard.html';
+                    }
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        
+        // Updated to populate sidebar profile as well
+        function populateNavbar(user) { 
+            if (!user) return; 
+            document.getElementById('welcome-message').textContent = `Welcome back, ${user.displayName.split(' ')[0]}!`; 
+            const defaultPhoto = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e5e7eb"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+            const photo = user.photoURL || defaultPhoto;
+            
+            // Sidebar profile
+            document.getElementById('sidebar-profile-pic').src = photo;
+            document.getElementById('sidebar-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('sidebar-profile-email').textContent = user.email || '';
+            
+            // Popup profile
+            document.getElementById('popup-profile-pic').src = photo;
+            document.getElementById('popup-profile-name').textContent = user.displayName || 'Admin';
+            document.getElementById('popup-profile-email').textContent = user.email || '';
+        }
+        
+        async function initializeAdminView() {
+            listenForOrders();
+            const employeesSnap = await getDocs(collection(db, "employees"));
+            const employees = employeesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            await Promise.all([ refreshAttendanceTracker(employees), calculateAndRenderGlobalSummary(employees) ]);
+        }
+        
+        function toggleFabMenu() { document.getElementById('fabMenu').classList.toggle('show'); document.getElementById('fabButton').classList.toggle('open'); }
+        
+        function bindEventListeners() {
+            document.body.addEventListener('click', async (e) => {
+                const appAction = e.target.closest('[data-app-action]');
+                if (!e.target.closest('.fab-container')) { 
+                    document.getElementById('fabMenu')?.classList.remove('show'); 
+                    document.getElementById('fabButton')?.classList.remove('open'); 
+                }
+                if (!appAction) return;
+                const action = appAction.dataset.appAction;
+                if (action !== 'toggle-fab') { 
+                    document.getElementById('fabMenu')?.classList.remove('show'); 
+                    document.getElementById('fabButton')?.classList.remove('open'); 
+                }
+                if (!appAction.href) e.preventDefault();
+                switch (action) {
+                    case 'toggle-fab': toggleFabMenu(); break;
+                    case 'navigate-order-form': window.location.href='order-form.html'; break;
+                    case 'navigate-add-payment': window.location.href='admin-add-payment.html'; break;
+                    case 'logout': await signOut(auth); break;
+                    case 'close-modal': closeModal(appAction.dataset.modalId); break;
+                    case 'open-other-options-modal': 
+                        const { id, name } = appAction.dataset; 
+                        document.getElementById('other-options-title').textContent = `Mark Attendance: ${name}`; 
+                        document.getElementById('other-options-buttons').innerHTML = `<button class="btn btn-danger" data-app-action="mark-attendance" data-id="${id}" data-status="absent">Absent</button><button class="btn btn-warning" data-app-action="mark-attendance" data-id="${id}" data-status="half-day">Half Day</button><button class="btn btn-secondary" data-app-action="mark-attendance" data-id="${id}" data-status="paid-holiday">Paid Holiday</button>`;
+                        openModal('other-options-modal'); 
+                        break;
+                    case 'mark-attendance': await handleAttendanceClick(appAction.dataset.id, appAction.dataset.status); closeModal('other-options-modal'); break;
+                    // Profile and settings actions (placeholder)
+                    case 'profile': alert('Profile page - implement'); break;
+                    case 'settings': alert('Settings page - implement'); break;
+                }
+            });
+        }
+
+        // The rest of the original functions (handleAttendanceClick, refreshAttendanceTracker, etc.) remain exactly as they were.
+        async function handleAttendanceClick(employeeId, status) {
+            try { 
+                await setDoc(doc(db, `employees/${employeeId}/attendance`, getIndiaDateString()), { status, date: getIndiaDateString() }); 
+                const rowToHide = document.querySelector(`.employee-row-v2[data-employee-row-id="${employeeId}"]`); 
+                if(rowToHide) {
+                    rowToHide.classList.add('hidden');
+                    setTimeout(() => {
+                        if (document.querySelectorAll('.employee-row-v2:not(.hidden)').length === 0) {
+                            document.getElementById('attendance-card').style.display = 'none';
+                        }
+                    }, 500);
+                }
+            } catch (err) { console.error(err); } 
+        }
+        
+        async function refreshAttendanceTracker(employees) {
+            const today = getIndiaDateString();
+            const attendancePromises = employees.map(emp => getDoc(doc(db, `employees/${emp.id}/attendance`, today)));
+            const attendanceDocs = await Promise.all(attendancePromises);
+            const attendedTodayIds = new Set(attendanceDocs.filter(docSnap => docSnap.exists()).map(docSnap => docSnap.ref.parent.parent.id));
+            const employeesToTrack = employees.filter(emp => !attendedTodayIds.has(emp.id));
+            renderAttendanceTracker(employeesToTrack);
+        }
+        
+        const getInitials = (name) => { const parts = name.split(' '); let initials = parts[0] ? parts[0][0] : ''; if (parts.length > 1) initials += parts[parts.length - 1][0]; return initials.toUpperCase(); };
+        
+        function renderAttendanceTracker(employeesToTrack) {
+            const attendanceCard = document.getElementById('attendance-card');
+            const container = document.getElementById('attendance-tracker');
+            attendanceCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Today's Attendance</h2>`;
+            if (employeesToTrack.length === 0) {
+                attendanceCard.style.display = 'none';
+            } else {
+                attendanceCard.style.display = 'block';
+                container.innerHTML = employeesToTrack.map(emp => `
+                    <div class="employee-row-v2" data-employee-row-id="${emp.id}">
+                        <div class="employee-info-v2">
+                            <div class="employee-avatar">${getInitials(emp.name)}</div>
+                            <span class="employee-name">${emp.name}</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-success btn-sm" data-app-action="mark-attendance" data-id="${emp.id}" data-status="present">Present</button>
+                            <button class="btn-icon" data-app-action="open-other-options-modal" data-id="${emp.id}" data-name="${emp.name}" aria-label="More options for ${emp.name}">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                    </div>`).join('');
+            }
+        }
+        
+        function listenForOrders() {
+            const ordersQuery = query(collection(db, `upvc_orders`), orderBy('createdAt', 'desc'));
+            onSnapshot(ordersQuery, (snapshot) => {
+                const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                populateUpcomingOverdueList(orders);
+                populateRecentOrdersList(orders);
+            });
+        }
+        
+        const getStatusInfo = (order, today) => { if (order.status === 'completed') return null; const dueDate = order.dueDate ? new Date(order.dueDate + 'T00:00:00') : null; if (!dueDate) return null; if (dueDate < today) return { text: 'Overdue', className: 'overdue' }; const daysDiff = Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)); if (daysDiff >= 0 && daysDiff <= 3) return { text: `Due in ${daysDiff} day${daysDiff !== 1 ? 's' : ''}`, className: 'upcoming-due' }; return null;};
+        
+        function populateUpcomingOverdueList(orders) {
+            const container = document.getElementById('upcoming-overdue-list');
+            const today = new Date(); today.setHours(0,0,0,0);
+            const criticalOrders = orders.map(order => ({ ...order, statusInfo: getStatusInfo(order, today) })).filter(order => order.statusInfo !== null).sort((a,b) => (new Date(a.dueDate)?.getTime() || 0) - (new Date(b.dueDate)?.getTime() || 0));
+            document.querySelector('#orders-card .card-header').innerHTML = `<h2 class="card-title">Critical Orders</h2>`;
+            if (criticalOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); grid-column: 1 / -1;">No critical orders found.</p>'; } 
+            else { container.innerHTML = criticalOrders.map(order => `<div class="upcoming-order-card ${order.statusInfo.className}" onclick="window.location.href='order-details.html?id=${order.id}'"><div class="card-info"><div class="customer-name" title="${order.name}">${order.name}</div><div class="due-status">${order.statusInfo.text}</div></div></div>`).join(''); }
+        }
+        
+        function populateRecentOrdersList(orders) {
+            const container = document.getElementById('recent-orders-list');
+            const recentOrders = orders.slice(0, 5);
+            document.querySelector('#recent-orders-card .card-header').innerHTML = `<h2 class="card-title">Recently Added Orders</h2>`;
+            if (recentOrders.length === 0) { container.innerHTML = '<p style="color: var(--light-text-secondary); padding: 12px 4px;">No recent orders to display.</p>'; } 
+            else { container.innerHTML = recentOrders.map(order => `<div class="recent-order-row">
+                        <div class="order-customer-info">
+                            <div class="order-customer-name">${order.name}</div>
+                            <div class="order-due-date">Due: ${order.dueDate || 'N/A'}</div>
+                        </div>
+                        <span class="order-added-by">${order.createdBy ? order.createdBy.split(' ')[0] : 'Admin'}</span>
+                        <a href="order-details.html?id=${order.id}" class="btn btn-secondary btn-sm">View</a>
+                    </div>`).join(''); }
+        }
+        
+        async function calculateAndRenderGlobalSummary(employees) {
+            const container = document.getElementById('global-summary-card');
+            const todayInIndia = getIndiaDateString(); const [year, month] = todayInIndia.split('-');
+            const startDate = `${year}-${month}-01`; const lastDay = new Date(year, parseInt(month, 10), 0).getDate(); const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+            let totalEarned = 0, totalPaid = 0;
+            const promises = employees.map(async emp => {
+                const [attSnap, paySnap] = await Promise.all([ getDocs(query(collection(db, `employees/${emp.id}/attendance`), where('date', '>=', startDate), where('date', '<=', endDate))), getDocs(query(collection(db, `employees/${emp.id}/payments`), where('date', '>=', startDate), where('date', '<=', endDate))) ]);
+                let p=0,h=0,ph=0; attSnap.forEach(d => { const s = d.data().status; if(s==='present')p++; else if(s==='half-day')h++; else if(s==='paid-holiday')ph++; });
+                totalEarned += (p+(h*0.5)+ph)*(emp.dailySalary||0); paySnap.forEach(d => { totalPaid += d.data().amount || 0; });
+            });
+            await Promise.all(promises);
+            container.querySelector('.card-header').innerHTML = `<h2 class="card-title">Month in Review</h2>`;
+            container.querySelector('.global-summary-grid').innerHTML = `<div class="global-stat"><div class="label">Total to be Paid</div><div class="value danger-text">₹${(totalEarned - totalPaid).toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Earned</div><div class="value">₹${totalEarned.toFixed(2)}</div></div><div class="global-stat"><div class="label">Total Paid</div><div class="value">₹${totalPaid.toFixed(2)}</div></div>`;
+            const actionsCard = document.getElementById('quick-actions-card');
+            actionsCard.querySelector('.card-header').innerHTML = `<h2 class="card-title">Quick Actions</h2>`;
+            actionsCard.querySelector('.quick-actions-container').innerHTML = `<a href="view-orders.html" class="link-tile"><span>View All Orders</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a><a href="admin-employees.html" class="link-tile"><span>Manage All Employees</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M17 17V7H7"></path></svg></a>`;
+        }
     </script>
 </body>
 </html>
