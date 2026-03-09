@@ -87,6 +87,7 @@
         .btn { padding: 10px 18px; border: 1px solid transparent; border-radius: var(--radius-md); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s var(--ease-cubic); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .btn-primary { background-color: var(--color-primary); color: white; box-shadow: var(--shadow-sm); }
         .btn-danger { background-color: var(--color-danger); color: white; }
+        .btn-warning { background-color: var(--color-warning); color: white; }
         .btn-secondary { background-color: var(--color-surface); border-color: var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
         .btn-icon { background: none; border: none; padding: 10px; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
         .btn-icon:hover { color: var(--color-text-primary); background-color: var(--color-border); }
@@ -146,10 +147,12 @@
         .form-group input:focus + label, .form-group input:not(:placeholder-shown) + label, .form-group select:focus + label, .form-group select:valid + label { top: -10px; font-size: 0.8rem; color: var(--color-primary); }
         .modal-content .modal-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem; }
         .manage-modal-section { padding-top: 1rem; margin-top: 1rem; border-top: 1px solid var(--color-border); }
-        .manage-action { display: flex; align-items: center; gap: 1rem; padding: 12px; border-radius: var(--radius-md); text-decoration: none; color: var(--color-text-primary); font-weight: 500; transition: background-color 0.2s; }
+        .manage-action { display: flex; align-items: center; gap: 1rem; padding: 12px; border-radius: var(--radius-md); text-decoration: none; color: var(--color-text-primary); font-weight: 500; transition: background-color 0.2s; cursor: pointer; border: none; width: 100%; background: none; font-family: inherit; font-size: 1rem;}
         .manage-action:hover { background-color: var(--light-bg-tertiary); }
         .manage-action.danger-action { color: var(--color-danger); }
         .manage-action.danger-action:hover { background-color: var(--color-danger-bg); }
+        .manage-action.warning-action { color: var(--color-warning); }
+        .manage-action.warning-action:hover { background-color: var(--color-warning-bg); }
         #toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: var(--radius-md); color: white; font-weight: 500; box-shadow: var(--shadow-lg); transition: bottom 0.5s; z-index: 1001; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes modalOpen { from { opacity: 0; transform: translateY(-30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -264,6 +267,7 @@
         
         let db, auth;
         let currentUserProfile = null;
+        let currentUserAuth = null;
         let currentEmployee = null;
         let allAttendance = [];
         let allPayments = [];
@@ -303,6 +307,7 @@
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
+                    currentUserAuth = user;
                     const userRef = doc(db, "users", user.uid);
                     let userDoc = await getDoc(userRef);
                     
@@ -405,7 +410,57 @@
         async function handleDeleteEmployee() { const modal = document.getElementById('delete-employee-modal'); const { employeeId, employeeName } = modal.dataset; if (!employeeId) return; try { const batch = writeBatch(db); const empDoc = await getDoc(doc(db, "employees", employeeId)); const userUID = empDoc.data().userUID; if (userUID) { batch.update(doc(db, "users", userUID), {status: 'denied', role: null, employeeId: null}); } const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); attSnap.forEach(d => batch.delete(d.ref)); paySnap.forEach(d => batch.delete(d.ref)); batch.delete(doc(db, "employees", employeeId)); await batch.commit(); closeModal('delete-employee-modal'); showToast(`${employeeName} has been permanently deleted.`, 'success'); setTimeout(() => window.location.href = 'admin-employees.html', 1500); } catch(err) { showToast("Could not delete employee.", "error"); } }
         async function openPaymentModalForEdit(paymentId, employeeId) { try { const paymentDoc = await getDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); if (!paymentDoc.exists()) throw new Error("Payment record not found."); const payment = paymentDoc.data(); document.getElementById('payment-modal-title').textContent = 'Edit Payment'; document.getElementById('payment-id').value = paymentId; document.getElementById('payment-amount').value = payment.amount; document.getElementById('payment-date').value = payment.date; document.getElementById('payment-note').value = payment.note || ''; document.getElementById('payment-mode').value = payment.paymentMode || 'Cash'; openModal('payment-modal'); } catch(err) { showToast(err.message, 'error'); } }
         async function handleDeletePayment() { const modal = document.getElementById('delete-payment-modal'); const { paymentId, employeeId } = modal.dataset; if (!paymentId || !employeeId) return; try { await deleteDoc(doc(db, `employees/${employeeId}/payments`, paymentId)); closeModal('delete-payment-modal'); showToast("Payment deleted successfully.", "success"); await showDetailView(true); } catch(err) { showToast("Could not delete payment.", "error"); } }
-        async function handleOpenEditOptions(employeeId, employeeName) { const empDoc = await getDoc(doc(db, "employees", employeeId)); const employee = empDoc.data(); const title = document.getElementById('edit-options-title'); const content = document.getElementById('edit-options-modal-content'); title.textContent = `Manage ${employeeName}`; let buttonsHtml = `<a href="#" class="manage-action" data-app-action="open-name-salary-modal" data-id="${employeeId}"><span class="material-symbols-outlined">drive_file_rename_outline</span><span>Edit Name/Salary</span></a>`; if (employee.userUID) { buttonsHtml += `<a href="#" class="manage-action danger-action" data-app-action="unlink-user" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link_off</span><span>Unlink Google Account</span></a>`; } else { buttonsHtml += `<a href="#" class="manage-action" data-app-action="open-link-user-from-profile" data-employee-id="${employeeId}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link</span><span>Link Google Account</span></a>`; } buttonsHtml += `<div class="manage-modal-section"></div><a href="#" class="manage-action danger-action" data-app-action="open-delete-modal" data-id="${employeeId}" data-name="${employeeName}"><span class="material-symbols-outlined">delete</span><span>Delete Employee</span></a>`; content.innerHTML = buttonsHtml; openModal('edit-options-modal'); }
+        
+        async function handleOpenEditOptions(employeeId, employeeName) { 
+            const empDoc = await getDoc(doc(db, "employees", employeeId)); 
+            const employee = empDoc.data(); 
+            const title = document.getElementById('edit-options-title'); 
+            const content = document.getElementById('edit-options-modal-content'); 
+            title.textContent = `Manage ${employeeName}`; 
+            
+            let buttonsHtml = `<button class="manage-action" data-app-action="open-name-salary-modal" data-id="${employeeId}"><span class="material-symbols-outlined">drive_file_rename_outline</span><span>Edit Name/Salary</span></button>`; 
+            
+            if (employee.userUID) { 
+                // Only show "Make Co-Admin" if the logged in user is the Master Admin
+                if (currentUserAuth && currentUserAuth.email === ADMIN_EMAIL) {
+                    buttonsHtml += `<button class="manage-action warning-action" data-app-action="make-co-admin" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">admin_panel_settings</span><span>Make Co-Admin</span></button>`;
+                }
+                buttonsHtml += `<button class="manage-action danger-action" data-app-action="unlink-user" data-employee-id="${employeeId}" data-user-uid="${employee.userUID}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link_off</span><span>Unlink Google Account</span></button>`; 
+            } else { 
+                buttonsHtml += `<button class="manage-action" data-app-action="open-link-user-from-profile" data-employee-id="${employeeId}" data-employee-name="${employeeName}"><span class="material-symbols-outlined">link</span><span>Link Google Account</span></button>`; 
+            } 
+            
+            buttonsHtml += `<div class="manage-modal-section"></div><button class="manage-action danger-action" data-app-action="open-delete-modal" data-id="${employeeId}" data-name="${employeeName}"><span class="material-symbols-outlined">delete</span><span>Delete Employee</span></button>`; 
+            content.innerHTML = buttonsHtml; 
+            openModal('edit-options-modal'); 
+        }
+
+        async function handleMakeCoAdmin(employeeId, userUID, employeeName) {
+            if (!confirm(`Are you sure you want to make ${employeeName} a Co-Admin? This will give them full access to all orders and employee records, but they will no longer be tracked for attendance or salary.`)) return;
+            try {
+                const batch = writeBatch(db);
+                
+                // 1. Give Admin status
+                batch.update(doc(db, "users", userUID), { role: 'admin', employeeId: null });
+                
+                // 2. Delete the employee record and its subcollections (Cleanup)
+                const [attSnap, paySnap] = await Promise.all([getDocs(collection(db, `employees/${employeeId}/attendance`)), getDocs(collection(db, `employees/${employeeId}/payments`))]); 
+                attSnap.forEach(d => batch.delete(d.ref)); 
+                paySnap.forEach(d => batch.delete(d.ref)); 
+                batch.delete(doc(db, "employees", employeeId));
+                
+                await batch.commit();
+                
+                showToast(`${employeeName} is now a Co-Admin.`, "success");
+                closeModal('edit-options-modal');
+                setTimeout(() => window.location.href = 'admin-employees.html', 1500);
+
+            } catch(err) {
+                console.error(err);
+                showToast("Failed to promote user to Admin.", "error");
+            }
+        }
+
         async function handleUnlinkUser(employeeId, userUID, employeeName) { if (!confirm(`Are you sure you want to unlink the Google account from ${employeeName}? Their access will be revoked.`)) return; try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: null }); if (userUID) { batch.update(doc(db, "users", userUID), { status: 'denied', employeeId: null }); } await batch.commit(); showToast("Account unlinked successfully.", "success"); closeModal('edit-options-modal'); await showDetailView(true); } catch(err) { showToast("Failed to unlink account.", "error"); } }
         async function handleOpenLinkUserFromProfile(employeeId, employeeName) { const modal = document.getElementById('link-user-modal'); const q = query(collection(db, "users"), where("status", "in", ["pending", "denied"])); try { const usersSnap = await getDocs(q); const availableUsers = usersSnap.docs.map(d => ({ id: d.id, ...d.data() })); const userOptions = availableUsers.map(user => `<option value="${user.id}">${user.displayName} (${user.email})</option>`).join(''); modal.innerHTML = `<div class="modal-content"><div class="modal-header"><h2>Link Account for <strong>${employeeName}</strong></h2><button class="close-btn" data-app-action="close-modal" data-modal-id="link-user-modal"><span class="material-symbols-outlined">close</span></button></div><form id="link-user-form"><input type="hidden" id="link-employee-id" value="${employeeId}"><div class="form-group"><select id="link-user-select" required><option value="" disabled selected hidden></option>${userOptions}</select><label for="link-user-select">Select Available User</label></div><button type="submit" class="btn btn-primary" style="width:100%">Confirm & Link Account</button></form></div>`; document.getElementById('link-user-form').addEventListener('submit', handleLinkUserFormSubmit); openModal('link-user-modal'); } catch (err) { showToast("Could not load users.", "error"); } }
         async function handleLinkUserFormSubmit(e) { e.preventDefault(); const employeeId = document.getElementById('link-employee-id').value; const userUID = document.getElementById('link-user-select').value; if (!employeeId || !userUID) { showToast("Please select a user to link.", "error"); return; } try { const batch = writeBatch(db); batch.update(doc(db, "employees", employeeId), { userUID: userUID }); batch.update(doc(db, "users", userUID), { status: 'approved', role: 'employee', employeeId: employeeId }); await batch.commit(); showToast("Account linked successfully!", "success"); closeModal('link-user-modal'); closeModal('edit-options-modal'); await showDetailView(true); } catch (err) { showToast("Failed to link account.", "error"); } }
@@ -428,6 +483,7 @@
                     case 'open-edit-options': await handleOpenEditOptions(appAction.dataset.id, appAction.dataset.name); break;
                     case 'open-name-salary-modal': closeModal('edit-options-modal'); await openEmployeeModalForEdit(appAction.dataset.id); break;
                     case 'unlink-user': await handleUnlinkUser(appAction.dataset.employeeId, appAction.dataset.userUid, appAction.dataset.employeeName); break;
+                    case 'make-co-admin': await handleMakeCoAdmin(appAction.dataset.employeeId, appAction.dataset.userUid, appAction.dataset.employeeName); break;
                     case 'open-link-user-from-profile': closeModal('edit-options-modal'); await handleOpenLinkUserFromProfile(appAction.dataset.employeeId, appAction.dataset.employeeName); break;
                     case 'open-delete-modal': closeModal('edit-options-modal'); await openDeleteModal(appAction.dataset.id, appAction.dataset.name); break;
                     case 'open-edit-payment-modal': await openPaymentModalForEdit(appAction.dataset.paymentId, appAction.dataset.employeeId); break;
