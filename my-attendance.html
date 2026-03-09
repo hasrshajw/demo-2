@@ -179,7 +179,7 @@
             .sidebar.collapsed .nav-item:hover .nav-label::before { content: ""; position: absolute; left: -6px; top: 50%; transform: translateY(-50%); border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent var(--tooltip-bg) transparent transparent; }
         }
 
-        /* ============= PAGE SPECIFIC STYLES ============= */
+        /* ============= PAGE CONTENT STYLES ============= */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
         @media (max-width: 768px) { .container { padding: 0 16px; } }
 
@@ -349,7 +349,7 @@
             <main class="content-area">
                 <div class="container" id="main-container">
                     <div id="attendance-view" class="view active">
-                         <!-- Page Header Skeleton -->
+                         <!-- Skeleton State -->
                          <div class="page-header">
                             <div class="employee-header">
                                 <div class="skeleton" style="width: 64px; height: 64px; border-radius: 18px;"></div>
@@ -443,8 +443,14 @@
             const mOpen = document.getElementById('m-open-drawer');
             const mClose = document.getElementById('m-close-drawer');
             
-            const openMobileDrawer = () => { sidebar.classList.add('mobile-open'); mOverlay.classList.add('mobile-open'); };
-            const closeMobileDrawer = () => { sidebar.classList.remove('mobile-open'); mOverlay.classList.remove('mobile-open'); };
+            const openMobileDrawer = () => {
+                sidebar.classList.add('mobile-open');
+                mOverlay.classList.add('mobile-open');
+            };
+            const closeMobileDrawer = () => {
+                sidebar.classList.remove('mobile-open');
+                mOverlay.classList.remove('mobile-open');
+            };
 
             if(mOpen) mOpen.onclick = openMobileDrawer;
             if(mClose) mClose.onclick = closeMobileDrawer;
@@ -544,12 +550,6 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
                         <span>Back to Dashboard</span>
                     </a>
-                    <div class="page-header mobile-only">
-                        <div class="employee-header">
-                            <div class="employee-avatar">${getInitials(employeeData.name)}</div>
-                            <div><h1 class="employee-name">My Attendance</h1></div>
-                        </div>
-                    </div>
                     <div class="detail-grid">
                         <div class="main-column">
                             <div class="card"> 
