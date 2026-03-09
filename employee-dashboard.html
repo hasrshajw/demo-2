@@ -237,7 +237,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, getDoc, setDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -268,19 +268,45 @@
         function listenForAuthStateChanges() {
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    if (user.email === ADMIN_EMAIL) { window.location.href = 'admin-dashboard.html'; return; }
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (!userDoc.exists() || !userDoc.data().status) { window.location.href = 'login.html'; return; }
-                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
-                    switch (currentUserProfile.status) {
-                        case 'approved':
-                            if (!currentUserProfile.employeeId) { document.getElementById('main-container').innerHTML = `<h2>Error: Your account is not linked to an employee profile.</h2>`; return; }
-                            await initializeEmployeeView();
-                            break;
-                        case 'denied': window.location.href = 'access-denied.html'; break;
-                        case 'pending': default: window.location.href = 'pending-approval.html'; break;
+                    const userRef = doc(db, "users", user.uid);
+                    let userDoc = await getDoc(userRef);
+                    
+                    // Master admin self-healing/setup
+                    if (user.email === ADMIN_EMAIL) {
+                        if (!userDoc.exists() || userDoc.data().role !== 'admin') {
+                            await setDoc(userRef, { 
+                                displayName: user.displayName || 'Master Admin', 
+                                email: user.email, 
+                                photoURL: user.photoURL,
+                                status: 'approved', 
+                                role: 'admin' 
+                            }, { merge: true });
+                            userDoc = await getDoc(userRef);
+                        }
                     }
-                } else { window.location.href = 'login.html'; }
+
+                    if (!userDoc.exists() || userDoc.data().status !== 'approved') { 
+                        window.location.href = 'login.html'; 
+                        return; 
+                    }
+                    
+                    currentUserProfile = { id: userDoc.id, ...userDoc.data() };
+                    const isAdmin = (user.email === ADMIN_EMAIL || currentUserProfile.role === 'admin');
+
+                    if (isAdmin) {
+                        window.location.href = 'admin-dashboard.html';
+                        return;
+                    }
+
+                    if (!currentUserProfile.employeeId) { 
+                        document.getElementById('main-container').innerHTML = `<h2>Error: Your account is not linked to an employee profile. Please contact an administrator.</h2>`; 
+                        return; 
+                    }
+                    
+                    await initializeEmployeeView();
+                } else { 
+                    window.location.href = 'login.html'; 
+                }
             });
         }
         
