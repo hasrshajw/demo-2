@@ -207,7 +207,7 @@
             display: flex; align-items: center; gap: 1.25rem; background: var(--color-surface); padding: 1.5rem; 
             border: 1px solid #eef2f6; border-radius: var(--radius-xl); box-shadow: var(--premium-shadow); 
             transition: all 0.3s var(--ease-cubic); text-decoration: none; position: relative; overflow: hidden;
-            z-index: 1;
+            z-index: 1; height: 104px; /* Fixed height to perfectly align grids */
         }
         .employee-card::before {
             content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
@@ -222,14 +222,16 @@
         .employee-icon { flex-shrink: 0; width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 1px solid #e2e8f0; color: #475569; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); transition: all 0.3s; }
         .employee-card:hover .employee-icon { background: linear-gradient(135deg, #f0fdf4, #dcfce7); color: #059669; border-color: #bbf7d0; transform: scale(1.05); }
         
-        .employee-info { flex-grow: 1; overflow: hidden; }
+        .employee-info { flex-grow: 1; overflow: hidden; min-width: 0; } /* Essential for deep text-overflow */
         
-        /* Flex wrapper to handle badging nicely */
-        .employee-name-wrapper { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;}
-        .employee-name { font-weight: 700; color: var(--color-text-primary); font-size: 1.15rem; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;}
+        /* Strict Flex wrapper to prevent multiline wrapping */
+        .employee-name-wrapper { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; white-space: nowrap; overflow: hidden;}
+        .employee-name { font-weight: 700; color: var(--color-text-primary); font-size: 1.15rem; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 1;}
         
-        .employee-stats { display: flex; gap: 1rem; color: var(--color-text-secondary); font-size: 0.875rem; }
+        .employee-stats { display: flex; gap: 1rem; color: var(--color-text-secondary); font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .employee-stats span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .employee-stats strong { color: var(--color-text-primary); font-weight: 600; }
+        
         .employee-arrow { color: #cbd5e1; transition: color 0.3s, transform 0.3s; flex-shrink: 0;}
         .employee-card:hover .employee-arrow { color: var(--color-primary); transform: translateX(4px); }
         
@@ -247,9 +249,9 @@
         .admin-card:hover .admin-icon-wrap { background: linear-gradient(135deg, #fde68a, #fcd34d); color: #b45309; border-color: #fbbf24;}
         
         .admin-badge {
-            background: #fffbeb; color: #b45309; padding: 4px 10px; border-radius: 9999px; 
+            background: #fffbeb; color: #b45309; padding: 2px 8px; border-radius: 9999px; 
             font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; 
-            border: 1px solid rgba(245, 158, 11, 0.3); white-space: nowrap; display: inline-block;
+            border: 1px solid rgba(245, 158, 11, 0.3); white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1.2;
         }
 
         .empty-state { text-align: center; padding: 5rem 2rem; background: var(--color-surface); border: 2px dashed #e2e8f0; border-radius: var(--radius-xl); grid-column: 1 / -1;}
@@ -495,9 +497,13 @@
                 profileTrigger.onclick = (e) => {
                     e.stopPropagation();
                     if (window.innerWidth > 768) {
-                        pPopup.style.left = '16px'; pPopup.style.bottom = '80px'; pPopup.style.transform = 'none';
+                        pPopup.style.left = '16px';
+                        pPopup.style.bottom = '80px';
+                        pPopup.style.transform = 'none';
                     } else {
-                        pPopup.style.left = '50%'; pPopup.style.bottom = '100px'; pPopup.style.transform = 'translateX(-50%)';
+                        pPopup.style.left = '50%';
+                        pPopup.style.bottom = '100px';
+                        pPopup.style.transform = 'translateX(-50%)';
                     }
                     pPopup.classList.toggle('active');
                 };
